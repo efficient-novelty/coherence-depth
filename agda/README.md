@@ -1,0 +1,436 @@
+# PEN: Principle of Efficient Novelty in Cubical Agda
+
+Mechanization of the PEN framework in Agda. The repository now has two
+connected but distinct centers of gravity:
+
+- the original counting/oracle artifact for recurrence, novelty, and schema
+  enumeration
+- the coherence-depth theorem package used by `1_coherence_depth.tex`
+
+## Setup
+
+### Prerequisites
+
+1. Agda 2.8.0 or newer with Cubical support
+2. The Cubical library from <https://github.com/agda/cubical>
+
+### Installation
+
+```bash
+# Clone the cubical library if needed
+git clone https://github.com/agda/cubical.git ~/.agda/cubical
+
+# Register it with Agda
+echo "$HOME/.agda/cubical/cubical.agda-lib" >> ~/.agda/libraries
+
+# Move into the Agda workspace
+cd /mnt/c/dev/pen/agda
+
+# Type-check the top-level artifact
+agda --transliterate PEN.agda
+```
+
+`--transliterate` is useful in this repository because many theorem names and
+comments use Unicode identifiers.
+
+## Project Structure
+
+The top-level Agda tree currently looks like this:
+
+```text
+agda/
+|- pen.agda-lib
+|- PEN.agda
+|- README.md
+|- progress_tracking.md
+|- Core/
+|- Metatheory/
+|- ObligationGraph/
+|- Saturation/
+|- Adjunction/
+|- CaseStudies/
+|- Oracle/
+|- OpSchema/
+|- Geometry/
+|- Logic/
+|- bridge/
+`- Test/
+```
+
+The most important directories are:
+
+- `Core/`: arithmetic and paper-facing recurrence packages, including
+  `Nat.agda`, `AffineRecurrence.agda`, and `DepthOneAffine.agda`
+- `Metatheory/`: theorem-facing coherence-depth surface used by the paper
+- `Geometry/`: exact topological/HIT developments, including the standalone
+  clutching-family formalization for `thm:clutching`
+- `ObligationGraph/` and `Saturation/`: the older counting/barrier model that
+  still supports the recurrence side of the artifact
+- `Adjunction/`: supporting lower-bound scaffolding
+- `CaseStudies/`: theorem-facing coherence-depth examples and audit fixtures
+- `Oracle/` and `OpSchema/`: novelty and capability measurement work
+- `Test/`: lightweight regression modules for the main surfaces
+
+## Current Status
+
+### Coherence-Depth Track: Integrated
+
+The coherence-depth theorem package is now exposed from `PEN.agda` and has a
+top-level smoke import in `Test/MetatheorySmoke.agda`.
+
+The one exception is the exact clutching-family artifact for `thm:clutching`,
+which now lives in `Geometry/Clutching.agda` and is checked by the dedicated
+`Test/ClutchingSmoke.agda` smoke module. It is intentionally kept as a
+standalone Cubical geometry artifact for now because the main theorem package
+still uses the repository-local `Core/Nat.agda`, while the exact suspension /
+circle development rides directly on the Cubical library's standard HIT stack.
+
+Current theorem-facing modules:
+
+- `Metatheory/Obligations.agda` defines the paper's obligation-language
+  surface:
+  `HistoricalSupport`, `PrimitiveCost`, `ObligationLanguage`,
+  `StabilizesAt`, `HasCoherenceDepth`, `PrimitiveEliminatesAbove`,
+  `HasPrimitiveDepth`, `FactorsThroughWindow`, and
+  `HasChronologicalWindowSize`.
+- `Metatheory/InterfaceCalculus.agda` now provides the lightweight
+  interface-calculus surface for `prop:transparent` via
+  `LibraryState`, `TransparentDevelopment`, `SealedLayer`,
+  `ExplicitSealedLayer`, `explicit-sealed-public-interface`,
+  `explicit-sealed-public-size`,
+  `transparent-growth-keeps-library-state`,
+  `transparent-definitions-preserve-active-interface`,
+  `transparent-definitions-have-zero-integration-latency`, and
+  `transparent-user-level-code-lies-outside-the-recurrence`.
+- `Metatheory/Refactoring.agda` packages the exact paper-facing refactoring
+  corollary `cor:refactoring` via `PayloadNormalForm`,
+  `PayloadPresentation`, `ObligationNormalForm`, `ObligationPresentation`,
+  `historical-support-correspondence`, and `refactoring-invariance`, making
+  the counting-normal-form quotient and the induced payload/obligation/support
+  bijections explicit.
+- `Metatheory/CanonicityDensity.agda` packages the exact paper-facing
+  maximal-density theorem `thm:canonicity` via
+  `HistoricalInterface`, `FullyCoupledFoundation`,
+  `FoundationalCoreExtension`, `NativeCanonicityPreservingTotality`,
+  `PromotedOperationalExhaustiveness`, `MaximalInterfaceDensity`,
+  `CanonicityDensityTheorem`,
+  `primitive-interaction-counting-normal-form`, and
+  `global-admissibility-forces-maximal-interface-density`.
+- `Metatheory/TracePrinciple.agda` packages the exact paper-facing integration
+  trace principle `thm:trace` via `IntegrationTracePrinciple`,
+  `public-counting-normal-form`, and `integration-trace-principle`, built on
+  the explicit counted sealed-layer surface from
+  `Metatheory/InterfaceCalculus.agda`.
+- `Metatheory/UniversalRecurrence.agda` packages the exact paper-facing
+  universal affine recurrence `thm:recurrence` via
+  `CountedHistoricalLayer`, `HistoricalWindow`, `historical-interface`,
+  `historical-interface-counting-normal-form`,
+  `WindowedRecurrenceContext`, `ChronologicalRecurrenceContext`,
+  `UniversalAffineRecurrence`, `universal-affine-recurrence`, and
+  `universal-affine-recurrence-from-coherence`, making explicit that the
+  recurrence law itself uses only the windowed counted-history package while
+  exact depth can still be tracked separately.
+- `Metatheory/CanonicalTelescope.agda` and
+  `Metatheory/TraceCostNormalForm.agda` provide the finite canonical
+  telescope and counted trace-cost normal form used by the fixed raw
+  extension-calculus bridge.
+- `Metatheory/PresentationEquivalence.agda` and
+  `Metatheory/MuInvariance.agda` make the explicit presentation generators
+  and the invariant minimal opaque trace count `mu` theorem-facing.
+- `Metatheory/RawStructuralSyntax.agda`,
+  `Metatheory/RawStructuralTyping.agda`,
+  `Metatheory/SurfaceNormalizationBridge.agda`, and
+  `Metatheory/SurfaceToHornImage.agda` mechanize the bridge from the paper's
+  fixed raw extension calculus to the canonical horn-generated trace
+  interface. This is deliberately not a parser or elaboration theorem for
+  arbitrary Cubical Agda programs.
+- `Metatheory/FiniteInterfaceBasis.agda`,
+  `Metatheory/GlobalActionSemantics.agda`, and
+  `Metatheory/ActiveBasisContract.agda` expose the finite active-basis
+  naturality package and its non-circularity examples.
+- `Metatheory/SparseDependencyRecurrence.agda` and
+  `Metatheory/FullCouplingEnvelope.agda` expose sparse dependency recurrence
+  and the fully coupled endpoint used for the Fibonacci specialization.
+- `CaseStudies/*.agda` packages the universe extension, global modality,
+  promoted active-basis interface, and sparse datatype examples checked by
+  the coherence-depth audit script.
+- `Metatheory/Obligations.agda` also now includes the arity-to-dimension
+  surface for `lem:arity-dimension`:
+  `Positive`, `CoherenceCellShape`,
+  `historical-arity-forces-cell-dimension`, and
+  `irreducible-obligation-requires-cell`.
+- `Metatheory/Extensional.agda` proves the UIP/extensional collapse via
+  `UIP-forces-depth-1` and `history-truncates-to-one`.
+- `Metatheory/KanSubsumption.agda` now packages both the raw arity-3 open-box
+  derivation surface, the exact theorem-facing horn-reduction wrapper, and the
+  exact telescopic wrapper for remote binary comparisons via
+  `HornExtensionFiber`, `horn-extension-fiber-contractible`,
+  `structural-horn-language`,
+  `structural-integration-horn-reduction`,
+  `remote-layer-obligation-derived`,
+  `TelescopicTraceChain`,
+  `TelescopicSubsumptionView`,
+  `telescopic-subsumption`,
+  `telescopic-remote-comparison-derived`,
+  `arity3-obligation-syntactically-derivable`,
+  `history-beyond-two-algorithmically-subsumed`, and
+  `arity3-open-box-hfilled`.
+- `Metatheory/UpperBound.agda` turns that horn-extension package into the
+  exact paper-facing upper bound and contractible-factor decomposition for
+  `thm:upper` and `cor:contractible-factor` via
+  `ContractibleRemoteFactor`,
+  `structural-obligation-contractible-factorization`,
+  `contractible-remote-factor-contractible`,
+  `structural-obligation-set-equivalence`, and
+  `structural-stabilizes-at-two`.
+- `Metatheory/ChronologicalWindow.agda` upgrades that upper bound to the
+  exact paper-facing chronological-window corollary `cor:chrono-window` via
+  `primitive-obligations-factor-through-last-two`,
+  `one-layer-window-insufficient`,
+  `two-layer-chronological-window`, and
+  `chronological-markov-blanket`.
+- `Metatheory/ExactDepth.agda` packages the exact paper-facing depth-two
+  corollary `cor:d2` via
+  `stabilization-at-zero-impossible`,
+  `stabilization-at-one-impossible`,
+  `structural-coherence-depth-exactly-two`,
+  `structural-chronological-window-size-exactly-two`,
+  `cubical-coherence-depth-exactly-two`, and
+  `cubical-chronological-window-size-exactly-two`, while threading through
+  the lower-bound witnesses
+  `cubical-binary-sealing-obstruction` and
+  `cubical-triangle-identity-corollary`.
+- `Metatheory/AdjunctionBarrier.agda` packages the lower bound against global
+  depth-1 collapse via `explicit-binary-sealing-obstruction`,
+  `triangle-identity-corollary`, `depth1-insufficient`, and
+  `adjunction-barrier`.
+- `Metatheory/TwoDFoundations.agda` now splits the abstract 2D-foundations
+  layer into a weaker primitive/window package and a separate exact-depth
+  wrapper. The primitive/window side is exposed via
+  `PrimitiveWindow2DFoundation`,
+  `primitive-depth-two-law-for-2d-foundations`,
+  `chronological-window-size-two-for-2d-foundations`, and
+  `cubical-primitive-depth-two-law-for-2d-foundations`; the exact
+  `thm:2d-foundations` wrapper is then exposed via
+  `FullyCoupled2DFoundation`,
+  `depth-two-law-for-2d-foundations`,
+  `constant-payload-depth-two-law`,
+  `cubical-primitive-window-2d-foundation`,
+  `cubical-2d-foundation`,
+  `cubical-depth-two-law-for-2d-foundations`, and
+  `cubical-chronological-window-size-two-for-2d-foundations`.
+- `Geometry/Clutching.agda` packages the exact paper-facing clutching family
+  `thm:clutching` via `CircleClutchingBoundary`, `clutching-family`,
+  `HopfClutchingFamily`, `hopf-binary-clutching-datum`,
+  `hopf-binary-clutching-nontrivial`, `ClutchingHornExtensionFiber`,
+  `clutching-horn-extension-fiber-contractible`, and
+  `clutching-family-theorem`, with regression coverage in
+  `Test/ClutchingSmoke.agda`.
+- `Core/AffineRecurrence.agda` and `Core/DepthOneAffine.agda` package the
+  arithmetic specializations used by the universal recurrence theorem,
+  including the payload-aware depth-two law and the paper-facing depth-1
+  corollary.
+
+What this means in practice:
+
+- the extensional depth-1 collapse is mechanized
+- the exact cubical upper bound `O^(k)(X) ~= O^(2)(X)` is mechanized
+- the exact contractible-factor decomposition above depth 2 is mechanized
+- the lower bound against cubical depth-1 collapse is mechanized
+- the exact horn-reduction surface and its arity-3 computational witness are
+  mechanized
+- the exact telescopic subsumption wrapper for remote binary comparisons is
+  mechanized
+- the exact chronological-window corollary is mechanized
+- the exact `d = 2` coherence-depth corollary is mechanized
+- the abstract `2`D-foundations wrapper is mechanized
+- the exact clutching-family lower-bound witness is mechanized
+- the paper's arity-to-dimension dictionary is now mechanized
+- the exact admissible-refactoring invariance corollary is now mechanized
+- the exact maximal-interface-density theorem is now mechanized
+- the exact integration trace principle is now mechanized
+- the exact universal affine recurrence is mechanized on an explicit counted
+  depth-`d` historical window
+- the fixed raw extension-calculus bridge to horn-generated trace interfaces
+  is mechanized
+- the explicit presentation-equivalence generators preserve `mu`
+- active-basis coverage, sparse recurrence, and the full-coupling envelope are
+  mechanized
+- the theorem-facing case studies and YAML audit fixtures are checked
+- the recurrence side still has the payload-aware arithmetic specializations
+  and the depth-1 closed forms
+
+What is still open on the paper-facing coherence-depth plan:
+
+- `1_coherence_depth.tex` still needs the Phase 10 prose rewrite so its
+  mechanization claims exactly match the fixed raw extension-calculus
+  boundary and the completed case-study audit.
+
+### Counting / Oracle Track
+
+The original PEN artifact remains active and is no longer just a stub:
+
+- `ObligationGraph/Recurrence.agda` still provides the stable payload-free
+  recurrence surface
+- `Oracle/Kappa.agda`, `Oracle/Nu.agda`, and `Oracle/Efficiency.agda` contain
+  the basic oracle and selection-measure work
+- `OpSchema/` contains the more advanced operation-schema-based novelty track
+  used for the R1-R16 validation work
+
+### Remaining Large Gap
+
+The end-to-end Genesis selection loop is still not implemented as a completed
+Agda artifact. The repository contains bridge and engine work around that
+direction, but the main unfinished Agda milestone is still the selection-loop
+story rather than the already-integrated theorem package above.
+
+## Useful Entry Points
+
+If you are trying to orient yourself quickly, start here:
+
+- `PEN.agda`: top-level export surface
+- `Metatheory/Obligations.agda`: obligation-language and arity/dimension API
+- `Metatheory/InterfaceCalculus.agda`: transparent-vs-sealed interface surface
+  plus the explicit counted sealed-layer API
+- `Metatheory/Refactoring.agda`: exact refactoring-invariance wrapper for
+  payload/obligation counting normal forms
+- `Metatheory/CanonicityDensity.agda`: fully coupled historical-interface and
+  maximal-density package for `thm:canonicity`
+- `Metatheory/TracePrinciple.agda`: exact trace-principle wrapper for sealed
+  exports
+- `Metatheory/UniversalRecurrence.agda`: windowed recurrence wrapper for the
+  counted historical interface, plus the exact-depth context that extends it
+- `Metatheory/CanonicalTelescope.agda`: canonical finite telescope surface
+- `Metatheory/TraceCostNormalForm.agda`: counted trace-cost normal forms and
+  `mu`
+- `Metatheory/PresentationEquivalence.agda`: explicit presentation-generator
+  equivalence
+- `Metatheory/MuInvariance.agda`: `mu` invariance and computational
+  replacement bridge
+- `Metatheory/RawStructuralSyntax.agda`: fixed raw extension-calculus syntax
+- `Metatheory/RawStructuralTyping.agda`: admissibility and structural role
+  classification
+- `Metatheory/SurfaceNormalizationBridge.agda`: raw extension normalization to
+  canonical signatures
+- `Metatheory/SurfaceToHornImage.agda`: raw structural telescope to horn image
+  theorem
+- `Metatheory/FiniteInterfaceBasis.agda`: counted finite active basis
+- `Metatheory/GlobalActionSemantics.agda`: advertised active-interface action
+  semantics
+- `Metatheory/ActiveBasisContract.agda`: active-basis contract and
+  non-circularity examples
+- `Metatheory/SparseDependencyRecurrence.agda`: sparse footprint recurrence
+- `Metatheory/FullCouplingEnvelope.agda`: fully coupled specialization
+- `CaseStudies/`: checked case-study summaries for the audit data
+- `Metatheory/Extensional.agda`: depth-1 theorem
+- `Metatheory/KanSubsumption.agda`: horn-reduction, telescopic subsumption,
+  and arity-3 open-box package
+- `Metatheory/UpperBound.agda`: exact depth-two upper-bound/stabilization
+  wrapper and contractible-factor decomposition
+- `Metatheory/ChronologicalWindow.agda`: exact chronological-window wrapper
+- `Metatheory/ExactDepth.agda`: exact depth-two corollary wrapper
+- `Metatheory/AdjunctionBarrier.agda`: lower-bound obstruction package
+- `Metatheory/TwoDFoundations.agda`: split abstract 2D-foundations wrappers
+  for primitive/window depth and exact depth, plus the constant-payload
+  affine/Fibonacci consequence
+- `Geometry/Clutching.agda`: exact suspension-sphere clutching family for
+  `thm:clutching`
+- `Core/AffineRecurrence.agda`: payload-aware recurrence
+- `Test/MetatheorySmoke.agda`: lightweight regression import for the theorem
+  package
+- `Test/ClutchingSmoke.agda`: lightweight regression import for the standalone
+  clutching artifact
+- `progress_tracking.md`: longer historical log for the Agda work
+
+## Verification Commands
+
+For the integrated coherence-depth surface:
+
+```bash
+cd /mnt/c/dev/pen/agda
+agda --transliterate PEN.agda
+agda --transliterate Test/MetatheorySmoke.agda
+agda --transliterate Test/SurfaceBridgeSmoke.agda
+agda --transliterate Test/ActiveBasisExamples.agda
+agda --transliterate Test/SparseRecurrenceSmoke.agda
+agda --transliterate Geometry/Clutching.agda
+agda --transliterate Test/ClutchingSmoke.agda
+agda --transliterate Test/Fibonacci.agda
+```
+
+From the repository root, the coherence-depth artifact check runs the same
+baseline, reports the known auxiliary bridge-contract postulate separately,
+and scans theorem-facing modules for `postulate`:
+
+```bash
+./scripts/check_coherence_depth_artifact.sh
+python scripts/coherence_depth_audit.py runs/coherence_depth_case_studies
+```
+
+Useful additional checks:
+
+```bash
+agda --transliterate Metatheory/Obligations.agda
+agda --transliterate Metatheory/InterfaceCalculus.agda
+agda --transliterate Metatheory/Refactoring.agda
+agda --transliterate Metatheory/CanonicityDensity.agda
+agda --transliterate Metatheory/TracePrinciple.agda
+agda --transliterate Metatheory/UniversalRecurrence.agda
+agda --transliterate Metatheory/CanonicalTelescope.agda
+agda --transliterate Metatheory/TraceCostNormalForm.agda
+agda --transliterate Metatheory/PresentationEquivalence.agda
+agda --transliterate Metatheory/MuInvariance.agda
+agda --transliterate Metatheory/RawStructuralSyntax.agda
+agda --transliterate Metatheory/RawStructuralTyping.agda
+agda --transliterate Metatheory/SurfaceNormalizationBridge.agda
+agda --transliterate Metatheory/SurfaceToHornImage.agda
+agda --transliterate Metatheory/FiniteInterfaceBasis.agda
+agda --transliterate Metatheory/GlobalActionSemantics.agda
+agda --transliterate Metatheory/ActiveBasisContract.agda
+agda --transliterate Metatheory/SparseDependencyRecurrence.agda
+agda --transliterate Metatheory/FullCouplingEnvelope.agda
+agda --transliterate Metatheory/Extensional.agda
+agda --transliterate Metatheory/KanSubsumption.agda
+agda --transliterate Metatheory/UpperBound.agda
+agda --transliterate Metatheory/ChronologicalWindow.agda
+agda --transliterate Metatheory/ExactDepth.agda
+agda --transliterate Metatheory/AdjunctionBarrier.agda
+agda --transliterate Metatheory/TwoDFoundations.agda
+agda --transliterate Test/OpSchemaTest.agda
+agda --transliterate Test/BlindTest.agda
+```
+
+## Trust Boundary And Theorem Index
+
+The paper-facing trust boundary is tracked outside the Agda tree so reviewers
+can inspect it without reading every module:
+
+- `docs/coherence_depth_trust_boundary.md`: paper theorem, Agda module,
+  theorem-name, postulate-free status, and whether the result still depends on
+  the raw-surface bridge.
+- `docs/theorem_index.md`: searchable theorem-name index for the current
+  coherence-depth package plus the remaining paper-reference cleanup notes.
+
+The remaining coherence-depth work is tracked in `mechanization_plan.md`.
+After the top-level integration pass, the next executable slice is the Phase
+10 rewrite of `1_coherence_depth.tex`.
+
+## Known Issues
+
+1. The repository intentionally defines its own `Nat` surface in
+   `Core/Nat.agda` because some Cubical library data imports trigger Agda
+   2.8.0 compatibility problems in this setup.
+2. `Geometry/Clutching.agda` therefore stays as a standalone checked artifact
+   instead of being re-exported through `PEN.agda`: mixing the exact Cubical
+   suspension/circle development with the existing `Core/Nat.agda`-based
+   theorem package in one module currently trips Agda's built-in-natural
+   binding boundary.
+3. Some reflection-heavy oracle work has different ergonomics from the Cubical
+   theorem package; `progress_tracking.md` is the best place to check the
+   current caveats for those modules.
+
+## References
+
+1. Univalent Foundations Program, *Homotopy Type Theory*, 2013
+2. Cohen et al., "Cubical Type Theory", TYPES 2015
+3. Vezzosi et al., "Cubical Agda", ICFP 2019
