@@ -224,19 +224,19 @@ Goal: connect raw normalization to semantic trace roles.
 
 ### Paper Tasks
 
-- [ ] Add section "Normal forms for structural trace".
-- [ ] Explain unary action trace.
-- [ ] Explain binary comparison trace.
-- [ ] Explain higher horn packages.
-- [ ] Explain why higher algebraic operations supplied by users are payload.
-- [ ] Make clear that horn packages are derived by semantic cubical structure,
+- [x] Add section "Normal forms for structural trace".
+- [x] Explain unary action trace.
+- [x] Explain binary comparison trace.
+- [x] Explain higher horn packages.
+- [x] Explain why higher algebraic operations supplied by users are payload.
+- [x] Make clear that horn packages are derived by semantic cubical structure,
       not by definition alone.
 
 ### Acceptance Criteria
 
-- [ ] Every normalized role has support data.
-- [ ] Every normalized role has primitive/derived classification.
-- [ ] Horn roles are not merely declared derived; they require semantic
+- [x] Every normalized role has support data.
+- [x] Every normalized role has primitive/derived classification.
+- [x] Horn roles are not merely declared derived; they require semantic
       derivability.
 
 ## Milestone 4: Semantic Horn Reduction
@@ -542,7 +542,7 @@ Goal: produce the next complete paper/artifact version.
 - [ ] Add semantic cubical foundation section.
 - [ ] Add sealed extensions and trace section.
 - [x] Add semantic adequacy section.
-- [ ] Add trace normal form section.
+- [x] Add trace normal form section.
 - [ ] Add depth-at-most-two proof.
 - [ ] Add depth-at-least-two proof.
 - [ ] Add exact-depth theorem.

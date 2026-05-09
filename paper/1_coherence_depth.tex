@@ -1034,6 +1034,62 @@ hidden sealing derivation. This is exactly factorization completeness.
 The results of \autoref{sec:coherence} and \autoref{sec:mechanization} invoke surface syntax only through \autoref{rem:bridge-target}. Once an admissible declaration has been identified with its canonical normalized signature and the corresponding counted-interface data, the later depth, factorization, and recurrence theorems are applications of the abstract candidate-and-obligation calculus.
 \end{rem}
 
+\section{Normal forms for structural trace}
+\label{sec:trace-normal-forms}
+
+The adequacy bridge reduces the paper-facing semantic question to a small
+normal-form question about the trace part of a sealed public signature. After
+normalization, every admissible structural trace field is read in one of three
+roles: unary action trace, binary comparison trace, or a higher horn package.
+The roles are semantic roles, not merely syntactic tags. Each carries explicit
+historical support data, and each role determines whether the field is a
+candidate primitive public trace field or a derived one.
+
+\begin{table}[t]
+\centering
+\caption{Normal forms for structural trace.}
+\label{tab:trace-normal-forms}
+\small
+\begin{tabular}{@{}p{0.22\linewidth}p{0.28\linewidth}p{0.23\linewidth}p{0.17\linewidth}@{}}
+\toprule
+Normal role & Semantic content & Historical support & Primitive status \\
+\midrule
+Unary action trace & Action of the new payload on one exported interface site & one prior public field & primitive candidate unless transparently generated \\
+Binary comparison trace & Compatibility between two already exported actions, transports, or comparison witnesses & two prior public fields, or adjacent composite trace through them & primitive candidate; necessary in general by the swap obstruction \\
+Higher horn package & Boundary plus missing face/filler data for a higher structural obligation & a horn boundary assembled from unary and binary public trace & derived when the boundary is filled by $\hcomp$, $\transp$, and $\mathsf{hfill}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Unary action trace is the image of a raw action clause. It records how the new
+sealed payload acts on one previously exported basis site. Binary comparison
+trace is the image of raw comparison or transport clauses. It records that two
+publicly visible routes, already determined by action data and prior trace,
+agree in the way required for later sealed extensions to use them opaquely.
+These two roles are the only roles that may contribute irreducible primitive
+public trace fields in a $\mu$-minimal normalized signature.
+
+The higher role is different. A horn package may still appear in the exact
+realized obligation object, but its public trace field is primitive only if the
+fixed cubical structure cannot compute it from its displayed boundary. In the
+cubical setting of this paper, the derivedness witness is the actual boundary
+computation: $\hcomp$ synthesizes the missing face, $\transp$ aligns it along
+the exported comparison data, and $\mathsf{hfill}$ packages the filler. Thus
+the higher field is not declared derived by convention; it is derived because a
+term built from the semantic Kan operations reconstructs it from lower-arity
+public boundary trace. This is the normal-form content used by
+\autoref{thm:computational-replacement}, \autoref{lem:horn-reduction}, and
+\autoref{thm:higher-elim}.
+
+The same normal form also separates structural trace from payload. A
+user-supplied higher algebraic operation, higher HIT constructor, or other
+primitive higher-dimensional datum is part of the payload telescope~$K_n$ when
+it is authored as new semantic content. It is not reclassified as structural
+trace merely because it has higher arity or dimension. It becomes a structural
+horn package only when it is a sealing obligation whose boundary is built from
+previous public interface data and whose role is to integrate the new payload
+with that interface.
+
 \section{Obligation Depth, Minimal-Signature Depth, and the Dichotomy}
 \label{sec:coherence}
 
