@@ -15,15 +15,15 @@ cross-cutting paper, code, documentation, audit, and review-readiness tasks.
 
 ## Global Definition Of Done
 
-- [ ] The main theorem is stated as a theorem about primitive public structural
+- [x] The main theorem is stated as a theorem about primitive public structural
       trace, not about the disappearance of higher cubical objects.
-- [ ] The paper distinguishes sealed foundational extensions from transparent
+- [x] The paper distinguishes sealed foundational extensions from transparent
       definitional growth.
-- [ ] User-supplied higher HIT constructors are classified as payload, not
+- [x] User-supplied higher HIT constructors are classified as payload, not
       automatically generated structural trace.
-- [ ] Full coupling is stated as an assumption for recurrence equality and
+- [x] Full coupling is stated as an assumption for recurrence equality and
       Fibonacci scaling.
-- [ ] Sparse and orthogonal dependency patterns are stated as bounded or sparse
+- [x] Sparse and orthogonal dependency patterns are stated as bounded or sparse
       regimes, not as Fibonacci equality.
 - [ ] The semantic adequacy boundary is explicit in both paper and artifact.
 - [ ] Every theorem in the paper has an entry in `paper-map.yaml`.
@@ -40,41 +40,43 @@ with the mechanization target.
 
 ### Paper Tasks
 
-- [ ] Rewrite the main depth theorem around this phrase:
+- [x] Rewrite the main depth theorem around this phrase:
       "primitive public structural trace".
-- [ ] State that the theorem applies to admissible sealed structural
+- [x] State that the theorem applies to admissible sealed structural
       extensions in cubical foundations with stable Kan composition/filling.
-- [ ] State the theorem parametrically in a semantic adequacy package.
-- [ ] State the exact-depth theorem separately from the scaling theorem.
-- [ ] State the scaling theorem separately from the Fibonacci corollary.
-- [ ] Add a theorem statement for exact primitive coherence depth two.
-- [ ] Add a theorem statement for the full-coupling affine recurrence:
+- [x] State the theorem parametrically in a semantic adequacy package.
+- [x] State the exact-depth theorem separately from the scaling theorem.
+- [x] State the scaling theorem separately from the Fibonacci corollary.
+- [x] Add a theorem statement for exact primitive coherence depth two.
+- [x] Add a theorem statement for the full-coupling affine recurrence:
       `mu_(n+1) = mu_n + mu_(n-1) + kappa_n + kappa_(n-1)`.
-- [ ] Add a theorem statement for constant-payload Fibonacci scaling.
-- [ ] Add an indexing convention box for `n`, `n + 1`, bootstrap cases,
+- [x] Add a theorem statement for constant-payload Fibonacci scaling.
+- [x] Add an indexing convention box for `n`, `n + 1`, bootstrap cases,
       `mu_n`, `kappa_n`, and shifted trace `U_n`.
-- [ ] Decide whether the lower-bound proof uses swap, clutching, or both.
-- [ ] Record that decision in the paper and in this checklist.
+- [x] Decide whether the lower-bound proof uses swap, clutching, or both.
+- [x] Record that decision in the paper and in this checklist.
+      Decision: swap is the load-bearing lower-bound proof; clutching remains
+      an extended topological witness/example.
 
 ### Guardrail Tasks
 
-- [ ] Add wording that higher cubical cells, paths, cubes, homotopies, and HIT
+- [x] Add wording that higher cubical cells, paths, cubes, homotopies, and HIT
       constructors may exist at all dimensions.
-- [ ] Add wording that higher structural integration obligations are derived
+- [x] Add wording that higher structural integration obligations are derived
       from binary trace by Kan composition/filling.
-- [ ] Add wording that arbitrary user higher constructors are payload.
-- [ ] Add wording that transparent development has zero integration latency in
+- [x] Add wording that arbitrary user higher constructors are payload.
+- [x] Add wording that transparent development has zero integration latency in
       this model.
-- [ ] Add wording that sparse dependency footprints give sparse recurrences or
+- [x] Add wording that sparse dependency footprints give sparse recurrences or
       upper-bound envelopes.
-- [ ] Avoid claims that all semantic filler spaces are contractible.
+- [x] Avoid claims that all semantic filler spaces are contractible.
 
 ### Acceptance Criteria
 
-- [ ] No theorem wording implies that higher cubical objects vanish.
-- [ ] No theorem wording counts arbitrary user payload as structural trace.
-- [ ] No theorem wording says ordinary transparent library growth is Fibonacci.
-- [ ] Full coupling is visible in every equality-style recurrence statement.
+- [x] No theorem wording implies that higher cubical objects vanish.
+- [x] No theorem wording counts arbitrary user payload as structural trace.
+- [x] No theorem wording says ordinary transparent library growth is Fibonacci.
+- [x] Full coupling is visible in every equality-style recurrence statement.
 - [ ] The paper and Agda roadmap use the same recurrence indexing convention.
 
 ## Milestone 1: Add Semantic Interface Records
@@ -587,26 +589,26 @@ Goal: produce the next complete paper/artifact version.
 
 ### Title And Abstract
 
-- [ ] Title remains accurate after theorem qualification.
-- [ ] Abstract says "primitive public structural trace".
-- [ ] Abstract mentions admissible sealed extensions.
-- [ ] Abstract mentions higher obligations as derived from binary trace.
-- [ ] Abstract mentions Kan composition/filling.
-- [ ] Abstract mentions full coupling for recurrence equality.
-- [ ] Abstract mentions constant-payload Fibonacci as a specialization.
-- [ ] Abstract does not say higher coherences vanish.
+- [x] Title remains accurate after theorem qualification.
+- [x] Abstract says "primitive public structural trace".
+- [x] Abstract mentions admissible sealed extensions.
+- [x] Abstract mentions higher obligations as derived from binary trace.
+- [x] Abstract mentions Kan composition/filling.
+- [x] Abstract mentions full coupling for recurrence equality.
+- [x] Abstract mentions constant-payload Fibonacci as a specialization.
+- [x] Abstract does not say higher coherences vanish.
 
 ### Introduction
 
-- [ ] Add paragraph distinguishing higher cubical objects, higher structural
+- [x] Add paragraph distinguishing higher cubical objects, higher structural
       obligations, primitive public trace, and derived trace.
-- [ ] Add "scope at a glance" table.
-- [ ] Include sealed foundational extension boundaries as in scope.
-- [ ] Include transparent definitions as out of recurrence scope.
-- [ ] Include structural integration trace as in scope.
-- [ ] Include arbitrary user payload as out of structural trace scope.
-- [ ] Include full-coupling equality as a maximal regime.
-- [ ] Include sparse/orthogonal growth as separate from equality.
+- [x] Add "scope at a glance" table.
+- [x] Include sealed foundational extension boundaries as in scope.
+- [x] Include transparent definitions as out of recurrence scope.
+- [x] Include structural integration trace as in scope.
+- [x] Include arbitrary user payload as out of structural trace scope.
+- [x] Include full-coupling equality as a maximal regime.
+- [x] Include sparse/orthogonal growth as separate from equality.
 
 ### Preliminaries
 
@@ -624,17 +626,17 @@ Goal: produce the next complete paper/artifact version.
 
 ### Semantic Sections
 
-- [ ] Introduce `SemanticCubicalFoundation` in prose.
-- [ ] List interval and endpoints.
-- [ ] List cofibrations/faces.
-- [ ] List partial elements.
-- [ ] List paths or interval-indexed equality.
-- [ ] List transport.
-- [ ] List homogeneous composition.
-- [ ] List filling.
-- [ ] List substitution stability.
-- [ ] List optional univalence for lower bound.
-- [ ] State theorem is parametric in this structure.
+- [x] Introduce `SemanticCubicalFoundation` in prose.
+- [x] List interval and endpoints.
+- [x] List cofibrations/faces.
+- [x] List partial elements.
+- [x] List paths or interval-indexed equality.
+- [x] List transport.
+- [x] List homogeneous composition.
+- [x] List filling.
+- [x] List substitution stability.
+- [x] List optional univalence for lower bound.
+- [x] State theorem is parametric in this structure.
 
 ### Sealed Extensions And Trace
 

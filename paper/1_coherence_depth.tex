@@ -36,7 +36,7 @@
 \newcommand{\transp}{\mathrm{transp}}
 \newcommand{\Fib}{\mathrm{Fib}}
 
-\title[Coherence Depth and Affine Recurrence]{Coherence Depth and Affine Recurrence in a Cubical Extension Calculus}
+\title[Primitive Trace Depth and Affine Recurrence]{Primitive Public Structural Trace Depth and Affine Recurrence in Cubical Sealed Extensions}
 
 \author[H.\ Lande]{Halvor Lande}
 \email{hsl@awc.no}
@@ -47,11 +47,11 @@
 \begin{document}
 
 \begin{abstract}
-We study sealed, globally acting extensions of one fixed CCHM-style cubical core, not arbitrary Cubical Agda programs or ordinary transparent library growth. Public interfaces are exported opaquely and counted only after canonical telescope normalization. The paper separates the exact realized obligation objects $\Real_k(X)$ from the primitive public trace fields that survive in $\mu$-minimal normalized signatures. In this fixed calculus, cubical horn computation gives exact stabilization $\Real_k(X)\simeq\Real_2(X)$ for $k\geq2$, higher structural trace fields are eliminated from $\mu$-minimal public form, and a swap obstruction shows that unary data do not suffice in general. A separate recent-history theorem turns the depth-two bound into a genuine two-layer chronological window. Consequently, in the fully coupled regime, minimal opaque trace cost satisfies the payload-aware recurrence
+We study admissible sealed structural extensions of cubical foundations with substitution-stable Kan composition and filling. The result is not a truncation theorem: higher cubical cells, cubes, paths, homotopies, and user-supplied higher HIT constructors may exist at every dimension, with arbitrary higher user constructors counted as payload rather than automatically generated structural trace. The theorem concerns the primitive public structural trace exported at sealed boundaries. Stated parametrically in a semantic adequacy package for a fixed raw extension calculus, it separates exact realized obligation objects $\Real_k(X)$ from the primitive public trace fields that survive in $\mu$-minimal normalized signatures. Cubical horn computation via $\hcomp$ and $\mathsf{hfill}$ gives exact stabilization $\Real_k(X)\simeq\Real_2(X)$ for $k\geq2$, derives higher structural obligations from binary boundary trace, and a swap obstruction shows that unary data do not suffice in general. A separate recent-history theorem turns the exact depth-two bound into a genuine two-layer chronological window. Consequently, under the explicit full-coupling hypothesis, primitive trace cost satisfies the payload-aware recurrence
 \[
   \mu_{n+1} = \mu_n + \mu_{n-1} + \kappa_n+\kappa_{n-1}.
 \]
-Under constant payload size $\kappa_n=c$, the shifted sequence $U_n=\mu_n+2c$ is Fibonacci. The accompanying Cubical Agda development formalizes the candidate-and-obligation calculus, the fixed raw bridge to canonical trace signatures, active-basis naturality, sparse/full recurrence, and the case-study audit; \autoref{sec:mechanization} records the paper-to-Agda map and the trusted boundary.
+Under the further constant-payload specialization $\kappa_n=c$, the shifted sequence $U_n=\mu_n+2c$ is Fibonacci. The accompanying Cubical Agda development formalizes the candidate-and-obligation calculus, the fixed raw bridge to canonical trace signatures, active-basis naturality, sparse/full recurrence, and the case-study audit; \autoref{sec:mechanization} records the paper-to-Agda map and the trusted boundary.
 \end{abstract}
 
 \maketitle
@@ -73,31 +73,53 @@ Orthogonal extensions are not the subject of this recurrence law. Adjoining a ne
 
 The central observation is that these obligations are stratified by historical depth. Some are purely unary: the new layer must act on one previously exported generator. Others are genuinely binary: the new layer must preserve a previously exported compatibility witness between two generators. The paper therefore tracks two related depth notions: one for exact stabilization of realized obligation objects and one for what survives in normalized public signatures.
 
-\subsection{The fixed theorem object}
+\subsection{The theorem object and adequacy boundary}
 
-This paper fixes one cubical object theory from the start. Let $C$ be a CCHM-style cubical core calculus with univalence and Kan composition~\cite{cubical,cchm-hits}. Over~$C$ we study a language of globally acting extensions exported through opaque public signatures. A sealing step exposes only the normalized payload and trace fields of that public signature; the internal derivation that discharged the obligations is hidden behind opacity. The recurrence law proved below is therefore a theorem about a fixed cubical extension calculus built over~$C$, not a blanket claim about every system that carries the label ``cubical.'' Cubical Agda enters in two roles only: as a mechanization environment and as a source of native cubical constructions used to witness the lower-bound phenomena.
+The paper-facing theorem is parameterized by a semantic cubical foundation~$F$ and an adequacy package~$A$ that interprets admissible sealed structural extensions of~$F$ in the raw extension calculus used below. In the Agda roadmap these are the records \AgdaPath{SemanticCubicalFoundation} and \AgdaPath{RawAdequacyPackage}. The foundation supplies an interval with endpoints, cofibrations or face conditions, partial elements, path or interval-indexed equality, transport, homogeneous composition, filling, boundary laws, and substitution stability; the lower-bound witness additionally uses univalence. The adequacy package is the bridge that preserves semantic interpretation, historical support, primitive-versus-derived trace status, and exported cardinality when a semantic sealed extension is represented by raw declarations and normalized signatures.
+
+The mechanized instance fixes one cubical object theory from the start. Let $C$ be a CCHM-style cubical core calculus with univalence and Kan composition~\cite{cubical,cchm-hits}. Over~$C$ we study a language of globally acting extensions exported through opaque public signatures. A sealing step exposes only the normalized payload and trace fields of that public signature; the internal derivation that discharged the obligations is hidden behind opacity. The recurrence law proved below is therefore an instantiated theorem about this fixed cubical extension calculus, plus the explicit raw adequacy bridge of \autoref{sec:bridge}; it is not a blanket transfer theorem for every system that carries the label ``cubical.'' Cubical Agda enters in two roles only: as a mechanization environment and as a source of native cubical constructions used to witness the lower-bound phenomena.
 
 \subsection{What is not claimed}
 
 The theorem is deliberately narrower than several nearby slogans. It is not a theorem about arbitrary Cubical Agda programs, and it does not model transparent user-level library growth. It is not a theorem about every cubical type theory or about plain HoTT without the cubical horn-computation package isolated later in the paper. It does not say that arbitrary higher HoTT filler spaces are contractible; the contractible factors below are structural horn-extension packages produced by the fixed sealing calculus. Finally, the quantity~$\mu$ is not a source-code line count. It counts primitive public trace schemas after normalization and opacity, so refactorings that preserve the sealed public interface do not change it.
+
+\begin{table}[t]
+\centering
+\caption{Scope at a glance.}
+\label{tab:scope-at-glance}
+\small
+\begin{tabular}{@{}p{0.44\linewidth}p{0.44\linewidth}@{}}
+\toprule
+In scope & Out of scope \\
+\midrule
+Admissible sealed structural extensions & Ordinary transparent definitions and lemmas \\
+Primitive public structural trace at sealed boundaries & Arbitrary user payload, including higher HIT constructors \\
+Higher structural obligations derived from binary trace by Kan composition and filling & A claim that higher cubical objects or paths vanish \\
+Full-coupling recurrence equality & Sparse or orthogonal growth as Fibonacci equality \\
+The fixed raw adequacy bridge recorded in \autoref{sec:bridge} & A parser or elaborator adequacy theorem for arbitrary Cubical Agda programs \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \subsection{The core thesis}
 
 The exact metatheoretic invariant is the \emph{obligation depth}~$d_{\mathrm{obl}}$; the separate surface-syntactic invariant is the \emph{minimal-signature depth}~$d_\mu$. The thesis of the paper is that, once obligation depth is isolated from minimal-signature elimination, the asymptotic law of integration becomes forced.
 
 \begin{quote}
-In the fixed fully coupled cubical extension calculus of this paper, minimal opaque extension debt obeys a depth-two affine recurrence; under uniform payload size, the shifted sequence is Fibonacci.
+In the fixed fully coupled cubical extension calculus of this paper, primitive public structural trace obeys a depth-two affine recurrence; under uniform payload size, the shifted sequence is Fibonacci.
 \end{quote}
 
 Here ``fully coupled'' refers only to the foundational-core regime just described: admissible extensions are globally acting payloads whose semantics or promoted action is intended to range over the whole active interface, not orthogonal additions that leave most earlier exports untouched. Within that regime, the operative assumption is the scope of the advertised global action, not a prior density axiom. \autoref{thm:canonicity} identifies the primitive active \emph{basis} interface of this fixed extension calculus: native core extensions are constrained by canonicity-preserving totality of the operational semantics, while promoted interface packages are constrained by operational exhaustiveness of the exported global interface. The resulting recurrence is stated over the presentation-invariant minimal opaque cost~$\mu$, not over a chosen surface presentation. In extensional systems with UIP, the obligation depth collapses to~$1$, and under uniform payload size the recurrence is first-order affine. In the fixed cubical extension calculus studied here, the obligation depth is~$2$, and \autoref{thm:higher-elim} gives the separate surface-syntactic bound $d_\mu \leq 2$; after the constant-payload shift the affine law becomes Fibonacci.
 
 \begin{quote}
 \textbf{Main theorem at a glance.}
-In the sealed fully coupled extension calculus over the fixed CCHM-style core~$C$, exact realized obligations stabilize at depth~$2$, primitive trace fields in $\mu$-minimal normalized public signatures have arity at most~$2$, surviving primitive support has a two-layer chronological window, binary data are genuinely necessary in general, and minimal opaque cost satisfies
+Let $F$ be a cubical foundation with substitution-stable Kan composition and filling, and let $A$ be an adequacy package for admissible sealed structural extensions of~$F$. The primitive public structural trace has exact coherence depth~$2$: higher structural integration obligations are derived from binary boundary trace by the Kan structure, while the swap obstruction shows that unary trace alone is insufficient. Instantiating $F$ and~$A$ with the fixed CCHM-style core~$C$ and the raw bridge of \autoref{sec:bridge}, surviving primitive support has a two-layer chronological window.
+
+For a fully coupled sequence of sealed extensions in that instantiated setting, the primitive trace cost satisfies
 \[
   \mu_{n+1} = \mu_n + \mu_{n-1} + \kappa_n + \kappa_{n-1}.
 \]
-Under constant payload size $\kappa_n=c$, this is the shifted Fibonacci recurrence of \autoref{cor:fibonacci}.
+Under the additional constant payload assumption $\kappa_n=c$, this specializes to the shifted Fibonacci recurrence of \autoref{cor:fibonacci}. Sparse and orthogonal footprints remain bounded or sparse regimes, not equality-style Fibonacci laws.
 \end{quote}
 
 \begin{quote}
@@ -1533,9 +1555,9 @@ which is unary data, and second a path over $\mathsf{loop}$ identifying the two 
 Crucially, the HIT signature of $S^2$ contains no constructor of dimension~$3$ or higher. Accordingly, the elimination rule for $S^2$ asks for no primitive input beyond the two point data and the path family~$\gamma$ above. Once the binary path-over-loop has been supplied, any further compatibility condition appears only as a horn-extension problem over the already displayed eliminator boundary. By the same cubical filling argument used above, that higher extension type is computed from the boundary and therefore disappears from every $\mu$-minimal public presentation by \autoref{thm:higher-elim}. Thus the clutching presentation furnishes an exact depth-$2$ witness.
 \end{proof}
 
-\begin{cor}
+\begin{cor}[Exact primitive public structural trace depth two]
 \label{cor:d2}
-In the fixed fully coupled cubical extension calculus considered above, the obligation depth is exactly~$2$.
+In the fixed fully coupled cubical extension calculus considered above, the primitive public structural trace of admissible sealed structural extensions has exact coherence depth~$2$.
 \end{cor}
 
 \begin{proof}
@@ -1567,6 +1589,11 @@ The recurrence theorem is applied below together with the obligation-depth state
   I_{n,\mathrm{bas}}^{(d_{\mathrm{obl}})} = \biguplus_{j=0}^{d_{\mathrm{obl}}-1} S_{\mathrm{bas}}(L_{n-j}).
 \]
 By \autoref{thm:basis-choice}, its cardinality is independent of the basis families used to write the coproduct. Thus the recurrence counts the well-defined irreducible basis cardinality of the active interface rather than the raw number of exported generators. For the initial bootstrap stages before the full window has been populated, we adopt the natural convention that nonexistent earlier layers contribute the empty interface.
+
+\begin{rem}[Indexing convention for the recurrence]
+\label{rem:indexing-convention}
+The stage~$n$ sealed layer is $L_n$, exported by the declaration~$e_n$. Its payload contribution is $\kappa_n$, its primitive public trace contribution is $\mu_n$, and its public basis size is $\kappa_n+\mu_n$. The recurrence for the next layer, $L_{n+1}$, uses the active window ending at $L_n$; in the cubical depth-two case this window is $L_n$ and $L_{n-1}$, so the displayed equality is asserted for $n\geq2$. Bootstrap stages are handled by treating nonexistent earlier layers as the empty interface. Under constant payload $\kappa_n=c$, the shifted trace sequence used in \autoref{cor:fibonacci} is $U_n:=\mu_n+2c$.
+\end{rem}
 
 \subsection{Sparse footprints before the full envelope}
 
@@ -1637,9 +1664,9 @@ $|S_{\mathrm{bas}}(L_{n-j})|=\kappa_{n-j}+\mu_{n-j}$, yielding the displayed
 full-window formula.
 \end{proof}
 
-\subsection{The full-window affine recurrence}
+\subsection{The full-coupling affine recurrence}
 
-\begin{thm}[Full-window affine recurrence for minimal opaque cost]
+\begin{thm}[Full-coupling affine recurrence for primitive trace cost]
 \label{thm:recurrence}
 Let a fully coupled foundation have obligation depth~$d_{\mathrm{obl}}$ realized by a chronological window of size~$d_{\mathrm{obl}}$. Assume the stage~$n+1$ declaration is fully coupled against the whole active window,
 \[
@@ -1647,7 +1674,7 @@ Let a fully coupled foundation have obligation depth~$d_{\mathrm{obl}}$ realized
   =
   I_{n,\mathrm{bas}}^{(d_{\mathrm{obl}})}.
 \]
-Then the minimal opaque cost satisfies the payload-aware affine recurrence
+Then the primitive trace cost, equivalently the minimal opaque cost of the normalized trace signature, satisfies the payload-aware affine recurrence
 \[
   \mu_{n+1} = \sum_{j=0}^{d_{\mathrm{obl}}-1} \bigl(\mu_{n-j} + \kappa_{n-j}\bigr)
   \qquad
@@ -1670,7 +1697,7 @@ footprint. The full-window case of \autoref{lem:window-cardinality} gives
 Substituting yields the claimed affine recurrence.
 \end{proof}
 
-\begin{cor}[Depth-two full-window recurrence]
+\begin{cor}[Depth-two full-coupling recurrence]
 \label{cor:depth-two-window-recurrence}
 In the fixed fully coupled cubical extension calculus, the two-layer chronological window of \autoref{cor:chrono-window} gives, for every stage after the bootstrap layer,
 \[
@@ -2101,14 +2128,17 @@ The formalization establishes the cubical exact upper- and lower-bound metatheor
 \section{Scope and limitations}
 \label{sec:limitations}
 
-The theorem is deliberately tied to the extension calculus of
-\autoref{sec:framework}. A different cubical calculus, a different sealing
-discipline, or a richer raw declaration grammar would require a separate
-normalization theorem, raw bridge, horn-generation theorem, and chronological
-window proof. The paper therefore gives a reproducible theorem about one fixed
-calculus, not a transfer theorem for all cubical foundations.
+The semantic reading of the theorem is conditional on supplying a cubical
+foundation with stable Kan composition/filling together with an adequacy package
+for admissible sealed structural extensions. The artifact instantiates that
+package for the fixed raw extension calculus of \autoref{sec:framework}. A
+different cubical calculus, a different sealing discipline, or a richer raw
+declaration grammar would require a separate normalization theorem, raw bridge,
+horn-generation theorem, and chronological window proof. Thus the paper exposes
+the transfer boundary explicitly instead of claiming an automatic theorem for
+all cubical foundations.
 
-The full-window recurrence is also not a model of ordinary library growth.
+The full-coupling recurrence is also not a model of ordinary library growth.
 Local, orthogonal, or transparent additions are covered only by the sparse
 footprint statement of \autoref{sec:framework} and
 \autoref{thm:recurrence}; they need not fill the whole active interface and need
@@ -2136,13 +2166,15 @@ than mathematical claims silently assumed by the paper.
 \label{sec:conclusion}
 
 The paper isolates \emph{obligation depth}~$d_{\mathrm{obl}}$ as an exact
-metatheoretic invariant of a fixed sealed cubical extension calculus and keeps it
+metatheoretic invariant of admissible sealed structural extensions and keeps it
 separate from the minimal-signature depth~$d_\mu$ governing primitive public
-trace fields. In extensional settings with UIP, exact obligations collapse to
-depth~$1$. In the fully coupled cubical calculus studied here, exact obligations
-stabilize at depth~$2$, higher structural horn factors are eliminated from
-$\mu$-minimal public syntax, and surviving primitive support has a two-layer
-chronological window.
+trace fields. Its semantic formulation is parametric in a cubical foundation
+and an adequacy package; the checked instance is the fixed sealed cubical
+extension calculus studied here. In extensional settings with UIP, exact
+obligations collapse to depth~$1$. In the fully coupled cubical instance, exact
+obligations stabilize at depth~$2$, higher structural horn factors are
+eliminated from $\mu$-minimal public syntax, and surviving primitive support has
+a two-layer chronological window.
 
 That separation is what makes the recurrence transparent. Sealing cost is the
 size of the active primitive interface; the trace principle identifies each prior
