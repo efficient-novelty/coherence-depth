@@ -106,7 +106,10 @@ The fixed raw adequacy bridge recorded in \autoref{sec:bridge} & A parser or ela
 The exact metatheoretic invariant is the \emph{obligation depth}~$d_{\mathrm{obl}}$; the separate surface-syntactic invariant is the \emph{minimal-signature depth}~$d_\mu$. The thesis of the paper is that, once obligation depth is isolated from minimal-signature elimination, the asymptotic law of integration becomes forced.
 
 \begin{quote}
-In the fixed fully coupled cubical extension calculus of this paper, primitive public structural trace obeys a depth-two affine recurrence; under uniform payload size, the shifted sequence is Fibonacci.
+In the fixed cubical extension calculus of this paper, primitive public structural
+trace has exact coherence depth two. For fully coupled sealed sequences, the
+resulting two-layer window gives the depth-two affine recurrence; under uniform
+payload size, the shifted sequence is Fibonacci.
 \end{quote}
 
 Here ``fully coupled'' refers only to the foundational-core regime just described: admissible extensions are globally acting payloads whose semantics or promoted action is intended to range over the whole active interface, not orthogonal additions that leave most earlier exports untouched. Within that regime, the operative assumption is the scope of the advertised global action, not a prior density axiom. \autoref{thm:canonicity} identifies the primitive active \emph{basis} interface of this fixed extension calculus: native core extensions are constrained by canonicity-preserving totality of the operational semantics, while promoted interface packages are constrained by operational exhaustiveness of the exported global interface. The resulting recurrence is stated over the presentation-invariant minimal opaque cost~$\mu$, not over a chosen surface presentation. In extensional systems with UIP, the obligation depth collapses to~$1$, and under uniform payload size the recurrence is first-order affine. In the fixed cubical extension calculus studied here, the obligation depth is~$2$, and \autoref{thm:higher-elim} gives the separate surface-syntactic bound $d_\mu \leq 2$; after the constant-payload shift the affine law becomes Fibonacci.
@@ -119,7 +122,7 @@ For a fully coupled sequence of sealed extensions in that instantiated setting, 
 \[
   \mu_{n+1} = \mu_n + \mu_{n-1} + \kappa_n + \kappa_{n-1}.
 \]
-Under the additional constant payload assumption $\kappa_n=c$, this specializes to the shifted Fibonacci recurrence of \autoref{cor:fibonacci}. Sparse and orthogonal footprints remain bounded or sparse regimes, not equality-style Fibonacci laws.
+Under the additional constant payload assumption $\kappa_n=c$, this specializes to the shifted Fibonacci recurrence of \autoref{cor:fibonacci}. Sparse and orthogonal footprints remain bounded or sparse regimes, not equality-style Fibonacci laws. Thus full coupling enters only at the counting theorem: the exact depth-two claim itself is a primitive-trace statement about admissible sealed structural extensions.
 \end{quote}
 
 \begin{quote}
@@ -192,7 +195,7 @@ Claim & Logical role & Main inputs & Status \\
 \autoref{thm:higher-elim} & elimination from $\mu$-minimal normalized public signatures & \autoref{lem:horn-reduction}, \autoref{thm:computational-replacement}, canonical presentation, and the fixed raw bridge & formalized with bridge \\
 \autoref{lem:telescopic} & recent-history factorization of surviving binary primitive fields & factorization-complete trace export, the formal chronological-window chain, and the fixed raw bridge & formalized with bridge \\
 \autoref{thm:adjunction}, \autoref{thm:clutching} & lower-bound binary obstruction & swap barrier, adjunction coherence, and clutching-family witness & fully formalized \\
-\autoref{thm:recurrence} & affine recurrence for $\mu$ & \autoref{thm:trace}, \autoref{cor:mu-delta}, the sparse/full recurrence package, and the chronological-window package & formalized with bridge \\
+\autoref{thm:recurrence} & affine recurrence for $\mu$ & \autoref{thm:trace}, \autoref{cor:mu-delta}, the sparse/full recurrence package, full coupling, and the chronological-window package & formalized with bridge \\
 \autoref{sec:mechanization} & trusted-boundary audit & theorem-to-Agda correspondence for all rows above & mixed; see \autoref{tab:mechanization-status} \\
 \bottomrule
 \end{tabular}
@@ -1264,7 +1267,7 @@ Since depth~$0$ would mean the absence of any interaction with the current inter
 
 \subsection{\texorpdfstring{Theorem B: the fixed cubical calculus has $d_{\mathrm{obl}}=2$}{Theorem B: the fixed cubical calculus has d obl = 2}}
 
-From now on we specialize the paper's fixed theorem object to the fully coupled cubical extension calculus built over the chosen CCHM-style core~\cite{cubical,cchm-hits}, with univalence and Kan composition available in the ambient operational semantics. The next ingredients are deliberately complementary: an exact stabilization theorem for realized obligation objects gives the bound $d_{\mathrm{obl}} \leq 2$; \autoref{thm:higher-elim} gives the separate syntactic bound $d_\mu \leq 2$ on $\mu$-minimal public presentations; recent-history factorization turns the exact depth bound into a genuine two-step time window; and the explicit swap obstruction together with the clutching family give lower-bound witnesses. Together they determine exact obligation depth~$2$.
+From now on we specialize the paper's fixed theorem object to the cubical extension calculus built over the chosen CCHM-style core~\cite{cubical,cchm-hits}, with univalence and Kan composition available in the ambient operational semantics. Full coupling is not used to state the exact-depth theorem; it is reintroduced in \autoref{sec:scaling} when the two-layer window is counted as an equality-style recurrence. The next ingredients are deliberately complementary: an exact stabilization theorem for realized obligation objects gives the bound $d_{\mathrm{obl}} \leq 2$; \autoref{thm:higher-elim} gives the separate syntactic bound $d_\mu \leq 2$ on $\mu$-minimal public presentations; recent-history factorization turns the exact depth bound into a genuine two-step time window; and the explicit swap obstruction together with the clutching family give lower-bound witnesses. Together they determine exact obligation depth~$2$.
 
 Univalence and cubical computation play different roles in that argument. Univalence supplies the lower-bound source of genuine binary coherence, witnessed below by the swap obstruction and the clutching family. It does not by itself remove primitive arity-$3$ trace fields or produce exact stabilization of realized obligation objects. Those exact-stabilization and elimination statements use the separate cubical horn-computation package together with recent-history factorization.
 
@@ -1326,7 +1329,7 @@ This is a horn-extension type, not a closed-filler type. In cubical type theory,
 \begin{lem}[Syntactic horn reduction for structural integration coherence]
 \label{lem:horn-reduction}
 \label{thm:semantic-horn-reduction}
-Let $X$ be a foundational core candidate sealed at stage~$n+1$ in the fixed fully coupled cubical extension calculus. For every $k \geq 3$ and every boundary $\partial : \Real_{k-1}(X)$, the additional data exposed by adjoining the remote layer $L_{n-k+1}$ are canonically represented by a horn-extension fiber
+Let $X$ be a foundational core candidate sealed at stage~$n+1$ in the fixed cubical extension calculus. For every $k \geq 3$ and every boundary $\partial : \Real_{k-1}(X)$, the additional data exposed by adjoining the remote layer $L_{n-k+1}$ are canonically represented by a horn-extension fiber
 \[
   H_k(\partial)
   :=
@@ -1443,7 +1446,7 @@ Pass from the chosen surface presentation to its canonical normalized trace sign
 
 \begin{cor}
 \label{cor:dmu2}
-In the fixed fully coupled cubical extension calculus, the minimal-signature depth satisfies $d_\mu \leq 2$.
+In the fixed cubical extension calculus, the minimal-signature depth satisfies $d_\mu \leq 2$.
 \end{cor}
 
 \begin{proof}
@@ -1455,7 +1458,7 @@ In the fixed fully coupled cubical extension calculus, the minimal-signature dep
 \begin{thm}[Exact depth-two stabilization of realized obligations]
 \label{thm:upper}
 \label{thm:primitive-depth-upper-bound}
-In the fixed fully coupled cubical extension calculus, for every foundational core candidate~$X$ and every $k \geq 2$ there is a canonical equivalence
+In the fixed cubical extension calculus, for every foundational core candidate~$X$ and every $k \geq 2$ there is a canonical equivalence
 \[
   \Real_k(X) \simeq \Real_2(X).
 \]
@@ -1509,7 +1512,7 @@ The proof of \autoref{thm:upper} is iterative: each passage from depth~$j$ to de
 
 \begin{thm}[Recent-history factorization]
 \label{lem:telescopic}
-In the fixed fully coupled cubical extension calculus, every binary trace field that survives in a $\mu$-minimal normalized public signature at stage~$n+1$ factors through the previous two normalized signatures. More precisely, let $X$ be a candidate added at stage~$n+1$. Once the unary and binary trace data of~$X$ against $L_n$ and $L_{n-1}$ have been fixed, every comparison between $X$ and a remote layer $L_{n-r}$ with $r \geq 2$ is definitionally equal to a term obtained by iterating the factorization through the already exported unary bridges and binary comparison traces of the intervening normalized signatures. Consequently no $\mu$-minimal public signature contains a primitive remote binary field.
+In the fixed cubical extension calculus, every binary trace field that survives in a $\mu$-minimal normalized public signature at stage~$n+1$ factors through the previous two normalized signatures. More precisely, let $X$ be a candidate added at stage~$n+1$. Once the unary and binary trace data of~$X$ against $L_n$ and $L_{n-1}$ have been fixed, every comparison between $X$ and a remote layer $L_{n-r}$ with $r \geq 2$ is definitionally equal to a term obtained by iterating the factorization through the already exported unary bridges and binary comparison traces of the intervening normalized signatures. Consequently no $\mu$-minimal public signature contains a primitive remote binary field.
 This is a chronological factorization statement about surviving primitive fields, not an exact claim that remote binary obligation types are absent from $\Real_2(X)$.
 \end{thm}
 
@@ -1584,7 +1587,7 @@ $\mu$-minimal signature as a primitive field.
 
 \begin{cor}[Two-layer chronological window]
 \label{cor:chrono-window}
-In the fixed fully coupled cubical extension calculus, every sealing step at stage~$n+1$ has chronological window size at most~$2$ in the sense of \autoref{def:chronological-window}: all primitive obligations are generated by the exported traces of $L_n$ and $L_{n-1}$, while comparisons with layers $L_{n-r}$ for $r \geq 2$ factor through those two normalized signatures and are then synthesized by iterated Kan filling. Equivalently, the pair $(L_n,L_{n-1})$ forms a chronological Markov blanket for subsequent sealing.
+In the fixed cubical extension calculus, every sealing step at stage~$n+1$ has chronological window size at most~$2$ in the sense of \autoref{def:chronological-window}: all primitive obligations are generated by the exported traces of $L_n$ and $L_{n-1}$, while comparisons with layers $L_{n-r}$ for $r \geq 2$ factor through those two normalized signatures and are then synthesized by iterated Kan filling. Equivalently, the pair $(L_n,L_{n-1})$ forms a chronological Markov blanket for subsequent sealing.
 \end{cor}
 
 \begin{proof}
@@ -1695,7 +1698,7 @@ Crucially, the HIT signature of $S^2$ contains no constructor of dimension~$3$ o
 \begin{cor}[Exact primitive public structural trace depth two]
 \label{cor:d2}
 \label{thm:cubical-depth-exactly-two}
-In the fixed fully coupled cubical extension calculus considered above, the primitive public structural trace of admissible sealed structural extensions has exact coherence depth~$2$.
+In the fixed cubical extension calculus considered above, the primitive public structural trace of admissible sealed structural extensions has exact coherence depth~$2$.
 \end{cor}
 
 \begin{proof}
@@ -2026,7 +2029,7 @@ The cubical depth-two theorem can now be separated into two abstract layers. The
 
 \begin{thm}[Abstract horn-computational foundation interface]
 \label{thm:horn-interface}
-Let a fully coupled foundation satisfy the following package.
+Let a sealed extension calculus satisfy the following package.
 \begin{enumerate}
   \item For every candidate~$X$, every $k \geq 3$, and every boundary $\partial : \Real_{k-1}(X)$, the depth-$k$ obligation over~$\partial$ is canonically represented by a horn-extension fiber
   \[
@@ -2070,7 +2073,7 @@ Property~(5) is already the required two-layer chronological-window statement fo
 
 \begin{cor}[Cubical instantiation of the horn-computational interface]
 \label{cor:cubical-horn-interface}
-The fixed fully coupled cubical extension calculus over the chosen CCHM-style core satisfies the package of \autoref{thm:horn-interface}. Consequently \autoref{thm:upper}, \autoref{thm:higher-elim}, and \autoref{cor:chrono-window} are the concrete instance of that abstract horn-computational theorem pattern checked in this paper.
+The fixed cubical extension calculus over the chosen CCHM-style core satisfies the package of \autoref{thm:horn-interface}. Consequently \autoref{thm:upper}, \autoref{thm:higher-elim}, and \autoref{cor:chrono-window} are the concrete instance of that abstract horn-computational theorem pattern checked in this paper.
 \end{cor}
 
 \begin{proof}
@@ -2355,10 +2358,11 @@ separate from the minimal-signature depth~$d_\mu$ governing primitive public
 trace fields. Its semantic formulation is parametric in a cubical foundation
 and an adequacy package; the checked instance is the fixed sealed cubical
 extension calculus studied here. In extensional settings with UIP, exact
-obligations collapse to depth~$1$. In the fully coupled cubical instance, exact
+obligations collapse to depth~$1$. In the fixed cubical instance, exact
 obligations stabilize at depth~$2$, higher structural horn factors are
 eliminated from $\mu$-minimal public syntax, and surviving primitive support has
-a two-layer chronological window.
+a two-layer chronological window. Full coupling is then the additional scaling
+hypothesis that turns this window into an equality recurrence.
 
 That separation is what makes the recurrence transparent. Sealing cost is the
 size of the active primitive interface; the trace principle identifies each prior

@@ -564,7 +564,7 @@ Goal: produce the next complete paper/artifact version.
 - [x] Update `scripts/check_coherence_depth_artifact.sh`.
 - [x] Update `scripts/check_paper_map.py`.
 - [x] Update `scripts/audit_postulates.py`.
-- [ ] Update `.github/workflows/artifact-check.yml`.
+- [x] Update `.github/workflows/artifact-check.yml`.
 
 ### Artifact Check Tasks
 
@@ -847,8 +847,8 @@ Goal: produce the next complete paper/artifact version.
 - [ ] Update `.github/workflows/artifact-check.yml`.
 - [ ] Ensure CI runs semantic modules.
 - [ ] Ensure CI runs semantic smoke tests.
-- [ ] Ensure CI runs paper-map audit.
-- [ ] Ensure CI runs postulate audit.
+- [x] Ensure CI runs paper-map audit.
+- [x] Ensure CI runs postulate audit.
 
 ### Audit Scripts
 
@@ -887,7 +887,7 @@ Goal: produce the next complete paper/artifact version.
 
 - [x] Define full coupling as maximal/full dependency footprint.
 - [x] Define sparse coupling separately.
-- [ ] Add sparse example.
+- [x] Add sparse example.
 - [x] State sparse cases as bounded by the full-coupling envelope.
 
 ### Risk: Fibonacci Indexing Mismatch
