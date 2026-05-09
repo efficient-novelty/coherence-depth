@@ -1,0 +1,359 @@
+{
+  "schema": 1,
+  "format": "json-compatible-yaml",
+  "agda_root": "agda",
+  "paper": "paper/1_coherence_depth.tex",
+  "trusted_external_prefixes": [
+    "Agda.",
+    "Cubical."
+  ],
+  "entry_points": [
+    "Everything.agda",
+    "PEN.agda",
+    "Test/MetatheorySmoke.agda",
+    "Test/PresentationInvariance/Smoke.agda",
+    "Geometry/Clutching.agda",
+    "Test/ClutchingSmoke.agda",
+    "Test/Fibonacci.agda"
+  ],
+  "theorems": [
+    {
+      "paper_claim": "Fixed raw bridge package",
+      "paper_labels": ["rem:bridge-target"],
+      "agda_modules": [
+        "Metatheory/RawStructuralSyntax.agda",
+        "Metatheory/RawStructuralTyping.agda",
+        "Metatheory/SurfaceNormalizationBridge.agda",
+        "Metatheory/SurfaceToHornImage.agda",
+        "Metatheory/CanonicalTelescope.agda",
+        "Metatheory/TraceCostNormalForm.agda",
+        "Metatheory/PresentationEquivalence.agda",
+        "Metatheory/MuInvariance.agda"
+      ],
+      "agda_theorems": [
+        "raw-extension-payload-fields",
+        "act-clause-has-unary-support",
+        "normalizeRawExtension",
+        "raw-extension-normalizes-to-canonical-signature",
+        "normalization-respects-presentation-equivalence",
+        "normalized-signature-matches-counted-interface",
+        "surface-to-horn-normal-form",
+        "horn-image-complete-for-structural-clauses",
+        "raw-structural-normalizes-to-horn",
+        "canonical-telescope-cardinality",
+        "trace-cost-normal-form-cardinality",
+        "PresentationStep",
+        "mu-invariant-under-presentation-equivalence"
+      ],
+      "status": "fully formalized for the fixed raw extension calculus",
+      "uses_bridge": false,
+      "trusted_inputs": ["Agda kernel", "Cubical library", "fixed raw syntax"]
+    },
+    {
+      "paper_claim": "Canonical presentation and mu invariance",
+      "paper_labels": ["prop:canonical-presentation"],
+      "agda_modules": [
+        "Metatheory/CanonicalTelescope.agda",
+        "Metatheory/TraceCostNormalForm.agda",
+        "Metatheory/PresentationEquivalence.agda",
+        "Metatheory/MuInvariance.agda"
+      ],
+      "agda_theorems": [
+        "canonical-telescope-cardinality",
+        "trace-cost-normal-form-cardinality",
+        "primitive-trace-subtelescope",
+        "derived-trace-subtelescope",
+        "presentation-equivalence-preserves-primitive-cost",
+        "mu-preserved-by-presentation-step",
+        "mu-invariant-under-presentation-equivalence"
+      ],
+      "status": "fully formalized",
+      "uses_bridge": false,
+      "trusted_inputs": ["Agda kernel", "Cubical library", "Core/Nat.agda"]
+    },
+    {
+      "paper_claim": "Transparent user growth",
+      "paper_labels": ["prop:transparent"],
+      "agda_modules": ["Metatheory/InterfaceCalculus.agda"],
+      "agda_theorems": [
+        "transparent-growth-keeps-library-state",
+        "transparent-definitions-preserve-active-interface",
+        "transparent-definitions-have-zero-integration-latency",
+        "transparent-user-level-code-lies-outside-the-recurrence"
+      ],
+      "status": "fully formalized",
+      "uses_bridge": false,
+      "trusted_inputs": ["Agda kernel", "Cubical library"]
+    },
+    {
+      "paper_claim": "Basis choice and active-basis contract",
+      "paper_labels": ["thm:basis-choice"],
+      "agda_modules": [
+        "Metatheory/FiniteInterfaceBasis.agda",
+        "Metatheory/ActiveBasisContract.agda"
+      ],
+      "agda_theorems": [
+        "basis-families-exist",
+        "basis-family-cardinality-invariant",
+        "basis-action-equivalence",
+        "global-action-totality-implies-active-basis-contract",
+        "active-basis-contract-entails-density",
+        "coverage-alone-does-not-imply-depth-two-window",
+        "coverage-alone-does-not-imply-fibonacci"
+      ],
+      "status": "counted active-basis counterpart formalized",
+      "uses_bridge": true,
+      "trusted_inputs": ["Agda kernel", "Cubical library", "counted active interface"]
+    },
+    {
+      "paper_claim": "Canonicity, trace principle, and mu-delta bridge",
+      "paper_labels": ["thm:canonicity", "thm:trace", "cor:mu-delta"],
+      "agda_modules": [
+        "Metatheory/CanonicityDensity.agda",
+        "Metatheory/TracePrinciple.agda",
+        "Metatheory/InterfaceCalculus.agda",
+        "Metatheory/SurfaceNormalizationBridge.agda",
+        "Metatheory/TraceCostNormalForm.agda",
+        "Metatheory/MuInvariance.agda"
+      ],
+      "agda_theorems": [
+        "CanonicityDensityTheorem",
+        "global-admissibility-forces-maximal-interface-density",
+        "IntegrationTracePrinciple",
+        "public-counting-normal-form",
+        "integration-trace-principle",
+        "ExplicitSealedLayer",
+        "normalized-signature-matches-counted-interface",
+        "mu-of-trace-cost-normal-form"
+      ],
+      "status": "formalized through the fixed raw bridge",
+      "uses_bridge": true,
+      "trusted_inputs": ["Agda kernel", "Cubical library", "fixed raw bridge"]
+    },
+    {
+      "paper_claim": "Arity dimension and extensional collapse",
+      "paper_labels": ["lem:arity-dimension", "thm:extensional"],
+      "agda_modules": [
+        "Metatheory/Obligations.agda",
+        "Metatheory/Extensional.agda"
+      ],
+      "agda_theorems": [
+        "historical-arity-forces-cell-dimension",
+        "irreducible-obligation-requires-cell",
+        "UIP-forces-depth-1",
+        "history-truncates-to-one"
+      ],
+      "status": "fully formalized",
+      "uses_bridge": false,
+      "trusted_inputs": ["Agda kernel", "Cubical library"]
+    },
+    {
+      "paper_claim": "Horn reduction, exact upper bound, and chronological window",
+      "paper_labels": [
+        "lem:horn-reduction",
+        "thm:upper",
+        "cor:contractible-factor",
+        "cor:chrono-window"
+      ],
+      "agda_modules": [
+        "Metatheory/KanSubsumption.agda",
+        "Metatheory/UpperBound.agda",
+        "Metatheory/ChronologicalWindow.agda"
+      ],
+      "agda_theorems": [
+        "HornExtensionFiber",
+        "structural-integration-horn-reduction",
+        "remote-layer-obligation-derived",
+        "structural-obligation-set-equivalence",
+        "structural-stabilizes-at-two",
+        "structural-obligation-contractible-factorization",
+        "contractible-remote-factor-contractible",
+        "primitive-obligations-factor-through-last-two",
+        "two-layer-chronological-window",
+        "chronological-markov-blanket"
+      ],
+      "status": "fully formalized",
+      "uses_bridge": false,
+      "trusted_inputs": ["Agda kernel", "Cubical library", "CCHM-style horn operations"]
+    },
+    {
+      "paper_claim": "Higher elimination, factorization completeness, and horn interface",
+      "paper_labels": [
+        "thm:factorization-complete",
+        "thm:higher-elim",
+        "lem:telescopic",
+        "thm:horn-interface",
+        "cor:cubical-horn-interface"
+      ],
+      "agda_modules": [
+        "Metatheory/KanSubsumption.agda",
+        "Metatheory/UpperBound.agda",
+        "Metatheory/ChronologicalWindow.agda",
+        "Metatheory/ComputationalReplacement.agda",
+        "Metatheory/SurfaceToHornImage.agda",
+        "Metatheory/TwoDFoundations.agda"
+      ],
+      "agda_theorems": [
+        "TelescopicSubsumptionView",
+        "telescopic-subsumption",
+        "telescopic-remote-comparison-derived",
+        "primitive-obligations-factor-through-last-two",
+        "higher-arity-fields-disappear-from-minimal-signature",
+        "higher-arity-computational-replacement",
+        "higher-structural-fields-derived",
+        "higher-raw-structural-traces-derived",
+        "structural-primitive-eliminates-above-two",
+        "cubical-depth-two-law-for-2d-foundations"
+      ],
+      "status": "formalized through the fixed raw bridge",
+      "uses_bridge": true,
+      "trusted_inputs": ["Agda kernel", "Cubical library", "fixed raw bridge"]
+    },
+    {
+      "paper_claim": "Computational replacement",
+      "paper_labels": ["thm:computational-replacement"],
+      "agda_modules": [
+        "Metatheory/ComputationalReplacement.agda",
+        "Metatheory/MuInvariance.agda"
+      ],
+      "agda_theorems": [
+        "CanonicalTraceSignature",
+        "TracePresentation",
+        "computational-replacement-preserves-canonical-presentation",
+        "higher-arity-fields-disappear-from-minimal-signature",
+        "higher-arity-computational-replacement",
+        "computational-replacement-preserves-mu"
+      ],
+      "status": "fully formalized on explicit canonical trace presentations",
+      "uses_bridge": true,
+      "trusted_inputs": ["Agda kernel", "Cubical library", "canonical trace presentation interface"]
+    },
+    {
+      "paper_claim": "Binary lower bounds and exact depth two",
+      "paper_labels": [
+        "thm:adjunction",
+        "rem:adjunction-reading",
+        "thm:clutching",
+        "cor:d2"
+      ],
+      "agda_modules": [
+        "Metatheory/AdjunctionBarrier.agda",
+        "Geometry/Clutching.agda",
+        "Metatheory/ExactDepth.agda"
+      ],
+      "agda_theorems": [
+        "explicit-binary-sealing-obstruction",
+        "triangle-identity-corollary",
+        "adjunction-barrier",
+        "clutching-family-theorem",
+        "hopf-binary-clutching-nontrivial",
+        "clutching-horn-extension-fiber-contractible",
+        "structural-coherence-depth-exactly-two",
+        "structural-chronological-window-size-exactly-two",
+        "cubical-coherence-depth-exactly-two",
+        "cubical-chronological-window-size-exactly-two"
+      ],
+      "status": "fully formalized",
+      "uses_bridge": false,
+      "trusted_inputs": ["Agda kernel", "Cubical library", "univalence", "Cubical HITs"]
+    },
+    {
+      "paper_claim": "Abstract 2D-foundations wrappers",
+      "paper_labels": ["thm:2d-foundations", "cor:2ltt-instantiation"],
+      "agda_modules": [
+        "Metatheory/TwoDFoundations.agda",
+        "Metatheory/TwoLTTFoundations.agda"
+      ],
+      "agda_theorems": [
+        "PrimitiveWindow2DFoundation",
+        "primitive-depth-two-law-for-2d-foundations",
+        "chronological-window-size-two-for-2d-foundations",
+        "FullyCoupled2DFoundation",
+        "depth-two-law-for-2d-foundations",
+        "constant-payload-depth-two-law",
+        "cubical-primitive-window-2d-foundation",
+        "cubical-primitive-depth-two-law-for-2d-foundations",
+        "cubical-depth-two-law-for-2d-foundations",
+        "two-level-language",
+        "two-level-primitive-window-2d-foundation",
+        "two-level-primitive-depth-two-law-for-2d-foundations",
+        "two-level-2d-foundation",
+        "two-level-depth-two-law-for-2d-foundations",
+        "two-level-window-size-two-for-2d-foundations"
+      ],
+      "status": "fully formalized",
+      "uses_bridge": false,
+      "trusted_inputs": ["Agda kernel", "Cubical library", "abstract 2D foundation package"]
+    },
+    {
+      "paper_claim": "Recurrence and arithmetic specializations",
+      "paper_labels": ["thm:recurrence", "cor:d1", "cor:fibonacci"],
+      "agda_modules": [
+        "Metatheory/UniversalRecurrence.agda",
+        "Metatheory/SparseDependencyRecurrence.agda",
+        "Metatheory/FullCouplingEnvelope.agda",
+        "Core/DepthOneAffine.agda",
+        "Core/AffineRecurrence.agda"
+      ],
+      "agda_theorems": [
+        "WindowedRecurrenceContext",
+        "ChronologicalRecurrenceContext",
+        "UniversalAffineRecurrence",
+        "universal-affine-recurrence",
+        "universal-affine-recurrence-from-coherence",
+        "sparse-windowed-recurrence",
+        "transparent-growth-zero-footprint",
+        "orthogonal-extension-below-full-envelope",
+        "full-coupling-envelope",
+        "full-coupling-specializes-sparse-recurrence",
+        "full-coupling-depth-two-affine-law",
+        "depth1-affine-growth",
+        "Delta-depth1-closed",
+        "tau-depth1-closed",
+        "Delta-bootstrap",
+        "U-bootstrap-closed",
+        "tau-bootstrap-closed"
+      ],
+      "status": "formalized; Fibonacci is the full-coupling endpoint of sparse recurrence",
+      "uses_bridge": true,
+      "trusted_inputs": ["Agda kernel", "Cubical library", "Core/Nat.agda", "fixed raw bridge"]
+    },
+    {
+      "paper_claim": "Refactoring invariance",
+      "paper_labels": ["cor:refactoring"],
+      "agda_modules": ["Metatheory/Refactoring.agda"],
+      "agda_theorems": [
+        "historical-support-correspondence",
+        "refactoring-invariance"
+      ],
+      "status": "fully formalized",
+      "uses_bridge": false,
+      "trusted_inputs": ["Agda kernel", "Cubical library"]
+    },
+    {
+      "paper_claim": "Case-study audit data",
+      "paper_labels": ["sec:mechanization"],
+      "agda_modules": [
+        "CaseStudies/UniverseExtension.agda",
+        "CaseStudies/GlobalModality.agda",
+        "CaseStudies/PromotedInterface.agda",
+        "CaseStudies/SparseDatatype.agda"
+      ],
+      "agda_theorems": [
+        "universe-extension-summary",
+        "universe-refactored-presentation-same-mu",
+        "global-modality-summary",
+        "promoted-interface-summary",
+        "transparent-lemma-zero-footprint",
+        "coverage-does-not-prove-window",
+        "coverage-does-not-prove-fibonacci",
+        "sparse-datatype-summary",
+        "sparse-datatype-recurrence",
+        "sparse-datatype-below-full-envelope"
+      ],
+      "status": "fully formalized and audited",
+      "uses_bridge": false,
+      "trusted_inputs": ["Agda kernel", "Cubical library", "YAML case-study fixtures"]
+    }
+  ]
+}

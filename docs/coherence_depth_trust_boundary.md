@@ -6,16 +6,43 @@ This document records what the current Cubical Agda artifact checks directly,
 what is read through the paper-level bridge in `1_coherence_depth.tex`, and
 which files are outside the theorem-facing trust boundary.
 
-The current checked core is the existing coherence-depth theorem package. The
-raw surface bridge requested in `paper_improvement_plan.md` is still future
-work and starts with `Metatheory/CanonicalTelescope.agda`.
+The current checked core is the coherence-depth theorem package, the fixed raw
+surface bridge, the machine-readable theorem map, and the transitive
+theorem-facing import-closure audit. The artifact command is:
+
+```bash
+bash scripts/check_coherence_depth_artifact.sh
+```
+
+or, when GNU make is available:
+
+```bash
+make artifact-check
+```
+
+The same command is wired into the hosted artifact workflow:
+
+```text
+.github/workflows/artifact-check.yml
+```
+
+That workflow installs Agda 2.8.0, checks out the pinned Cubical library commit,
+registers both local Cubical library names (`cubical` and `cubical-0.9`), and
+runs `bash scripts/check_coherence_depth_artifact.sh`. A passing hosted run for
+the final archival commit is still publication evidence, not a separate
+mathematical assumption.
 
 ## Trusted Base
 
 - Agda 2.8.0 with Cubical support.
-- The Cubical library declared by `agda/pen.agda-lib`.
+- The Cubical library declared by `agda/pen.agda-lib` and the artifact-specific
+  root library file `coherence-depth.agda-lib`.
+- Local dependency evidence: Agda 2.8.0 and Cubical Agda `cubical-0.9` at commit
+  `b150186d2544e7efeddd31e5d14a8b9ecbb100f7`.
 - Repository-local arithmetic in `agda/Core/Nat.agda`.
 - The checked theorem-facing modules listed below.
+- The machine-readable theorem map `paper-map.yaml`.
+- The scripts `scripts/check_paper_map.py` and `scripts/audit_postulates.py`.
 
 Known warning class: several current theorem modules type-check with Cubical
 Agda `UnsupportedIndexedMatch` warnings. These warnings should remain visible
@@ -47,16 +74,23 @@ shown irrelevant for the bridge layer.
 | `cor:d1` | `Core/DepthOneAffine.agda` | `depth1-affine-growth`, `Delta-depth1-closed`, `tau-depth1-closed` | yes | yes, for `mu` reading |
 | `cor:fibonacci` | `Core/AffineRecurrence.agda` | `Delta-bootstrap`, `U-bootstrap-closed`, `tau-bootstrap-closed` | yes | yes, for `mu` reading |
 
+## Machine-Readable Checks
+
+- `paper-map.yaml` records paper claims, paper labels, Agda module paths, Agda
+  theorem names, status, bridge use, and trusted inputs.
+- `scripts/check_paper_map.py paper-map.yaml` verifies that all paper labels,
+  Agda files, and theorem names referenced by the map exist.
+- `scripts/audit_postulates.py agda paper-map.yaml` computes the transitive
+  import closure of the theorem-facing modules and reports, for each local
+  module, whether it uses `postulate`, declares an Agda `primitive` block,
+  contains `--safe`, or imports outside the repository-local root. Trusted
+  external imports are limited to `Agda.*` and `Cubical.*`.
+
 ## Outside The Current Theorem-Facing Boundary
 
-- The three-part raw bridge isolated by `rem:bridge-target` in the paper:
-  raw declarations to canonical trace presentations, presentation invariance
-  for raw-normalized signatures, and matching canonical signatures with the
-  counted interface.
-- The planned modules `SurfaceToHornImage.agda`, `MuInvariance.agda`,
-  `ActiveBasisContract.agda`, `SparseDependencyRecurrence.agda`, and
-  `FullCouplingEnvelope.agda`.
-- Auxiliary bridge payload harnesses such as `agda/Test/BridgePayloadContract.agda`;
-  that file intentionally contains postulated contract predicates and is not
-  imported by `PEN.agda` or the theorem smoke tests.
-
+- A parser or elaboration theorem for arbitrary Cubical Agda programs.
+- Transfer of the depth-two theorem to all cubical calculi or arbitrary HoTT.
+- Auxiliary bridge payload harnesses such as
+  `agda/Test/BridgePayloadContract.agda`; that file intentionally contains
+  postulated contract predicates and is not imported by `PEN.agda`,
+  `Everything.agda`, or the theorem smoke tests.

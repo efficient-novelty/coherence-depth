@@ -105,6 +105,30 @@ run_case_study_audit() {
   fi
 }
 
+run_python_check() {
+  local label="$1"
+  shift
+  echo "==> python $label"
+  if command -v python3 >/dev/null 2>&1; then
+    python3 "$@"
+  elif command -v python >/dev/null 2>&1; then
+    python "$@"
+  elif command -v powershell.exe >/dev/null 2>&1; then
+    local win_root
+    win_root="$(to_windows_path "$ROOT")"
+    local command="Set-Location -LiteralPath '$win_root'; python"
+    local arg
+    for arg in "$@"; do
+      command="$command '$arg'"
+    done
+    powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "$command"
+  else
+    echo "ERROR: python not found on PATH and powershell.exe fallback unavailable" >&2
+    return 127
+  fi
+}
+
+run_agda "Everything.agda"
 run_agda "PEN.agda"
 run_agda "Test/MetatheorySmoke.agda"
 run_agda "Test/PresentationInvariance/Smoke.agda"
@@ -146,6 +170,10 @@ if [ -f "$AGDA_DIR/Test/SparseRecurrenceSmoke.agda" ]; then
 fi
 
 require_no_postulates
+run_python_check "scripts/check_paper_map.py paper-map.yaml" \
+  "$ROOT/scripts/check_paper_map.py" "$ROOT/paper-map.yaml"
+run_python_check "scripts/audit_postulates.py agda paper-map.yaml" \
+  "$ROOT/scripts/audit_postulates.py" "$AGDA_DIR" "$ROOT/paper-map.yaml"
 run_case_study_audit
 
 echo "coherence-depth artifact check passed"

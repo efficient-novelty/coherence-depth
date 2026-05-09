@@ -9,6 +9,7 @@ This index gives the stable names to search for when checking the Agda side of
 
 ```bash
 cd agda
+agda --transliterate Everything.agda
 agda --transliterate PEN.agda
 agda --transliterate Test/MetatheorySmoke.agda
 agda --transliterate Test/PresentationInvariance/Smoke.agda
@@ -39,6 +40,8 @@ agda --transliterate Geometry/Clutching.agda
 agda --transliterate Test/ClutchingSmoke.agda
 agda --transliterate Test/Fibonacci.agda
 cd ..
+python scripts/check_paper_map.py paper-map.yaml
+python scripts/audit_postulates.py agda paper-map.yaml
 python scripts/coherence_depth_audit.py runs/coherence_depth_case_studies
 ./scripts/check_coherence_depth_artifact.sh
 ```
