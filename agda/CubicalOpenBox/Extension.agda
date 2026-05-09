@@ -46,14 +46,6 @@ OpenExt :
   Type ℓ
 OpenExt side base B = Σ (Lid side base B) (Filler side base B)
 
-canonicalLid :
-  {A : Type ℓ} {φ : I} →
-  (side : I → Partial φ A) →
-  (base : A [ φ ↦ side i0 ]) →
-  (B : OpenBox side base) →
-  Lid side base B
-canonicalLid side base B = hcomp side (outS base)
-
 canonicalFillSub :
   {A : Type ℓ} {φ : I} →
   (side : I → Partial φ A) →
@@ -63,6 +55,14 @@ canonicalFillSub :
   CompatibleBoundaryFamily side base B i
 canonicalFillSub side base B i =
   inS (hfill side base i)
+
+canonicalLid :
+  {A : Type ℓ} {φ : I} →
+  (side : I → Partial φ A) →
+  (base : A [ φ ↦ side i0 ]) →
+  (B : OpenBox side base) →
+  Lid side base B
+canonicalLid side base B = hcomp side (outS base)
 
 canonicalFill :
   {A : Type ℓ} {φ : I} →

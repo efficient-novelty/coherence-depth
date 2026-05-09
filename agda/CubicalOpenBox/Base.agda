@@ -94,22 +94,6 @@ OpenBoxFamily :
   I → Type ℓ
 OpenBoxFamily {A = A} side base B i = A
 
-Lid :
-  {A : Type ℓ} {φ : I} →
-  (side : I → Partial φ A) →
-  (base : A [ φ ↦ side i0 ]) →
-  OpenBox side base →
-  Type ℓ
-Lid side base B = OpenBoxFamily side base B i1
-
-BaseFace :
-  {A : Type ℓ} {φ : I} →
-  (side : I → Partial φ A) →
-  (base : A [ φ ↦ side i0 ]) →
-  OpenBox side base →
-  Type ℓ
-BaseFace side base B = OpenBoxFamily side base B i0
-
 CompatibleLid :
   {A : Type ℓ} {φ : I} →
   (side : I → Partial φ A) →
@@ -127,3 +111,19 @@ CompatibleBaseFace :
   SSet ℓ
 CompatibleBaseFace side base B =
   CompatibleBoundaryFamily side base B i0
+
+Lid :
+  {A : Type ℓ} {φ : I} →
+  (side : I → Partial φ A) →
+  (base : A [ φ ↦ side i0 ]) →
+  OpenBox side base →
+  Type ℓ
+Lid side base B = OpenBoxFamily side base B i1
+
+BaseFace :
+  {A : Type ℓ} {φ : I} →
+  (side : I → Partial φ A) →
+  (base : A [ φ ↦ side i0 ]) →
+  OpenBox side base →
+  Type ℓ
+BaseFace side base B = OpenBoxFamily side base B i0

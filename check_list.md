@@ -10,8 +10,8 @@ Tracking checklist distilled from `paper_improvement_plan.md`. Keep detailed rat
 - [ ] Define `Lid` as the compatible subtype at `i1`.
 - [ ] Define `Filler` as a path through compatible elements.
 - [x] Define `OpenExt` as the total space of lid plus filler.
-- [ ] Add an optional finite `FaceSystem` layer if useful for paper exposition.
-- [ ] Compile finite face systems into a single `Partial` boundary.
+- [x] Add an optional finite `FaceSystem` layer if useful for paper exposition.
+- [x] Compile finite face systems into a single `Partial` boundary.
 - [x] State the explicit open-box definition in the paper.
 - [x] Prove the intuitive missing-face/filler package equivalent to explicit `OpenExt`.
 - [x] Prove that the missing-face/open-extension equivalence is substitution-natural.
@@ -28,7 +28,7 @@ Tracking checklist distilled from `paper_improvement_plan.md`. Keep detailed rat
 
 ## Open-box modules
 
-- [ ] Add `CubicalOpenBox/FaceSystem.agda` if using explicit finite faces.
+- [x] Add `CubicalOpenBox/FaceSystem.agda` if using explicit finite faces.
 - [x] Add `CubicalOpenBox/Explicit.agda`.
 - [x] Add `CubicalOpenBox/Center.agda`.
 - [x] Add `CubicalOpenBox/Contractible.agda`.
@@ -48,7 +48,7 @@ Tracking checklist distilled from `paper_improvement_plan.md`. Keep detailed rat
 - [x] Define `HornSemanticDerivation`.
 - [x] Include lower boundary data in `HornSemanticDerivation`.
 - [x] Construct an explicit open box from lower boundary data.
-- [ ] Relate the horn package to `OpenExt`.
+- [x] Relate the horn package to `OpenExt`.
 - [x] Decode the canonical open-box center into the field type.
 - [x] Prove the replacement term only uses lower public fields plus cubical Kan operations.
 - [x] Prove replacement soundness.
@@ -56,7 +56,7 @@ Tracking checklist distilled from `paper_improvement_plan.md`. Keep detailed rat
 
 ## Cubical horn elaboration
 
-- [ ] Prove `structuralHornElaboration`.
+- [x] Prove `structuralHornElaboration`.
 - [ ] Handle remote comparison horn elaboration.
 - [ ] Build the cubical family for each structural horn.
 - [ ] Build the visible-face cofibration for each structural horn.
@@ -100,16 +100,16 @@ Tracking checklist distilled from `paper_improvement_plan.md`. Keep detailed rat
 ## Artifact refactor
 
 - [x] Update `Metatheory/RawStructuralSyntax.agda`.
-- [ ] Add or update `Metatheory/StructuralBoundary.agda`.
-- [ ] Add or update `Metatheory/HornOpenBox.agda`.
-- [ ] Add or update `Metatheory/HornElaboration.agda`.
+- [x] Add or update `Metatheory/StructuralBoundary.agda`.
+- [x] Add or update `Metatheory/HornOpenBox.agda`.
+- [x] Add or update `Metatheory/HornElaboration.agda`.
 - [x] Add or update `Metatheory/DerivedTrace.agda`.
 - [x] Add or update `Metatheory/ReplaceDerivedField.agda`.
 - [x] Add or update `Metatheory/NormalizationDerived.agda`.
 - [ ] Update `Surface/Modal/Adequacy.agda`.
 - [ ] Ensure SMod explicit horn fields elaborate through `HornElaboration`.
 - [x] Ensure SMod no longer assigns derivedness by tag.
-- [ ] Run a `derived` search and verify it appears only in derivation records, witnessed public statuses, theorem names, or prose comments.
+- [x] Run a `derived` search and verify it appears only in derivation records, witnessed public statuses, theorem names, or prose comments.
 
 ## Negative tests
 
@@ -143,7 +143,7 @@ Tracking checklist distilled from `paper_improvement_plan.md`. Keep detailed rat
 - [x] Insert theorem/proof draft C for exact stabilization.
 - [x] Insert theorem/proof draft D for derivedness-as-theorem.
 - [x] Insert theorem/proof draft E for minimal-signature elimination.
-- [ ] Label any remaining abstraction as an adequacy assumption.
+- [x] Label any remaining abstraction as an adequacy assumption.
 
 ## Acceptance gates
 

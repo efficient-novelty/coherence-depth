@@ -20,6 +20,7 @@ import Semantics.FibonacciScaling
 
 import CubicalOpenBox.Base
 import CubicalOpenBox.Explicit
+import CubicalOpenBox.FaceSystem
 import CubicalOpenBox.Extension
 import CubicalOpenBox.Center
 import CubicalOpenBox.Contractible
@@ -27,6 +28,9 @@ import CubicalOpenBox.MissingFaceEquiv
 import CubicalOpenBox.Substitution
 import Metatheory.StructuralHornShape
 import Metatheory.StructuralHornToOpenBox
+import Metatheory.StructuralBoundary
+import Metatheory.HornOpenBox
+import Metatheory.HornElaboration
 import Metatheory.DerivedTrace
 import Metatheory.ReplaceDerivedField
 import Metatheory.NormalizationDerived

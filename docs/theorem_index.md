@@ -17,6 +17,10 @@ agda --transliterate Metatheory/PresentationEquivalence.agda
 agda --transliterate Metatheory/MuInvariance.agda
 agda --transliterate Metatheory/RawStructuralSyntax.agda
 agda --transliterate Metatheory/RawStructuralTyping.agda
+agda --transliterate CubicalOpenBox/FaceSystem.agda
+agda --transliterate Metatheory/StructuralBoundary.agda
+agda --transliterate Metatheory/HornOpenBox.agda
+agda --transliterate Metatheory/HornElaboration.agda
 agda --transliterate Metatheory/SurfaceNormalizationBridge.agda
 agda --transliterate Metatheory/SurfaceToHornImage.agda
 agda --transliterate Metatheory/FiniteInterfaceBasis.agda
@@ -205,6 +209,10 @@ vocabulary `mechanized`, `conditional-on-adequacy-package`, `paper-only`, and
 | `typed-role-support-depth-matches-raw` | `Metatheory.RawStructuralTyping` | typed role support depth agrees with the raw clause support depth |
 | `algebraic-field-is-payload-not-structural-trace` | `Metatheory.RawStructuralTyping` | higher user operations are algebraic payload, not structural trace projections |
 | `naked-higher-face-rejected-or-packaged` | `Metatheory.RawStructuralTyping` | admissible higher structural material is either rejected or packaged as a horn boundary |
+| `FaceSystem` / `compileFaceSystem` | `CubicalOpenBox.FaceSystem` | finite visible-face systems with an explicit compiled `Partial` boundary |
+| `StructuralBoundary` | `Metatheory.StructuralBoundary` | lower-boundary availability package for raw structural horn clauses |
+| `HornOpenBoxPackage` / `identityHornPackageOpenExt` | `Metatheory.HornOpenBox` | explicit open-box package and missing-face/OpenExt bridge witness |
+| `HornElaborationInput` / `structuralHornElaboration` | `Metatheory.HornElaboration` | build a witnessed `HornSemanticDerivation` from boundary/open-box/replacement evidence |
 | `CanonicalNormalizedSignature` | `Metatheory.SurfaceNormalizationBridge` | canonical payload plus trace normal form for an admissible raw extension |
 | `normalizeRawExtension` | `Metatheory.SurfaceNormalizationBridge` | normalize the fixed raw extension calculus to a canonical counted signature |
 | `raw-extension-elaborates-to-candidate` | `Metatheory.SurfaceNormalizationBridge` | package an admissible raw extension as a theorem-facing candidate |

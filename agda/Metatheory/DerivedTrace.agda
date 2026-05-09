@@ -4,6 +4,7 @@ module Metatheory.DerivedTrace where
 
 open import Agda.Primitive using (Level; lsuc)
 open import Cubical.Foundations.Prelude
+open import Cubical.Foundations.Isomorphism using (Iso)
 
 open import CubicalOpenBox.Base
 open import CubicalOpenBox.Extension
@@ -66,6 +67,16 @@ record HornSemanticDerivation
     isHornClause : rawStructuralClauseKind f ≡ horn-kind
     boundaryAvailable : Type ℓ
     semanticOpenBox : StructuralOpenBox ℓ
+    packageOpenExtEquiv :
+      Iso
+        (OpenExt
+          (structuralSide semanticOpenBox)
+          (structuralBase semanticOpenBox)
+          (structuralOpenBoxAsOpenBox semanticOpenBox))
+        (OpenExt
+          (structuralSide semanticOpenBox)
+          (structuralBase semanticOpenBox)
+          (structuralOpenBoxAsOpenBox semanticOpenBox))
     derivedTrace : DerivedTrace Γlower f
     openBoxCenter :
       OpenExt
