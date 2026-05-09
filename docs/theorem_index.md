@@ -45,6 +45,7 @@ agda --transliterate CaseStudies/HigherPayload.agda
 agda --transliterate Test/SurfaceBridgeSmoke.agda
 agda --transliterate Test/ActiveBasisExamples.agda
 agda --transliterate Test/SparseRecurrenceSmoke.agda
+agda --transliterate Test/SemanticFixtureSmoke.agda
 agda --transliterate Test/HigherPayloadSmoke.agda
 agda --transliterate Test/SemanticDepthSmoke.agda
 agda --transliterate Test/FibonacciScalingSmoke.agda
@@ -234,7 +235,7 @@ cover these groups:
 | presentation and `mu` invariance | `presentation-step-surface`, `presentation-equivalence-surface`, `mu-presentation-equivalence-theorem`, `computational-replacement-mu-theorem` | `Metatheory.PresentationEquivalence`, `Metatheory.MuInvariance` |
 | raw structural bridge | `raw-extension-surface`, `admissible-raw-extension-surface`, `raw-extension-normalization-theorem`, `raw-structural-normalizes-to-horn-theorem` | `Metatheory.RawStructuralSyntax`, `Metatheory.RawStructuralTyping`, `Metatheory.SurfaceNormalizationBridge`, `Metatheory.SurfaceToHornImage` |
 | active-basis naturality | `finite-active-interface-surface`, `global-action-totality-theorem`, `active-basis-density-theorem`, `coverage-fibonacci-noncircularity-example` | `Metatheory.FiniteInterfaceBasis`, `Metatheory.GlobalActionSemantics`, `Metatheory.ActiveBasisContract` |
-| sparse/full recurrence | `sparse-windowed-recurrence-theorem`, `transparent-growth-zero-footprint-theorem`, `full-coupling-specializes-sparse-recurrence-theorem`, `full-coupling-depth-two-affine-law-theorem` | `Metatheory.SparseDependencyRecurrence`, `Metatheory.FullCouplingEnvelope` |
+| sparse/full recurrence and fixtures | `sparse-windowed-recurrence-theorem`, `transparent-growth-zero-footprint-theorem`, `full-coupling-specializes-sparse-recurrence-theorem`, `full-coupling-depth-two-affine-law-theorem`, `sparse-datatype-fixture-classification-smoke`, `transparent-lemma-zero-latency-smoke` | `Metatheory.SparseDependencyRecurrence`, `Metatheory.FullCouplingEnvelope`, `Test.SemanticFixtureSmoke` |
 
 ## Planned Names Not Yet Present
 

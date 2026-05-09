@@ -29,6 +29,7 @@ import Test.MetatheorySmoke
 import Test.SurfaceBridgeSmoke
 import Test.ActiveBasisExamples
 import Test.SparseRecurrenceSmoke
+import Test.SemanticFixtureSmoke
 import Test.HigherPayloadSmoke
 import Test.SemanticDepthSmoke
 import Test.FibonacciScalingSmoke

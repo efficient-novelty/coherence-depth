@@ -510,9 +510,9 @@ Goal: make the theorem tangible and test classification boundaries.
 
 ### Test Tasks
 
-- [ ] Add semantic fixture tests.
-- [ ] Add sparse classification tests.
-- [ ] Add transparent zero-latency tests.
+- [x] Add semantic fixture tests.
+- [x] Add sparse classification tests.
+- [x] Add transparent zero-latency tests.
 - [x] Add higher-payload classification tests.
 - [x] Ensure audit script reports expected classification for each fixture.
 
@@ -740,8 +740,8 @@ Goal: produce the next complete paper/artifact version.
 - [x] Add tests for exact depth theorem.
 - [x] Add tests for chronological window theorem.
 - [x] Add tests for full-coupling recurrence.
-- [ ] Add tests for sparse coupling separation.
-- [ ] Add tests for transparent zero latency.
+- [x] Add tests for sparse coupling separation.
+- [x] Add tests for transparent zero latency.
 - [x] Add tests for higher payload classification.
 
 ### Theorem Names To Stabilize

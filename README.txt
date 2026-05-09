@@ -112,6 +112,7 @@ Equivalent core checks from PowerShell:
   agda --transliterate Semantics/FibonacciScaling.agda
   agda --transliterate Test/SemanticDepthSmoke.agda
   agda --transliterate Test/FibonacciScalingSmoke.agda
+  agda --transliterate Test/SemanticFixtureSmoke.agda
   agda --transliterate CaseStudies/HigherPayload.agda
   agda --transliterate Test/HigherPayloadSmoke.agda
 
