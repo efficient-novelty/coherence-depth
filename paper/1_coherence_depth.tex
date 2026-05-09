@@ -1975,7 +1975,14 @@ The checked boundary consists of the Agda kernel with \texttt{--cubical} and
 the fixed raw extension-calculus specification, and the small arithmetic layer
 \AgdaPath{Core/Nat.agda}. The local dependency record is Agda~2.8.0 with
 Cubical Agda \texttt{cubical-0.9} at commit
-\texttt{b150186d2544e7efeddd31e5d14a8b9ecbb100f7}. The theorem-facing modules
+\texttt{b150186d2544e7efeddd31e5d14a8b9ecbb100f7}. The public artifact
+repository is
+\url{https://github.com/efficient-novelty/coherence-depth}; it contains an exact
+copy of the paper source, theorem-facing Agda modules, theorem map, audit
+scripts, and case-study fixtures used here. A reviewer can clone that repository
+and run \texttt{bash scripts/check\_coherence\_depth\_artifact.sh}, or
+\texttt{make artifact-check} when GNU make is available; equivalent PowerShell
+commands are listed in \AgdaPath{README.txt}. The theorem-facing modules
 listed in \autoref{tab:mechanization-status} are checked by
 \AgdaPath{scripts/check_coherence_depth_artifact.sh}; that script checks the
 main aggregate module \AgdaPath{agda/Everything.agda}, checks the clutching

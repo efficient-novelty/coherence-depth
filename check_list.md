@@ -1,471 +1,953 @@
-# Coherence Depth Paper Improvement Checklist
-
-Derived from `paper_improvement_plan.md`.
-
-Legend:
-
-- `[x]` completed in this artifact folder.
-- `[ ]` still open.
-
-## Completed Artifact Setup In This Folder
-
-- [x] Create a compact local artifact folder at `C:\dev\coherence-depth`.
-- [x] Include `paper/1_coherence_depth.tex`.
-- [x] Include direct TeX dependencies: `paper/coherence_depth_refs.bib` and `paper/lmcs.cls`.
-- [x] Include theorem-facing Agda files under `agda/`.
-- [x] Include theorem-facing docs under `docs/`.
-- [x] Include audit scripts under `scripts/`.
-- [x] Include case-study YAML fixtures under `runs/coherence_depth_case_studies/`.
-- [x] Add root `README.txt`.
-- [x] Add root `.gitignore` for Agda and LaTeX build outputs.
-- [x] Run the case-study audit successfully.
-- [x] Scan copied Agda source files and confirm no `.agda` file contains `postulate`.
-- [x] Confirm Agda version available locally: Agda 2.8.0.
-- [x] Check `agda/Test/Fibonacci.agda`.
-- [x] Check top-level `agda/PEN.agda`.
-- [x] Record that `PEN.agda` checks with known `UnsupportedIndexedMatch` warnings documented in the trust-boundary notes.
-
-## Priority 0: Reproducible Formal Artifact
-
-- [x] Provide a local artifact folder with relevant paper and Agda files.
-- [x] Include `README.txt`.
-- [x] Include Agda library file `agda/pen.agda-lib`.
-- [x] Include theorem-facing source directories: `Core`, `Metatheory`, `Geometry`, `CaseStudies`, plus imported support namespaces.
-- [x] Include theorem-facing tests under `agda/Test`.
-- [x] Include audit script `scripts/coherence_depth_audit.py`.
-- [x] Include artifact check script `scripts/check_coherence_depth_artifact.sh`.
-- [x] Include trust-boundary documentation.
-- [x] Include theorem index documentation.
-- [x] Include case-study audit fixtures.
-- [x] Rename or add an artifact-specific `coherence-depth.agda-lib`.
-- [x] Add `src/Everything.agda` or decide that `agda/PEN.agda` is the artifact top-level.
-- [x] Add `paper-map.yaml`.
-- [x] Add `scripts/audit_postulates.py` with transitive import-closure checking.
-- [x] Add `scripts/check_paper_map.py`.
-- [x] Add a `Makefile`.
-- [x] Add CI configuration for the artifact repository.
-- [x] Publish the artifact as a public GitHub repository or archive.
-- [ ] Cite an exact artifact commit hash.
-- [x] Pin the exact Cubical library version or commit.
-- [x] State exact expected build time.
-- [x] Ensure one command rebuilds every theorem cited in the paper.
-- [x] Ensure one command verifies theorem map and postulate audit.
-
-## Priority 1: Make The Theorem Object Explicit
-
-- [x] Add compact formal raw syntax in Section 2.
-- [x] Specify states `B`.
-- [x] Specify layer identifiers.
-- [x] Specify payload telescopes.
-- [x] Specify action clauses.
-- [x] Specify comparison clauses.
-- [x] Specify export selections.
-- [x] Specify surface declarations.
-- [x] Add judgments for well-formed states.
-- [x] Add judgments for raw declarations.
-- [x] Add judgments for admissible declarations.
-- [x] Add elaboration judgment to candidates.
-- [x] Add sealing judgment.
-- [x] Add normalized public signature judgment.
-- [x] Add primitive-field judgment.
-- [x] Add derived-field judgment.
-- [x] Add support computation judgment.
-- [x] Make clear what declarations are and are not admissible.
-
-## Priority 2: Separate Signatures, Index Sets, And Realized Types
-
-- [x] Replace overloaded `O^(k)(X)` notation.
-- [x] Define `ObSig_k(X)` as a finite normalized obligation signature.
-- [x] Define `Ix_k(X)` as primitive schema indices.
-- [x] Define `Real_k(X)` as the realized dependent type or space.
-- [x] Define `Prim_k(X)` as the primitive irreducible part.
-- [x] Define `Der_k(X)` as the derived or transparent part.
-- [x] State exact stabilization at the `Real_k` level.
-- [x] State minimal-signature elimination at the primitive-signature level.
-- [x] State the counting theorem in terms of primitive public trace fields.
-- [x] State the contractible-factor theorem at the realized-type level.
-- [x] Remove ambiguity between exact obligations and minimal public trace signatures.
-
-## Priority 3: Repair The Horn-Extension Argument
-
-- [x] Define the horn-extension object precisely.
-- [x] Define the boundary object `partial`.
-- [x] Define the missing-data package.
-- [x] Define `Fill_partial(gamma)`.
-- [x] Either prove actual contractibility with center and contraction.
-- [ ] Or weaken the exact theorem and keep the cost theorem.
-- [ ] If weakened, keep canonical derived witnesses from `hcomp`/`hfill`.
-- [ ] If weakened, prove elimination from `mu`-minimal public signatures.
-- [ ] If weakened, prove the recurrence from primitive support rather than exact obligation equivalence.
-- [x] Remove or weaken claims of the form `O^(k)(X) ~= O^(2)(X)` if they are not formally justified.
-
-## Priority 4: Fix Basis Uniqueness
-
-- [x] Replace arbitrary finite minimal generating-family uniqueness.
-- [x] Define basis elements as primitive normal-form classes or an explicit canonical basis.
-- [x] Prove uniqueness only for the canonical basis or prove invariance of cardinality.
-- [x] Separate basis existence from basis uniqueness.
-- [x] Ensure counting uses presentation-invariant primitive classes.
-
-## Priority 5: Clarify Counting Convention
-
-- [x] Decide between one trace schema per active basis site per layer and one trace schema per payload generator per active basis site.
-- [x] State the convention before the recurrence theorem.
-- [x] Define payload contribution `kappa_n`.
-- [x] Define trace contribution `mu_n`.
-- [x] Make the density law match the chosen convention.
-- [x] Check all examples against the chosen convention.
-
-## Priority 6: Recast Full Coupling As A Hypothesis
-
-- [x] Define active interface footprint.
-- [x] Define fully coupled footprint judgment.
-- [x] State full coupling as a hypothesis, not a derived conclusion.
-- [x] Separate sparse footprints from fully coupled footprints.
-- [x] State sparse recurrence before or alongside the full-window recurrence.
-- [x] Explain that ordinary library growth is often sparse.
-
-## Section 1: Introduction
-
-- [x] Narrow the abstract.
-- [x] State the main theorem early with all assumptions visible.
-- [x] Add a "not claimed" paragraph.
-- [x] Say the theorem is not about arbitrary Cubical Agda programs.
-- [x] Say the theorem is not about transparent user-level library growth.
-- [x] Say the theorem is not about all cubical type theories.
-- [x] Say the theorem does not assert arbitrary higher HoTT fillers are contractible.
-- [x] Say the theorem is not a source-code line-count model.
-- [x] Add a main-theorem-at-a-glance box.
-- [x] Adjust tone away from broad Fibonacci/coherence slogans.
-
-## Section 2: Fixed Cubical Extension Calculus
-
-- [x] Add a formal syntax block.
-- [x] Add formal judgments.
-- [x] Clarify opacity and sealing.
-- [x] Replace Theorem 2.17 with a statement matching the formal calculus.
-- [x] Revise Theorem 2.20 and Theorem 2.22.
-- [x] Strengthen the Integration Trace Principle.
-
-## Section 3: Raw Bridge And Canonical Normal Forms
-
-- [x] Add actual presentation-step generators.
-- [x] Include rebundling.
-- [x] Include currying/uncurrying.
-- [x] Include transparent alias removal.
-- [x] Include duplicate derived-field removal.
-- [x] Include splitting/merging shell records.
-- [x] Prove or cite normal-form termination.
-- [x] Prove or cite normal-form confluence or enough uniqueness for `mu`.
-- [x] Fix Theorem 3.5.
-- [x] Make bridge scope prominent.
-- [x] Say which raw declaration constructors are covered.
-- [x] Say what remains paper-level explanatory.
-
-## Section 4: Obligation Depth And Cubical Dichotomy
-
-- [x] Replace Definition 4.1 with separate `ObSig`, `Ix`, `Real`, and `Prim` definitions.
-- [x] Distinguish obligation depth from minimal-signature depth.
-- [x] Define chronological window size.
-- [x] Strengthen the taxonomy in Remark 4.2.
-- [x] Repair Lemma 4.5 with a dimension assignment or grammar induction.
-- [x] Rewrite Lemma 4.9 as the key upper-bound theorem.
-- [x] Add a labeled depth-three horn diagram.
-- [x] Define the remote layer in the general case.
-- [x] State which faces are visible from public traces.
-- [x] State which face is missing.
-- [x] Construct the missing-data package.
-- [x] Define the filler predicate.
-- [x] Prove the upper bound by induction using factorization-complete trace export.
-- [x] Fix Theorem 4.13 by proving contractibility or weakening to the cost/signature theorem.
-- [x] Clarify Theorem 4.11.
-- [x] Rewrite Theorem 4.15.
-- [x] Specify whether equality is definitional, path equality, quotient equality, or presentation equivalence.
-
-## Section 4 Lower Bound
-
-- [x] Replace the risky global polymorphic endomap example.
-- [x] Use an objectwise promoted-interface candidate.
-- [x] Define the unary candidate.
-- [x] Define the binary sealing obligation.
-- [x] Show admissibility after full sealing.
-- [x] Show failure of depth-one sufficiency.
-- [x] Prove or explain transport by conjugation along `ua(swap)`.
-- [x] Add a positive control using identity.
-- [x] State the lower bound as depth-one insufficiency.
-
-## Section 4 Clutching Family
-
-- [x] Decide whether the clutching family is load-bearing or an extended example.
-- [ ] If load-bearing, define the exact raw extension declaration.
-- [ ] If load-bearing, show primitive arity two.
-- [ ] If load-bearing, show no primitive arity three.
-- [x] If not load-bearing, move it to an extended example.
-
-## Section 5: Recurrence Theorem
-
-- [x] Rewrite Theorem 5.1 with explicit assumptions.
-- [x] State sparse recurrence before full recurrence or move sparse recurrence to an appendix.
-- [x] State full-window recurrence.
-- [x] Specialize to depth one.
-- [x] Specialize to depth two.
-- [x] Check indexing carefully.
-- [x] Add a bootstrap table.
-- [x] Add concrete counts for the running example.
-- [x] State the payload-aware affine recurrence.
-- [x] State the shifted Fibonacci consequence only under constant payload.
-
-## Section 6: Mechanization
-
-- [x] Include theorem-facing docs in the artifact.
-- [x] Include a theorem index in `docs/theorem_index.md`.
-- [x] Include trust-boundary notes in `docs/coherence_depth_trust_boundary.md`.
-- [x] Include an artifact README.
-- [x] Include a no-postulate scan result for copied Agda files.
-- [x] Include a successful top-level Agda check result from this machine.
-- [x] Add a shorter theorem-map table to the paper.
-- [x] Add a machine-readable theorem map.
-- [x] Add a trusted-boundary box to the paper.
-- [x] Add true transitive import-closure postulate audit.
-- [x] Report uses of Agda primitives and trusted Cubical primitives.
-- [x] Add CI badge or build log.
-- [ ] Add exact commit hash.
-- [x] Add exact dependency pins.
-- [x] Add one-command build evidence.
-
-## Proof Patch Checklist
-
-- [x] Replace overloaded obligation notation everywhere.
-- [x] Audit every theorem statement for the level it concerns: syntax, index set, realized type, or cardinality.
-- [x] Prove or weaken horn contractibility.
-- [x] Repair basis uniqueness.
-- [x] Fix full-coupling and density assumptions.
-- [x] Repair lower-bound example.
-- [x] Recheck recurrence indexing and payload accounting.
-- [x] Align mechanization claims with actual artifact output.
-
-## Suggested Revised Paper Outline
-
-- [ ] Section 1: Introduction with problem, theorem, non-claims, contributions, and running example.
-- [ ] Section 2: Sealed extension calculus.
-- [ ] Section 3: Canonical normal forms and cost.
-- [ ] Section 4: Obligation objects and depth notions.
-- [ ] Section 5: Cubical horn-generation theorem.
-- [ ] Section 6: Binary lower bound.
-- [ ] Section 7: Recurrence theorem.
-- [ ] Section 8: Mechanization and artifact.
-- [ ] Section 9: Limitations and related work.
-
-## Definitions To Add Or Tighten
-
-- [x] Normalized public signature.
-- [x] Primitive schema.
-- [x] Support and arity.
-- [x] Exact obligation object.
-- [x] Minimal-signature depth.
-- [x] Chronological window.
-- [x] Full coupling footprint.
-
-## New Lemmas To Add Or Strengthen
-
-- [x] Normalization lemmas.
-- [x] Basis lemmas.
-- [x] Trace/cost lemmas.
-- [x] Horn lemmas.
-- [x] Chronology lemmas.
-- [x] Lower-bound lemmas.
-- [x] Recurrence lemmas.
-
-## Mechanization Upgrade Plan
-
-- [x] Create a minimum local artifact skeleton.
-- [x] Include paper source.
-- [x] Include checked Agda top-level `PEN.agda`.
-- [x] Include theorem-facing modules.
-- [x] Include audit fixtures and script.
-- [x] Include README with build/check commands.
-- [x] Add `Everything.agda`.
-- [x] Add `paper-map.yaml`.
-- [x] Add theorem-map checker.
-- [x] Add import-closure postulate checker.
-- [x] Add Makefile.
-- [x] Add CI.
-- [ ] Add archival release or public repository.
-
-## README Checklist
-
-- [x] State artifact purpose.
-- [x] State broader development repository.
-- [x] List directory layout.
-- [x] List Agda requirement.
-- [x] List Cubical library requirement.
-- [x] List build/check commands.
-- [x] Point to theorem index.
-- [x] Point to trusted boundary.
-- [x] Explicitly state what theorem is formalized.
-- [x] Explicitly state what theorem is not formalized.
-- [x] Pin exact Cubical library version or commit.
-- [x] State expected build time.
-- [x] Explain how to locate theorem numbers such as Theorem 4.13, 4.17, and 5.1 without relying only on prose docs.
-
-## Postulate Audit Checklist
-
-- [x] Check copied `.agda` files for `postulate` tokens.
-- [x] Check transitive import closure of theorem-facing modules.
-- [x] Report module name.
-- [x] Report whether each module uses `postulate`.
-- [x] Report whether each module uses `primitive`.
-- [x] Report whether each module compiles with `--safe`.
-- [x] Report whether each module imports outside the trusted root.
-- [x] List trusted Agda and Cubical primitives explicitly.
-
-## Paper-To-Agda Theorem Map
-
-- [x] Include prose theorem index in `docs/theorem_index.md`.
-- [x] Include trust-boundary table in `docs/coherence_depth_trust_boundary.md`.
-- [x] Convert theorem map to machine-readable `paper-map.yaml`.
-- [x] Include columns: paper claim, Agda module, Agda theorem names, status, uses bridge, trusted inputs.
-- [x] Keep a shorter table in the main paper.
-- [x] Put the complete map in an appendix or artifact file.
-
-## Rhetorical And Exposition Improvements
-
-- [x] Reduce repeated theorem-stack summaries.
-- [x] Replace repetition with one dependency diagram and one theorem map.
-- [x] Add a running example with concrete counts.
-- [x] Add a sealed-layer export diagram.
-- [x] Add a depth-three horn diagram.
-- [x] Add a dependency graph from exact obligations to minimal signatures to recurrence.
-- [x] Add a sparse versus fully coupled footprint diagram.
-- [x] Add a frequently confused distinctions box.
-
-## Literature And Positioning
-
-- [x] Position the contribution as a normalized cost invariant, not a replacement for standard coherence theory.
-- [x] Discuss cubical type theory and CCHM-style composition as operational substrate.
-- [x] Discuss Cubical Agda as proof assistant environment, not theorem target.
-- [x] Discuss univalence as source of binary lower-bound examples.
-- [x] Discuss Mac Lane/Stasheff/coherence as qualitative background.
-- [x] Discuss algebraic signatures, module systems, and normalization analogues.
-- [x] Explain why the result is not about arbitrary HoTT or arbitrary cubical calculi.
-
-## Decision Tree If The Hard Theorem Fails
-
-- [ ] If contractibility is fully provable, keep the exact obligation-depth theorem.
-- [ ] If only canonical derived witnesses are provable, revise the main result to the minimal public-signature cost theorem.
-- [ ] If only grammar-specific factorization is formalized, state the grammar-specific theorem.
-- [ ] If the raw bridge is partial, restrict theorem statements and examples to covered constructors.
-
-## Pre-Submission Checklist: Theorem Clarity
-
-- [x] The main theorem is stated in the introduction with all hypotheses visible.
-- [x] The theorem target is a fixed extension calculus, not cubical type theory in general.
-- [x] `ObSig`, `Real`, `Prim`, and `mu` are distinct objects.
-- [x] The recurrence theorem depends on a chronological-window theorem.
-- [x] Sparse extensions are explicitly outside the full-coupling recurrence or covered by a sparse recurrence.
-
-## Pre-Submission Checklist: Definitions
-
-- [x] Raw syntax is specified.
-- [x] Admissibility is specified.
-- [x] Full coupling is specified by a footprint judgment.
-- [x] Presentation equivalence is generated by explicit constructors.
-- [x] Counting normalization has uniqueness or invariance lemmas.
-- [x] Primitive/derived tags are formal.
-- [x] Support and arity are invariant under normalization.
-
-## Pre-Submission Checklist: Proofs
-
-- [x] Basis uniqueness no longer relies on arbitrary finite minimal generating families.
-- [x] Density theorem resolves the per-site/per-payload ambiguity.
-- [x] Horn-extension theorem includes explicit boundary/filler definitions.
-- [x] Contractibility is proved with center and contraction, or the exact theorem is weakened.
-- [x] Recent-history factorization specifies the equality notion used.
-- [x] Swap lower bound is formulated as a promoted-interface unary/binary separation.
-- [x] Clutching family is either formal and precise or moved to examples.
-
-## Pre-Submission Checklist: Mechanization
-
-- [x] Local artifact folder exists.
-- [ ] Public repository or artifact archive exists.
-- [ ] Commit hash is cited.
-- [x] Agda version is identified locally.
-- [x] Agda version and Cubical library version are both pinned in the artifact.
-- [x] One-command build works from a Makefile or equivalent artifact command.
-- [x] Copied theorem-facing Agda files are postulate-scanned.
-- [x] The theorem-facing import closure is postulate-audited.
-- [x] The theorem map is machine-readable.
-- [x] Paper-level explanatory claims are separated from formalized claims.
-
-## Pre-Submission Checklist: Exposition
-
-- [x] Abstract is narrower and less overstuffed.
-- [x] Introduction has a not-claimed paragraph.
-- [x] The paper has one running example with concrete counts.
-- [x] The paper has diagrams for the trace principle and horn step.
-- [x] Repeated theorem-stack summaries are consolidated.
-- [x] Related work frames the result as a normalized cost model for sealed extensions.
-
-## Recommended Order Of Work
-
-### Phase 1: Lock The Theorem Target
-
-- [x] Define the raw calculus.
-- [x] Split `O^(k)` into `ObSig`, `Ix`, `Real`, and `Prim`.
-- [x] Fix basis uniqueness.
-- [x] Define full-coupling footprints.
-- [x] Settle the per-site/per-payload convention.
-
-### Phase 2: Resolve The Horn Theorem
-
-- [x] Write the exact horn-extension object.
-- [x] Try to prove center and contraction in Agda.
-- [ ] If contraction fails, downgrade exact stabilization and preserve the `mu`-elimination theorem.
-- [x] Update all downstream theorems accordingly.
-
-### Phase 3: Repair The Lower Bound
-
-- [x] Replace the global endomap example with an objectwise promoted-interface candidate.
-- [x] Prove transport-by-conjugation along `ua(swap)`.
-- [x] Add the positive control using identity.
-- [x] State the lower bound as a depth-one insufficiency theorem.
-
-### Phase 4: Rebuild Recurrence Section
-
-- [x] State sparse recurrence.
-- [x] State full-window recurrence.
-- [x] Specialize to depth one and depth two.
-- [x] Add bootstrap table and concrete counts.
-
-### Phase 5: Publish The Artifact
-
-- [x] Build/check `PEN.agda` as the current top-level artifact module.
-- [x] Build `Everything.agda` if that becomes the artifact top-level.
-- [x] Run theorem-map checker.
-- [x] Run available postulate scan over copied `.agda` files.
-- [x] Run transitive import-closure postulate audit.
-- [x] Add CI.
-- [x] Update Section 6 from artifact output.
-
-### Phase 6: Final Exposition Pass
-
-- [x] Narrow abstract.
-- [x] Add diagrams.
-- [x] Remove duplicate summaries.
-- [x] Add limitations.
-- [x] Update related work.
-- [x] Ensure every claim in the introduction is proved later or clearly labeled as motivation.
-
-## Final Publication Standard
-
-- [x] Make explicit what calculus is being studied.
-- [x] Make explicit which declarations are admissible.
-- [x] Make explicit what full coupling means.
-- [x] Make explicit what exactly is counted.
-- [x] Make explicit what is a signature-level statement versus a type-level statement.
-- [x] Make explicit how cubical horn computation enters.
-- [x] Make explicit whether horn extension spaces are contractible or merely canonically represented.
-- [x] Make explicit why binary obligations are necessary.
-- [x] Make explicit why remote history does not add primitive trace fields.
-- [x] Make explicit why the recurrence follows.
-- [x] Make explicit what has been machine-checked.
+# Checklist: Paper Improvement Plan
+
+Source: `paper_improvement_plan.md`
+
+This checklist turns the improvement plan into executable work items for the
+next paper and Agda artifact revision. It is organized by milestone, with
+cross-cutting paper, code, documentation, audit, and review-readiness tasks.
+
+## Completion Legend
+
+- [ ] Not started
+- [ ] In progress
+- [ ] Done
+- [ ] Blocked, with note added below the item
+
+## Global Definition Of Done
+
+- [ ] The main theorem is stated as a theorem about primitive public structural
+      trace, not about the disappearance of higher cubical objects.
+- [ ] The paper distinguishes sealed foundational extensions from transparent
+      definitional growth.
+- [ ] User-supplied higher HIT constructors are classified as payload, not
+      automatically generated structural trace.
+- [ ] Full coupling is stated as an assumption for recurrence equality and
+      Fibonacci scaling.
+- [ ] Sparse and orthogonal dependency patterns are stated as bounded or sparse
+      regimes, not as Fibonacci equality.
+- [ ] The semantic adequacy boundary is explicit in both paper and artifact.
+- [ ] Every theorem in the paper has an entry in `paper-map.yaml`.
+- [ ] Every theorem entry has an honest status: `mechanized`,
+      `conditional-on-adequacy-package`, `paper-only`, or `trusted-input`.
+- [ ] The Agda artifact typechecks after each milestone.
+- [ ] The postulate audit reports no hidden theorem-critical assumptions.
+- [ ] The paper, theorem index, paper map, and artifact agree on theorem names.
+
+## Milestone 0: Stabilize The Target Statement
+
+Goal: rewrite the central claim so it is precise, reviewer-proof, and aligned
+with the mechanization target.
+
+### Paper Tasks
+
+- [ ] Rewrite the main depth theorem around this phrase:
+      "primitive public structural trace".
+- [ ] State that the theorem applies to admissible sealed structural
+      extensions in cubical foundations with stable Kan composition/filling.
+- [ ] State the theorem parametrically in a semantic adequacy package.
+- [ ] State the exact-depth theorem separately from the scaling theorem.
+- [ ] State the scaling theorem separately from the Fibonacci corollary.
+- [ ] Add a theorem statement for exact primitive coherence depth two.
+- [ ] Add a theorem statement for the full-coupling affine recurrence:
+      `mu_(n+1) = mu_n + mu_(n-1) + kappa_n + kappa_(n-1)`.
+- [ ] Add a theorem statement for constant-payload Fibonacci scaling.
+- [ ] Add an indexing convention box for `n`, `n + 1`, bootstrap cases,
+      `mu_n`, `kappa_n`, and shifted trace `U_n`.
+- [ ] Decide whether the lower-bound proof uses swap, clutching, or both.
+- [ ] Record that decision in the paper and in this checklist.
+
+### Guardrail Tasks
+
+- [ ] Add wording that higher cubical cells, paths, cubes, homotopies, and HIT
+      constructors may exist at all dimensions.
+- [ ] Add wording that higher structural integration obligations are derived
+      from binary trace by Kan composition/filling.
+- [ ] Add wording that arbitrary user higher constructors are payload.
+- [ ] Add wording that transparent development has zero integration latency in
+      this model.
+- [ ] Add wording that sparse dependency footprints give sparse recurrences or
+      upper-bound envelopes.
+- [ ] Avoid claims that all semantic filler spaces are contractible.
+
+### Acceptance Criteria
+
+- [ ] No theorem wording implies that higher cubical objects vanish.
+- [ ] No theorem wording counts arbitrary user payload as structural trace.
+- [ ] No theorem wording says ordinary transparent library growth is Fibonacci.
+- [ ] Full coupling is visible in every equality-style recurrence statement.
+- [ ] The paper and Agda roadmap use the same recurrence indexing convention.
+
+## Milestone 1: Add Semantic Interface Records
+
+Goal: create the semantic layer that downstream results can depend on.
+
+### New Agda Modules
+
+- [ ] Create `agda/Semantics/` directory.
+- [ ] Add `agda/Semantics/CubicalFoundation.agda`.
+- [ ] Add `agda/Semantics/SealedExtension.agda`.
+- [ ] Add `agda/Semantics/PrimitiveTrace.agda`.
+- [ ] Add top-level imports in `agda/Everything.agda`.
+- [ ] Add top-level imports in `agda/PEN.agda`.
+- [ ] Add smoke test module `agda/Test/SemanticDepthSmoke.agda`.
+
+### `Semantics.CubicalFoundation`
+
+- [ ] Define `SemanticCubicalFoundation`.
+- [ ] Include interval object and endpoints.
+- [ ] Include cofibration/face structure.
+- [ ] Include partial element structure.
+- [ ] Include path or interval-indexed equality structure.
+- [ ] Include transport.
+- [ ] Include homogeneous composition.
+- [ ] Include filling.
+- [ ] Include boundary laws for composition/filling.
+- [ ] Include substitution stability.
+- [ ] Split universe-heavy fields into smaller records if constraints become
+      hard to manage.
+- [ ] Add optional `UnivalenceStructure` or a separate
+      `SemanticCubicalFoundationWithUnivalence` record for lower bounds.
+
+### `Semantics.SealedExtension`
+
+- [ ] Define semantic library states.
+- [ ] Define semantic sealed layers.
+- [ ] Define payload `K_n`.
+- [ ] Define resolved structural trace `T_n`.
+- [ ] Define public interface `I_n = K_n + T_n`.
+- [ ] Define transparent development separately.
+- [ ] Prove or postulate with explicit status:
+      `semantic-transparent-zero-latency`.
+- [ ] Define sealed extension sequences.
+
+### `Semantics.PrimitiveTrace`
+
+- [ ] Define primitive trace.
+- [ ] Define derived trace.
+- [ ] Define structural trace versus payload.
+- [ ] Define historical support.
+- [ ] Define support depth.
+- [ ] Define primitive trace depth at most `d`.
+- [ ] Define primitive trace depth exactly `d`.
+- [ ] Define binary trace necessity.
+- [ ] Ensure higher HIT constructors can be classified as payload.
+
+### Acceptance Criteria
+
+- [ ] New semantic modules typecheck.
+- [ ] Existing Agda modules still typecheck.
+- [ ] Semantic definitions do not silently assume the main theorem.
+- [ ] The trace/payload split is expressible in code.
+- [ ] Transparent growth is represented outside the sealed recurrence model.
+
+## Milestone 2: Package Raw Adequacy
+
+Goal: make the bridge from semantic cubical extensions to the raw extension
+calculus explicit.
+
+### New Agda Module
+
+- [ ] Add `agda/Semantics/RawAdequacy.agda`.
+
+### Record/API Tasks
+
+- [ ] Define `RawAdequacyPackage`.
+- [ ] Add field `raw-syntax-sound-for-semantic-extensions`.
+- [ ] Add field `semantic-extension-elaborates-to-raw`.
+- [ ] Add field `raw-normalization-preserves-semantics`.
+- [ ] Add field `raw-normalization-preserves-support`.
+- [ ] Add field `raw-normalization-preserves-primitive-status`.
+- [ ] Add field `raw-normalization-preserves-cardinality`.
+- [ ] Add field for preservation of exported interface cardinality.
+- [ ] Add field for preservation of historical support.
+- [ ] Add field for preservation of primitive-vs-derived classification.
+- [ ] Add field for semantic interpretation preservation.
+
+### Refactor Tasks
+
+- [ ] Refactor downstream semantic theorems to take `RawAdequacyPackage` as a
+      parameter.
+- [ ] Avoid using raw calculus results directly in paper-facing semantic theorem
+      statements without the adequacy package.
+- [ ] Mark uninstantiated adequacy fields as trusted inputs or conditional
+      assumptions in `paper-map.yaml`.
+
+### Paper Tasks
+
+- [ ] Add section "Semantic adequacy of the extension calculus".
+- [ ] Define semantic structural obligations.
+- [ ] Define raw action clauses.
+- [ ] Define raw comparison clauses.
+- [ ] Define raw horn clauses.
+- [ ] State raw soundness.
+- [ ] State raw completeness.
+- [ ] State preservation of support.
+- [ ] State preservation of primitive/derived status.
+- [ ] State preservation of cardinality.
+- [ ] Clearly label mechanized, conditional, and assumed parts.
+
+### Acceptance Criteria
+
+- [ ] The paper can honestly say which results are conditional on adequacy.
+- [ ] Downstream theorem modules typecheck parametrically over adequacy.
+- [ ] Adequacy assumptions are visible to the audit tooling.
+- [ ] The artifact does not look as if it assumes the main theorem.
+
+## Milestone 3: Semantic Trace Normal Forms
+
+Goal: connect raw normalization to semantic trace roles.
+
+### New Agda Module
+
+- [ ] Add `agda/Semantics/TraceNormalForm.agda`.
+
+### Existing Modules To Strengthen
+
+- [ ] Strengthen `agda/Metatheory/RawStructuralSyntax.agda`.
+- [ ] Strengthen `agda/Metatheory/RawStructuralTyping.agda`.
+- [ ] Strengthen `agda/Metatheory/SurfaceNormalizationBridge.agda`.
+
+### Theorem Tasks
+
+- [ ] Define semantic trace normal forms.
+- [ ] Prove every admissible structural trace field normalizes to unary action,
+      binary comparison, or derived horn package.
+- [ ] Add theorem `semantic-trace-normal-form`.
+- [ ] Add theorem `unary-action-trace-primitive-candidate`.
+- [ ] Add theorem `binary-comparison-trace-primitive-candidate`.
+- [ ] Add theorem `higher-horn-trace-derived`.
+- [ ] Track support depth for every normalized role.
+- [ ] Track primitive/derived status for every normalized role.
+- [ ] Ensure horn roles carry a semantic derivation obligation.
+
+### Paper Tasks
+
+- [ ] Add section "Normal forms for structural trace".
+- [ ] Explain unary action trace.
+- [ ] Explain binary comparison trace.
+- [ ] Explain higher horn packages.
+- [ ] Explain why higher algebraic operations supplied by users are payload.
+- [ ] Make clear that horn packages are derived by semantic cubical structure,
+      not by definition alone.
+
+### Acceptance Criteria
+
+- [ ] Every normalized role has support data.
+- [ ] Every normalized role has primitive/derived classification.
+- [ ] Horn roles are not merely declared derived; they require semantic
+      derivability.
+
+## Milestone 4: Semantic Horn Reduction
+
+Goal: prove the core upper-bound engine using cubical composition/filling.
+
+### New Agda Module
+
+- [ ] Add `agda/Semantics/SemanticHornReduction.agda`.
+
+### Definition Tasks
+
+- [ ] Define semantic horn boundary data.
+- [ ] Define semantic derived trace from `hfill`.
+- [ ] Define semantic derived trace from `hcomp`.
+- [ ] Define higher structural obligation support beyond depth two.
+- [ ] Define telescopic remote comparison data.
+
+### Theorem Tasks
+
+- [ ] Add theorem `semantic-horn-extension-derived`.
+- [ ] Add theorem `higher-structural-obligation-derived-by-hfill`.
+- [ ] Add theorem `semantic-telescopic-subsumption`.
+- [ ] Add theorem `semantic-remote-comparison-derived`.
+- [ ] Prove higher horn trace is derived from binary boundary data.
+- [ ] Prove remote comparisons factor through a depth-two boundary.
+- [ ] Prove the exported trace field is computable from depth-two data.
+
+### Proof Safety Tasks
+
+- [ ] Do not state that all filler spaces are contractible.
+- [ ] If uniqueness is needed, restrict it to the theorem-facing exported trace
+      package, not all semantic fillers.
+- [ ] Ensure `hfill`/`hcomp` appear in the theorem dependencies.
+- [ ] Ensure substitution stability is used where required.
+
+### Paper Tasks
+
+- [ ] Add main upper-bound proof section.
+- [ ] Present the proof as derived-trace computability.
+- [ ] Explain how higher horn-shaped structural material is generated from
+      binary boundary trace.
+- [ ] Explain telescopic subsumption without implying truncation of the
+      foundation.
+
+### Acceptance Criteria
+
+- [ ] The upper-bound engine is semantic, not merely syntactic.
+- [ ] Derived trace explicitly uses cubical filling/composition.
+- [ ] The paper does not claim semantic filler spaces are globally
+      contractible.
+
+## Milestone 5: Upper Bound, Depth At Most Two
+
+Goal: prove primitive trace depth at most two.
+
+### New Agda Module
+
+- [ ] Add `agda/Semantics/DepthUpperBound.agda`.
+
+### Theorem Tasks
+
+- [ ] Import semantic raw adequacy.
+- [ ] Import semantic trace normal forms.
+- [ ] Import semantic horn reduction.
+- [ ] Prove `primitive-trace-depth-at-most-two`.
+- [ ] Prove primitive trace normal forms stabilize at depth two.
+- [ ] Prove primitive trace fields of support depth greater than two reduce to
+      depth-two primitive public trace plus derived horn trace.
+- [ ] Prove the theorem parametrically over `RawAdequacyPackage`.
+
+### Paper Tasks
+
+- [ ] State Theorem E: upper bound, depth at most two.
+- [ ] Use the normal-form split in the proof:
+      unary, binary, higher horn.
+- [ ] Say higher horn trace is derived rather than primitive.
+
+### Acceptance Criteria
+
+- [ ] The theorem is about primitive trace depth, not global truncation.
+- [ ] The theorem is conditional on or supplied with semantic adequacy.
+- [ ] The proof depends on semantic horn reduction.
+
+## Milestone 6: Lower Bound, Depth Not One
+
+Goal: prove unary trace alone is insufficient.
+
+### New Agda Module
+
+- [ ] Add `agda/Semantics/DepthLowerBound.agda`.
+
+### Existing Modules To Connect
+
+- [ ] Import `agda/Metatheory/AdjunctionBarrier.agda`.
+- [ ] Import `agda/Geometry/Clutching.agda` if using the clutching witness.
+
+### Swap Witness Tasks
+
+- [ ] Define or reuse the two-point type witness.
+- [ ] Define or reuse the nontrivial swap equivalence.
+- [ ] Use univalence to obtain the swap path.
+- [ ] Show transport of a unary clause along the swap path changes the
+      observable action.
+- [ ] Show constant-left and constant-right are distinguishable.
+- [ ] Prove the binary comparison between `refl` and the swap path cannot be
+      derived from unary trace alone.
+- [ ] Add theorem `swap-path-forces-binary-trace`.
+- [ ] Add theorem `semantic-depth-one-impossible`.
+- [ ] Add theorem `semantic-binary-trace-necessary`.
+
+### Optional Clutching Witness Tasks
+
+- [ ] Decide whether clutching is included as a theorem, example, or appendix.
+- [ ] If included, prove or connect `clutching-forces-binary-trace`.
+- [ ] Keep swap as the primary lower-bound proof if it is easier to maintain.
+
+### Paper Tasks
+
+- [ ] Add main lower-bound proof section.
+- [ ] Explain the swap witness in reviewer-facing prose.
+- [ ] Optionally add the clutching witness as a richer geometric example.
+- [ ] State why the lower bound connects to the semantic primitive trace
+      definition, not only to the synthetic calculus.
+
+### Acceptance Criteria
+
+- [ ] There is a named theorem `semantic-depth-one-impossible`.
+- [ ] The proof uses semantic primitive trace definitions.
+- [ ] The lower bound does not rely only on the synthetic obligation language.
+- [ ] The required univalence assumption is explicit.
+
+## Milestone 7: Exact Depth Theorem
+
+Goal: combine upper and lower bounds into the paper-facing result.
+
+### New Agda Module
+
+- [ ] Add `agda/Semantics/ExactDepth.agda`.
+
+### Theorem Tasks
+
+- [ ] Import `Semantics.DepthUpperBound`.
+- [ ] Import `Semantics.DepthLowerBound`.
+- [ ] Prove `cubical-foundations-primitive-coherence-depth-exactly-two`.
+- [ ] Add alias `sealed-structural-trace-depth-exactly-two` if useful.
+- [ ] Ensure there is one canonical theorem name used by the paper.
+
+### Documentation Tasks
+
+- [ ] Add exact-depth theorem to `paper-map.yaml`.
+- [ ] Add exact-depth theorem to `docs/theorem_index.md`.
+- [ ] Add exact-depth theorem to the paper mechanization table.
+
+### Acceptance Criteria
+
+- [ ] The paper has one canonical exact-depth theorem.
+- [ ] The theorem combines both `depth <= 2` and `depth > 1`.
+- [ ] The theorem states all required assumptions.
+
+## Milestone 8: Chronological Window And Recurrence
+
+Goal: derive scaling from exact depth two.
+
+### New Or Updated Agda Modules
+
+- [ ] Add `agda/Semantics/ChronologicalWindow.agda`.
+- [ ] Add `agda/Semantics/FullCoupling.agda`.
+- [ ] Add `agda/Semantics/ScalingRecurrence.agda`.
+- [ ] Refactor `agda/Metatheory/UniversalRecurrence.agda` to consume the
+      semantic window theorem where appropriate.
+- [ ] Refactor `agda/Metatheory/SparseDependencyRecurrence.agda` to keep sparse
+      cases separate.
+- [ ] Refactor `agda/Metatheory/FullCouplingEnvelope.agda` to align with the
+      semantic full-coupling definition.
+
+### Chronological Window Tasks
+
+- [ ] Define `ChronologicalWindowSize`.
+- [ ] Prove `exact-depth-two-implies-chronological-window-two`.
+- [ ] Prove `stage-trace-supported-by-last-two-interfaces`.
+- [ ] State support as inclusion in `I_n + I_(n-1)`.
+
+### Full Coupling Tasks
+
+- [ ] Define `FullCoupling` as an isomorphism, not merely an inequality.
+- [ ] Add field `fullCouplingIso`.
+- [ ] Define sparse coupling separately.
+- [ ] Define dependency footprint for sparse coupling.
+- [ ] Prove sparse footprint is contained in the two-layer window.
+
+### Affine Recurrence Tasks
+
+- [ ] Define cardinalities `kappa_n = |K_n|` and `mu_n = |T_n|`.
+- [ ] Prove `I_n = K_n + T_n` at the cardinality level.
+- [ ] Prove `full-coupling-affine-recurrence`.
+- [ ] Ensure the recurrence theorem assumes full coupling.
+- [ ] Ensure sparse cases are not presented as equality unless their footprint
+      is full.
+
+### Paper Tasks
+
+- [ ] Add chronological window theorem.
+- [ ] Add full coupling definition.
+- [ ] Add sparse coupling definition or remark.
+- [ ] Add affine recurrence theorem.
+- [ ] Separate full-coupling equality from sparse upper-bound behavior.
+
+### Acceptance Criteria
+
+- [ ] Exact depth two is the input to the chronological window theorem.
+- [ ] Full coupling is an isomorphism in code.
+- [ ] The recurrence theorem is bookkeeping after the full-coupling isomorphism.
+- [ ] Sparse and full-coupling regimes cannot be confused.
+
+## Milestone 9: Constant-Payload Fibonacci Corollary
+
+Goal: connect the affine recurrence to the existing arithmetic recurrence.
+
+### New Agda Module
+
+- [ ] Add `agda/Semantics/FibonacciScaling.agda`.
+
+### Existing Module To Reuse
+
+- [ ] Reuse `agda/Core/AffineRecurrence.agda`.
+
+### Theorem Tasks
+
+- [ ] Define constant payload condition `ConstantPayload S c`.
+- [ ] Define bootstrap assumptions.
+- [ ] Define shifted trace `U_n = mu_n + 2 * c`.
+- [ ] Prove `U_(n+1) = U_n + U_(n-1)`.
+- [ ] Prove `constant-payload-fibonacci-scaling`.
+- [ ] Align theorem indexing with `Core.AffineRecurrence`.
+- [ ] Add a smoke theorem that checks the first few values.
+
+### Paper Tasks
+
+- [ ] State constant-payload corollary.
+- [ ] State exact bootstrap convention.
+- [ ] Show the shifted sequence is Fibonacci.
+- [ ] Avoid implying all sealed sequences are Fibonacci.
+
+### Acceptance Criteria
+
+- [ ] Paper formula and Agda theorem use the same indexing.
+- [ ] Bootstrap conditions are explicit.
+- [ ] The corollary depends on full coupling and constant payload.
+
+## Milestone 10: End-To-End Examples
+
+Goal: make the theorem tangible and test classification boundaries.
+
+### Fixture Tasks
+
+- [ ] Add one full-coupling sealed extension sequence fixture.
+- [ ] Add one sparse dependency fixture.
+- [ ] Add one transparent-development fixture.
+- [ ] Add one higher-payload fixture.
+- [ ] Ensure each fixture has expected classification metadata.
+
+### Possible Existing Case Studies To Review
+
+- [ ] Review `runs/coherence_depth_case_studies/universe_extension.yaml`.
+- [ ] Review `runs/coherence_depth_case_studies/universe_extension_refactored.yaml`.
+- [ ] Review `runs/coherence_depth_case_studies/sparse_datatype.yaml`.
+- [ ] Review `runs/coherence_depth_case_studies/transparent_lemma_extension.yaml`.
+- [ ] Review `runs/coherence_depth_case_studies/promoted_interface.yaml`.
+- [ ] Review `runs/coherence_depth_case_studies/global_modality.yaml`.
+
+### Test Tasks
+
+- [ ] Add semantic fixture tests.
+- [ ] Add sparse classification tests.
+- [ ] Add transparent zero-latency tests.
+- [ ] Add higher-payload classification tests.
+- [ ] Ensure audit script reports expected classification for each fixture.
+
+### Paper Tasks
+
+- [ ] Add a small table of fixtures.
+- [ ] Show which fixture is full coupling.
+- [ ] Show which fixture is sparse.
+- [ ] Show which fixture is transparent and therefore outside recurrence.
+- [ ] Show which fixture contains higher payload rather than structural trace.
+
+### Acceptance Criteria
+
+- [ ] Examples demonstrate the guardrails.
+- [ ] Classification agrees between paper, fixtures, and audit script.
+- [ ] No example accidentally treats arbitrary higher payload as trace.
+
+## Milestone 11: Paper Rewrite And Artifact Audit
+
+Goal: produce the next complete paper/artifact version.
+
+### Paper Rewrite Tasks
+
+- [ ] Rewrite abstract.
+- [ ] Rewrite introduction.
+- [ ] Add "scope at a glance" table.
+- [ ] Add semantic cubical foundation section.
+- [ ] Add sealed extensions and trace section.
+- [ ] Add semantic adequacy section.
+- [ ] Add trace normal form section.
+- [ ] Add depth-at-most-two proof.
+- [ ] Add depth-at-least-two proof.
+- [ ] Add exact-depth theorem.
+- [ ] Add chronological window theorem.
+- [ ] Add recurrence theorem.
+- [ ] Add Fibonacci corollary.
+- [ ] Add theorem dependency diagram.
+- [ ] Update mechanization table.
+- [ ] Update limitations section.
+- [ ] Check that all claims match code status.
+
+### Files To Update
+
+- [ ] Update `paper/1_coherence_depth.tex`.
+- [ ] Update `paper-map.yaml`.
+- [ ] Update `docs/theorem_index.md`.
+- [ ] Update `docs/coherence_depth_trust_boundary.md`.
+- [ ] Update `README.txt`.
+- [ ] Update `scripts/check_coherence_depth_artifact.sh`.
+- [ ] Update `scripts/check_paper_map.py`.
+- [ ] Update `scripts/audit_postulates.py`.
+- [ ] Update `.github/workflows/artifact-check.yml`.
+
+### Artifact Check Tasks
+
+- [ ] Add semantic modules to artifact check script.
+- [ ] Add semantic smoke tests to artifact check script.
+- [ ] Add semantic modules to CI workflow.
+- [ ] Add semantic smoke tests to CI workflow.
+- [ ] Run the full artifact check.
+- [ ] Run the postulate audit.
+- [ ] Run the paper-map audit.
+- [ ] Record any remaining trusted inputs.
+
+### Acceptance Criteria
+
+- [ ] Paper claims match code claims.
+- [ ] Every theorem has a status.
+- [ ] The trust boundary is explicit.
+- [ ] CI covers the new semantic modules.
+- [ ] The reviewer can see exactly what is mechanized and what is conditional.
+
+## Paper Checklist
+
+### Title And Abstract
+
+- [ ] Title remains accurate after theorem qualification.
+- [ ] Abstract says "primitive public structural trace".
+- [ ] Abstract mentions admissible sealed extensions.
+- [ ] Abstract mentions higher obligations as derived from binary trace.
+- [ ] Abstract mentions Kan composition/filling.
+- [ ] Abstract mentions full coupling for recurrence equality.
+- [ ] Abstract mentions constant-payload Fibonacci as a specialization.
+- [ ] Abstract does not say higher coherences vanish.
+
+### Introduction
+
+- [ ] Add paragraph distinguishing higher cubical objects, higher structural
+      obligations, primitive public trace, and derived trace.
+- [ ] Add "scope at a glance" table.
+- [ ] Include sealed foundational extension boundaries as in scope.
+- [ ] Include transparent definitions as out of recurrence scope.
+- [ ] Include structural integration trace as in scope.
+- [ ] Include arbitrary user payload as out of structural trace scope.
+- [ ] Include full-coupling equality as a maximal regime.
+- [ ] Include sparse/orthogonal growth as separate from equality.
+
+### Preliminaries
+
+- [ ] Define cubical foundation.
+- [ ] Define sealed extension.
+- [ ] Define public interface.
+- [ ] Define payload.
+- [ ] Define resolved trace.
+- [ ] Define primitive trace.
+- [ ] Define derived trace.
+- [ ] Define historical support.
+- [ ] Define coherence depth.
+- [ ] Define chronological window.
+- [ ] Define full coupling.
+
+### Semantic Sections
+
+- [ ] Introduce `SemanticCubicalFoundation` in prose.
+- [ ] List interval and endpoints.
+- [ ] List cofibrations/faces.
+- [ ] List partial elements.
+- [ ] List paths or interval-indexed equality.
+- [ ] List transport.
+- [ ] List homogeneous composition.
+- [ ] List filling.
+- [ ] List substitution stability.
+- [ ] List optional univalence for lower bound.
+- [ ] State theorem is parametric in this structure.
+
+### Sealed Extensions And Trace
+
+- [ ] Define `E_n = (B_n, K_n, T_n, interpretation_n)` or equivalent.
+- [ ] Define `I_n = K_n + T_n`.
+- [ ] Define transparent development separately.
+- [ ] State transparent development has zero integration latency.
+- [ ] Connect transparent development to existing formal material if available.
+
+### Adequacy Section
+
+- [ ] Define semantic structural obligations.
+- [ ] Define raw clauses.
+- [ ] Prove or state raw soundness.
+- [ ] Prove or state raw completeness.
+- [ ] Prove or state support preservation.
+- [ ] Prove or state primitive/derived preservation.
+- [ ] Prove or state cardinality preservation.
+- [ ] Label theorem status honestly.
+
+### Upper Bound Section
+
+- [ ] Normalize an arbitrary structural obligation.
+- [ ] Handle unary case.
+- [ ] Handle binary case.
+- [ ] Handle higher horn package case.
+- [ ] Use `hfill`/`hcomp` for higher horn trace.
+- [ ] Use telescopic subsumption for remote comparisons.
+- [ ] Conclude no primitive trace beyond depth two remains.
+- [ ] Avoid filler-space contractibility claims.
+
+### Lower Bound Section
+
+- [ ] Present swap witness.
+- [ ] Explain nontrivial equivalence on the two-point type.
+- [ ] Explain univalence path.
+- [ ] Explain transport of unary clauses.
+- [ ] Explain distinguishability of constant-left and constant-right.
+- [ ] Conclude binary comparison is not unary-derived.
+- [ ] Optionally present clutching witness.
+
+### Scaling Section
+
+- [ ] Define `K_n`, `T_n`, `I_n`.
+- [ ] Define `kappa_n` and `mu_n`.
+- [ ] State chronological window theorem.
+- [ ] State full coupling as `T_(n+1) ~= I_n + I_(n-1)`.
+- [ ] Derive affine recurrence.
+- [ ] State sparse cases separately.
+- [ ] State constant-payload Fibonacci corollary.
+- [ ] Include bootstrap convention.
+
+### Limitations
+
+- [ ] Say arbitrary Cubical Agda elaboration remains outside scope unless a
+      concrete elaborator adequacy theorem is supplied.
+- [ ] Say semantic adequacy may remain a package/assumption until instantiated.
+- [ ] Say full coupling is maximal, not universal.
+- [ ] Say higher payload can be primitive at any dimension.
+- [ ] Say no global truncation of cubical foundations is claimed.
+
+## Agda Checklist
+
+### New Semantic Modules
+
+- [ ] `agda/Semantics/CubicalFoundation.agda`
+- [ ] `agda/Semantics/SealedExtension.agda`
+- [ ] `agda/Semantics/PrimitiveTrace.agda`
+- [ ] `agda/Semantics/RawAdequacy.agda`
+- [ ] `agda/Semantics/TraceNormalForm.agda`
+- [ ] `agda/Semantics/SemanticHornReduction.agda`
+- [ ] `agda/Semantics/DepthUpperBound.agda`
+- [ ] `agda/Semantics/DepthLowerBound.agda`
+- [ ] `agda/Semantics/ExactDepth.agda`
+- [ ] `agda/Semantics/ChronologicalWindow.agda`
+- [ ] `agda/Semantics/FullCoupling.agda`
+- [ ] `agda/Semantics/ScalingRecurrence.agda`
+- [ ] `agda/Semantics/FibonacciScaling.agda`
+
+### Existing Modules To Update
+
+- [ ] `agda/Metatheory/RawStructuralSyntax.agda`
+- [ ] `agda/Metatheory/RawStructuralTyping.agda`
+- [ ] `agda/Metatheory/SurfaceNormalizationBridge.agda`
+- [ ] `agda/Metatheory/UniversalRecurrence.agda`
+- [ ] `agda/Metatheory/SparseDependencyRecurrence.agda`
+- [ ] `agda/Metatheory/FullCouplingEnvelope.agda`
+- [ ] `agda/Core/AffineRecurrence.agda`
+- [ ] `agda/Everything.agda`
+- [ ] `agda/PEN.agda`
+
+### Tests
+
+- [ ] Add `agda/Test/SemanticDepthSmoke.agda`.
+- [ ] Add `agda/Test/FibonacciScalingSmoke.agda`.
+- [ ] Add tests for semantic foundation records.
+- [ ] Add tests for sealed extension interface splitting.
+- [ ] Add tests for raw adequacy package plumbing.
+- [ ] Add tests for trace normal form classification.
+- [ ] Add tests for horn-derived trace.
+- [ ] Add tests for exact depth theorem.
+- [ ] Add tests for chronological window theorem.
+- [ ] Add tests for full-coupling recurrence.
+- [ ] Add tests for sparse coupling separation.
+- [ ] Add tests for transparent zero latency.
+- [ ] Add tests for higher payload classification.
+
+### Theorem Names To Stabilize
+
+- [ ] `SemanticCubicalFoundation`
+- [ ] `KanStructure`
+- [ ] `UnivalenceStructure`
+- [ ] `SemanticLibraryState`
+- [ ] `SemanticSealedLayer`
+- [ ] `semantic-public-interface`
+- [ ] `semantic-transparent-zero-latency`
+- [ ] `RawAdequacyPackage`
+- [ ] `raw-syntax-sound-for-semantic-extensions`
+- [ ] `semantic-extension-elaborates-to-raw`
+- [ ] `raw-normalization-preserves-semantics`
+- [ ] `raw-normalization-preserves-support`
+- [ ] `raw-normalization-preserves-primitive-status`
+- [ ] `raw-normalization-preserves-cardinality`
+- [ ] `semantic-trace-normal-form`
+- [ ] `unary-action-trace-primitive-candidate`
+- [ ] `binary-comparison-trace-primitive-candidate`
+- [ ] `higher-horn-trace-derived`
+- [ ] `semantic-horn-extension-derived`
+- [ ] `higher-structural-obligation-derived-by-hfill`
+- [ ] `semantic-telescopic-subsumption`
+- [ ] `semantic-remote-comparison-derived`
+- [ ] `primitive-trace-depth-at-most-two`
+- [ ] `swap-path-forces-binary-trace`
+- [ ] `semantic-depth-one-impossible`
+- [ ] `cubical-foundations-primitive-coherence-depth-exactly-two`
+- [ ] `exact-depth-two-implies-chronological-window-two`
+- [ ] `full-coupling-window-iso`
+- [ ] `full-coupling-affine-recurrence`
+- [ ] `constant-payload-fibonacci-scaling`
+
+## Documentation And Metadata Checklist
+
+### `paper-map.yaml`
+
+- [ ] Add `thm:semantic-adequacy`.
+- [ ] Add `thm:semantic-horn-reduction`.
+- [ ] Add `thm:primitive-depth-upper-bound`.
+- [ ] Add `thm:primitive-depth-lower-bound`.
+- [ ] Add `thm:cubical-depth-exactly-two`.
+- [ ] Add `thm:full-coupling-affine-recurrence`.
+- [ ] Add `cor:constant-payload-fibonacci`.
+- [ ] Include Agda module for each theorem.
+- [ ] Include Agda theorem name for each theorem.
+- [ ] Include status for each theorem.
+- [ ] Include trusted inputs for conditional/assumed theorems.
+
+### `docs/theorem_index.md`
+
+- [ ] Add section "Semantic Upgrade Theorems".
+- [ ] List all semantic foundation theorems.
+- [ ] List all adequacy theorems.
+- [ ] List all normal-form theorems.
+- [ ] List all horn-reduction theorems.
+- [ ] List all depth theorems.
+- [ ] List all window/scaling theorems.
+- [ ] Mark conditional results clearly.
+
+### `docs/coherence_depth_trust_boundary.md`
+
+- [ ] State theorem is parametric in `SemanticCubicalFoundation`.
+- [ ] State full semantic theorem depends on `RawAdequacyPackage`.
+- [ ] State what is mechanized for the fixed admissible extension language.
+- [ ] State arbitrary Cubical Agda parser/elaborator adequacy remains outside
+      scope unless added.
+- [ ] State which assumptions are trusted inputs.
+
+### `README.txt`
+
+- [ ] Add commands for checking semantic modules.
+- [ ] Add commands for checking semantic smoke tests.
+- [ ] Add commands for running artifact check script.
+- [ ] Add commands for running postulate audit.
+- [ ] Add commands for running paper-map audit.
+
+## Automation, CI, And Audit Checklist
+
+### Artifact Check Script
+
+- [ ] Update `scripts/check_coherence_depth_artifact.sh`.
+- [ ] Add `Semantics/CubicalFoundation.agda`.
+- [ ] Add `Semantics/SealedExtension.agda`.
+- [ ] Add `Semantics/PrimitiveTrace.agda`.
+- [ ] Add `Semantics/RawAdequacy.agda`.
+- [ ] Add `Semantics/TraceNormalForm.agda`.
+- [ ] Add `Semantics/SemanticHornReduction.agda`.
+- [ ] Add `Semantics/DepthUpperBound.agda`.
+- [ ] Add `Semantics/DepthLowerBound.agda`.
+- [ ] Add `Semantics/ExactDepth.agda`.
+- [ ] Add `Semantics/ChronologicalWindow.agda`.
+- [ ] Add `Semantics/FullCoupling.agda`.
+- [ ] Add `Semantics/ScalingRecurrence.agda`.
+- [ ] Add `Semantics/FibonacciScaling.agda`.
+- [ ] Add `Test/SemanticDepthSmoke.agda`.
+- [ ] Add `Test/FibonacciScalingSmoke.agda`.
+
+### CI Workflow
+
+- [ ] Update `.github/workflows/artifact-check.yml`.
+- [ ] Ensure CI runs semantic modules.
+- [ ] Ensure CI runs semantic smoke tests.
+- [ ] Ensure CI runs paper-map audit.
+- [ ] Ensure CI runs postulate audit.
+
+### Audit Scripts
+
+- [ ] Update `scripts/check_paper_map.py`.
+- [ ] Update `scripts/audit_postulates.py`.
+- [ ] Teach scripts status `mechanized`.
+- [ ] Teach scripts status `conditional-on-adequacy-package`.
+- [ ] Teach scripts status `paper-only`.
+- [ ] Teach scripts status `trusted-input`.
+- [ ] Make hidden semantic adequacy assumptions fail the audit.
+- [ ] Make missing theorem-map entries fail the audit.
+
+## Risk Mitigation Checklist
+
+### Risk: Semantic Adequacy Is Too Hard
+
+- [ ] Keep downstream theorems parametric in `RawAdequacyPackage`.
+- [ ] Instantiate the package only where justified.
+- [ ] Clearly distinguish conditional metatheorem from instantiated theorem.
+- [ ] Track unproved adequacy fields in `paper-map.yaml`.
+
+### Risk: Arbitrary HIT Constructors Are Counted As Trace
+
+- [ ] Classify user-supplied higher constructors as payload.
+- [ ] Add a higher-payload case study.
+- [ ] Add a test that higher payload does not increase structural trace depth.
+
+### Risk: Horn Theorem Overclaims Contractibility
+
+- [ ] State derived-trace computability instead of filler-space
+      contractibility.
+- [ ] Audit paper for words like "unique filler" and qualify them if present.
+- [ ] Ensure semantic horn theorem uses `hfill`/`hcomp`.
+
+### Risk: Full Coupling Is Treated As Universal
+
+- [ ] Define full coupling as maximal/full dependency footprint.
+- [ ] Define sparse coupling separately.
+- [ ] Add sparse example.
+- [ ] State sparse cases as bounded by the full-coupling envelope.
+
+### Risk: Fibonacci Indexing Mismatch
+
+- [ ] Add indexing convention box.
+- [ ] Add first-values smoke theorem.
+- [ ] Cross-check paper formula against Agda theorem.
+- [ ] Cross-check bootstrap assumptions.
+
+### Risk: Universe Levels Become Unmanageable
+
+- [ ] Split semantic records into smaller records.
+- [ ] Keep universe polymorphism only where necessary.
+- [ ] Add small smoke modules before larger theorem modules.
+
+### Risk: Artifact Appears To Assume The Theorem
+
+- [ ] Avoid classifying horn trace as derived without semantic derivation.
+- [ ] Add explicit derivation theorem using `hfill`/`hcomp`.
+- [ ] Make adequacy assumptions visible in docs and audits.
+
+## Minimum Viable Next Version
+
+Use this section if time is limited.
+
+- [ ] Paper states the full theorem as conditional on a semantic adequacy
+      package.
+- [ ] Code defines `RawAdequacyPackage` explicitly.
+- [ ] Downstream exact-depth theorem is mechanized relative to the package.
+- [ ] Downstream recurrence theorem is mechanized relative to the package.
+- [ ] Downstream Fibonacci corollary is mechanized relative to the package.
+- [ ] Swap lower bound remains mechanized.
+- [ ] Paper clearly labels the semantic bridge and its mechanization status.
+- [ ] Artifact check includes all newly introduced semantic wrappers.
+- [ ] Trust-boundary document is updated.
+
+## Final Verification Commands
+
+Run these after the corresponding modules exist.
+
+```bash
+agda --transliterate Semantics/CubicalFoundation.agda
+agda --transliterate Semantics/SealedExtension.agda
+agda --transliterate Semantics/PrimitiveTrace.agda
+agda --transliterate Semantics/RawAdequacy.agda
+agda --transliterate Semantics/TraceNormalForm.agda
+agda --transliterate Semantics/SemanticHornReduction.agda
+agda --transliterate Semantics/DepthUpperBound.agda
+agda --transliterate Semantics/DepthLowerBound.agda
+agda --transliterate Semantics/ExactDepth.agda
+agda --transliterate Semantics/ChronologicalWindow.agda
+agda --transliterate Semantics/FullCoupling.agda
+agda --transliterate Semantics/ScalingRecurrence.agda
+agda --transliterate Semantics/FibonacciScaling.agda
+agda --transliterate Test/SemanticDepthSmoke.agda
+agda --transliterate Test/FibonacciScalingSmoke.agda
+```
+
+Also run:
+
+```bash
+scripts/check_coherence_depth_artifact.sh
+python scripts/check_paper_map.py
+python scripts/audit_postulates.py
+```

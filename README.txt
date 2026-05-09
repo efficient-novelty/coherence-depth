@@ -9,6 +9,10 @@ The broader development repository is:
 
   https://github.com/efficient-novelty/mechanization
 
+The public artifact repository for this folder is:
+
+  https://github.com/efficient-novelty/coherence-depth
+
 This artifact intentionally contains only the paper source, direct TeX
 dependencies, theorem-facing Agda modules, audit scripts, theorem-map
 documentation, and small case-study fixtures.
