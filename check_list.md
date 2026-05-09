@@ -493,20 +493,20 @@ Goal: make the theorem tangible and test classification boundaries.
 
 ### Fixture Tasks
 
-- [ ] Add one full-coupling sealed extension sequence fixture.
-- [ ] Add one sparse dependency fixture.
-- [ ] Add one transparent-development fixture.
+- [x] Add one full-coupling sealed extension sequence fixture.
+- [x] Add one sparse dependency fixture.
+- [x] Add one transparent-development fixture.
 - [ ] Add one higher-payload fixture.
 - [ ] Ensure each fixture has expected classification metadata.
 
 ### Possible Existing Case Studies To Review
 
-- [ ] Review `runs/coherence_depth_case_studies/universe_extension.yaml`.
-- [ ] Review `runs/coherence_depth_case_studies/universe_extension_refactored.yaml`.
-- [ ] Review `runs/coherence_depth_case_studies/sparse_datatype.yaml`.
-- [ ] Review `runs/coherence_depth_case_studies/transparent_lemma_extension.yaml`.
-- [ ] Review `runs/coherence_depth_case_studies/promoted_interface.yaml`.
-- [ ] Review `runs/coherence_depth_case_studies/global_modality.yaml`.
+- [x] Review `runs/coherence_depth_case_studies/universe_extension.yaml`.
+- [x] Review `runs/coherence_depth_case_studies/universe_extension_refactored.yaml`.
+- [x] Review `runs/coherence_depth_case_studies/sparse_datatype.yaml`.
+- [x] Review `runs/coherence_depth_case_studies/transparent_lemma_extension.yaml`.
+- [x] Review `runs/coherence_depth_case_studies/promoted_interface.yaml`.
+- [x] Review `runs/coherence_depth_case_studies/global_modality.yaml`.
 
 ### Test Tasks
 
@@ -518,10 +518,10 @@ Goal: make the theorem tangible and test classification boundaries.
 
 ### Paper Tasks
 
-- [ ] Add a small table of fixtures.
-- [ ] Show which fixture is full coupling.
-- [ ] Show which fixture is sparse.
-- [ ] Show which fixture is transparent and therefore outside recurrence.
+- [x] Add a small table of fixtures.
+- [x] Show which fixture is full coupling.
+- [x] Show which fixture is sparse.
+- [x] Show which fixture is transparent and therefore outside recurrence.
 - [ ] Show which fixture contains higher payload rather than structural trace.
 
 ### Acceptance Criteria

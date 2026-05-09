@@ -2185,6 +2185,32 @@ programs.
 
 \begin{table}[t]
 \centering
+\caption{Audited case-study fixtures and their classification role.}
+\label{tab:case-study-fixtures}
+\scriptsize
+\begin{tabular}{@{}p{0.22\linewidth}p{0.14\linewidth}p{0.13\linewidth}p{0.13\linewidth}p{0.24\linewidth}@{}}
+\toprule
+Fixture & Coupling regime & $\mu$ & Trace profile & Boundary demonstrated \\
+\midrule
+\AgdaPath{universe_extension.yaml} & full coupling & $2$ & unary $1$, binary $1$, higher horn derived & fully coupled sealed extension sequence \\
+\AgdaPath{universe_extension_refactored.yaml} & full coupling & $2$ & unary $1$, binary $1$, higher horn derived & same public cost after refactoring \\
+\AgdaPath{global_modality.yaml} & full coupling & $3$ & unary $1$, binary $2$, higher horn derived & global modal payload with full-envelope trace \\
+\AgdaPath{sparse_datatype.yaml} & sparse local & $1$ & unary $1$ & sparse footprint below the full envelope \\
+\AgdaPath{transparent_lemma_extension.yaml} & transparent zero & $0$ & no trace obligations & transparent development outside the recurrence \\
+\AgdaPath{promoted_interface.yaml} & active-basis totality & $2$ & unary $2$ & promoted interface package counted by active basis \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The fixture audit therefore exercises the full-coupling endpoint, the sparse
+case, transparent zero-latency growth, promoted active-basis counting, and
+presentation invariance. It deliberately does not use the higher horn rows as a
+higher-payload example: those rows are structural horn obligations marked
+derived, while a user-supplied higher HIT constructor would be payload and
+requires a separate fixture.
+
+\begin{table}[t]
+\centering
 \caption{Mechanization status of the main theorem stack.}
 \label{tab:mechanization-status}
 \scriptsize
