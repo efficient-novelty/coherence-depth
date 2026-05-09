@@ -84,6 +84,28 @@ data RawStructuralClause (ℓ : Level) : Type (ℓ-suc ℓ) where
   cmp  : NewPayloadRef → BasisSite → BasisSite → RawStructuralClause ℓ
   horn : RawBoundary ℓ → RawStructuralClause ℓ
 
+data RawStructuralClauseKind : Type where
+  unary-action-kind binary-comparison-kind derived-horn-kind :
+    RawStructuralClauseKind
+
+rawStructuralClauseKind :
+  RawStructuralClause ℓ → RawStructuralClauseKind
+rawStructuralClauseKind (act p s) =
+  unary-action-kind
+rawStructuralClauseKind (cmp p left right) =
+  binary-comparison-kind
+rawStructuralClauseKind (horn b) =
+  derived-horn-kind
+
+rawStructuralClauseSupportDepth :
+  RawStructuralClause ℓ → Nat
+rawStructuralClauseSupportDepth (act p s) =
+  suc zero
+rawStructuralClauseSupportDepth (cmp p left right) =
+  suc (suc zero)
+rawStructuralClauseSupportDepth (horn b) =
+  historyDepth b
+
 record RawTelescope {ℓ : Level} (A : Type ℓ) : Type ℓ where
   constructor mkRawTelescope
   field

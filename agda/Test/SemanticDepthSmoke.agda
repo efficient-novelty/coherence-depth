@@ -11,6 +11,8 @@ open import Metatheory.Obligations
         ; ChronologicalWindowAt
         )
 open import Metatheory.KanSubsumption using (structural-horn-language)
+open import Metatheory.RawStructuralSyntax using (RawBoundary)
+open import Metatheory.RawStructuralTyping using (PackagedHornBoundary)
 open import Semantics.CubicalFoundation
 open import Semantics.RawAdequacy
 open import Semantics.DepthUpperBound
@@ -19,6 +21,7 @@ open import Semantics.ExactDepth
 open import Semantics.ChronologicalWindow
 open import Semantics.PrimitiveTrace
 open import Semantics.SemanticHornReduction
+open import Semantics.TraceNormalForm
 
 semantic-upper-bound-smoke :
   {ℓF ℓ : Level}
@@ -87,3 +90,11 @@ horn-substitution-stability-smoke :
   Type ℓ
 horn-substitution-stability-smoke {F = F} boundary =
   semantic-derived-trace-respects-substitution F boundary
+
+horn-normal-form-derivation-smoke :
+  {ℓ : Level} {F : SemanticCubicalFoundation ℓ} {b : RawBoundary ℓ} ->
+  (package : PackagedHornBoundary b) ->
+  (derivation : HornSemanticDerivation F b) ->
+  SemanticDerivedHornTrace F (semanticBoundary derivation)
+horn-normal-form-derivation-smoke {F = F} {b = b} package derivation =
+  horn-normal-form-semantic-derived-trace F b package derivation

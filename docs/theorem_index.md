@@ -99,6 +99,10 @@ vocabulary `mechanized`, `conditional-on-adequacy-package`, `paper-only`, and
 | `traceHistoricalSupport` / `TraceHistoricalArity` | `Semantics.PrimitiveTrace` | semantic primitive traces carry explicit historical support data |
 | `RawAdequacyPackage` | `Semantics.RawAdequacy` | explicit semantic-to-raw bridge assumptions |
 | `semantic-trace-normal-form` | `Semantics.TraceNormalForm` | unary/binary/horn normal-form split |
+| `HornSemanticDerivation` | `Semantics.TraceNormalForm` | semantic derivation obligation carried by horn normal forms |
+| `semantic-trace-normal-form-with-derivation` | `Semantics.TraceNormalForm` | normal-form split where horn cases require semantic derivation data |
+| `semantic-normal-form-for-admissible-structural-field` | `Semantics.TraceNormalForm` | every admissible raw structural field has a semantic unary/binary/horn normal form |
+| `semantic-normal-form-for-admissible-structural-field-with-derivation` | `Semantics.TraceNormalForm` | admissible structural fields normalize with explicit horn derivation obligations |
 | `semantic-horn-extension-derived` | `Semantics.SemanticHornReduction` | derived horn trace from semantic Kan data |
 | `higher-horn-trace-derived-from-binary-boundary-data` | `Semantics.SemanticHornReduction` | higher horn trace is exposed as derived from binary boundary data |
 | `exported-horn-trace-computable-from-depth-two-data` | `Semantics.SemanticHornReduction` | exported horn trace field is computed from the depth-two boundary package |
@@ -193,9 +197,12 @@ vocabulary `mechanized`, `conditional-on-adequacy-package`, `paper-only`, and
 | `raw-extension-payload-fields` | `Metatheory.RawStructuralSyntax` | payload telescope projection for the fixed raw extension calculus |
 | `raw-extension-structural-clauses` | `Metatheory.RawStructuralSyntax` | structural-clause telescope projection for the fixed raw extension calculus |
 | `raw-extension-algebraic-fields` | `Metatheory.RawStructuralSyntax` | algebraic payload telescope projection for the fixed raw extension calculus |
+| `rawStructuralClauseKind` / `rawStructuralClauseSupportDepth` | `Metatheory.RawStructuralSyntax` | first-class classifier and support depth for raw structural clauses |
 | `act-clause-has-unary-support` | `Metatheory.RawStructuralTyping` | action clauses classify as unary structural trace support |
 | `cmp-clause-has-binary-support` | `Metatheory.RawStructuralTyping` | comparison clauses classify as binary structural trace support |
 | `horn-clause-has-higher-boundary-support` | `Metatheory.RawStructuralTyping` | horn clauses classify as packaged higher boundary support |
+| `typed-role-kind-matches-raw` | `Metatheory.RawStructuralTyping` | typed unary/binary/horn roles agree with the raw clause classifier |
+| `typed-role-support-depth-matches-raw` | `Metatheory.RawStructuralTyping` | typed role support depth agrees with the raw clause support depth |
 | `algebraic-field-is-payload-not-structural-trace` | `Metatheory.RawStructuralTyping` | higher user operations are algebraic payload, not structural trace projections |
 | `naked-higher-face-rejected-or-packaged` | `Metatheory.RawStructuralTyping` | admissible higher structural material is either rejected or packaged as a horn boundary |
 | `CanonicalNormalizedSignature` | `Metatheory.SurfaceNormalizationBridge` | canonical payload plus trace normal form for an admissible raw extension |
@@ -203,6 +210,8 @@ vocabulary `mechanized`, `conditional-on-adequacy-package`, `paper-only`, and
 | `raw-extension-elaborates-to-candidate` | `Metatheory.SurfaceNormalizationBridge` | package an admissible raw extension as a theorem-facing candidate |
 | `raw-extension-normalizes-to-canonical-signature` | `Metatheory.SurfaceNormalizationBridge` | named bridge from admissible raw extension to canonical signature |
 | `raw-trace-normalizes-to-canonical-signature` | `Metatheory.SurfaceNormalizationBridge` | normalize one typed raw structural role to a trace-cost field |
+| `admissible-structural-trace-field-normalizes` | `Metatheory.SurfaceNormalizationBridge` | every admissible structural field normalizes to a typed unary, binary, or horn role |
+| `admissible-structural-field-normalizes-to-canonical-field` | `Metatheory.SurfaceNormalizationBridge` | the normalized role is exactly the canonical trace-cost field used for counting |
 | `normalize-preserves-support` | `Metatheory.SurfaceNormalizationBridge` | raw normalization preserves the selected trace support |
 | `normalize-preserves-arity` | `Metatheory.SurfaceNormalizationBridge` | normalized arity matches normalized historical support |
 | `normalize-preserves-primitive-cost` | `Metatheory.SurfaceNormalizationBridge` | raw normalization preserves primitive/derived trace cost |

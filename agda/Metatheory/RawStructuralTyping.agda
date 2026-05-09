@@ -196,6 +196,48 @@ horn-clause-has-higher-boundary-support :
 horn-clause-has-higher-boundary-support b package =
   mkHigherBoundarySupport b package refl
 
+typed-role-clause-kind :
+  {ℓ : Level} →
+  {c : RawStructuralClause ℓ} →
+  TypedStructuralRole c →
+  RawStructuralClauseKind
+typed-role-clause-kind (unary-action-role p s) =
+  unary-action-kind
+typed-role-clause-kind (binary-comparison-role p left right) =
+  binary-comparison-kind
+typed-role-clause-kind (horn-boundary-role b package) =
+  derived-horn-kind
+
+typed-role-kind-matches-raw :
+  {ℓ : Level} →
+  {c : RawStructuralClause ℓ} →
+  (role : TypedStructuralRole c) →
+  typed-role-clause-kind role ≡ rawStructuralClauseKind c
+typed-role-kind-matches-raw (unary-action-role p s) = refl
+typed-role-kind-matches-raw (binary-comparison-role p left right) = refl
+typed-role-kind-matches-raw (horn-boundary-role b package) = refl
+
+typed-role-support-depth :
+  {ℓ : Level} →
+  {c : RawStructuralClause ℓ} →
+  TypedStructuralRole c →
+  Nat
+typed-role-support-depth (unary-action-role p s) =
+  suc zero
+typed-role-support-depth (binary-comparison-role p left right) =
+  suc (suc zero)
+typed-role-support-depth (horn-boundary-role b package) =
+  historyDepth b
+
+typed-role-support-depth-matches-raw :
+  {ℓ : Level} →
+  {c : RawStructuralClause ℓ} →
+  (role : TypedStructuralRole c) →
+  typed-role-support-depth role ≡ rawStructuralClauseSupportDepth c
+typed-role-support-depth-matches-raw (unary-action-role p s) = refl
+typed-role-support-depth-matches-raw (binary-comparison-role p left right) = refl
+typed-role-support-depth-matches-raw (horn-boundary-role b package) = refl
+
 algebraic-field-is-payload-not-structural-trace :
   {ℓ : Level} →
   (a : AlgebraicPayloadField ℓ) →

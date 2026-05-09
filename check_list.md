@@ -205,14 +205,14 @@ Goal: connect raw normalization to semantic trace roles.
 
 ### Existing Modules To Strengthen
 
-- [ ] Strengthen `agda/Metatheory/RawStructuralSyntax.agda`.
-- [ ] Strengthen `agda/Metatheory/RawStructuralTyping.agda`.
-- [ ] Strengthen `agda/Metatheory/SurfaceNormalizationBridge.agda`.
+- [x] Strengthen `agda/Metatheory/RawStructuralSyntax.agda`.
+- [x] Strengthen `agda/Metatheory/RawStructuralTyping.agda`.
+- [x] Strengthen `agda/Metatheory/SurfaceNormalizationBridge.agda`.
 
 ### Theorem Tasks
 
 - [x] Define semantic trace normal forms.
-- [ ] Prove every admissible structural trace field normalizes to unary action,
+- [x] Prove every admissible structural trace field normalizes to unary action,
       binary comparison, or derived horn package.
 - [x] Add theorem `semantic-trace-normal-form`.
 - [x] Add theorem `unary-action-trace-primitive-candidate`.
@@ -220,7 +220,7 @@ Goal: connect raw normalization to semantic trace roles.
 - [x] Add theorem `higher-horn-trace-derived`.
 - [x] Track support depth for every normalized role.
 - [x] Track primitive/derived status for every normalized role.
-- [ ] Ensure horn roles carry a semantic derivation obligation.
+- [x] Ensure horn roles carry a semantic derivation obligation.
 
 ### Paper Tasks
 
@@ -718,9 +718,9 @@ Goal: produce the next complete paper/artifact version.
 
 ### Existing Modules To Update
 
-- [ ] `agda/Metatheory/RawStructuralSyntax.agda`
-- [ ] `agda/Metatheory/RawStructuralTyping.agda`
-- [ ] `agda/Metatheory/SurfaceNormalizationBridge.agda`
+- [x] `agda/Metatheory/RawStructuralSyntax.agda`
+- [x] `agda/Metatheory/RawStructuralTyping.agda`
+- [x] `agda/Metatheory/SurfaceNormalizationBridge.agda`
 - [ ] `agda/Metatheory/UniversalRecurrence.agda`
 - [ ] `agda/Metatheory/SparseDependencyRecurrence.agda`
 - [ ] `agda/Metatheory/FullCouplingEnvelope.agda`

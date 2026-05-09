@@ -201,6 +201,30 @@ raw-trace-normalizes-to-canonical-signature :
 raw-trace-normalizes-to-canonical-signature =
   traceCostFieldForRole
 
+admissible-structural-trace-field-normalizes :
+  (B : LibraryState ℓ) →
+  (e : RawExtension ℓ) →
+  (admissible : AdmissibleRawExtension B e) →
+  (i : FieldIndex (normalizedTraceTelescope e admissible)) →
+  TypedStructuralRole
+    (RawTelescope.fieldAt (raw-extension-structural-clauses e) i)
+admissible-structural-trace-field-normalizes B e admissible i =
+  StructuralClausesWellTyped.structuralClauseTyped
+    (AdmissibleRawExtension.structuralWellTyped admissible)
+    i
+
+admissible-structural-field-normalizes-to-canonical-field :
+  (B : LibraryState ℓ) →
+  (e : RawExtension ℓ) →
+  (admissible : AdmissibleRawExtension B e) →
+  (i : FieldIndex (normalizedTraceTelescope e admissible)) →
+  traceCostFieldForRole
+    (admissible-structural-trace-field-normalizes B e admissible i)
+  ≡
+  normalizedTraceField e admissible i
+admissible-structural-field-normalizes-to-canonical-field B e admissible i =
+  refl
+
 normalize-preserves-support :
   (B : LibraryState ℓ) →
   (e : RawExtension ℓ) →
