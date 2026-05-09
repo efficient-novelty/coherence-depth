@@ -1,0 +1,66 @@
+{-# OPTIONS --cubical --safe --guardedness #-}
+
+module Test.Surface.ModalAdequacySmoke where
+
+open import Cubical.Foundations.Prelude
+open import Cubical.Foundations.Isomorphism using (Iso; isoToPath)
+
+open import CaseStudies.Common using (Unit; tt; unit-is-prop)
+open import Surface.Modal.Syntax
+open import Surface.Modal.Adequacy
+open import Surface.Modal.Normalization
+open import Surface.Modal.Elaboration using (four)
+
+unit-function-iso : Iso Unit (Unit → Unit)
+unit-function-iso = record
+  { fun = λ _ _ → tt
+  ; inv = λ _ → tt
+  ; rightInv = λ f → funExt (λ { tt → unit-is-prop tt (f tt) })
+  ; leftInv = λ { tt → refl }
+  }
+
+unit-function-path : Unit ≡ (Unit → Unit)
+unit-function-path =
+  isoToPath unit-function-iso
+
+modal-oldU : OldU
+modal-oldU =
+  mkOldU Unit (λ _ → Unit) (λ _ _ → tt) (λ _ _ → unit-function-path)
+
+modal-payload : ModPayload
+modal-payload =
+  mkModPayload (λ A → A) (λ A x → x)
+
+modal-trace : ModTrace modal-oldU modal-payload
+modal-trace =
+  mkModTrace
+    (λ _ → tt)
+    (λ _ → refl)
+    (λ _ _ → refl)
+    (λ _ _ → refl)
+
+minimal-modal : ModalDecl
+minimal-modal =
+  minimalModalDecl modal-oldU modal-payload modal-trace
+
+explicit-modal : ModalDecl
+explicit-modal =
+  explicitHornModalDecl modal-oldU modal-payload modal-trace
+
+minimal-modal-primitive-count :
+  modalPrimitiveTraceCount minimal-modal ≡ four
+minimal-modal-primitive-count =
+  modal-primitive-trace-preserved minimal-modal
+
+explicit-horn-does-not-change-mu-smoke :
+  muModal minimal-modal ≡ muModal explicit-modal
+explicit-horn-does-not-change-mu-smoke =
+  explicit-horn-presentation-invariant
+    minimal-modal
+    explicit-modal
+    refl
+    refl
+
+rebundled-trace-preserves-mu-smoke :
+  muModal minimal-modal ≡ muModal (minimalModalDecl modal-oldU modal-payload modal-trace)
+rebundled-trace-preserves-mu-smoke = refl

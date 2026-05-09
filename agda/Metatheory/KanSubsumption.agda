@@ -7,6 +7,9 @@ open import Cubical.Foundations.Isomorphism using (Iso)
 
 open import Core.Nat renaming (ℕ to Nat)
 open import Core.Sequence using (Vec; []; _∷_)
+open import CubicalOpenBox.Base
+open import CubicalOpenBox.Extension
+open import CubicalOpenBox.Contractible
 open import Metatheory.Obligations
   using ( HistoricalSupport
         ; mkSupport
@@ -62,24 +65,10 @@ arity3-open-box-hfilled :
 arity3-open-box-hfilled u u0 =
   hfill u u0
 
-data HornExtensionWitness : Type where
-  hornWitness : HornExtensionWitness
-
-record HornExtensionFiber {ℓ : Level} {A : Type ℓ} {φ : I}
-  (u : I → Partial φ A) (u0 : A [ φ ↦ u i0 ]) : Type ℓ where
-  constructor mkHornExtensionFiber
-  field
-    witness : HornExtensionWitness
-
-  missingFace : Arity3-Obligation u u0
-  missingFace =
-    arity3-obligation-syntactically-derivable u u0
-
-  filler : I → A
-  filler =
-    arity3-open-box-hfilled u u0
-
-open HornExtensionFiber public
+HornExtensionFiber : {ℓ : Level} {A : Type ℓ} {φ : I}
+  (u : I → Partial φ A) (u0 : A [ φ ↦ u i0 ]) → Type ℓ
+HornExtensionFiber u u0 =
+  OpenExt u u0 mkOpenBox
 
 canonical-horn-extension :
   {ℓ : Level} {A : Type ℓ} {φ : I} →
@@ -87,7 +76,19 @@ canonical-horn-extension :
   (u0 : A [ φ ↦ u i0 ]) →
   HornExtensionFiber u u0
 canonical-horn-extension u u0 =
-  mkHornExtensionFiber hornWitness
+  canonicalOpenExt u u0 mkOpenBox
+
+horn-extension-missing-face :
+  {ℓ : Level} {A : Type ℓ} {φ : I} →
+  {u : I → Partial φ A} {u0 : A [ φ ↦ u i0 ]} →
+  HornExtensionFiber u u0 → A
+horn-extension-missing-face fiber = fiber .fst
+
+horn-extension-filler :
+  {ℓ : Level} {A : Type ℓ} {φ : I} →
+  {u : I → Partial φ A} {u0 : A [ φ ↦ u i0 ]} →
+  (fiber : HornExtensionFiber u u0) → I → A
+horn-extension-filler fiber i = fiber .snd i
 
 horn-extension-fiber-contractible :
   {ℓ : Level} {A : Type ℓ} {φ : I} →
@@ -95,8 +96,7 @@ horn-extension-fiber-contractible :
   (u0 : A [ φ ↦ u i0 ]) →
   isContr (HornExtensionFiber u u0)
 horn-extension-fiber-contractible u u0 =
-  canonical-horn-extension u u0 , λ where
-    (mkHornExtensionFiber hornWitness) → refl
+  openExtIsContr u u0 mkOpenBox
 
 data HornCandidate : Type where
   horn-candidate : HornCandidate

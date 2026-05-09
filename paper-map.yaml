@@ -83,11 +83,18 @@
       "status": "mechanized",
       "status_detail": "fully formalized for the fixed raw extension calculus",
       "uses_bridge": false,
-      "trusted_inputs": ["Agda kernel", "Cubical library", "fixed raw syntax"]
+      "trusted_inputs": [
+        "Agda kernel",
+        "Cubical library",
+        "fixed raw syntax"
+      ],
+      "formal_status": "checked-internal"
     },
     {
       "paper_claim": "Canonical presentation and mu invariance",
-      "paper_labels": ["prop:canonical-presentation"],
+      "paper_labels": [
+        "prop:canonical-presentation"
+      ],
       "agda_modules": [
         "Metatheory/CanonicalTelescope.agda",
         "Metatheory/TraceCostNormalForm.agda",
@@ -106,12 +113,143 @@
       "status": "mechanized",
       "status_detail": "fully formalized",
       "uses_bridge": false,
-      "trusted_inputs": ["Agda kernel", "Cubical library", "Core/Nat.agda"]
+      "trusted_inputs": [
+        "Agda kernel",
+        "Cubical library",
+        "Core/Nat.agda"
+      ],
+      "formal_status": "checked-internal"
+    },
+    {
+      "claim_id": "H1",
+      "paper_claim": "Actual cubical open-box contractibility and structural horn identification",
+      "paper_labels": [
+        "lem:missing-face-openext",
+        "thm:actual-open-box-contractibility",
+        "lem:openext-substitution-stability"
+      ],
+      "agda_modules": [
+        "CubicalOpenBox/Base.agda",
+        "CubicalOpenBox/Extension.agda",
+        "CubicalOpenBox/Contractible.agda",
+        "CubicalOpenBox/Substitution.agda",
+        "Metatheory/StructuralHornShape.agda",
+        "Metatheory/StructuralHornToOpenBox.agda",
+        "Test/CubicalOpenBox/FlatArrHorn.agda",
+        "Test/CubicalOpenBox/NaturalitySmoke.agda",
+        "Test/CubicalOpenBox/ClosedBoundaryNotClaimed.agda"
+      ],
+      "agda_theorems": [
+        "OpenBox",
+        "OpenExt",
+        "canonicalOpenExt",
+        "openExtIsContr",
+        "OpenBoxReindexing",
+        "center-natural-under-reindexing",
+        "StructuralHornShape",
+        "structuralHornToOpenBox",
+        "structuralHornPackageIsoOpenExt",
+        "structuralHornExtensionIsContr",
+        "structuralHornExtensionNaturality",
+        "flatArrOpenExtContractible",
+        "identityCenterNatural",
+        "closed-boundary-not-routed-through-openExt"
+      ],
+      "status": "mechanized",
+      "formal_status": "checked-actual-cubical",
+      "status_detail": "uses actual Cubical Agda Partial/Sub-indexed open-box data and hcomp/hfill center; not a closed-boundary theorem",
+      "uses_bridge": false,
+      "trusted_inputs": [
+        "Agda kernel",
+        "Cubical library",
+        "Cubical Agda hcomp",
+        "Cubical Agda hfill",
+        "Cubical Agda Partial/Sub"
+      ],
+      "local_postulates": false,
+      "local_primitives": false,
+      "semantic_adequacy_required": false,
+      "external_transfer_required_for_broad_claim": true
+    },
+    {
+      "claim_id": "A1",
+      "paper_claim": "Modal surface adequacy instance",
+      "paper_labels": [
+        "thm:modal-surface-adequacy"
+      ],
+      "agda_modules": [
+        "Surface/Modal/Syntax.agda",
+        "Surface/Modal/Typing.agda",
+        "Surface/Modal/Routes.agda",
+        "Surface/Modal/Elaboration.agda",
+        "Surface/Modal/Normalization.agda",
+        "Surface/Modal/Adequacy.agda",
+        "Test/Surface/ModalAdequacySmoke.agda"
+      ],
+      "agda_theorems": [
+        "OldU",
+        "ModPayload",
+        "ModTrace",
+        "leftRoute",
+        "rightRoute",
+        "ArrHornType",
+        "elabModal",
+        "modal-elaboration-sound",
+        "modal-payload-preserved",
+        "modal-primitive-trace-preserved",
+        "modal-derived-horn-preserved",
+        "modal-support-preserved",
+        "modal-mu-preserved",
+        "explicit-horn-presentation-invariant",
+        "minimal-modal-primitive-count",
+        "explicit-horn-does-not-change-mu-smoke",
+        "rebundled-trace-preserves-mu-smoke"
+      ],
+      "status": "mechanized",
+      "formal_status": "checked-adequacy-instance",
+      "status_detail": "concrete SMod surface calculus elaborates into the fixed raw extension syntax preserving primitive/derived tags and mu",
+      "uses_bridge": false,
+      "trusted_inputs": [
+        "Agda kernel",
+        "Cubical library",
+        "fixed raw syntax"
+      ],
+      "local_postulates": false,
+      "semantic_adequacy_required": false,
+      "external_transfer_required_for_broad_claim": false,
+      "preserves": [
+        "well_typedness",
+        "primitive_derived_tags",
+        "historical_support",
+        "mu"
+      ]
+    },
+    {
+      "claim_id": "G1",
+      "paper_claim": "Broad Cubical Agda adequacy transfer",
+      "paper_labels": [],
+      "agda_modules": [],
+      "agda_theorems": [],
+      "status": "trusted-input",
+      "formal_status": "semantic-assumption",
+      "status_detail": "broad arbitrary Cubical Agda/source-language transfer remains open and must be supplied as a separate adequacy theorem",
+      "uses_bridge": true,
+      "trusted_inputs": [
+        "semantic adequacy package",
+        "external transfer theorem"
+      ],
+      "local_postulates": null,
+      "semantic_adequacy_required": true,
+      "external_transfer_required_for_broad_claim": true
     },
     {
       "paper_claim": "Transparent user growth",
-      "paper_labels": ["prop:transparent"],
-      "agda_modules": ["Metatheory/InterfaceCalculus.agda"],
+      "paper_labels": [
+        "prop:transparent"
+      ],
+      "agda_modules": [
+        "Metatheory/InterfaceCalculus.agda"
+      ],
       "agda_theorems": [
         "transparent-growth-keeps-library-state",
         "transparent-definitions-preserve-active-interface",
@@ -121,7 +259,11 @@
       "status": "mechanized",
       "status_detail": "fully formalized",
       "uses_bridge": false,
-      "trusted_inputs": ["Agda kernel", "Cubical library"]
+      "trusted_inputs": [
+        "Agda kernel",
+        "Cubical library"
+      ],
+      "formal_status": "checked-internal"
     },
     {
       "paper_claim": "Basis choice and active-basis contract",
@@ -147,11 +289,20 @@
       "status": "paper-only",
       "status_detail": "paper-level basis-choice reading; counted active-basis counterpart formalized",
       "uses_bridge": true,
-      "trusted_inputs": ["Agda kernel", "Cubical library", "counted active interface"]
+      "trusted_inputs": [
+        "Agda kernel",
+        "Cubical library",
+        "counted active interface"
+      ],
+      "formal_status": "paper-level-interpretation"
     },
     {
       "paper_claim": "Canonicity, trace principle, and mu-delta bridge",
-      "paper_labels": ["thm:canonicity", "thm:trace", "cor:mu-delta"],
+      "paper_labels": [
+        "thm:canonicity",
+        "thm:trace",
+        "cor:mu-delta"
+      ],
       "agda_modules": [
         "Metatheory/CanonicityDensity.agda",
         "Metatheory/TracePrinciple.agda",
@@ -173,11 +324,19 @@
       "status": "conditional-on-adequacy-package",
       "status_detail": "formalized through the fixed raw bridge",
       "uses_bridge": true,
-      "trusted_inputs": ["Agda kernel", "Cubical library", "fixed raw bridge"]
+      "trusted_inputs": [
+        "Agda kernel",
+        "Cubical library",
+        "fixed raw bridge"
+      ],
+      "formal_status": "checked-internal"
     },
     {
       "paper_claim": "Arity dimension and extensional collapse",
-      "paper_labels": ["lem:arity-dimension", "thm:extensional"],
+      "paper_labels": [
+        "lem:arity-dimension",
+        "thm:extensional"
+      ],
       "agda_modules": [
         "Metatheory/Obligations.agda",
         "Metatheory/Extensional.agda"
@@ -191,7 +350,11 @@
       "status": "mechanized",
       "status_detail": "fully formalized",
       "uses_bridge": false,
-      "trusted_inputs": ["Agda kernel", "Cubical library"]
+      "trusted_inputs": [
+        "Agda kernel",
+        "Cubical library"
+      ],
+      "formal_status": "checked-internal"
     },
     {
       "paper_claim": "Horn reduction, exact upper bound, and chronological window",
@@ -248,7 +411,12 @@
       "status": "mechanized",
       "status_detail": "fully formalized",
       "uses_bridge": false,
-      "trusted_inputs": ["Agda kernel", "Cubical library", "CCHM-style horn operations"]
+      "trusted_inputs": [
+        "Agda kernel",
+        "Cubical library",
+        "CCHM-style horn operations"
+      ],
+      "formal_status": "checked-internal"
     },
     {
       "paper_claim": "Higher elimination, factorization completeness, and horn interface",
@@ -283,11 +451,18 @@
       "status": "conditional-on-adequacy-package",
       "status_detail": "formalized through the fixed raw bridge",
       "uses_bridge": true,
-      "trusted_inputs": ["Agda kernel", "Cubical library", "fixed raw bridge"]
+      "trusted_inputs": [
+        "Agda kernel",
+        "Cubical library",
+        "fixed raw bridge"
+      ],
+      "formal_status": "checked-internal"
     },
     {
       "paper_claim": "Computational replacement",
-      "paper_labels": ["thm:computational-replacement"],
+      "paper_labels": [
+        "thm:computational-replacement"
+      ],
       "agda_modules": [
         "Metatheory/ComputationalReplacement.agda",
         "Metatheory/MuInvariance.agda"
@@ -303,7 +478,12 @@
       "status": "mechanized",
       "status_detail": "fully formalized on explicit canonical trace presentations",
       "uses_bridge": true,
-      "trusted_inputs": ["Agda kernel", "Cubical library", "canonical trace presentation interface"]
+      "trusted_inputs": [
+        "Agda kernel",
+        "Cubical library",
+        "canonical trace presentation interface"
+      ],
+      "formal_status": "checked-internal"
     },
     {
       "paper_claim": "Binary lower bounds and exact depth two",
@@ -348,11 +528,20 @@
       "status": "mechanized",
       "status_detail": "fully formalized",
       "uses_bridge": false,
-      "trusted_inputs": ["Agda kernel", "Cubical library", "univalence", "Cubical HITs"]
+      "trusted_inputs": [
+        "Agda kernel",
+        "Cubical library",
+        "univalence",
+        "Cubical HITs"
+      ],
+      "formal_status": "checked-internal"
     },
     {
       "paper_claim": "Abstract 2D-foundations wrappers",
-      "paper_labels": ["thm:2d-foundations", "cor:2ltt-instantiation"],
+      "paper_labels": [
+        "thm:2d-foundations",
+        "cor:2ltt-instantiation"
+      ],
       "agda_modules": [
         "Metatheory/TwoDFoundations.agda",
         "Metatheory/TwoLTTFoundations.agda"
@@ -377,7 +566,12 @@
       "status": "mechanized",
       "status_detail": "fully formalized",
       "uses_bridge": false,
-      "trusted_inputs": ["Agda kernel", "Cubical library", "abstract 2D foundation package"]
+      "trusted_inputs": [
+        "Agda kernel",
+        "Cubical library",
+        "abstract 2D foundation package"
+      ],
+      "formal_status": "checked-internal"
     },
     {
       "paper_claim": "Recurrence and arithmetic specializations",
@@ -436,11 +630,19 @@
       "status": "conditional-on-adequacy-package",
       "status_detail": "formalized; Fibonacci is the full-coupling endpoint of sparse recurrence",
       "uses_bridge": true,
-      "trusted_inputs": ["Agda kernel", "Cubical library", "Core/Nat.agda", "fixed raw bridge"]
+      "trusted_inputs": [
+        "Agda kernel",
+        "Cubical library",
+        "Core/Nat.agda",
+        "fixed raw bridge"
+      ],
+      "formal_status": "checked-internal"
     },
     {
       "paper_claim": "Barrier discipline and concrete window decompositions",
-      "paper_labels": ["sec:mechanization"],
+      "paper_labels": [
+        "sec:mechanization"
+      ],
       "agda_modules": [
         "Saturation/AbstractionBarrier.agda",
         "Saturation/AbstractionBarrier9.agda",
@@ -466,12 +668,21 @@
       "status": "mechanized",
       "status_detail": "checked local barrier examples and concrete decomposition recurrence witnesses",
       "uses_bridge": false,
-      "trusted_inputs": ["Agda kernel", "Cubical library", "Core/Nat.agda"]
+      "trusted_inputs": [
+        "Agda kernel",
+        "Cubical library",
+        "Core/Nat.agda"
+      ],
+      "formal_status": "checked-internal"
     },
     {
       "paper_claim": "Refactoring invariance",
-      "paper_labels": ["cor:refactoring"],
-      "agda_modules": ["Metatheory/Refactoring.agda"],
+      "paper_labels": [
+        "cor:refactoring"
+      ],
+      "agda_modules": [
+        "Metatheory/Refactoring.agda"
+      ],
       "agda_theorems": [
         "historical-support-correspondence",
         "refactoring-invariance"
@@ -479,11 +690,17 @@
       "status": "mechanized",
       "status_detail": "fully formalized",
       "uses_bridge": false,
-      "trusted_inputs": ["Agda kernel", "Cubical library"]
+      "trusted_inputs": [
+        "Agda kernel",
+        "Cubical library"
+      ],
+      "formal_status": "checked-internal"
     },
     {
       "paper_claim": "Case-study audit data",
-      "paper_labels": ["sec:mechanization"],
+      "paper_labels": [
+        "sec:mechanization"
+      ],
       "agda_modules": [
         "CaseStudies/UniverseExtension.agda",
         "CaseStudies/GlobalModality.agda",
@@ -510,7 +727,12 @@
       "status": "mechanized",
       "status_detail": "fully formalized and audited",
       "uses_bridge": false,
-      "trusted_inputs": ["Agda kernel", "Cubical library", "YAML case-study fixtures"]
+      "trusted_inputs": [
+        "Agda kernel",
+        "Cubical library",
+        "YAML case-study fixtures"
+      ],
+      "formal_status": "checked-internal"
     }
   ]
 }

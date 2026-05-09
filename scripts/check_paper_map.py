@@ -22,6 +22,7 @@ REQUIRED_ENTRY_FIELDS = {
     "agda_modules",
     "agda_theorems",
     "status",
+    "formal_status",
     "uses_bridge",
     "trusted_inputs",
 }
@@ -31,6 +32,13 @@ ALLOWED_STATUSES = {
     "conditional-on-adequacy-package",
     "paper-only",
     "trusted-input",
+}
+ALLOWED_FORMAL_STATUSES = {
+    "checked-internal",
+    "checked-actual-cubical",
+    "checked-adequacy-instance",
+    "semantic-assumption",
+    "paper-level-interpretation",
 }
 BRIDGE_BOUNDARY_KEYWORDS = (
     "adequacy",
@@ -129,6 +137,15 @@ def main() -> int:
                 f"entry {index} ({claim}): status must be one of: {allowed}"
             )
 
+        formal_status = raw_entry.get("formal_status")
+        if not isinstance(formal_status, str) or not formal_status:
+            errors.append(f"entry {index} ({claim}): formal_status must be a non-empty string")
+        elif formal_status not in ALLOWED_FORMAL_STATUSES:
+            allowed = ", ".join(sorted(ALLOWED_FORMAL_STATUSES))
+            errors.append(
+                f"entry {index} ({claim}): formal_status must be one of: {allowed}"
+            )
+
         detail = raw_entry.get("status_detail")
         if detail is not None and (not isinstance(detail, str) or not detail):
             errors.append(f"entry {index} ({claim}): status_detail must be a non-empty string")
@@ -147,6 +164,26 @@ def main() -> int:
 
         if not trusted_inputs:
             errors.append(f"entry {index} ({claim}): trusted_inputs must not be empty")
+
+        if isinstance(formal_status, str) and formal_status.startswith("checked-"):
+            if not modules:
+                errors.append(
+                    f"entry {index} ({claim}): checked formal status must list Agda modules"
+                )
+
+        if formal_status == "semantic-assumption" and raw_entry["status"] == "mechanized":
+            errors.append(
+                f"entry {index} ({claim}): semantic assumptions must not be reported as mechanized"
+            )
+
+        broad_text = " ".join([claim, *labels]).lower()
+        if (
+            ("arbitrary cubical agda" in broad_text or "broad cubical" in broad_text)
+            and formal_status not in {"semantic-assumption", "checked-adequacy-instance"}
+        ):
+            errors.append(
+                f"entry {index} ({claim}): broad Cubical Agda/CCHM claim needs adequacy-instance or semantic-assumption status"
+            )
 
         if raw_entry["status"] == "conditional-on-adequacy-package":
             if not raw_entry["uses_bridge"]:

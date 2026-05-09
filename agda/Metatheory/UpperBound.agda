@@ -12,10 +12,7 @@ open import Metatheory.KanSubsumption
   using ( StructuralObligation
         ; HornCandidate
         ; horn-candidate
-        ; HornExtensionWitness
         ; HornExtensionFiber
-        ; hornWitness
-        ; mkHornExtensionFiber
         ; depth2-boundary
         ; extend-remote-layer
         ; horn-extension-fiber-contractible
@@ -211,10 +208,10 @@ extend-after-collapse :
 extend-after-collapse u u0 zero depth2-boundary =
   refl
 extend-after-collapse u u0 (suc offset)
-  (extend-remote-layer boundary (mkHornExtensionFiber hornWitness)) =
-  cong
-    (λ b → extend-remote-layer b (mkHornExtensionFiber hornWitness))
+  (extend-remote-layer boundary fiber) =
+  cong₂ extend-remote-layer
     (extend-after-collapse u u0 offset boundary)
+    (horn-extension-fiber-contractible u u0 .snd fiber)
 
 structural-obligation-set-equivalence :
   {ℓ : Level} {A : Type ℓ} {φ : I} →
