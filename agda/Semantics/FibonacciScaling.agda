@@ -13,6 +13,7 @@ open import Core.AffineRecurrence
         ; scale
         )
 open import Semantics.CubicalFoundation
+open import Semantics.RawAdequacy
 open import Semantics.SealedExtension
 open import Semantics.FullCoupling
 open import Semantics.ScalingRecurrence
@@ -56,6 +57,21 @@ constant-payload-fibonacci-scaling :
 constant-payload-fibonacci-scaling S coupling constant bootstrap n =
   U-bootstrap-is-fibonacci _ n
 
+constant-payload-fibonacci-scaling-relative-to-adequacy :
+  {ℓ : Level} {F : SemanticCubicalFoundation ℓ} ->
+  RawAdequacyPackage F ->
+  (S : SemanticSealedSequence F) ->
+  FullCoupling S ->
+  {c : Nat} ->
+  ConstantPayload S c ->
+  Bootstrap S c ->
+  (n : Nat) ->
+  shiftedTrace c (suc (suc n))
+    ≡ shiftedTrace c (suc n) + shiftedTrace c n
+constant-payload-fibonacci-scaling-relative-to-adequacy
+  adequacy S coupling constant bootstrap n =
+  constant-payload-fibonacci-scaling S coupling constant bootstrap n
+
 constant-payload-fibonacci-closed :
   {ℓ : Level} {F : SemanticCubicalFoundation ℓ} ->
   (S : SemanticSealedSequence F) ->
@@ -67,3 +83,17 @@ constant-payload-fibonacci-closed :
   shiftedTrace c n ≡ scale c (fib (suc (suc n)))
 constant-payload-fibonacci-closed S coupling constant bootstrap n =
   U-bootstrap-closed _ n
+
+constant-payload-fibonacci-closed-relative-to-adequacy :
+  {ℓ : Level} {F : SemanticCubicalFoundation ℓ} ->
+  RawAdequacyPackage F ->
+  (S : SemanticSealedSequence F) ->
+  FullCoupling S ->
+  {c : Nat} ->
+  ConstantPayload S c ->
+  Bootstrap S c ->
+  (n : Nat) ->
+  shiftedTrace c n ≡ scale c (fib (suc (suc n)))
+constant-payload-fibonacci-closed-relative-to-adequacy
+  adequacy S coupling constant bootstrap n =
+  constant-payload-fibonacci-closed S coupling constant bootstrap n

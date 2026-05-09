@@ -7,6 +7,7 @@ open import Cubical.Foundations.Prelude
 
 open import Core.Nat renaming (ℕ to Nat)
 open import Semantics.CubicalFoundation
+open import Semantics.RawAdequacy
 open import Semantics.SealedExtension
 open import Semantics.FullCoupling
 
@@ -41,3 +42,14 @@ full-coupling-affine-recurrence :
     ≡ mu S (suc n) + mu S n + kappa S (suc n) + kappa S n
 full-coupling-affine-recurrence S coupling n =
   fullCouplingCardinality coupling n
+
+full-coupling-affine-recurrence-relative-to-adequacy :
+  {ℓ : Level} {F : SemanticCubicalFoundation ℓ} ->
+  RawAdequacyPackage F ->
+  (S : SemanticSealedSequence F) ->
+  FullCoupling S ->
+  (n : Nat) ->
+  mu S (suc (suc n))
+    ≡ mu S (suc n) + mu S n + kappa S (suc n) + kappa S n
+full-coupling-affine-recurrence-relative-to-adequacy adequacy S coupling n =
+  full-coupling-affine-recurrence S coupling n

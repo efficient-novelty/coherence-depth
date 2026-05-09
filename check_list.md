@@ -127,7 +127,7 @@ Goal: create the semantic layer that downstream results can depend on.
 - [x] Define primitive trace.
 - [x] Define derived trace.
 - [x] Define structural trace versus payload.
-- [ ] Define historical support.
+- [x] Define historical support.
 - [x] Define support depth.
 - [x] Define primitive trace depth at most `d`.
 - [x] Define primitive trace depth exactly `d`.
@@ -252,7 +252,7 @@ Goal: prove the core upper-bound engine using cubical composition/filling.
 - [x] Define semantic horn boundary data.
 - [x] Define semantic derived trace from `hfill`.
 - [x] Define semantic derived trace from `hcomp`.
-- [ ] Define higher structural obligation support beyond depth two.
+- [x] Define higher structural obligation support beyond depth two.
 - [x] Define telescopic remote comparison data.
 
 ### Theorem Tasks
@@ -261,9 +261,9 @@ Goal: prove the core upper-bound engine using cubical composition/filling.
 - [x] Add theorem `higher-structural-obligation-derived-by-hfill`.
 - [x] Add theorem `semantic-telescopic-subsumption`.
 - [x] Add theorem `semantic-remote-comparison-derived`.
-- [ ] Prove higher horn trace is derived from binary boundary data.
+- [x] Prove higher horn trace is derived from binary boundary data.
 - [x] Prove remote comparisons factor through a depth-two boundary.
-- [ ] Prove the exported trace field is computable from depth-two data.
+- [x] Prove the exported trace field is computable from depth-two data.
 
 ### Proof Safety Tasks
 
@@ -271,7 +271,7 @@ Goal: prove the core upper-bound engine using cubical composition/filling.
 - [x] If uniqueness is needed, restrict it to the theorem-facing exported trace
       package, not all semantic fillers.
 - [x] Ensure `hfill`/`hcomp` appear in the theorem dependencies.
-- [ ] Ensure substitution stability is used where required.
+- [x] Ensure substitution stability is used where required.
 
 ### Paper Tasks
 
@@ -336,13 +336,13 @@ Goal: prove unary trace alone is insufficient.
 
 ### Swap Witness Tasks
 
-- [ ] Define or reuse the two-point type witness.
-- [ ] Define or reuse the nontrivial swap equivalence.
-- [ ] Use univalence to obtain the swap path.
-- [ ] Show transport of a unary clause along the swap path changes the
+- [x] Define or reuse the two-point type witness.
+- [x] Define or reuse the nontrivial swap equivalence.
+- [x] Use univalence to obtain the swap path.
+- [x] Show transport of a unary clause along the swap path changes the
       observable action.
-- [ ] Show constant-left and constant-right are distinguishable.
-- [ ] Prove the binary comparison between `refl` and the swap path cannot be
+- [x] Show constant-left and constant-right are distinguishable.
+- [x] Prove the binary comparison between `refl` and the swap path cannot be
       derived from unary trace alone.
 - [x] Add theorem `swap-path-forces-binary-trace`.
 - [x] Add theorem `semantic-depth-one-impossible`.
@@ -418,7 +418,7 @@ Goal: derive scaling from exact depth two.
 - [x] Define `ChronologicalWindowSize`.
 - [x] Prove `exact-depth-two-implies-chronological-window-two`.
 - [x] Prove `stage-trace-supported-by-last-two-interfaces`.
-- [ ] State support as inclusion in `I_n + I_(n-1)`.
+- [x] State support as inclusion in `I_n + I_(n-1)`.
 
 ### Full Coupling Tasks
 
@@ -920,8 +920,8 @@ Use this section if time is limited.
       package.
 - [x] Code defines `RawAdequacyPackage` explicitly.
 - [x] Downstream exact-depth theorem is mechanized relative to the package.
-- [ ] Downstream recurrence theorem is mechanized relative to the package.
-- [ ] Downstream Fibonacci corollary is mechanized relative to the package.
+- [x] Downstream recurrence theorem is mechanized relative to the package.
+- [x] Downstream Fibonacci corollary is mechanized relative to the package.
 - [x] Swap lower bound remains mechanized.
 - [x] Paper clearly labels the semantic bridge and its mechanization status.
 - [x] Artifact check includes all newly introduced semantic wrappers.

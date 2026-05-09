@@ -18,6 +18,7 @@ open import Semantics.DepthLowerBound
 open import Semantics.ExactDepth
 open import Semantics.ChronologicalWindow
 open import Semantics.PrimitiveTrace
+open import Semantics.SemanticHornReduction
 
 semantic-upper-bound-smoke :
   {ℓF ℓ : Level}
@@ -58,3 +59,31 @@ higher-payload-smoke :
   PayloadTrace (higher-hit-constructor-as-payload {F = F} A 3)
 higher-payload-smoke {F = F} A =
   higher-hit-payload-not-structural-trace {F = F} A 3
+
+higher-payload-historical-arity-smoke :
+  {ℓ : Level} {F : SemanticCubicalFoundation ℓ} ->
+  (A : Type ℓ) ->
+  TraceHistoricalArity
+    (higher-hit-constructor-as-payload {F = F} A 3)
+    ≡ 0
+higher-payload-historical-arity-smoke A = refl
+
+swap-lower-bound-witness-smoke :
+  two-point-type-witness ≡ two-point-type-witness
+swap-lower-bound-witness-smoke = refl
+
+horn-computability-smoke :
+  {ℓ : Level} {F : SemanticCubicalFoundation ℓ} ->
+  (support : HigherStructuralObligationSupport F) ->
+  Carrier (supportBoundary support)
+horn-computability-smoke {F = F} =
+  exported-horn-trace-computable-from-depth-two-data F
+
+horn-substitution-stability-smoke :
+  {ℓ : Level} {F : SemanticCubicalFoundation ℓ} ->
+  (boundary : SemanticHornBoundaryData F) ->
+  {B : Type ℓ} ->
+  (Carrier boundary -> B) ->
+  Type ℓ
+horn-substitution-stability-smoke {F = F} boundary =
+  semantic-derived-trace-respects-substitution F boundary

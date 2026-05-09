@@ -31,6 +31,28 @@ record SemanticHornBoundaryData {ℓ : Level}
 
 open SemanticHornBoundaryData public
 
+record BinaryBoundaryTrace {ℓ : Level}
+  (F : SemanticCubicalFoundation ℓ)
+  (boundary : SemanticHornBoundaryData F) : Type ℓ where
+  constructor mkBinaryBoundaryTrace
+  field
+    leftBoundaryTrace : Carrier boundary
+    rightBoundaryTrace : Carrier boundary
+
+open BinaryBoundaryTrace public
+
+record HigherStructuralObligationSupport {ℓ : Level}
+  (F : SemanticCubicalFoundation ℓ) : Type (lsuc ℓ) where
+  constructor mkHigherStructuralObligationSupport
+  field
+    supportOffset : Nat
+    supportBoundary : SemanticHornBoundaryData F
+    binaryBoundaryData : BinaryBoundaryTrace F supportBoundary
+    supportDepth : Nat
+    supportDepthBeyondTwo : supportDepth ≡ 3 + supportOffset
+
+open HigherStructuralObligationSupport public
+
 record SemanticDerivedHornTrace {ℓ : Level}
   (F : SemanticCubicalFoundation ℓ)
   (boundary : SemanticHornBoundaryData F) : Type ℓ where
@@ -82,6 +104,33 @@ higher-structural-obligation-derived-by-hfill :
   derivedStatus (semantic-horn-extension-derived F boundary)
     ≡ refl
 higher-structural-obligation-derived-by-hfill F boundary = refl
+
+higher-horn-trace-derived-from-binary-boundary-data :
+  {ℓ : Level} ->
+  (F : SemanticCubicalFoundation ℓ) ->
+  (support : HigherStructuralObligationSupport F) ->
+  SemanticDerivedHornTrace F (supportBoundary support)
+higher-horn-trace-derived-from-binary-boundary-data F support =
+  semantic-horn-extension-derived F (supportBoundary support)
+
+exported-horn-trace-computable-from-depth-two-data :
+  {ℓ : Level} ->
+  (F : SemanticCubicalFoundation ℓ) ->
+  (support : HigherStructuralObligationSupport F) ->
+  Carrier (supportBoundary support)
+exported-horn-trace-computable-from-depth-two-data F support =
+  hcompTrace
+    (higher-horn-trace-derived-from-binary-boundary-data F support)
+
+semantic-derived-trace-respects-substitution :
+  {ℓ : Level} ->
+  (F : SemanticCubicalFoundation ℓ) ->
+  (boundary : SemanticHornBoundaryData F) ->
+  {B : Type ℓ} ->
+  (Carrier boundary -> B) ->
+  Type ℓ
+semantic-derived-trace-respects-substitution F boundary f =
+  KanStructure.substitution-stability (kan F) f
 
 semantic-telescopic-subsumption :
   {ℓ : Level} {A : Type ℓ} {φ : I} ->

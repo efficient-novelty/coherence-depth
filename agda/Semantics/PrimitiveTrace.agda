@@ -6,7 +6,8 @@ open import Agda.Primitive using (Level; lsuc)
 open import Cubical.Foundations.Prelude
 
 open import Core.Nat renaming (ℕ to Nat)
-open import Metatheory.Obligations using (_≤_)
+open import Core.Sequence using ([])
+open import Metatheory.Obligations using (_≤_; HistoricalSupport; mkSupport)
 open import Semantics.CubicalFoundation
 
 data TracePayloadClass : Type where
@@ -24,6 +25,7 @@ record PrimitiveTrace {ℓ : Level}
   field
     traceCarrier : Type ℓ
     traceSupportDepth : Nat
+    traceHistoricalSupport : HistoricalSupport traceSupportDepth
     traceClass : TracePayloadClass
     traceStatus : TracePrimitiveStatus
     traceRole : TraceRole
@@ -57,6 +59,13 @@ DerivedTraceField :
   Type
 DerivedTraceField t =
   traceStatus t ≡ derived-trace
+
+TraceHistoricalArity :
+  {ℓ : Level} {F : SemanticCubicalFoundation ℓ} ->
+  PrimitiveTrace F ->
+  Nat
+TraceHistoricalArity t =
+  HistoricalSupport.arity (traceHistoricalSupport t)
 
 record PrimitiveTraceDepthAtMost {ℓ : Level}
   (F : SemanticCubicalFoundation ℓ) (d : Nat) : Type (lsuc ℓ) where
@@ -96,6 +105,7 @@ higher-hit-constructor-as-payload Carrier arity =
   mkPrimitiveTrace
     Carrier
     arity
+    (mkSupport zero [])
     payload-trace
     primitive-trace
     higher-user-payload

@@ -96,14 +96,21 @@ vocabulary `mechanized`, `conditional-on-adequacy-package`, `paper-only`, and
 | `SemanticSealedLayer` | `Semantics.SealedExtension` | payload/trace sealed-layer split |
 | `semantic-public-interface` | `Semantics.SealedExtension` | public interface `K_n + T_n` |
 | `semantic-transparent-zero-latency` | `Semantics.SealedExtension` | transparent development has zero latency |
+| `traceHistoricalSupport` / `TraceHistoricalArity` | `Semantics.PrimitiveTrace` | semantic primitive traces carry explicit historical support data |
 | `RawAdequacyPackage` | `Semantics.RawAdequacy` | explicit semantic-to-raw bridge assumptions |
 | `semantic-trace-normal-form` | `Semantics.TraceNormalForm` | unary/binary/horn normal-form split |
 | `semantic-horn-extension-derived` | `Semantics.SemanticHornReduction` | derived horn trace from semantic Kan data |
+| `higher-horn-trace-derived-from-binary-boundary-data` | `Semantics.SemanticHornReduction` | higher horn trace is exposed as derived from binary boundary data |
+| `exported-horn-trace-computable-from-depth-two-data` | `Semantics.SemanticHornReduction` | exported horn trace field is computed from the depth-two boundary package |
+| `semantic-derived-trace-respects-substitution` | `Semantics.SemanticHornReduction` | semantic horn wrapper exposes the substitution-stability dependency |
 | `primitive-trace-depth-at-most-two` | `Semantics.DepthUpperBound` | adequacy-parameterized primitive upper bound |
 | `semantic-depth-one-impossible` | `Semantics.DepthLowerBound` | adequacy-parameterized unary lower-bound failure |
+| `two-point-type-witness` / `swap-path-from-univalence` | `Semantics.DepthLowerBound` | semantic aliases for the two-point swap lower-bound witness |
 | `cubical-foundations-primitive-coherence-depth-exactly-two` | `Semantics.ExactDepth` | canonical semantic-facing exact-depth theorem name |
 | `full-coupling-affine-recurrence` | `Semantics.ScalingRecurrence` | full-coupling cardinality recurrence wrapper |
+| `full-coupling-affine-recurrence-relative-to-adequacy` | `Semantics.ScalingRecurrence` | adequacy-parameterized recurrence wrapper |
 | `constant-payload-fibonacci-scaling` | `Semantics.FibonacciScaling` | constant-payload Fibonacci recurrence wrapper |
+| `constant-payload-fibonacci-scaling-relative-to-adequacy` | `Semantics.FibonacciScaling` | adequacy-parameterized constant-payload Fibonacci wrapper |
 | `transparent-growth-keeps-library-state` | `Metatheory.InterfaceCalculus` | transparent growth stays in one library state |
 | `transparent-definitions-preserve-active-interface` | `Metatheory.InterfaceCalculus` | transparent definitions do not enlarge the active interface |
 | `transparent-definitions-have-zero-integration-latency` | `Metatheory.InterfaceCalculus` | zero latency for transparent growth |
