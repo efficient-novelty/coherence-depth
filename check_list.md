@@ -406,11 +406,11 @@ Goal: derive scaling from exact depth two.
 - [x] Add `agda/Semantics/ChronologicalWindow.agda`.
 - [x] Add `agda/Semantics/FullCoupling.agda`.
 - [x] Add `agda/Semantics/ScalingRecurrence.agda`.
-- [ ] Refactor `agda/Metatheory/UniversalRecurrence.agda` to consume the
+- [x] Refactor `agda/Metatheory/UniversalRecurrence.agda` to consume the
       semantic window theorem where appropriate.
-- [ ] Refactor `agda/Metatheory/SparseDependencyRecurrence.agda` to keep sparse
+- [x] Refactor `agda/Metatheory/SparseDependencyRecurrence.agda` to keep sparse
       cases separate.
-- [ ] Refactor `agda/Metatheory/FullCouplingEnvelope.agda` to align with the
+- [x] Refactor `agda/Metatheory/FullCouplingEnvelope.agda` to align with the
       semantic full-coupling definition.
 
 ### Chronological Window Tasks
@@ -721,10 +721,10 @@ Goal: produce the next complete paper/artifact version.
 - [x] `agda/Metatheory/RawStructuralSyntax.agda`
 - [x] `agda/Metatheory/RawStructuralTyping.agda`
 - [x] `agda/Metatheory/SurfaceNormalizationBridge.agda`
-- [ ] `agda/Metatheory/UniversalRecurrence.agda`
-- [ ] `agda/Metatheory/SparseDependencyRecurrence.agda`
-- [ ] `agda/Metatheory/FullCouplingEnvelope.agda`
-- [ ] `agda/Core/AffineRecurrence.agda`
+- [x] `agda/Metatheory/UniversalRecurrence.agda`
+- [x] `agda/Metatheory/SparseDependencyRecurrence.agda`
+- [x] `agda/Metatheory/FullCouplingEnvelope.agda`
+- [x] `agda/Core/AffineRecurrence.agda`
 - [x] `agda/Everything.agda`
 - [x] `agda/PEN.agda`
 

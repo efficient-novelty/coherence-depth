@@ -291,6 +291,11 @@ open import Metatheory.SparseDependencyRecurrence public
   using ( sumFin
         ; CouplingFootprint
         ; mkCouplingFootprint
+        ; SparseFootprint
+        ; mkSparseFootprint
+        ; FullFootprint
+        ; mkFullFootprint
+        ; footprint-window-bound
         ; zero-coupling-footprint
         ; SparseWindowedContext
         ; mkSparseWindowedContext
@@ -311,9 +316,12 @@ open import Metatheory.FullCouplingEnvelope public
   using ( FullCouplingEnvelope
         ; mkFullCouplingEnvelope
         ; full-coupling-envelope
+        ; full-coupling-envelope-is-full-footprint
         ; full-coupling-sparse-context
         ; full-coupling-specializes-sparse-recurrence
         ; full-coupling-depth-two-affine-law
+        ; semantic-full-coupling-window-iso
+        ; semantic-full-coupling-cardinality-envelope
         )
 open import Metatheory.UniversalRecurrence public
   using ( CountedHistoricalLayer
@@ -332,6 +340,8 @@ open import Metatheory.UniversalRecurrence public
         ; recent-layer-affine-sum
         ; UniversalAffineRecurrence
         ; universal-affine-recurrence
+        ; semantic-depth-two-windowed-recurrence-context
+        ; semantic-universal-affine-recurrence
         ; universal-affine-recurrence-from-coherence
         )
 open import Metatheory.Extensional public

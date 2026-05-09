@@ -7,6 +7,12 @@ open import PEN
 affine-shift-available = U-is-fibonacci
 affine-bootstrap-available = tau-bootstrap-closed
 affine-depth1-available = tau-depth1-closed
+affine-payload-aware-bootstrap-step =
+  payload-aware-bootstrap-step
+affine-shifted-trace-step =
+  shifted-trace-fibonacci-step
+affine-shifted-trace-closed =
+  shifted-trace-fibonacci-closed
 
 obligation-language-surface = ObligationLanguage
 historical-support-surface = HistoricalSupport
@@ -169,6 +175,10 @@ windowed-recurrence-context-surface = WindowedRecurrenceContext
 chronological-recurrence-context-surface = ChronologicalRecurrenceContext
 universal-recurrence-package-surface = UniversalAffineRecurrence
 universal-recurrence-theorem-available = universal-affine-recurrence
+semantic-windowed-recurrence-context-available =
+  semantic-depth-two-windowed-recurrence-context
+semantic-universal-recurrence-theorem-available =
+  semantic-universal-affine-recurrence
 universal-recurrence-from-coherence-available =
   universal-affine-recurrence-from-coherence
 finite-active-interface-surface = FiniteActiveInterface
@@ -193,6 +203,9 @@ coverage-depth-window-noncircularity-example =
 coverage-fibonacci-noncircularity-example =
   coverage-alone-does-not-imply-fibonacci
 coupling-footprint-surface = CouplingFootprint
+sparse-footprint-surface = SparseFootprint
+full-footprint-surface = FullFootprint
+footprint-window-bound-theorem = footprint-window-bound
 sparse-windowed-context-surface = SparseWindowedContext
 sparse-windowed-recurrence-surface = SparseWindowedRecurrence
 sparse-windowed-recurrence-theorem =
@@ -207,10 +220,16 @@ orthogonal-extension-below-full-envelope-theorem =
   orthogonal-extension-below-full-envelope
 full-coupling-envelope-surface = FullCouplingEnvelope
 full-coupling-envelope-theorem = full-coupling-envelope
+full-coupling-envelope-is-full-footprint-theorem =
+  full-coupling-envelope-is-full-footprint
 full-coupling-specializes-sparse-recurrence-theorem =
   full-coupling-specializes-sparse-recurrence
 full-coupling-depth-two-affine-law-theorem =
   full-coupling-depth-two-affine-law
+semantic-full-coupling-window-iso-theorem =
+  semantic-full-coupling-window-iso
+semantic-full-coupling-cardinality-envelope-theorem =
+  semantic-full-coupling-cardinality-envelope
 
 extensional-available = history-truncates-to-one
 

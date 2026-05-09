@@ -48,6 +48,27 @@ record CouplingFootprint (n : Nat) : Type where
 
 open CouplingFootprint public
 
+record SparseFootprint (n : Nat) (F : CouplingFootprint n) : Type where
+  constructor mkSparseFootprint
+  field
+    containedInWindow : dependencyCount F ≤ n
+
+open SparseFootprint public
+
+record FullFootprint (n : Nat) (F : CouplingFootprint n) : Type where
+  constructor mkFullFootprint
+  field
+    coversWholeWindow : dependencyCount F ≡ n
+
+open FullFootprint public
+
+footprint-window-bound :
+  {n : Nat} →
+  (F : CouplingFootprint n) →
+  SparseFootprint n F
+footprint-window-bound F =
+  mkSparseFootprint (dependencyCount≤window F)
+
 zero-coupling-footprint : (n : Nat) → CouplingFootprint n
 zero-coupling-footprint n = record
   { dependencyCount = zero
@@ -75,6 +96,8 @@ sparse-next-latency C = payload C + sparse-footprint-cost C
 record SparseWindowedRecurrence (C : SparseWindowedContext) : Type where
   constructor mkSparseWindowedRecurrence
   field
+    footprintBound :
+      SparseFootprint (windowDepth C) (footprint C)
     footprintCost :
       Nat
     recurrenceLaw :
@@ -85,7 +108,8 @@ open SparseWindowedRecurrence public
 sparse-windowed-recurrence :
   (C : SparseWindowedContext) → SparseWindowedRecurrence C
 sparse-windowed-recurrence C = record
-  { footprintCost = sparse-next-latency C
+  { footprintBound = footprint-window-bound (footprint C)
+  ; footprintCost = sparse-next-latency C
   ; recurrenceLaw = refl
   }
 

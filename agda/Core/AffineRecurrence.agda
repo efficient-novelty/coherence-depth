@@ -151,6 +151,22 @@ U-bootstrap-closed c (suc (suc n)) =
   scale c (fib (suc (suc (suc n))) + fib (suc (suc n)))         ≡⟨ refl ⟩
   scale c (fib (suc (suc (suc (suc n)))))                       ∎
 
+payload-aware-bootstrap-step : (c n : ℕ) →
+  Delta-bootstrap c (suc (suc n))
+    ≡ Delta-bootstrap c (suc n) + Delta-bootstrap c n + payload2 c
+payload-aware-bootstrap-step =
+  Delta-bootstrap-step
+
+shifted-trace-fibonacci-step : (c n : ℕ) →
+  U-bootstrap c (suc (suc n)) ≡ U-bootstrap c (suc n) + U-bootstrap c n
+shifted-trace-fibonacci-step =
+  U-bootstrap-is-fibonacci
+
+shifted-trace-fibonacci-closed : (c n : ℕ) →
+  U-bootstrap c n ≡ scale c (fib (suc (suc n)))
+shifted-trace-fibonacci-closed =
+  U-bootstrap-closed
+
 tauShift : ℕ → ℕ
 tauShift zero = 5
 tauShift (suc n) = tauShift n + 2

@@ -25,6 +25,14 @@ open import Metatheory.TracePrinciple
         ; public-counting-normal-form
         ; integration-trace-principle
         )
+open import Metatheory.KanSubsumption
+  using (structural-horn-language)
+open import Semantics.CubicalFoundation
+  using (SemanticCubicalFoundation)
+open import Semantics.RawAdequacy
+  using (RawAdequacyPackage)
+open import Semantics.ChronologicalWindow
+  using (exact-depth-two-implies-chronological-window-two)
 
 private
   variable
@@ -178,6 +186,24 @@ windowed-recurrence-context :
     {ℓC = ℓC} {ℓO = ℓO} {ℓI = ℓI} {ℓP = ℓP} {ℓT = ℓT} L d
 windowed-recurrence-context = windowedContext
 
+semantic-depth-two-windowed-recurrence-context :
+  {ℓF ℓ ℓI ℓP ℓT : Level}
+  {F : SemanticCubicalFoundation ℓF} →
+  RawAdequacyPackage F →
+  {A : Type ℓ} {φ : I} →
+  (u : I → Partial φ A) →
+  (u0 : A [ φ ↦ u i0 ]) →
+  HasCoherenceDepth (structural-horn-language u u0) 2 →
+  HistoricalWindow {ℓI = ℓI} {ℓP = ℓP} {ℓT = ℓT} 2 →
+  WindowedRecurrenceContext
+    {ℓI = ℓI} {ℓP = ℓP} {ℓT = ℓT}
+    (structural-horn-language u u0) 2
+semantic-depth-two-windowed-recurrence-context adequacy u u0 exactDepth layers =
+  mkWindowedRecurrenceContext
+    (exact-depth-two-implies-chronological-window-two
+      adequacy u u0 exactDepth)
+    layers
+
 active-historical-interface :
   {L : ObligationLanguage ℓC ℓO} {d : Nat} →
   WindowedRecurrenceContext
@@ -225,6 +251,23 @@ universal-affine-recurrence C = record
   ; integration-latency-step =
       historical-interface-size-as-affine-sum (recentLayers C)
   }
+
+semantic-universal-affine-recurrence :
+  {ℓF ℓ ℓI ℓP ℓT : Level}
+  {F : SemanticCubicalFoundation ℓF} →
+  (adequacy : RawAdequacyPackage F) →
+  {A : Type ℓ} {φ : I} →
+  (u : I → Partial φ A) →
+  (u0 : A [ φ ↦ u i0 ]) →
+  (exactDepth : HasCoherenceDepth (structural-horn-language u u0) 2) →
+  (layers : HistoricalWindow {ℓI = ℓI} {ℓP = ℓP} {ℓT = ℓT} 2) →
+  UniversalAffineRecurrence
+    (semantic-depth-two-windowed-recurrence-context
+      adequacy u u0 exactDepth layers)
+semantic-universal-affine-recurrence adequacy u u0 exactDepth layers =
+  universal-affine-recurrence
+    (semantic-depth-two-windowed-recurrence-context
+      adequacy u u0 exactDepth layers)
 
 universal-affine-recurrence-from-coherence :
   {L : ObligationLanguage ℓC ℓO} {d : Nat} →
