@@ -305,6 +305,58 @@ of states, where each step adjoins one new sealed layer of the fixed extension c
 
 The definitions in this section are part of the theorem object. They are not claimed to be the unique possible formalization of cubical sealed extension. The broader adequacy question is whether a different cubical surface language or semantic foundation admits a faithful transfer into this raw calculus while preserving admissibility, primitive-versus-derived trace status, historical support, and public cardinality.
 
+\subsection{Notation and terminology}
+\label{subsec:notation-terminology}
+
+The paper uses the following notation consistently. The point of the table is
+to keep three levels separate: exact realized obligations, normalized public
+syntax, and chronological counting.
+
+\begin{table}[t]
+\centering
+\caption{Core notation.}
+\label{tab:notation}
+\small
+\begin{tabular}{@{}p{0.18\linewidth}p{0.56\linewidth}p{0.17\linewidth}@{}}
+\toprule
+Symbol & Meaning & Level \\
+\midrule
+$\Cext$ & fixed sealed-extension calculus studied in this paper & theorem object \\
+$X$ & candidate sealed extension before export & model \\
+$L_n$ & sealed layer exported at stage~$n$ & chronology \\
+$\kappa_n$ & payload size of layer~$n$ & count \\
+$\mu_n$ & primitive public trace size of layer~$n$ & count \\
+$\Real_k(X)$ & realized obligation object after exposing depth-$k$ history & exact obligation \\
+$\Prim_k(X)$ & primitive part of the normalized obligation signature & public syntax \\
+$\Der_k(X)$ & derived part of the normalized obligation signature & public syntax \\
+$d_{\mathrm{obl}}$ & exact obligation stabilization depth & metatheory \\
+$d_\mu$ & minimal public-signature depth & syntax/counting \\
+$\Foot_n$ & active footprint touched by the new layer & recurrence \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[t]
+\centering
+\caption{Compact glossary.}
+\label{tab:glossary}
+\small
+\begin{tabular}{@{}p{0.22\linewidth}p{0.68\linewidth}@{}}
+\toprule
+Term & Meaning in this paper \\
+\midrule
+Sealed extension & an extension whose internal derivation is hidden and whose public behavior is exposed only through a normalized signature \\
+Payload & genuinely new structure supplied by the extension \\
+Trace & public compatibility data required for the payload to interact with the existing active interface \\
+Primitive trace & trace that is not synthesized from other public data under the counting normalization \\
+Derived trace & trace present in some presentation but computed from lower trace or generic cubical operations \\
+Full coupling & the regime in which a new layer acts on every active primitive basis site in the relevant window \\
+Sparse footprint & the general case where only selected active sites are touched \\
+Adequacy boundary & the interface between the fixed raw calculus and broader semantic cubical systems \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \subsection{Raw syntax and judgments}
 \label{subsec:raw-syntax}
 
@@ -784,6 +836,20 @@ The trace principle counts kernel-level extensions and promoted interface packag
 \label{sec:bridge}
 
 The counting calculus of \autoref{sec:framework} is intended to measure explicit extension declarations over the fixed cubical core~$C$, not a freestanding payload calculus detached from syntax. This section spells out the semantic adequacy bridge for the fixed raw extension calculus of \autoref{def:surface-extension}. Raw payload, action, comparison, algebraic-payload, and packaged horn-boundary declarations normalize to sealed public signatures; sealing exports only their opaque public interfaces; and counting is performed on the normalized public signature of that export. The statement is intentionally narrower than an arbitrary Cubical Agda elaboration theorem: Cubical Agda is the mechanization environment, while the theorem target is the raw extension calculus defined here.
+
+\subsection{What an adequacy theorem would have to prove}
+\label{subsec:adequacy-preservation}
+
+The internal theorem is conditional on exactly the following preservation
+properties. An adequacy theorem from a richer cubical surface language into
+$\Cext$ must preserve semantic admissibility, primitive-versus-derived trace
+status, historical support, public cardinality~$\mu$, the horn-extension
+representation of structural integration obligations, the correspondence
+between opacity/sealing and the intended semantic boundary, and the
+correspondence between advertised global action and full-coupling coverage.
+This makes the conjecture falsifiable: a counterexample must either violate
+one of these bridge clauses or exhibit a structural obligation not representable
+as a derived horn-extension package in the target calculus.
 
 \begin{defi}[Semantic structural obligations]
 \label{def:semantic-structural-obligations}
@@ -1726,7 +1792,7 @@ which is unary data, and second a path over $\mathsf{loop}$ identifying the two 
 Crucially, the HIT signature of $S^2$ contains no constructor of dimension~$3$ or higher. Accordingly, the elimination rule for $S^2$ asks for no primitive input beyond the two point data and the path family~$\gamma$ above. Once the binary path-over-loop has been supplied, any further compatibility condition appears only as a horn-extension problem over the already displayed eliminator boundary. By the same cubical filling argument used above, that higher extension type is computed from the boundary and therefore disappears from every $\mu$-minimal public presentation by \autoref{thm:higher-elim}. Thus the clutching presentation furnishes an exact depth-$2$ witness.
 \end{proof}
 
-\begin{cor}[Exact primitive public structural trace depth two]
+\begin{cor}[Fixed-calculus exact public trace depth two]
 \label{cor:d2}
 \label{thm:cubical-depth-exactly-two}
 In the fixed cubical extension calculus considered above, the primitive public structural trace of admissible sealed structural extensions has exact coherence depth~$2$.
@@ -1738,6 +1804,10 @@ In the fixed cubical extension calculus considered above, the primitive public s
 
 \section{The complexity scaling theorem}
 \label{sec:scaling}
+
+The recurrence theorem is intentionally arithmetic. Its role is to expose the
+scaling consequence of the depth-two public-trace theorem once a chronological
+window and a coupling footprint have already been fixed.
 
 \begin{defi}[Layerwise payload and trace contributions]
 \label{def:layerwise-mu-kappa}
@@ -2399,6 +2469,29 @@ configuration for the same script; the remaining publication logistics are the
 final archival commit and a passing hosted build log for that commit, rather
 than mathematical claims silently assumed by the paper.
 
+\subsection{Reviewer-facing FAQ}
+\label{subsec:faq}
+
+\paragraph{Does the theorem say higher paths vanish?}
+No. It concerns primitive public structural trace at sealed boundaries, not
+internal homotopy dimension.
+
+\paragraph{Does it say Cubical Agda libraries grow by Fibonacci recurrence?}
+No. The Fibonacci statement is the fully coupled constant-payload endpoint of
+the sparse footprint theorem. Ordinary libraries are typically sparse.
+
+\paragraph{Is $\mu$ a line count?}
+No. It counts primitive public trace schemas in canonical normalized
+signatures.
+
+\paragraph{Does $\hcomp$ make every higher coherence contractible?}
+No. The contractible factors are the structural horn-extension packages
+generated by the fixed sealing calculus.
+
+\paragraph{Is the Agda artifact a proof for arbitrary surface programs?}
+No. It checks the fixed model, the raw bridge stated in
+\autoref{rem:bridge-target}, and the theorem-facing trace-accounting package.
+
 \section{Conclusion}
 \label{sec:conclusion}
 
@@ -2430,6 +2523,14 @@ The Cubical Agda development backs the theorem stack at the boundary stated in
 active-basis package, sparse/full recurrence package, and audit examples are
 checked in the cited theorem-facing modules, with the trusted assumptions made
 explicit rather than hidden in the prose.
+
+The broader statement that cubical foundations in general obey this law remains
+a conjectural program. The paper proves a depth-two theorem for a fixed formal
+sealed-extension calculus and proposes it as evidence for a broader cubical
+depth-two conjecture. The present calculus supplies a checked theorem object, a
+trace-accounting discipline, lower-bound witnesses, and an explicit adequacy
+boundary; future work is to prove transfer theorems from richer cubical surface
+calculi and concrete foundational extension mechanisms into this sealed model.
 
 \bibliographystyle{alphaurl}
 \bibliography{coherence_depth_refs}
