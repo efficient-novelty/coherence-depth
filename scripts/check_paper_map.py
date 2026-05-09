@@ -26,6 +26,13 @@ REQUIRED_ENTRY_FIELDS = {
     "trusted_inputs",
 }
 
+ALLOWED_STATUSES = {
+    "mechanized",
+    "conditional-on-adequacy-package",
+    "paper-only",
+    "trusted-input",
+}
+
 
 def load_map(path: Path) -> dict[str, Any]:
     try:
@@ -53,6 +60,13 @@ def check_theorem_name(contents: dict[Path, str], name: str) -> bool:
     return any(pattern.search(text) for text in contents.values())
 
 
+def theorem_like_labels(paper_text: str) -> set[str]:
+    return {
+        match.group(1)
+        for match in re.finditer(r"\\label\{((?:thm|lem|cor|prop):[^}]+)\}", paper_text)
+    }
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("map", nargs="?", default="paper-map.yaml")
@@ -78,6 +92,7 @@ def main() -> int:
 
     checked_modules: set[Path] = set()
     checked_names = 0
+    mapped_labels: set[str] = set()
 
     for index, raw_entry in enumerate(entries, start=1):
         if not isinstance(raw_entry, dict):
@@ -95,6 +110,15 @@ def main() -> int:
 
         if not isinstance(raw_entry["status"], str) or not raw_entry["status"]:
             errors.append(f"entry {index}: status must be a non-empty string")
+        elif raw_entry["status"] not in ALLOWED_STATUSES:
+            allowed = ", ".join(sorted(ALLOWED_STATUSES))
+            errors.append(
+                f"entry {index} ({claim}): status must be one of: {allowed}"
+            )
+
+        detail = raw_entry.get("status_detail")
+        if detail is not None and (not isinstance(detail, str) or not detail):
+            errors.append(f"entry {index} ({claim}): status_detail must be a non-empty string")
 
         if not isinstance(raw_entry["uses_bridge"], bool):
             errors.append(f"entry {index}: uses_bridge must be a boolean")
@@ -112,6 +136,7 @@ def main() -> int:
             errors.append(f"entry {index} ({claim}): trusted_inputs must not be empty")
 
         for label in labels:
+            mapped_labels.add(label)
             if not check_label(paper_text, label):
                 errors.append(f"entry {index} ({claim}): paper label not found: {label}")
 
@@ -132,6 +157,9 @@ def main() -> int:
                 errors.append(
                     f"entry {index} ({claim}): Agda name not found in listed modules: {name}"
                 )
+
+    for label in sorted(theorem_like_labels(paper_text) - mapped_labels):
+        errors.append(f"paper theorem-like label is missing from theorem map: {label}")
 
     if errors:
         for error in errors:

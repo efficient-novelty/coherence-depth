@@ -32,6 +32,14 @@ runs `bash scripts/check_coherence_depth_artifact.sh`. A passing hosted run for
 the final archival commit is still publication evidence, not a separate
 mathematical assumption.
 
+The paper's broad semantic statement is parametric in a
+`SemanticCubicalFoundation` and depends on a `RawAdequacyPackage` connecting
+admissible sealed semantic extensions to the fixed raw extension calculus. In
+this artifact the theorem-facing bridge is mechanized for that fixed raw
+calculus. Applying the theorem to arbitrary Cubical Agda programs, to another
+parser or elaborator, or to a different cubical calculus remains conditional on
+supplying the corresponding adequacy package.
+
 ## Trusted Base
 
 - Agda 2.8.0 with Cubical support.
@@ -79,7 +87,9 @@ shown irrelevant for the bridge layer.
 - `paper-map.yaml` records paper claims, paper labels, Agda module paths, Agda
   theorem names, status, bridge use, and trusted inputs.
 - `scripts/check_paper_map.py paper-map.yaml` verifies that all paper labels,
-  Agda files, and theorem names referenced by the map exist.
+  Agda files, theorem names, and theorem-map statuses referenced by the map
+  exist. The accepted statuses are `mechanized`,
+  `conditional-on-adequacy-package`, `paper-only`, and `trusted-input`.
 - `scripts/audit_postulates.py agda paper-map.yaml` computes the transitive
   import closure of the theorem-facing modules and reports, for each local
   module, whether it uses `postulate`, declares an Agda `primitive` block,

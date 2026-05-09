@@ -46,6 +46,27 @@ python scripts/coherence_depth_audit.py runs/coherence_depth_case_studies
 ./scripts/check_coherence_depth_artifact.sh
 ```
 
+## Semantic Upgrade Theorems
+
+The semantic theorem layer in `paper/1_coherence_depth.tex` is indexed by the
+following stable labels. The machine-readable `paper-map.yaml` uses the status
+vocabulary `mechanized`, `conditional-on-adequacy-package`, `paper-only`, and
+`trusted-input`; the checker rejects free-form status strings.
+
+| Paper label | Primary Agda surface | Status |
+|---|---|---|
+| semantic foundation interface | `SemanticCubicalFoundation` and `RawAdequacyPackage` are paper-level parameters for the broad semantic reading; the fixed raw-calculus instance is checked by the modules below | `trusted-input`/`conditional-on-adequacy-package` boundary |
+| `thm:semantic-adequacy` | fixed raw bridge modules, especially `Metatheory.SurfaceNormalizationBridge` and `Metatheory.SurfaceToHornImage` | `mechanized` for the fixed raw extension calculus |
+| `thm:factorization-complete` | `primitive-obligations-factor-through-last-two`, `surface-to-horn-normal-form` | `conditional-on-adequacy-package` for the surface-signature reading |
+| `thm:higher-elim` | `higher-arity-fields-disappear-from-minimal-signature`, `higher-structural-fields-derived` | `conditional-on-adequacy-package` |
+| `thm:semantic-horn-reduction` | `structural-integration-horn-reduction`, `remote-layer-obligation-derived` | `mechanized` |
+| `thm:primitive-depth-upper-bound` | `structural-obligation-set-equivalence`, `structural-stabilizes-at-two` | `mechanized` |
+| `thm:primitive-depth-lower-bound` | `explicit-binary-sealing-obstruction`, `adjunction-barrier` | `mechanized` |
+| `thm:cubical-depth-exactly-two` | `structural-coherence-depth-exactly-two`, `cubical-coherence-depth-exactly-two` | `mechanized` |
+| `cor:chrono-window` | `two-layer-chronological-window`, `chronological-markov-blanket` | `mechanized` |
+| `thm:full-coupling-affine-recurrence` | `universal-affine-recurrence`, `full-coupling-depth-two-affine-law` | `conditional-on-adequacy-package` for the paper's `mu` reading |
+| `cor:constant-payload-fibonacci` | `Delta-bootstrap`, `U-bootstrap-closed`, `tau-bootstrap-closed` | `conditional-on-adequacy-package` for the paper's `mu` reading |
+
 ## Theorem Names
 
 | Name | Module | Role |

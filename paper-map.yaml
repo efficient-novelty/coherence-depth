@@ -19,7 +19,15 @@
   "theorems": [
     {
       "paper_claim": "Fixed raw bridge package",
-      "paper_labels": ["rem:bridge-target"],
+      "paper_labels": [
+        "thm:elaboration",
+        "thm:adequacy",
+        "thm:semantic-adequacy",
+        "prop:normal-form-stability",
+        "prop:irreducible-necessary",
+        "lem:trace-cost-dictionary",
+        "rem:bridge-target"
+      ],
       "agda_modules": [
         "Metatheory/RawStructuralSyntax.agda",
         "Metatheory/RawStructuralTyping.agda",
@@ -45,7 +53,8 @@
         "PresentationStep",
         "mu-invariant-under-presentation-equivalence"
       ],
-      "status": "fully formalized for the fixed raw extension calculus",
+      "status": "mechanized",
+      "status_detail": "fully formalized for the fixed raw extension calculus",
       "uses_bridge": false,
       "trusted_inputs": ["Agda kernel", "Cubical library", "fixed raw syntax"]
     },
@@ -67,7 +76,8 @@
         "mu-preserved-by-presentation-step",
         "mu-invariant-under-presentation-equivalence"
       ],
-      "status": "fully formalized",
+      "status": "mechanized",
+      "status_detail": "fully formalized",
       "uses_bridge": false,
       "trusted_inputs": ["Agda kernel", "Cubical library", "Core/Nat.agda"]
     },
@@ -81,13 +91,19 @@
         "transparent-definitions-have-zero-integration-latency",
         "transparent-user-level-code-lies-outside-the-recurrence"
       ],
-      "status": "fully formalized",
+      "status": "mechanized",
+      "status_detail": "fully formalized",
       "uses_bridge": false,
       "trusted_inputs": ["Agda kernel", "Cubical library"]
     },
     {
       "paper_claim": "Basis choice and active-basis contract",
-      "paper_labels": ["thm:basis-choice"],
+      "paper_labels": [
+        "thm:basis-choice",
+        "lem:basis-invariants",
+        "thm:coverage",
+        "prop:basis-minimality"
+      ],
       "agda_modules": [
         "Metatheory/FiniteInterfaceBasis.agda",
         "Metatheory/ActiveBasisContract.agda"
@@ -101,7 +117,8 @@
         "coverage-alone-does-not-imply-depth-two-window",
         "coverage-alone-does-not-imply-fibonacci"
       ],
-      "status": "counted active-basis counterpart formalized",
+      "status": "paper-only",
+      "status_detail": "paper-level basis-choice reading; counted active-basis counterpart formalized",
       "uses_bridge": true,
       "trusted_inputs": ["Agda kernel", "Cubical library", "counted active interface"]
     },
@@ -126,7 +143,8 @@
         "normalized-signature-matches-counted-interface",
         "mu-of-trace-cost-normal-form"
       ],
-      "status": "formalized through the fixed raw bridge",
+      "status": "conditional-on-adequacy-package",
+      "status_detail": "formalized through the fixed raw bridge",
       "uses_bridge": true,
       "trusted_inputs": ["Agda kernel", "Cubical library", "fixed raw bridge"]
     },
@@ -143,7 +161,8 @@
         "UIP-forces-depth-1",
         "history-truncates-to-one"
       ],
-      "status": "fully formalized",
+      "status": "mechanized",
+      "status_detail": "fully formalized",
       "uses_bridge": false,
       "trusted_inputs": ["Agda kernel", "Cubical library"]
     },
@@ -151,7 +170,9 @@
       "paper_claim": "Horn reduction, exact upper bound, and chronological window",
       "paper_labels": [
         "lem:horn-reduction",
+        "thm:semantic-horn-reduction",
         "thm:upper",
+        "thm:primitive-depth-upper-bound",
         "cor:contractible-factor",
         "cor:chrono-window"
       ],
@@ -172,7 +193,8 @@
         "two-layer-chronological-window",
         "chronological-markov-blanket"
       ],
-      "status": "fully formalized",
+      "status": "mechanized",
+      "status_detail": "fully formalized",
       "uses_bridge": false,
       "trusted_inputs": ["Agda kernel", "Cubical library", "CCHM-style horn operations"]
     },
@@ -181,6 +203,7 @@
       "paper_labels": [
         "thm:factorization-complete",
         "thm:higher-elim",
+        "cor:dmu2",
         "lem:telescopic",
         "thm:horn-interface",
         "cor:cubical-horn-interface"
@@ -205,7 +228,8 @@
         "structural-primitive-eliminates-above-two",
         "cubical-depth-two-law-for-2d-foundations"
       ],
-      "status": "formalized through the fixed raw bridge",
+      "status": "conditional-on-adequacy-package",
+      "status_detail": "formalized through the fixed raw bridge",
       "uses_bridge": true,
       "trusted_inputs": ["Agda kernel", "Cubical library", "fixed raw bridge"]
     },
@@ -224,7 +248,8 @@
         "higher-arity-computational-replacement",
         "computational-replacement-preserves-mu"
       ],
-      "status": "fully formalized on explicit canonical trace presentations",
+      "status": "mechanized",
+      "status_detail": "fully formalized on explicit canonical trace presentations",
       "uses_bridge": true,
       "trusted_inputs": ["Agda kernel", "Cubical library", "canonical trace presentation interface"]
     },
@@ -232,9 +257,11 @@
       "paper_claim": "Binary lower bounds and exact depth two",
       "paper_labels": [
         "thm:adjunction",
+        "thm:primitive-depth-lower-bound",
         "rem:adjunction-reading",
         "thm:clutching",
-        "cor:d2"
+        "cor:d2",
+        "thm:cubical-depth-exactly-two"
       ],
       "agda_modules": [
         "Metatheory/AdjunctionBarrier.agda",
@@ -253,7 +280,8 @@
         "cubical-coherence-depth-exactly-two",
         "cubical-chronological-window-size-exactly-two"
       ],
-      "status": "fully formalized",
+      "status": "mechanized",
+      "status_detail": "fully formalized",
       "uses_bridge": false,
       "trusted_inputs": ["Agda kernel", "Cubical library", "univalence", "Cubical HITs"]
     },
@@ -281,13 +309,23 @@
         "two-level-depth-two-law-for-2d-foundations",
         "two-level-window-size-two-for-2d-foundations"
       ],
-      "status": "fully formalized",
+      "status": "mechanized",
+      "status_detail": "fully formalized",
       "uses_bridge": false,
       "trusted_inputs": ["Agda kernel", "Cubical library", "abstract 2D foundation package"]
     },
     {
       "paper_claim": "Recurrence and arithmetic specializations",
-      "paper_labels": ["thm:recurrence", "cor:d1", "cor:fibonacci"],
+      "paper_labels": [
+        "lem:window-cardinality",
+        "thm:recurrence",
+        "thm:full-coupling-affine-recurrence",
+        "cor:depth-two-window-recurrence",
+        "cor:d1",
+        "cor:fibonacci",
+        "cor:constant-payload-fibonacci",
+        "cor:phi"
+      ],
       "agda_modules": [
         "Metatheory/UniversalRecurrence.agda",
         "Metatheory/SparseDependencyRecurrence.agda",
@@ -314,7 +352,8 @@
         "U-bootstrap-closed",
         "tau-bootstrap-closed"
       ],
-      "status": "formalized; Fibonacci is the full-coupling endpoint of sparse recurrence",
+      "status": "conditional-on-adequacy-package",
+      "status_detail": "formalized; Fibonacci is the full-coupling endpoint of sparse recurrence",
       "uses_bridge": true,
       "trusted_inputs": ["Agda kernel", "Cubical library", "Core/Nat.agda", "fixed raw bridge"]
     },
@@ -326,7 +365,8 @@
         "historical-support-correspondence",
         "refactoring-invariance"
       ],
-      "status": "fully formalized",
+      "status": "mechanized",
+      "status_detail": "fully formalized",
       "uses_bridge": false,
       "trusted_inputs": ["Agda kernel", "Cubical library"]
     },
@@ -351,7 +391,8 @@
         "sparse-datatype-recurrence",
         "sparse-datatype-below-full-envelope"
       ],
-      "status": "fully formalized and audited",
+      "status": "mechanized",
+      "status_detail": "fully formalized and audited",
       "uses_bridge": false,
       "trusted_inputs": ["Agda kernel", "Cubical library", "YAML case-study fixtures"]
     }

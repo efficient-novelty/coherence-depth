@@ -151,8 +151,11 @@ The machine-readable map is:
   paper-map.yaml
 
 The map records paper claims, paper labels, Agda modules, theorem names,
-formalization status, bridge use, and trusted inputs. The artifact check runs
-scripts/check_paper_map.py against this map, runs
+formalization status, bridge use, and trusted inputs. Status values are
+restricted to `mechanized`, `conditional-on-adequacy-package`, `paper-only`,
+and `trusted-input`, so adequacy assumptions cannot hide behind free-form
+status prose. The artifact check runs scripts/check_paper_map.py against this
+map, runs
 scripts/audit_postulates.py over the transitive theorem-facing import closure,
 and runs the case-study fixture audit.
 
@@ -171,6 +174,11 @@ What is not formalized:
   - a transfer theorem for all cubical calculi or arbitrary HoTT;
   - a claim that ordinary transparent user libraries grow according to the
     full-coupling recurrence.
+
+The paper's broad semantic statement is parametric in a
+SemanticCubicalFoundation and depends on a RawAdequacyPackage. This artifact
+checks the fixed raw-calculus instance and records the remaining semantic
+transfer boundary in docs/coherence_depth_trust_boundary.md.
 
 The paper text discusses postulates in the broader development repository.
 Those auxiliary development files are not included in this artifact.

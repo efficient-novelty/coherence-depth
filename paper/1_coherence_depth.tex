@@ -852,6 +852,7 @@ By \autoref{def:surface-extension} and \autoref{def:elaboration}, the payload te
 
 \begin{thm}[Adequacy of normalized public signatures]
 \label{thm:adequacy}
+\label{thm:semantic-adequacy}
 Let $e$ be an admissible surface extension over~$\B_n$ and let $L(e)$ be its sealed export. Then:
 \begin{enumerate}
   \item every field of $N(e)$ comes from a field of the sealed public interface of~$L(e)$; counting normalization introduces no new primitive public datum;
@@ -1324,6 +1325,7 @@ This is a horn-extension type, not a closed-filler type. In cubical type theory,
 
 \begin{lem}[Syntactic horn reduction for structural integration coherence]
 \label{lem:horn-reduction}
+\label{thm:semantic-horn-reduction}
 Let $X$ be a foundational core candidate sealed at stage~$n+1$ in the fixed fully coupled cubical extension calculus. For every $k \geq 3$ and every boundary $\partial : \Real_{k-1}(X)$, the additional data exposed by adjoining the remote layer $L_{n-k+1}$ are canonically represented by a horn-extension fiber
 \[
   H_k(\partial)
@@ -1452,6 +1454,7 @@ In the fixed fully coupled cubical extension calculus, the minimal-signature dep
 
 \begin{thm}[Exact depth-two stabilization of realized obligations]
 \label{thm:upper}
+\label{thm:primitive-depth-upper-bound}
 In the fixed fully coupled cubical extension calculus, for every foundational core candidate~$X$ and every $k \geq 2$ there is a canonical equivalence
 \[
   \Real_k(X) \simeq \Real_2(X).
@@ -1592,6 +1595,7 @@ In the fixed fully coupled cubical extension calculus, every sealing step at sta
 
 \begin{thm}[Explicit binary sealing obstruction]
 \label{thm:adjunction}
+\label{thm:primitive-depth-lower-bound}
 Let the active interface of a fully coupled univalent foundation export the two-point type $\mathbf{2}$ and the univalent path
 \[
   p_{\mathsf{swap}} := \mathsf{ua}(\mathsf{swap}) : \mathbf{2} \equiv \mathbf{2}.
@@ -1690,6 +1694,7 @@ Crucially, the HIT signature of $S^2$ contains no constructor of dimension~$3$ o
 
 \begin{cor}[Exact primitive public structural trace depth two]
 \label{cor:d2}
+\label{thm:cubical-depth-exactly-two}
 In the fixed fully coupled cubical extension calculus considered above, the primitive public structural trace of admissible sealed structural extensions has exact coherence depth~$2$.
 \end{cor}
 
@@ -1813,6 +1818,7 @@ only the sparse formula of \autoref{lem:window-cardinality}.
 
 \begin{thm}[Full-coupling affine recurrence for primitive trace cost]
 \label{thm:recurrence}
+\label{thm:full-coupling-affine-recurrence}
 Let a fully coupled foundation have obligation depth~$d_{\mathrm{obl}}$ realized by a chronological window of size~$d_{\mathrm{obl}}$. Assume the stage~$n+1$ declaration is fully coupled against the whole active window,
 \[
   \Foot_{n,\mathrm{full}}^{(d_{\mathrm{obl}})}
@@ -1900,6 +1906,7 @@ Assume in this subsection that every sealed layer contributes the same core payl
 
 \begin{cor}[Affine Fibonacci recurrence]
 \label{cor:fibonacci}
+\label{cor:constant-payload-fibonacci}
 In the fixed fully coupled cubical extension calculus, if the obligation depth is~$2$ and every sealed layer contributes core payload size~$c$, then
 \[
   \mu_{n+1} = \mu_n + \mu_{n-1} + 2c.

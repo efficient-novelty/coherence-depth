@@ -17,6 +17,12 @@ MODULE_RE = re.compile(r"(?m)^\s*module\s+([A-Za-z0-9_.]+)\s+where\b")
 POSTULATE_RE = re.compile(r"(?m)^\s*postulate\b")
 PRIMITIVE_RE = re.compile(r"(?m)^\s*primitive(?:\s|$)")
 OPTIONS_RE = re.compile(r"\{-#\s*OPTIONS\s+([^#]*)#-\}", re.MULTILINE)
+ALLOWED_STATUSES = {
+    "mechanized",
+    "conditional-on-adequacy-package",
+    "paper-only",
+    "trusted-input",
+}
 
 
 def load_map(path: Path) -> dict[str, Any]:
@@ -129,6 +135,15 @@ def main() -> int:
         trusted_prefixes = ["Agda.", "Cubical."]
 
     errors: list[str] = []
+    for index, entry in enumerate(data.get("theorems", []), start=1):
+        if isinstance(entry, dict):
+            status = entry.get("status")
+            if status not in ALLOWED_STATUSES:
+                allowed = ", ".join(sorted(ALLOWED_STATUSES))
+                errors.append(
+                    f"paper-map entry {index}: status must be one of: {allowed}"
+                )
+
     queue: deque[Path] = deque(entry_module_paths(agda_root, data))
     seen: set[Path] = set()
     reports: list[dict[str, Any]] = []
