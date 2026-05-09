@@ -122,7 +122,7 @@
     },
     {
       "claim_id": "H1",
-      "paper_claim": "Actual cubical open-box contractibility and structural horn identification",
+      "paper_claim": "Cubical open-box boundary package and structural horn identification",
       "paper_labels": [
         "lem:missing-face-openext",
         "thm:actual-open-box-contractibility",
@@ -140,9 +140,13 @@
         "Test/CubicalOpenBox/ClosedBoundaryNotClaimed.agda"
       ],
       "agda_theorems": [
+        "StructuralOpenBox",
+        "CompatibleBoundaryFamily",
+        "canonicalFillSub",
         "OpenBox",
         "OpenExt",
         "canonicalOpenExt",
+        "isContrPathPSingleton",
         "openExtIsContr",
         "OpenBoxReindexing",
         "center-natural-under-reindexing",
@@ -155,10 +159,10 @@
         "identityCenterNatural",
         "closed-boundary-not-routed-through-openExt"
       ],
-      "status": "mechanized",
+      "status": "conditional-on-adequacy-package",
       "formal_status": "checked-actual-cubical",
-      "status_detail": "uses actual Cubical Agda Partial/Sub-indexed open-box data and hcomp/hfill center; not a closed-boundary theorem",
-      "uses_bridge": false,
+      "status_detail": "uses actual Cubical Agda Partial/Sub-indexed boundary data and hcomp/hfill center; the fully fibrant path-through-compatible-elements presentation is the explicit adequacy step; not a closed-boundary theorem",
+      "uses_bridge": true,
       "trusted_inputs": [
         "Agda kernel",
         "Cubical library",
@@ -168,7 +172,7 @@
       ],
       "local_postulates": false,
       "local_primitives": false,
-      "semantic_adequacy_required": false,
+      "semantic_adequacy_required": true,
       "external_transfer_required_for_broad_claim": true
     },
     {

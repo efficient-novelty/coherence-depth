@@ -4,8 +4,8 @@ Tracking checklist distilled from `paper_improvement_plan.md`. Keep detailed rat
 
 ## Open-box formalization
 
-- [ ] Replace the abstract/thin `OpenBox` object with an explicit `StructuralOpenBox`.
-- [ ] Include the cubical family `A`, visible-face condition `phi`, side boundary, and compatible base face.
+- [x] Replace the abstract/thin `OpenBox` object with an explicit `StructuralOpenBox`.
+- [x] Include the cubical family `A`, visible-face condition `phi`, side boundary, and compatible base face.
 - [ ] Define `BoundaryFamily` using compatible sub-elements.
 - [ ] Define `Lid` as the compatible subtype at `i1`.
 - [ ] Define `Filler` as a path through compatible elements.
@@ -16,15 +16,15 @@ Tracking checklist distilled from `paper_improvement_plan.md`. Keep detailed rat
 - [x] Prove the intuitive missing-face/filler package equivalent to explicit `OpenExt`.
 - [x] Prove that the missing-face/open-extension equivalence is substitution-natural.
 - [x] Construct `openExtCenter` using cubical composition/filling.
-- [ ] Add a wrapper such as `canonicalFillSub` for library-specific `Sub` details.
-- [ ] Prove `isContrPathPSingleton`.
+- [x] Add a wrapper such as `canonicalFillSub` for library-specific `Sub` details.
+- [x] Prove `isContrPathPSingleton`.
 - [x] Prove `openExtIsContr` without postulates.
 - [x] Explicitly distinguish total open-box extensions from fixed-lid fillers.
 - [x] Explicitly distinguish open-box extensions from closed-boundary filler spaces.
 - [x] Prove named substitution stability for `OpenExt`.
 - [x] Prove canonical center preservation under substitution.
 - [x] Add a negative/non-theorem guard against applying open-box contractibility to closed boundaries.
-- [ ] If the explicit theorem is not mechanized, downgrade the paper claim to an adequacy assumption.
+- [x] If the explicit theorem is not mechanized, downgrade the paper claim to an adequacy assumption.
 
 ## Open-box modules
 
@@ -147,7 +147,7 @@ Tracking checklist distilled from `paper_improvement_plan.md`. Keep detailed rat
 
 ## Acceptance gates
 
-- [ ] `StructuralOpenBox` is not empty.
+- [x] `StructuralOpenBox` is not empty.
 - [ ] `OpenExt` contains `Partial`/`Sub` data or explicit side/agreement equations.
 - [x] `openExtIsContr` is proved, not postulated.
 - [x] The proof contracts `Sigma lid, filler`, not arbitrary fixed-lid fillers.
@@ -164,4 +164,4 @@ Tracking checklist distilled from `paper_improvement_plan.md`. Keep detailed rat
 - [x] Exact `Real_k` stabilization is proved using contractible open-box factors.
 - [x] Minimal-public-signature elimination is proved using `DerivedTrace` and replacement.
 - [x] The paper does not conflate contractible exact factors, derived fields, `mu`-minimal elimination, and absent obligations.
-- [ ] Any remaining abstraction is labeled as an adequacy assumption.
+- [x] Any remaining abstraction is labeled as an adequacy assumption.

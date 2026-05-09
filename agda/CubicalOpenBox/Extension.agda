@@ -15,8 +15,7 @@ private
 
 -- The checked homogeneous filler is the path produced by hfill. The visible
 -- Partial boundary and Sub base are explicit parameters; the endpoint laws
--- below make the agreement obligations inspectable without moving Sub itself
--- out of Cubical Agda's strict universe.
+-- below make the agreement obligations inspectable.
 Filler :
   {A : Type ℓ} {φ : I} →
   (side : I → Partial φ A) →
@@ -55,6 +54,16 @@ canonicalLid :
   Lid side base B
 canonicalLid side base B = hcomp side (outS base)
 
+canonicalFillSub :
+  {A : Type ℓ} {φ : I} →
+  (side : I → Partial φ A) →
+  (base : A [ φ ↦ side i0 ]) →
+  (B : OpenBox side base) →
+  (i : I) →
+  CompatibleBoundaryFamily side base B i
+canonicalFillSub side base B i =
+  inS (hfill side base i)
+
 canonicalFill :
   {A : Type ℓ} {φ : I} →
   (side : I → Partial φ A) →
@@ -68,7 +77,9 @@ canonicalEndpointLaws :
   (side : I → Partial φ A) →
   (base : A [ φ ↦ side i0 ]) →
   (B : OpenBox side base) →
-  FillerEndpointLaws side base (hfill side base) (canonicalLid side base B)
+  FillerEndpointLaws side base
+    (hfill side base)
+    (canonicalLid side base B)
 canonicalEndpointLaws side base B =
   mkFillerEndpointLaws refl refl
 

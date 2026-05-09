@@ -18,6 +18,20 @@ flatArrBase = inS tt
 flatArrOpenBox : OpenBox flatArrBoundary flatArrBase
 flatArrOpenBox = mkOpenBox
 
+flatArrStructuralOpenBox : StructuralOpenBox ℓ-zero
+flatArrStructuralOpenBox =
+  mkStructuralOpenBox Unit i1 flatArrBoundary flatArrBase
+
+flatArrStructuralOpenBoxCarrier : Type ℓ-zero
+flatArrStructuralOpenBoxCarrier =
+  structuralA flatArrStructuralOpenBox
+
+flatArrCanonicalSubFill :
+  (i : I) →
+  CompatibleBoundaryFamily flatArrBoundary flatArrBase flatArrOpenBox i
+flatArrCanonicalSubFill =
+  canonicalFillSub flatArrBoundary flatArrBase flatArrOpenBox
+
 flatArrCanonicalExtension : OpenExt flatArrBoundary flatArrBase flatArrOpenBox
 flatArrCanonicalExtension =
   canonicalOpenExt flatArrBoundary flatArrBase flatArrOpenBox

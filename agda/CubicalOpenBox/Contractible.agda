@@ -13,6 +13,12 @@ private
     A : Type ℓ
     φ : I
 
+isContrPathPSingleton :
+  (B : I → Type ℓ) →
+  (b0 : B i0) →
+  isContr (Σ[ b1 ∈ B i1 ] PathP B b0 b1)
+isContrPathPSingleton = isContrSinglP
+
 openExtIsContr :
   {A : Type ℓ} {φ : I} →
   (side : I → Partial φ A) →

@@ -12,8 +12,7 @@ private
 
 -- The theorem-facing open box used by the paper. The visible faces are
 -- represented by the actual Cubical Agda Partial interface, and the base face
--- is a Sub element. Cubical Agda keeps Partial/Sub in the strict SSet universe,
--- so the side and base data live as indices rather than record fields.
+-- is a Sub element.
 record OpenBox {ℓ : Level} {A : Type ℓ} {φ : I}
   (side : I → Partial φ A)
   (base : A [ φ ↦ side i0 ]) : Type ℓ where
@@ -21,12 +20,38 @@ record OpenBox {ℓ : Level} {A : Type ℓ} {φ : I}
 
 open OpenBox public
 
-StructuralOpenBox :
-  {A : Type ℓ} {φ : I} →
-  (side : I → Partial φ A) →
-  (base : A [ φ ↦ side i0 ]) →
-  Type ℓ
-StructuralOpenBox = OpenBox
+record StructuralOpenBox (ℓ : Level) : SSet (ℓ-suc ℓ) where
+  constructor mkStructuralOpenBox
+  field
+    structuralA    : Type ℓ
+    structuralPhi  : I
+    structuralSide :
+      I → Partial structuralPhi structuralA
+    structuralBase :
+      structuralA [ structuralPhi ↦ structuralSide i0 ]
+
+open StructuralOpenBox public
+
+structuralOpenBoxAsOpenBox :
+  (ob : StructuralOpenBox ℓ) →
+  OpenBox (structuralSide ob) (structuralBase ob)
+structuralOpenBoxAsOpenBox ob = mkOpenBox
+
+structuralBoundaryFamily :
+  (ob : StructuralOpenBox ℓ) →
+  I → SSet ℓ
+structuralBoundaryFamily ob i =
+  structuralA ob [ structuralPhi ob ↦ structuralSide ob i ]
+
+structuralLid :
+  (ob : StructuralOpenBox ℓ) →
+  SSet ℓ
+structuralLid ob = structuralBoundaryFamily ob i1
+
+structuralBaseFace :
+  (ob : StructuralOpenBox ℓ) →
+  SSet ℓ
+structuralBaseFace ob = structuralBoundaryFamily ob i0
 
 openBoxSide :
   {A : Type ℓ} {φ : I} →
@@ -44,13 +69,30 @@ openBoxBase :
   A [ φ ↦ side i0 ]
 openBoxBase side base B = base
 
+BoundaryFamily :
+  {A : Type ℓ} {φ : I} →
+  (side : I → Partial φ A) →
+  (base : A [ φ ↦ side i0 ]) →
+  OpenBox side base →
+  I → Type ℓ
+BoundaryFamily {A = A} side base B i = A
+
+CompatibleBoundaryFamily :
+  {A : Type ℓ} {φ : I} →
+  (side : I → Partial φ A) →
+  (base : A [ φ ↦ side i0 ]) →
+  OpenBox side base →
+  I → SSet ℓ
+CompatibleBoundaryFamily {A = A} {φ = φ} side base B i =
+  A [ φ ↦ side i ]
+
 OpenBoxFamily :
   {A : Type ℓ} {φ : I} →
   (side : I → Partial φ A) →
   (base : A [ φ ↦ side i0 ]) →
   OpenBox side base →
   I → Type ℓ
-OpenBoxFamily {A = A} side base B i = A
+OpenBoxFamily = BoundaryFamily
 
 Lid :
   {A : Type ℓ} {φ : I} →
