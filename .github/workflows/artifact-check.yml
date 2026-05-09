@@ -71,6 +71,6 @@ jobs:
             echo "cubical-0.9"
           } > "$HOME/.agda/defaults"
 
-      - name: Run artifact check
+      - name: Run artifact and semantic checks
         shell: bash
         run: bash scripts/check_coherence_depth_artifact.sh

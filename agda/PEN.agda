@@ -350,6 +350,21 @@ open import Metatheory.AdjunctionBarrier public
          TriangleIdentityCorollary; triangle-identity-corollary;
          adjunction-barrier)
 
+-- Semantic theorem interface and paper-facing wrappers
+import Semantics.CubicalFoundation
+import Semantics.SealedExtension
+import Semantics.PrimitiveTrace
+import Semantics.RawAdequacy
+import Semantics.TraceNormalForm
+import Semantics.SemanticHornReduction
+import Semantics.DepthUpperBound
+import Semantics.DepthLowerBound
+import Semantics.ExactDepth
+import Semantics.ChronologicalWindow
+import Semantics.FullCoupling
+import Semantics.ScalingRecurrence
+import Semantics.FibonacciScaling
+
 -- ============================================
 -- Main Results (Phase 1)
 -- ============================================

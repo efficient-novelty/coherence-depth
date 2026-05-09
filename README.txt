@@ -31,6 +31,7 @@ agda/
   PEN.agda
   pen.agda-lib
   Core/
+  Semantics/
   Metatheory/
   Geometry/
   CaseStudies/
@@ -96,6 +97,21 @@ Equivalent core checks from PowerShell:
   agda --transliterate Geometry/Clutching.agda
   agda --transliterate Test/ClutchingSmoke.agda
   agda --transliterate Test/Fibonacci.agda
+  agda --transliterate Semantics/CubicalFoundation.agda
+  agda --transliterate Semantics/SealedExtension.agda
+  agda --transliterate Semantics/PrimitiveTrace.agda
+  agda --transliterate Semantics/RawAdequacy.agda
+  agda --transliterate Semantics/TraceNormalForm.agda
+  agda --transliterate Semantics/SemanticHornReduction.agda
+  agda --transliterate Semantics/DepthUpperBound.agda
+  agda --transliterate Semantics/DepthLowerBound.agda
+  agda --transliterate Semantics/ExactDepth.agda
+  agda --transliterate Semantics/ChronologicalWindow.agda
+  agda --transliterate Semantics/FullCoupling.agda
+  agda --transliterate Semantics/ScalingRecurrence.agda
+  agda --transliterate Semantics/FibonacciScaling.agda
+  agda --transliterate Test/SemanticDepthSmoke.agda
+  agda --transliterate Test/FibonacciScalingSmoke.agda
   agda --transliterate CaseStudies/HigherPayload.agda
   agda --transliterate Test/HigherPayloadSmoke.agda
 

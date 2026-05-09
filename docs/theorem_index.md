@@ -1,6 +1,6 @@
 # Coherence-Depth Theorem Index
 
-Date: 2026-05-02
+Date: 2026-05-09
 
 This index gives the stable names to search for when checking the Agda side of
 `1_coherence_depth.tex`.
@@ -24,6 +24,19 @@ agda --transliterate Metatheory/GlobalActionSemantics.agda
 agda --transliterate Metatheory/ActiveBasisContract.agda
 agda --transliterate Metatheory/SparseDependencyRecurrence.agda
 agda --transliterate Metatheory/FullCouplingEnvelope.agda
+agda --transliterate Semantics/CubicalFoundation.agda
+agda --transliterate Semantics/SealedExtension.agda
+agda --transliterate Semantics/PrimitiveTrace.agda
+agda --transliterate Semantics/RawAdequacy.agda
+agda --transliterate Semantics/TraceNormalForm.agda
+agda --transliterate Semantics/SemanticHornReduction.agda
+agda --transliterate Semantics/DepthUpperBound.agda
+agda --transliterate Semantics/DepthLowerBound.agda
+agda --transliterate Semantics/ExactDepth.agda
+agda --transliterate Semantics/ChronologicalWindow.agda
+agda --transliterate Semantics/FullCoupling.agda
+agda --transliterate Semantics/ScalingRecurrence.agda
+agda --transliterate Semantics/FibonacciScaling.agda
 agda --transliterate CaseStudies/UniverseExtension.agda
 agda --transliterate CaseStudies/GlobalModality.agda
 agda --transliterate CaseStudies/PromotedInterface.agda
@@ -33,6 +46,8 @@ agda --transliterate Test/SurfaceBridgeSmoke.agda
 agda --transliterate Test/ActiveBasisExamples.agda
 agda --transliterate Test/SparseRecurrenceSmoke.agda
 agda --transliterate Test/HigherPayloadSmoke.agda
+agda --transliterate Test/SemanticDepthSmoke.agda
+agda --transliterate Test/FibonacciScalingSmoke.agda
 agda --transliterate Test/PresentationInvariance/RebundleRecord.agda
 agda --transliterate Test/PresentationInvariance/SplitShell.agda
 agda --transliterate Test/PresentationInvariance/CurryUncurry.agda
@@ -57,22 +72,37 @@ vocabulary `mechanized`, `conditional-on-adequacy-package`, `paper-only`, and
 
 | Paper label | Primary Agda surface | Status |
 |---|---|---|
-| semantic foundation interface | `SemanticCubicalFoundation` and `RawAdequacyPackage` are paper-level parameters for the broad semantic reading; the fixed raw-calculus instance is checked by the modules below | `trusted-input`/`conditional-on-adequacy-package` boundary |
-| `thm:semantic-adequacy` | fixed raw bridge modules, especially `Metatheory.SurfaceNormalizationBridge` and `Metatheory.SurfaceToHornImage` | `mechanized` for the fixed raw extension calculus |
+| semantic foundation interface | `Semantics.CubicalFoundation`, `Semantics.SealedExtension`, `Semantics.PrimitiveTrace`, and `Semantics.RawAdequacy` package the broad semantic reading; the fixed raw-calculus instance is checked by the modules below | `trusted-input`/`conditional-on-adequacy-package` boundary |
+| `thm:semantic-adequacy` | `RawAdequacyPackage` plus fixed raw bridge modules, especially `Metatheory.SurfaceNormalizationBridge` and `Metatheory.SurfaceToHornImage` | `mechanized` for the fixed raw extension calculus, parameterized for the semantic bridge |
 | `thm:factorization-complete` | `primitive-obligations-factor-through-last-two`, `surface-to-horn-normal-form` | `conditional-on-adequacy-package` for the surface-signature reading |
 | `thm:higher-elim` | `higher-arity-fields-disappear-from-minimal-signature`, `higher-structural-fields-derived` | `conditional-on-adequacy-package` |
-| `thm:semantic-horn-reduction` | `structural-integration-horn-reduction`, `remote-layer-obligation-derived` | `mechanized` |
-| `thm:primitive-depth-upper-bound` | `structural-obligation-set-equivalence`, `structural-stabilizes-at-two` | `mechanized` |
-| `thm:primitive-depth-lower-bound` | `explicit-binary-sealing-obstruction`, `adjunction-barrier` | `mechanized` |
-| `thm:cubical-depth-exactly-two` | `structural-coherence-depth-exactly-two`, `cubical-coherence-depth-exactly-two` | `mechanized` |
-| `cor:chrono-window` | `two-layer-chronological-window`, `chronological-markov-blanket` | `mechanized` |
-| `thm:full-coupling-affine-recurrence` | `universal-affine-recurrence`, `full-coupling-depth-two-affine-law` | `conditional-on-adequacy-package` for the paper's `mu` reading |
-| `cor:constant-payload-fibonacci` | `Delta-bootstrap`, `U-bootstrap-closed`, `tau-bootstrap-closed` | `conditional-on-adequacy-package` for the paper's `mu` reading |
+| `thm:semantic-horn-reduction` | `semantic-horn-extension-derived`, `higher-structural-obligation-derived-by-hfill`, `semantic-remote-comparison-derived` | `mechanized` |
+| `thm:primitive-depth-upper-bound` | `primitive-trace-depth-at-most-two`, `structural-obligation-set-equivalence`, `structural-stabilizes-at-two` | `mechanized` |
+| `thm:primitive-depth-lower-bound` | `semantic-depth-one-impossible`, `swap-path-forces-binary-trace`, `adjunction-barrier` | `mechanized` |
+| `thm:cubical-depth-exactly-two` | `cubical-foundations-primitive-coherence-depth-exactly-two`, `structural-coherence-depth-exactly-two`, `cubical-coherence-depth-exactly-two` | `mechanized` |
+| `cor:chrono-window` | `exact-depth-two-implies-chronological-window-two`, `stage-trace-supported-by-last-two-interfaces`, `chronological-markov-blanket` | `mechanized` |
+| `thm:full-coupling-affine-recurrence` | `FullCoupling`, `fullCouplingIso`, `full-coupling-window-iso`, `full-coupling-affine-recurrence`, `universal-affine-recurrence` | `conditional-on-adequacy-package` for the paper's `mu` reading |
+| `cor:constant-payload-fibonacci` | `constant-payload-fibonacci-scaling`, `constant-payload-fibonacci-closed`, `Delta-bootstrap`, `U-bootstrap-closed` | `conditional-on-adequacy-package` for the paper's `mu` reading |
 
 ## Theorem Names
 
 | Name | Module | Role |
 |---|---|---|
+| `SemanticCubicalFoundation` | `Semantics.CubicalFoundation` | semantic cubical foundation parameter |
+| `KanStructure` | `Semantics.CubicalFoundation` | interval, face, partial, transport, hcomp, and hfill interface |
+| `UnivalenceStructure` | `Semantics.CubicalFoundation` | optional lower-bound univalence package |
+| `SemanticLibraryState` | `Semantics.SealedExtension` | semantic active-interface state |
+| `SemanticSealedLayer` | `Semantics.SealedExtension` | payload/trace sealed-layer split |
+| `semantic-public-interface` | `Semantics.SealedExtension` | public interface `K_n + T_n` |
+| `semantic-transparent-zero-latency` | `Semantics.SealedExtension` | transparent development has zero latency |
+| `RawAdequacyPackage` | `Semantics.RawAdequacy` | explicit semantic-to-raw bridge assumptions |
+| `semantic-trace-normal-form` | `Semantics.TraceNormalForm` | unary/binary/horn normal-form split |
+| `semantic-horn-extension-derived` | `Semantics.SemanticHornReduction` | derived horn trace from semantic Kan data |
+| `primitive-trace-depth-at-most-two` | `Semantics.DepthUpperBound` | adequacy-parameterized primitive upper bound |
+| `semantic-depth-one-impossible` | `Semantics.DepthLowerBound` | adequacy-parameterized unary lower-bound failure |
+| `cubical-foundations-primitive-coherence-depth-exactly-two` | `Semantics.ExactDepth` | canonical semantic-facing exact-depth theorem name |
+| `full-coupling-affine-recurrence` | `Semantics.ScalingRecurrence` | full-coupling cardinality recurrence wrapper |
+| `constant-payload-fibonacci-scaling` | `Semantics.FibonacciScaling` | constant-payload Fibonacci recurrence wrapper |
 | `transparent-growth-keeps-library-state` | `Metatheory.InterfaceCalculus` | transparent growth stays in one library state |
 | `transparent-definitions-preserve-active-interface` | `Metatheory.InterfaceCalculus` | transparent definitions do not enlarge the active interface |
 | `transparent-definitions-have-zero-integration-latency` | `Metatheory.InterfaceCalculus` | zero latency for transparent growth |

@@ -1,6 +1,6 @@
 # Coherence-Depth Trust Boundary
 
-Date: 2026-05-02
+Date: 2026-05-09
 
 This document records what the current Cubical Agda artifact checks directly,
 what is read through the paper-level bridge in `1_coherence_depth.tex`, and
@@ -39,6 +39,9 @@ this artifact the theorem-facing bridge is mechanized for that fixed raw
 calculus. Applying the theorem to arbitrary Cubical Agda programs, to another
 parser or elaborator, or to a different cubical calculus remains conditional on
 supplying the corresponding adequacy package.
+The semantic interface records and wrappers themselves are now checked in
+`agda/Semantics/`, including the smoke modules
+`Test/SemanticDepthSmoke.agda` and `Test/FibonacciScalingSmoke.agda`.
 
 ## Trusted Base
 
@@ -61,6 +64,9 @@ shown irrelevant for the bridge layer.
 
 | Paper result | Agda module | Main theorem/package names | Postulate-free? | Bridge dependency |
 |---|---|---|---:|---|
+| semantic interface | `Semantics/CubicalFoundation.agda`, `Semantics/SealedExtension.agda`, `Semantics/PrimitiveTrace.agda`, `Semantics/RawAdequacy.agda` | `SemanticCubicalFoundation`, `SemanticSealedLayer`, `PrimitiveTrace`, `RawAdequacyPackage` | yes | records the bridge boundary |
+| semantic wrappers | `Semantics/TraceNormalForm.agda`, `Semantics/SemanticHornReduction.agda`, `Semantics/DepthUpperBound.agda`, `Semantics/DepthLowerBound.agda`, `Semantics/ExactDepth.agda`, `Semantics/ChronologicalWindow.agda` | `semantic-trace-normal-form`, `semantic-horn-extension-derived`, `primitive-trace-depth-at-most-two`, `semantic-depth-one-impossible`, `cubical-foundations-primitive-coherence-depth-exactly-two`, `stage-trace-supported-by-last-two-interfaces` | yes | yes |
+| semantic scaling wrappers | `Semantics/FullCoupling.agda`, `Semantics/ScalingRecurrence.agda`, `Semantics/FibonacciScaling.agda` | `FullCoupling`, `fullCouplingIso`, `full-coupling-affine-recurrence`, `constant-payload-fibonacci-scaling` | yes | yes, for `mu` reading |
 | `prop:transparent` | `Metatheory/InterfaceCalculus.agda` | `transparent-growth-keeps-library-state`, `transparent-definitions-preserve-active-interface`, `transparent-definitions-have-zero-integration-latency`, `transparent-user-level-code-lies-outside-the-recurrence` | yes | no |
 | `lem:arity-dimension` | `Metatheory/Obligations.agda` | `historical-arity-forces-cell-dimension`, `irreducible-obligation-requires-cell` | yes | no |
 | `thm:extensional` | `Metatheory/Extensional.agda` | `UIP-forces-depth-1`, `history-truncates-to-one` | yes | no |

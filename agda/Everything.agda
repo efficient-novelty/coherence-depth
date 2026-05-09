@@ -4,6 +4,20 @@ module Everything where
 
 import PEN
 
+import Semantics.CubicalFoundation
+import Semantics.SealedExtension
+import Semantics.PrimitiveTrace
+import Semantics.RawAdequacy
+import Semantics.TraceNormalForm
+import Semantics.SemanticHornReduction
+import Semantics.DepthUpperBound
+import Semantics.DepthLowerBound
+import Semantics.ExactDepth
+import Semantics.ChronologicalWindow
+import Semantics.FullCoupling
+import Semantics.ScalingRecurrence
+import Semantics.FibonacciScaling
+
 import CaseStudies.Common
 import CaseStudies.UniverseExtension
 import CaseStudies.GlobalModality
@@ -16,6 +30,8 @@ import Test.SurfaceBridgeSmoke
 import Test.ActiveBasisExamples
 import Test.SparseRecurrenceSmoke
 import Test.HigherPayloadSmoke
+import Test.SemanticDepthSmoke
+import Test.FibonacciScalingSmoke
 import Test.PresentationInvariance.Smoke
 import Test.PresentationInvariance.RebundleRecord
 import Test.PresentationInvariance.SplitShell

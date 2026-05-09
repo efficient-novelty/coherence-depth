@@ -85,62 +85,62 @@ Goal: create the semantic layer that downstream results can depend on.
 
 ### New Agda Modules
 
-- [ ] Create `agda/Semantics/` directory.
-- [ ] Add `agda/Semantics/CubicalFoundation.agda`.
-- [ ] Add `agda/Semantics/SealedExtension.agda`.
-- [ ] Add `agda/Semantics/PrimitiveTrace.agda`.
-- [ ] Add top-level imports in `agda/Everything.agda`.
-- [ ] Add top-level imports in `agda/PEN.agda`.
-- [ ] Add smoke test module `agda/Test/SemanticDepthSmoke.agda`.
+- [x] Create `agda/Semantics/` directory.
+- [x] Add `agda/Semantics/CubicalFoundation.agda`.
+- [x] Add `agda/Semantics/SealedExtension.agda`.
+- [x] Add `agda/Semantics/PrimitiveTrace.agda`.
+- [x] Add top-level imports in `agda/Everything.agda`.
+- [x] Add top-level imports in `agda/PEN.agda`.
+- [x] Add smoke test module `agda/Test/SemanticDepthSmoke.agda`.
 
 ### `Semantics.CubicalFoundation`
 
-- [ ] Define `SemanticCubicalFoundation`.
-- [ ] Include interval object and endpoints.
-- [ ] Include cofibration/face structure.
-- [ ] Include partial element structure.
-- [ ] Include path or interval-indexed equality structure.
-- [ ] Include transport.
-- [ ] Include homogeneous composition.
-- [ ] Include filling.
-- [ ] Include boundary laws for composition/filling.
-- [ ] Include substitution stability.
+- [x] Define `SemanticCubicalFoundation`.
+- [x] Include interval object and endpoints.
+- [x] Include cofibration/face structure.
+- [x] Include partial element structure.
+- [x] Include path or interval-indexed equality structure.
+- [x] Include transport.
+- [x] Include homogeneous composition.
+- [x] Include filling.
+- [x] Include boundary laws for composition/filling.
+- [x] Include substitution stability.
 - [ ] Split universe-heavy fields into smaller records if constraints become
       hard to manage.
-- [ ] Add optional `UnivalenceStructure` or a separate
+- [x] Add optional `UnivalenceStructure` or a separate
       `SemanticCubicalFoundationWithUnivalence` record for lower bounds.
 
 ### `Semantics.SealedExtension`
 
-- [ ] Define semantic library states.
-- [ ] Define semantic sealed layers.
-- [ ] Define payload `K_n`.
-- [ ] Define resolved structural trace `T_n`.
-- [ ] Define public interface `I_n = K_n + T_n`.
-- [ ] Define transparent development separately.
-- [ ] Prove or postulate with explicit status:
+- [x] Define semantic library states.
+- [x] Define semantic sealed layers.
+- [x] Define payload `K_n`.
+- [x] Define resolved structural trace `T_n`.
+- [x] Define public interface `I_n = K_n + T_n`.
+- [x] Define transparent development separately.
+- [x] Prove or postulate with explicit status:
       `semantic-transparent-zero-latency`.
-- [ ] Define sealed extension sequences.
+- [x] Define sealed extension sequences.
 
 ### `Semantics.PrimitiveTrace`
 
-- [ ] Define primitive trace.
-- [ ] Define derived trace.
-- [ ] Define structural trace versus payload.
+- [x] Define primitive trace.
+- [x] Define derived trace.
+- [x] Define structural trace versus payload.
 - [ ] Define historical support.
-- [ ] Define support depth.
-- [ ] Define primitive trace depth at most `d`.
-- [ ] Define primitive trace depth exactly `d`.
-- [ ] Define binary trace necessity.
-- [ ] Ensure higher HIT constructors can be classified as payload.
+- [x] Define support depth.
+- [x] Define primitive trace depth at most `d`.
+- [x] Define primitive trace depth exactly `d`.
+- [x] Define binary trace necessity.
+- [x] Ensure higher HIT constructors can be classified as payload.
 
 ### Acceptance Criteria
 
-- [ ] New semantic modules typecheck.
-- [ ] Existing Agda modules still typecheck.
-- [ ] Semantic definitions do not silently assume the main theorem.
-- [ ] The trace/payload split is expressible in code.
-- [ ] Transparent growth is represented outside the sealed recurrence model.
+- [x] New semantic modules typecheck.
+- [x] Existing Agda modules still typecheck.
+- [x] Semantic definitions do not silently assume the main theorem.
+- [x] The trace/payload split is expressible in code.
+- [x] Transparent growth is represented outside the sealed recurrence model.
 
 ## Milestone 2: Package Raw Adequacy
 
@@ -149,25 +149,25 @@ calculus explicit.
 
 ### New Agda Module
 
-- [ ] Add `agda/Semantics/RawAdequacy.agda`.
+- [x] Add `agda/Semantics/RawAdequacy.agda`.
 
 ### Record/API Tasks
 
-- [ ] Define `RawAdequacyPackage`.
-- [ ] Add field `raw-syntax-sound-for-semantic-extensions`.
-- [ ] Add field `semantic-extension-elaborates-to-raw`.
-- [ ] Add field `raw-normalization-preserves-semantics`.
-- [ ] Add field `raw-normalization-preserves-support`.
-- [ ] Add field `raw-normalization-preserves-primitive-status`.
-- [ ] Add field `raw-normalization-preserves-cardinality`.
-- [ ] Add field for preservation of exported interface cardinality.
-- [ ] Add field for preservation of historical support.
-- [ ] Add field for preservation of primitive-vs-derived classification.
-- [ ] Add field for semantic interpretation preservation.
+- [x] Define `RawAdequacyPackage`.
+- [x] Add field `raw-syntax-sound-for-semantic-extensions`.
+- [x] Add field `semantic-extension-elaborates-to-raw`.
+- [x] Add field `raw-normalization-preserves-semantics`.
+- [x] Add field `raw-normalization-preserves-support`.
+- [x] Add field `raw-normalization-preserves-primitive-status`.
+- [x] Add field `raw-normalization-preserves-cardinality`.
+- [x] Add field for preservation of exported interface cardinality.
+- [x] Add field for preservation of historical support.
+- [x] Add field for preservation of primitive-vs-derived classification.
+- [x] Add field for semantic interpretation preservation.
 
 ### Refactor Tasks
 
-- [ ] Refactor downstream semantic theorems to take `RawAdequacyPackage` as a
+- [x] Refactor downstream semantic theorems to take `RawAdequacyPackage` as a
       parameter.
 - [x] Avoid using raw calculus results directly in paper-facing semantic theorem
       statements without the adequacy package.
@@ -191,7 +191,7 @@ calculus explicit.
 ### Acceptance Criteria
 
 - [x] The paper can honestly say which results are conditional on adequacy.
-- [ ] Downstream theorem modules typecheck parametrically over adequacy.
+- [x] Downstream theorem modules typecheck parametrically over adequacy.
 - [x] Adequacy assumptions are visible to the audit tooling.
 - [x] The artifact does not look as if it assumes the main theorem.
 
@@ -201,7 +201,7 @@ Goal: connect raw normalization to semantic trace roles.
 
 ### New Agda Module
 
-- [ ] Add `agda/Semantics/TraceNormalForm.agda`.
+- [x] Add `agda/Semantics/TraceNormalForm.agda`.
 
 ### Existing Modules To Strengthen
 
@@ -211,15 +211,15 @@ Goal: connect raw normalization to semantic trace roles.
 
 ### Theorem Tasks
 
-- [ ] Define semantic trace normal forms.
+- [x] Define semantic trace normal forms.
 - [ ] Prove every admissible structural trace field normalizes to unary action,
       binary comparison, or derived horn package.
-- [ ] Add theorem `semantic-trace-normal-form`.
-- [ ] Add theorem `unary-action-trace-primitive-candidate`.
-- [ ] Add theorem `binary-comparison-trace-primitive-candidate`.
-- [ ] Add theorem `higher-horn-trace-derived`.
-- [ ] Track support depth for every normalized role.
-- [ ] Track primitive/derived status for every normalized role.
+- [x] Add theorem `semantic-trace-normal-form`.
+- [x] Add theorem `unary-action-trace-primitive-candidate`.
+- [x] Add theorem `binary-comparison-trace-primitive-candidate`.
+- [x] Add theorem `higher-horn-trace-derived`.
+- [x] Track support depth for every normalized role.
+- [x] Track primitive/derived status for every normalized role.
 - [ ] Ensure horn roles carry a semantic derivation obligation.
 
 ### Paper Tasks
@@ -245,24 +245,24 @@ Goal: prove the core upper-bound engine using cubical composition/filling.
 
 ### New Agda Module
 
-- [ ] Add `agda/Semantics/SemanticHornReduction.agda`.
+- [x] Add `agda/Semantics/SemanticHornReduction.agda`.
 
 ### Definition Tasks
 
-- [ ] Define semantic horn boundary data.
-- [ ] Define semantic derived trace from `hfill`.
-- [ ] Define semantic derived trace from `hcomp`.
+- [x] Define semantic horn boundary data.
+- [x] Define semantic derived trace from `hfill`.
+- [x] Define semantic derived trace from `hcomp`.
 - [ ] Define higher structural obligation support beyond depth two.
-- [ ] Define telescopic remote comparison data.
+- [x] Define telescopic remote comparison data.
 
 ### Theorem Tasks
 
-- [ ] Add theorem `semantic-horn-extension-derived`.
-- [ ] Add theorem `higher-structural-obligation-derived-by-hfill`.
-- [ ] Add theorem `semantic-telescopic-subsumption`.
-- [ ] Add theorem `semantic-remote-comparison-derived`.
+- [x] Add theorem `semantic-horn-extension-derived`.
+- [x] Add theorem `higher-structural-obligation-derived-by-hfill`.
+- [x] Add theorem `semantic-telescopic-subsumption`.
+- [x] Add theorem `semantic-remote-comparison-derived`.
 - [ ] Prove higher horn trace is derived from binary boundary data.
-- [ ] Prove remote comparisons factor through a depth-two boundary.
+- [x] Prove remote comparisons factor through a depth-two boundary.
 - [ ] Prove the exported trace field is computable from depth-two data.
 
 ### Proof Safety Tasks
@@ -295,18 +295,18 @@ Goal: prove primitive trace depth at most two.
 
 ### New Agda Module
 
-- [ ] Add `agda/Semantics/DepthUpperBound.agda`.
+- [x] Add `agda/Semantics/DepthUpperBound.agda`.
 
 ### Theorem Tasks
 
-- [ ] Import semantic raw adequacy.
-- [ ] Import semantic trace normal forms.
-- [ ] Import semantic horn reduction.
-- [ ] Prove `primitive-trace-depth-at-most-two`.
-- [ ] Prove primitive trace normal forms stabilize at depth two.
-- [ ] Prove primitive trace fields of support depth greater than two reduce to
+- [x] Import semantic raw adequacy.
+- [x] Import semantic trace normal forms.
+- [x] Import semantic horn reduction.
+- [x] Prove `primitive-trace-depth-at-most-two`.
+- [x] Prove primitive trace normal forms stabilize at depth two.
+- [x] Prove primitive trace fields of support depth greater than two reduce to
       depth-two primitive public trace plus derived horn trace.
-- [ ] Prove the theorem parametrically over `RawAdequacyPackage`.
+- [x] Prove the theorem parametrically over `RawAdequacyPackage`.
 
 ### Paper Tasks
 
@@ -327,11 +327,11 @@ Goal: prove unary trace alone is insufficient.
 
 ### New Agda Module
 
-- [ ] Add `agda/Semantics/DepthLowerBound.agda`.
+- [x] Add `agda/Semantics/DepthLowerBound.agda`.
 
 ### Existing Modules To Connect
 
-- [ ] Import `agda/Metatheory/AdjunctionBarrier.agda`.
+- [x] Import `agda/Metatheory/AdjunctionBarrier.agda`.
 - [ ] Import `agda/Geometry/Clutching.agda` if using the clutching witness.
 
 ### Swap Witness Tasks
@@ -344,9 +344,9 @@ Goal: prove unary trace alone is insufficient.
 - [ ] Show constant-left and constant-right are distinguishable.
 - [ ] Prove the binary comparison between `refl` and the swap path cannot be
       derived from unary trace alone.
-- [ ] Add theorem `swap-path-forces-binary-trace`.
-- [ ] Add theorem `semantic-depth-one-impossible`.
-- [ ] Add theorem `semantic-binary-trace-necessary`.
+- [x] Add theorem `swap-path-forces-binary-trace`.
+- [x] Add theorem `semantic-depth-one-impossible`.
+- [x] Add theorem `semantic-binary-trace-necessary`.
 
 ### Optional Clutching Witness Tasks
 
@@ -364,7 +364,7 @@ Goal: prove unary trace alone is insufficient.
 
 ### Acceptance Criteria
 
-- [ ] There is a named theorem `semantic-depth-one-impossible`.
+- [x] There is a named theorem `semantic-depth-one-impossible`.
 - [x] The proof uses semantic primitive trace definitions.
 - [x] The lower bound does not rely only on the synthetic obligation language.
 - [x] The required univalence assumption is explicit.
@@ -375,14 +375,14 @@ Goal: combine upper and lower bounds into the paper-facing result.
 
 ### New Agda Module
 
-- [ ] Add `agda/Semantics/ExactDepth.agda`.
+- [x] Add `agda/Semantics/ExactDepth.agda`.
 
 ### Theorem Tasks
 
-- [ ] Import `Semantics.DepthUpperBound`.
-- [ ] Import `Semantics.DepthLowerBound`.
-- [ ] Prove `cubical-foundations-primitive-coherence-depth-exactly-two`.
-- [ ] Add alias `sealed-structural-trace-depth-exactly-two` if useful.
+- [x] Import `Semantics.DepthUpperBound`.
+- [x] Import `Semantics.DepthLowerBound`.
+- [x] Prove `cubical-foundations-primitive-coherence-depth-exactly-two`.
+- [x] Add alias `sealed-structural-trace-depth-exactly-two` if useful.
 - [x] Ensure there is one canonical theorem name used by the paper.
 
 ### Documentation Tasks
@@ -403,9 +403,9 @@ Goal: derive scaling from exact depth two.
 
 ### New Or Updated Agda Modules
 
-- [ ] Add `agda/Semantics/ChronologicalWindow.agda`.
-- [ ] Add `agda/Semantics/FullCoupling.agda`.
-- [ ] Add `agda/Semantics/ScalingRecurrence.agda`.
+- [x] Add `agda/Semantics/ChronologicalWindow.agda`.
+- [x] Add `agda/Semantics/FullCoupling.agda`.
+- [x] Add `agda/Semantics/ScalingRecurrence.agda`.
 - [ ] Refactor `agda/Metatheory/UniversalRecurrence.agda` to consume the
       semantic window theorem where appropriate.
 - [ ] Refactor `agda/Metatheory/SparseDependencyRecurrence.agda` to keep sparse
@@ -415,18 +415,18 @@ Goal: derive scaling from exact depth two.
 
 ### Chronological Window Tasks
 
-- [ ] Define `ChronologicalWindowSize`.
-- [ ] Prove `exact-depth-two-implies-chronological-window-two`.
-- [ ] Prove `stage-trace-supported-by-last-two-interfaces`.
+- [x] Define `ChronologicalWindowSize`.
+- [x] Prove `exact-depth-two-implies-chronological-window-two`.
+- [x] Prove `stage-trace-supported-by-last-two-interfaces`.
 - [ ] State support as inclusion in `I_n + I_(n-1)`.
 
 ### Full Coupling Tasks
 
-- [ ] Define `FullCoupling` as an isomorphism, not merely an inequality.
-- [ ] Add field `fullCouplingIso`.
-- [ ] Define sparse coupling separately.
-- [ ] Define dependency footprint for sparse coupling.
-- [ ] Prove sparse footprint is contained in the two-layer window.
+- [x] Define `FullCoupling` as an isomorphism, not merely an inequality.
+- [x] Add field `fullCouplingIso`.
+- [x] Define sparse coupling separately.
+- [x] Define dependency footprint for sparse coupling.
+- [x] Prove sparse footprint is contained in the two-layer window.
 
 ### Affine Recurrence Tasks
 
@@ -448,7 +448,7 @@ Goal: derive scaling from exact depth two.
 ### Acceptance Criteria
 
 - [x] Exact depth two is the input to the chronological window theorem.
-- [ ] Full coupling is an isomorphism in code.
+- [x] Full coupling is an isomorphism in code.
 - [x] The recurrence theorem is bookkeeping after the full-coupling isomorphism.
 - [x] Sparse and full-coupling regimes cannot be confused.
 
@@ -458,21 +458,21 @@ Goal: connect the affine recurrence to the existing arithmetic recurrence.
 
 ### New Agda Module
 
-- [ ] Add `agda/Semantics/FibonacciScaling.agda`.
+- [x] Add `agda/Semantics/FibonacciScaling.agda`.
 
 ### Existing Module To Reuse
 
-- [ ] Reuse `agda/Core/AffineRecurrence.agda`.
+- [x] Reuse `agda/Core/AffineRecurrence.agda`.
 
 ### Theorem Tasks
 
-- [ ] Define constant payload condition `ConstantPayload S c`.
-- [ ] Define bootstrap assumptions.
-- [ ] Define shifted trace `U_n = mu_n + 2 * c`.
-- [ ] Prove `U_(n+1) = U_n + U_(n-1)`.
-- [ ] Prove `constant-payload-fibonacci-scaling`.
+- [x] Define constant payload condition `ConstantPayload S c`.
+- [x] Define bootstrap assumptions.
+- [x] Define shifted trace `U_n = mu_n + 2 * c`.
+- [x] Prove `U_(n+1) = U_n + U_(n-1)`.
+- [x] Prove `constant-payload-fibonacci-scaling`.
 - [x] Align theorem indexing with `Core.AffineRecurrence`.
-- [ ] Add a smoke theorem that checks the first few values.
+- [x] Add a smoke theorem that checks the first few values.
 
 ### Paper Tasks
 
@@ -568,10 +568,10 @@ Goal: produce the next complete paper/artifact version.
 
 ### Artifact Check Tasks
 
-- [ ] Add semantic modules to artifact check script.
-- [ ] Add semantic smoke tests to artifact check script.
-- [ ] Add semantic modules to CI workflow.
-- [ ] Add semantic smoke tests to CI workflow.
+- [x] Add semantic modules to artifact check script.
+- [x] Add semantic smoke tests to artifact check script.
+- [x] Add semantic modules to CI workflow.
+- [x] Add semantic smoke tests to CI workflow.
 - [x] Run the full artifact check.
 - [x] Run the postulate audit.
 - [x] Run the paper-map audit.
@@ -582,7 +582,7 @@ Goal: produce the next complete paper/artifact version.
 - [x] Paper claims match code claims.
 - [x] Every theorem has a status.
 - [x] The trust boundary is explicit.
-- [ ] CI covers the new semantic modules.
+- [x] CI covers the new semantic modules.
 - [x] The reviewer can see exactly what is mechanized and what is conditional.
 
 ## Paper Checklist
@@ -702,19 +702,19 @@ Goal: produce the next complete paper/artifact version.
 
 ### New Semantic Modules
 
-- [ ] `agda/Semantics/CubicalFoundation.agda`
-- [ ] `agda/Semantics/SealedExtension.agda`
-- [ ] `agda/Semantics/PrimitiveTrace.agda`
-- [ ] `agda/Semantics/RawAdequacy.agda`
-- [ ] `agda/Semantics/TraceNormalForm.agda`
-- [ ] `agda/Semantics/SemanticHornReduction.agda`
-- [ ] `agda/Semantics/DepthUpperBound.agda`
-- [ ] `agda/Semantics/DepthLowerBound.agda`
-- [ ] `agda/Semantics/ExactDepth.agda`
-- [ ] `agda/Semantics/ChronologicalWindow.agda`
-- [ ] `agda/Semantics/FullCoupling.agda`
-- [ ] `agda/Semantics/ScalingRecurrence.agda`
-- [ ] `agda/Semantics/FibonacciScaling.agda`
+- [x] `agda/Semantics/CubicalFoundation.agda`
+- [x] `agda/Semantics/SealedExtension.agda`
+- [x] `agda/Semantics/PrimitiveTrace.agda`
+- [x] `agda/Semantics/RawAdequacy.agda`
+- [x] `agda/Semantics/TraceNormalForm.agda`
+- [x] `agda/Semantics/SemanticHornReduction.agda`
+- [x] `agda/Semantics/DepthUpperBound.agda`
+- [x] `agda/Semantics/DepthLowerBound.agda`
+- [x] `agda/Semantics/ExactDepth.agda`
+- [x] `agda/Semantics/ChronologicalWindow.agda`
+- [x] `agda/Semantics/FullCoupling.agda`
+- [x] `agda/Semantics/ScalingRecurrence.agda`
+- [x] `agda/Semantics/FibonacciScaling.agda`
 
 ### Existing Modules To Update
 
@@ -725,57 +725,57 @@ Goal: produce the next complete paper/artifact version.
 - [ ] `agda/Metatheory/SparseDependencyRecurrence.agda`
 - [ ] `agda/Metatheory/FullCouplingEnvelope.agda`
 - [ ] `agda/Core/AffineRecurrence.agda`
-- [ ] `agda/Everything.agda`
-- [ ] `agda/PEN.agda`
+- [x] `agda/Everything.agda`
+- [x] `agda/PEN.agda`
 
 ### Tests
 
-- [ ] Add `agda/Test/SemanticDepthSmoke.agda`.
-- [ ] Add `agda/Test/FibonacciScalingSmoke.agda`.
-- [ ] Add tests for semantic foundation records.
-- [ ] Add tests for sealed extension interface splitting.
-- [ ] Add tests for raw adequacy package plumbing.
-- [ ] Add tests for trace normal form classification.
-- [ ] Add tests for horn-derived trace.
-- [ ] Add tests for exact depth theorem.
-- [ ] Add tests for chronological window theorem.
-- [ ] Add tests for full-coupling recurrence.
+- [x] Add `agda/Test/SemanticDepthSmoke.agda`.
+- [x] Add `agda/Test/FibonacciScalingSmoke.agda`.
+- [x] Add tests for semantic foundation records.
+- [x] Add tests for sealed extension interface splitting.
+- [x] Add tests for raw adequacy package plumbing.
+- [x] Add tests for trace normal form classification.
+- [x] Add tests for horn-derived trace.
+- [x] Add tests for exact depth theorem.
+- [x] Add tests for chronological window theorem.
+- [x] Add tests for full-coupling recurrence.
 - [ ] Add tests for sparse coupling separation.
 - [ ] Add tests for transparent zero latency.
 - [x] Add tests for higher payload classification.
 
 ### Theorem Names To Stabilize
 
-- [ ] `SemanticCubicalFoundation`
-- [ ] `KanStructure`
-- [ ] `UnivalenceStructure`
-- [ ] `SemanticLibraryState`
-- [ ] `SemanticSealedLayer`
-- [ ] `semantic-public-interface`
-- [ ] `semantic-transparent-zero-latency`
-- [ ] `RawAdequacyPackage`
-- [ ] `raw-syntax-sound-for-semantic-extensions`
-- [ ] `semantic-extension-elaborates-to-raw`
-- [ ] `raw-normalization-preserves-semantics`
-- [ ] `raw-normalization-preserves-support`
-- [ ] `raw-normalization-preserves-primitive-status`
-- [ ] `raw-normalization-preserves-cardinality`
-- [ ] `semantic-trace-normal-form`
-- [ ] `unary-action-trace-primitive-candidate`
-- [ ] `binary-comparison-trace-primitive-candidate`
-- [ ] `higher-horn-trace-derived`
-- [ ] `semantic-horn-extension-derived`
-- [ ] `higher-structural-obligation-derived-by-hfill`
-- [ ] `semantic-telescopic-subsumption`
-- [ ] `semantic-remote-comparison-derived`
-- [ ] `primitive-trace-depth-at-most-two`
-- [ ] `swap-path-forces-binary-trace`
-- [ ] `semantic-depth-one-impossible`
-- [ ] `cubical-foundations-primitive-coherence-depth-exactly-two`
-- [ ] `exact-depth-two-implies-chronological-window-two`
-- [ ] `full-coupling-window-iso`
-- [ ] `full-coupling-affine-recurrence`
-- [ ] `constant-payload-fibonacci-scaling`
+- [x] `SemanticCubicalFoundation`
+- [x] `KanStructure`
+- [x] `UnivalenceStructure`
+- [x] `SemanticLibraryState`
+- [x] `SemanticSealedLayer`
+- [x] `semantic-public-interface`
+- [x] `semantic-transparent-zero-latency`
+- [x] `RawAdequacyPackage`
+- [x] `raw-syntax-sound-for-semantic-extensions`
+- [x] `semantic-extension-elaborates-to-raw`
+- [x] `raw-normalization-preserves-semantics`
+- [x] `raw-normalization-preserves-support`
+- [x] `raw-normalization-preserves-primitive-status`
+- [x] `raw-normalization-preserves-cardinality`
+- [x] `semantic-trace-normal-form`
+- [x] `unary-action-trace-primitive-candidate`
+- [x] `binary-comparison-trace-primitive-candidate`
+- [x] `higher-horn-trace-derived`
+- [x] `semantic-horn-extension-derived`
+- [x] `higher-structural-obligation-derived-by-hfill`
+- [x] `semantic-telescopic-subsumption`
+- [x] `semantic-remote-comparison-derived`
+- [x] `primitive-trace-depth-at-most-two`
+- [x] `swap-path-forces-binary-trace`
+- [x] `semantic-depth-one-impossible`
+- [x] `cubical-foundations-primitive-coherence-depth-exactly-two`
+- [x] `exact-depth-two-implies-chronological-window-two`
+- [x] `full-coupling-window-iso`
+- [x] `full-coupling-affine-recurrence`
+- [x] `constant-payload-fibonacci-scaling`
 
 ## Documentation And Metadata Checklist
 
@@ -815,8 +815,8 @@ Goal: produce the next complete paper/artifact version.
 
 ### `README.txt`
 
-- [ ] Add commands for checking semantic modules.
-- [ ] Add commands for checking semantic smoke tests.
+- [x] Add commands for checking semantic modules.
+- [x] Add commands for checking semantic smoke tests.
 - [x] Add commands for running artifact check script.
 - [x] Add commands for running postulate audit.
 - [x] Add commands for running paper-map audit.
@@ -826,27 +826,27 @@ Goal: produce the next complete paper/artifact version.
 ### Artifact Check Script
 
 - [x] Update `scripts/check_coherence_depth_artifact.sh`.
-- [ ] Add `Semantics/CubicalFoundation.agda`.
-- [ ] Add `Semantics/SealedExtension.agda`.
-- [ ] Add `Semantics/PrimitiveTrace.agda`.
-- [ ] Add `Semantics/RawAdequacy.agda`.
-- [ ] Add `Semantics/TraceNormalForm.agda`.
-- [ ] Add `Semantics/SemanticHornReduction.agda`.
-- [ ] Add `Semantics/DepthUpperBound.agda`.
-- [ ] Add `Semantics/DepthLowerBound.agda`.
-- [ ] Add `Semantics/ExactDepth.agda`.
-- [ ] Add `Semantics/ChronologicalWindow.agda`.
-- [ ] Add `Semantics/FullCoupling.agda`.
-- [ ] Add `Semantics/ScalingRecurrence.agda`.
-- [ ] Add `Semantics/FibonacciScaling.agda`.
-- [ ] Add `Test/SemanticDepthSmoke.agda`.
-- [ ] Add `Test/FibonacciScalingSmoke.agda`.
+- [x] Add `Semantics/CubicalFoundation.agda`.
+- [x] Add `Semantics/SealedExtension.agda`.
+- [x] Add `Semantics/PrimitiveTrace.agda`.
+- [x] Add `Semantics/RawAdequacy.agda`.
+- [x] Add `Semantics/TraceNormalForm.agda`.
+- [x] Add `Semantics/SemanticHornReduction.agda`.
+- [x] Add `Semantics/DepthUpperBound.agda`.
+- [x] Add `Semantics/DepthLowerBound.agda`.
+- [x] Add `Semantics/ExactDepth.agda`.
+- [x] Add `Semantics/ChronologicalWindow.agda`.
+- [x] Add `Semantics/FullCoupling.agda`.
+- [x] Add `Semantics/ScalingRecurrence.agda`.
+- [x] Add `Semantics/FibonacciScaling.agda`.
+- [x] Add `Test/SemanticDepthSmoke.agda`.
+- [x] Add `Test/FibonacciScalingSmoke.agda`.
 
 ### CI Workflow
 
-- [ ] Update `.github/workflows/artifact-check.yml`.
-- [ ] Ensure CI runs semantic modules.
-- [ ] Ensure CI runs semantic smoke tests.
+- [x] Update `.github/workflows/artifact-check.yml`.
+- [x] Ensure CI runs semantic modules.
+- [x] Ensure CI runs semantic smoke tests.
 - [x] Ensure CI runs paper-map audit.
 - [x] Ensure CI runs postulate audit.
 
@@ -865,7 +865,7 @@ Goal: produce the next complete paper/artifact version.
 
 ### Risk: Semantic Adequacy Is Too Hard
 
-- [ ] Keep downstream theorems parametric in `RawAdequacyPackage`.
+- [x] Keep downstream theorems parametric in `RawAdequacyPackage`.
 - [ ] Instantiate the package only where justified.
 - [x] Clearly distinguish conditional metatheorem from instantiated theorem.
 - [x] Track unproved adequacy fields in `paper-map.yaml`.
@@ -893,7 +893,7 @@ Goal: produce the next complete paper/artifact version.
 ### Risk: Fibonacci Indexing Mismatch
 
 - [x] Add indexing convention box.
-- [ ] Add first-values smoke theorem.
+- [x] Add first-values smoke theorem.
 - [x] Clarify the paper mechanization prose so the general payload-aware
       recurrence and the constant-payload Fibonacci specialization are not
       conflated.
@@ -918,13 +918,13 @@ Use this section if time is limited.
 
 - [x] Paper states the full theorem as conditional on a semantic adequacy
       package.
-- [ ] Code defines `RawAdequacyPackage` explicitly.
-- [ ] Downstream exact-depth theorem is mechanized relative to the package.
+- [x] Code defines `RawAdequacyPackage` explicitly.
+- [x] Downstream exact-depth theorem is mechanized relative to the package.
 - [ ] Downstream recurrence theorem is mechanized relative to the package.
 - [ ] Downstream Fibonacci corollary is mechanized relative to the package.
 - [x] Swap lower bound remains mechanized.
 - [x] Paper clearly labels the semantic bridge and its mechanization status.
-- [ ] Artifact check includes all newly introduced semantic wrappers.
+- [x] Artifact check includes all newly introduced semantic wrappers.
 - [x] Trust-boundary document is updated.
 
 ## Final Verification Commands
