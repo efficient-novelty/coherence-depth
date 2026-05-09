@@ -894,6 +894,9 @@ Goal: produce the next complete paper/artifact version.
 
 - [x] Add indexing convention box.
 - [ ] Add first-values smoke theorem.
+- [x] Clarify the paper mechanization prose so the general payload-aware
+      recurrence and the constant-payload Fibonacci specialization are not
+      conflated.
 - [x] Cross-check paper formula against Agda theorem.
 - [x] Cross-check bootstrap assumptions.
 
