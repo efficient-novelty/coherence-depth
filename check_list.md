@@ -6,7 +6,7 @@ Tracking checklist distilled from `paper_improvement_plan.md`. Keep detailed rat
 
 - [x] Replace the abstract/thin `OpenBox` object with an explicit `StructuralOpenBox`.
 - [x] Include the cubical family `A`, visible-face condition `phi`, side boundary, and compatible base face.
-- [ ] Define `BoundaryFamily` using compatible sub-elements.
+- [x] Define `BoundaryFamily` using compatible sub-elements.
 - [ ] Define `Lid` as the compatible subtype at `i1`.
 - [ ] Define `Filler` as a path through compatible elements.
 - [x] Define `OpenExt` as the total space of lid plus filler.
@@ -41,17 +41,17 @@ Tracking checklist distilled from `paper_improvement_plan.md`. Keep detailed rat
 - [x] Keep raw structural role and arity in raw syntax.
 - [x] Ensure user-authored higher operations remain payload unless generated as structural trace.
 - [x] Define `TraceRole` with action, comparison, and horn roles.
-- [ ] Define `RawTraceField` without unverified derived status.
+- [x] Define `RawTraceField` without unverified derived status.
 - [x] Define `DerivedTrace` with boundary, replacement term, support proof, and soundness proof.
-- [ ] Define `PublicStatus` so derived status contains a derivation witness.
-- [ ] Prevent cached public status from bypassing irreducibility or derivation proofs.
+- [x] Define `PublicStatus` so derived status contains a derivation witness.
+- [x] Prevent cached public status from bypassing irreducibility or derivation proofs.
 - [x] Define `HornSemanticDerivation`.
 - [x] Include lower boundary data in `HornSemanticDerivation`.
-- [ ] Construct an explicit open box from lower boundary data.
+- [x] Construct an explicit open box from lower boundary data.
 - [ ] Relate the horn package to `OpenExt`.
-- [ ] Decode the canonical open-box center into the field type.
-- [ ] Prove the replacement term only uses lower public fields plus cubical Kan operations.
-- [ ] Prove replacement soundness.
+- [x] Decode the canonical open-box center into the field type.
+- [x] Prove the replacement term only uses lower public fields plus cubical Kan operations.
+- [x] Prove replacement soundness.
 - [x] Define `hornDerivedTrace`.
 
 ## Cubical horn elaboration
@@ -114,7 +114,7 @@ Tracking checklist distilled from `paper_improvement_plan.md`. Keep detailed rat
 ## Negative tests
 
 - [ ] Add a fake high-arity trace-shaped field without `StructuralBoundary`.
-- [ ] Verify that fake high-arity field is not classified as derived by tag.
+- [x] Verify that fake high-arity field is not classified as derived by tag.
 - [x] Add or describe a closed-boundary filler request.
 - [x] Verify `openExtIsContr` cannot be applied to arbitrary closed-boundary fillers.
 - [x] Add an explicit SMod horn test.
@@ -148,16 +148,16 @@ Tracking checklist distilled from `paper_improvement_plan.md`. Keep detailed rat
 ## Acceptance gates
 
 - [x] `StructuralOpenBox` is not empty.
-- [ ] `OpenExt` contains `Partial`/`Sub` data or explicit side/agreement equations.
+- [x] `OpenExt` contains `Partial`/`Sub` data or explicit side/agreement equations.
 - [x] `openExtIsContr` is proved, not postulated.
 - [x] The proof contracts `Sigma lid, filler`, not arbitrary fixed-lid fillers.
 - [x] The proof does not claim arbitrary closed-boundary filler spaces are contractible.
 - [x] Raw syntax has no unverified primitive/derived tag for horn clauses.
 - [x] `DerivedTrace` contains an actual replacement term.
-- [ ] `HornSemanticDerivation` constructs an explicit open box from lower boundary data.
-- [ ] The replacement term is obtained from `openExtCenter` and decoded into the field type.
-- [ ] The replacement term uses only lower public fields plus cubical Kan operations.
-- [ ] Replacement soundness is proved.
+- [x] `HornSemanticDerivation` constructs an explicit open box from lower boundary data.
+- [x] The replacement term is obtained from `openExtCenter` and decoded into the field type.
+- [x] The replacement term uses only lower public fields plus cubical Kan operations.
+- [x] Replacement soundness is proved.
 - [ ] Deleting a derived field is justified by presentation equivalence.
 - [ ] Normalization eliminates higher structural primitive fields by calling the derivation theorem.
 - [x] User-authored higher payload data is not eliminated by this theorem.

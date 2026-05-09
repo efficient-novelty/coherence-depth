@@ -23,4 +23,6 @@ open import CubicalOpenBox.Base public
     ; OpenBoxFamily
     ; Lid
     ; BaseFace
+    ; CompatibleLid
+    ; CompatibleBaseFace
     )

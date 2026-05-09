@@ -5,6 +5,8 @@ module Metatheory.DerivedTrace where
 open import Agda.Primitive using (Level; lsuc)
 open import Cubical.Foundations.Prelude
 
+open import CubicalOpenBox.Base
+open import CubicalOpenBox.Extension
 open import Metatheory.RawStructuralSyntax
 
 private
@@ -27,14 +29,56 @@ record DerivedTrace
 
 open DerivedTrace public
 
-record HornSemanticDerivation
+record IrreducibleTrace
   (Γlower : RawTelescope (RawStructuralClause ℓ))
   (f : RawStructuralClause ℓ) : Type (lsuc ℓ) where
+  constructor mkIrreducibleTrace
+  field
+    irreducibleCarrier : Type ℓ
+    irreducibilityProof : Type ℓ
+
+open IrreducibleTrace public
+
+data PublicStatus
+  (Γlower : RawTelescope (RawStructuralClause ℓ))
+  (f : RawStructuralClause ℓ) : Type (lsuc ℓ) where
+  primitiveStatus :
+    IrreducibleTrace Γlower f →
+    PublicStatus Γlower f
+  derivedStatus :
+    DerivedTrace Γlower f →
+    PublicStatus Γlower f
+
+record NormalizedPublicField
+  (Γlower : RawTelescope (RawStructuralClause ℓ))
+  (f : RawStructuralClause ℓ) : Type (lsuc ℓ) where
+  constructor mkNormalizedPublicField
+  field
+    checkedPublicStatus : PublicStatus Γlower f
+
+open NormalizedPublicField public
+
+record HornSemanticDerivation
+  (Γlower : RawTelescope (RawStructuralClause ℓ))
+  (f : RawStructuralClause ℓ) : SSet (lsuc ℓ) where
   constructor mkHornSemanticDerivation
   field
     isHornClause : rawStructuralClauseKind f ≡ horn-kind
     boundaryAvailable : Type ℓ
+    semanticOpenBox : StructuralOpenBox ℓ
     derivedTrace : DerivedTrace Γlower f
+    openBoxCenter :
+      OpenExt
+        (structuralSide semanticOpenBox)
+        (structuralBase semanticOpenBox)
+        (structuralOpenBoxAsOpenBox semanticOpenBox)
+    decodedCenter : fieldTy derivedTrace
+    replacementFromCenter :
+      replacementTerm derivedTrace ≡ decodedCenter
+    usesLowerBoundaryAndKan :
+      usesOnlyLower derivedTrace
+    replacementSoundFromOpenBox :
+      replacementSound derivedTrace
 
 open HornSemanticDerivation public
 

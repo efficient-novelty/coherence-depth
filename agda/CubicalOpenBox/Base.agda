@@ -74,8 +74,9 @@ BoundaryFamily :
   (side : I → Partial φ A) →
   (base : A [ φ ↦ side i0 ]) →
   OpenBox side base →
-  I → Type ℓ
-BoundaryFamily {A = A} side base B i = A
+  I → SSet ℓ
+BoundaryFamily {A = A} {φ = φ} side base B i =
+  A [ φ ↦ side i ]
 
 CompatibleBoundaryFamily :
   {A : Type ℓ} {φ : I} →
@@ -83,8 +84,7 @@ CompatibleBoundaryFamily :
   (base : A [ φ ↦ side i0 ]) →
   OpenBox side base →
   I → SSet ℓ
-CompatibleBoundaryFamily {A = A} {φ = φ} side base B i =
-  A [ φ ↦ side i ]
+CompatibleBoundaryFamily = BoundaryFamily
 
 OpenBoxFamily :
   {A : Type ℓ} {φ : I} →
@@ -92,7 +92,7 @@ OpenBoxFamily :
   (base : A [ φ ↦ side i0 ]) →
   OpenBox side base →
   I → Type ℓ
-OpenBoxFamily = BoundaryFamily
+OpenBoxFamily {A = A} side base B i = A
 
 Lid :
   {A : Type ℓ} {φ : I} →
@@ -109,3 +109,21 @@ BaseFace :
   OpenBox side base →
   Type ℓ
 BaseFace side base B = OpenBoxFamily side base B i0
+
+CompatibleLid :
+  {A : Type ℓ} {φ : I} →
+  (side : I → Partial φ A) →
+  (base : A [ φ ↦ side i0 ]) →
+  OpenBox side base →
+  SSet ℓ
+CompatibleLid side base B =
+  CompatibleBoundaryFamily side base B i1
+
+CompatibleBaseFace :
+  {A : Type ℓ} {φ : I} →
+  (side : I → Partial φ A) →
+  (base : A [ φ ↦ side i0 ]) →
+  OpenBox side base →
+  SSet ℓ
+CompatibleBaseFace side base B =
+  CompatibleBoundaryFamily side base B i0

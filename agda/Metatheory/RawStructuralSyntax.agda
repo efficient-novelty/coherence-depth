@@ -88,6 +88,20 @@ data RawStructuralClauseKind : Type where
   unary-action-kind binary-comparison-kind horn-kind :
     RawStructuralClauseKind
 
+data TraceRole : Type where
+  action comparison horn-role : TraceRole
+
+record RawTraceField (ℓ : Level) : Type (ℓ-suc ℓ) where
+  constructor mkRawTraceField
+  field
+    rawTraceRole    : TraceRole
+    rawTraceArity   : Nat
+    rawTraceSupport : HistoricalSupport rawTraceArity
+    rawTraceCarrier : Type ℓ
+    rawTraceWitness : Type ℓ
+
+open RawTraceField public
+
 rawStructuralClauseKind :
   RawStructuralClause ℓ → RawStructuralClauseKind
 rawStructuralClauseKind (act p s) =

@@ -15,7 +15,7 @@ private
 
 record HigherStructuralDerivedStep
   (Γlower : RawTelescope (RawStructuralClause ℓ))
-  (f : RawStructuralClause ℓ) : Type (lsuc ℓ) where
+  (f : RawStructuralClause ℓ) : SSet (lsuc ℓ) where
   constructor mkHigherStructuralDerivedStep
   field
     hornDerivation : HornSemanticDerivation Γlower f

@@ -14,8 +14,8 @@ private
     φ : I
 
 -- The checked homogeneous filler is the path produced by hfill. The visible
--- Partial boundary and Sub base are explicit parameters; the endpoint laws
--- below make the agreement obligations inspectable.
+-- Partial boundary and Sub base are explicit parameters; the canonical
+-- compatible refinement is exposed separately by canonicalFillSub.
 Filler :
   {A : Type ℓ} {φ : I} →
   (side : I → Partial φ A) →
