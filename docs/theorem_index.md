@@ -213,6 +213,10 @@ vocabulary `mechanized`, `conditional-on-adequacy-package`, `paper-only`, and
 | `StructuralBoundary` | `Metatheory.StructuralBoundary` | lower-boundary availability package for raw structural horn clauses |
 | `HornOpenBoxPackage` / `identityHornPackageOpenExt` | `Metatheory.HornOpenBox` | explicit open-box package and missing-face/OpenExt bridge witness |
 | `HornElaborationInput` / `structuralHornElaboration` | `Metatheory.HornElaboration` | build a witnessed `HornSemanticDerivation` from boundary/open-box/replacement evidence |
+| `replaceDerivedField` / `presentationEquiv` | `Metatheory.ReplaceDerivedField` | delete a derived raw field through explicit forward/backward presentation maps and round trips |
+| `higherStructuralTraceDerived` / `normalizationDerivedWitness` | `Metatheory.NormalizationDerived` | classify higher structural fields as derived only from a `HornSemanticDerivation` and its replacement witness |
+| `modal-explicit-horn-elaborates-through-HornElaboration` | `Surface.Modal.Adequacy` | concrete `SMod` explicit horn bridge into `HornElaboration` |
+| `modal-omitted-horn-inserts-derived-term` / `modal-explicit-and-omitted-horn-same-derived-term` | `Surface.Modal.Adequacy` | omitted and explicit `SMod` horns share the same derived replacement term |
 | `CanonicalNormalizedSignature` | `Metatheory.SurfaceNormalizationBridge` | canonical payload plus trace normal form for an admissible raw extension |
 | `normalizeRawExtension` | `Metatheory.SurfaceNormalizationBridge` | normalize the fixed raw extension calculus to a canonical counted signature |
 | `raw-extension-elaborates-to-candidate` | `Metatheory.SurfaceNormalizationBridge` | package an admissible raw extension as a theorem-facing candidate |

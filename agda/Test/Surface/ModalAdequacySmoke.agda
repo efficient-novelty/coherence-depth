@@ -10,6 +10,7 @@ open import Surface.Modal.Syntax
 open import Surface.Modal.Adequacy
 open import Surface.Modal.Normalization
 open import Surface.Modal.Elaboration using (four)
+open import Metatheory.DerivedTrace
 
 unit-function-iso : Iso Unit (Unit → Unit)
 unit-function-iso = record
@@ -56,6 +57,26 @@ explicit-horn-does-not-change-mu-smoke :
   muModal minimal-modal ≡ muModal explicit-modal
 explicit-horn-does-not-change-mu-smoke =
   explicit-horn-presentation-invariant
+    minimal-modal
+    explicit-modal
+    refl
+    refl
+
+explicit-horn-elaborates-through-HornElaboration-smoke :
+  HornSemanticDerivation modalLowerTraceTelescope modalHornClause
+explicit-horn-elaborates-through-HornElaboration-smoke =
+  modal-explicit-horn-elaborates-through-HornElaboration explicit-modal refl
+
+omitted-horn-inserts-same-derived-term-smoke :
+  replacementTerm
+    (hornDerivedTrace
+      (modal-omitted-horn-inserts-derived-term minimal-modal refl))
+  ≡
+  replacementTerm
+    (hornDerivedTrace
+      (modal-explicit-horn-elaborates-through-HornElaboration explicit-modal refl))
+omitted-horn-inserts-same-derived-term-smoke =
+  modal-explicit-and-omitted-horn-same-derived-term
     minimal-modal
     explicit-modal
     refl

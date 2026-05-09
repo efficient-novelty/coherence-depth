@@ -216,13 +216,19 @@
         "modal-support-preserved",
         "modal-mu-preserved",
         "explicit-horn-presentation-invariant",
+        "modal-explicit-horn-elaborates-through-HornElaboration",
+        "modal-omitted-horn-inserts-derived-term",
+        "modal-explicit-and-omitted-horn-same-derived-term",
+        "modalNormalizationDerivedWitness",
         "minimal-modal-primitive-count",
         "explicit-horn-does-not-change-mu-smoke",
+        "explicit-horn-elaborates-through-HornElaboration-smoke",
+        "omitted-horn-inserts-same-derived-term-smoke",
         "rebundled-trace-preserves-mu-smoke"
       ],
       "status": "mechanized",
       "formal_status": "checked-adequacy-instance",
-      "status_detail": "concrete SMod surface calculus elaborates into the fixed raw extension syntax preserving primitive/derived tags and mu",
+      "status_detail": "concrete SMod surface calculus elaborates into the fixed raw extension syntax; explicit and omitted horns route through HornElaboration witnesses and preserve mu",
       "uses_bridge": false,
       "trusted_inputs": [
         "Agda kernel",
@@ -234,7 +240,7 @@
       "external_transfer_required_for_broad_claim": false,
       "preserves": [
         "well_typedness",
-        "primitive_derived_tags",
+        "witnessed_public_status",
         "historical_support",
         "mu"
       ]
@@ -447,6 +453,8 @@
         "Metatheory/KanSubsumption.agda",
         "Metatheory/UpperBound.agda",
         "Metatheory/ChronologicalWindow.agda",
+        "Metatheory/NormalizationDerived.agda",
+        "Metatheory/ReplaceDerivedField.agda",
         "Metatheory/ComputationalReplacement.agda",
         "Metatheory/SurfaceToHornImage.agda",
         "Metatheory/TwoDFoundations.agda"
@@ -458,6 +466,11 @@
         "primitive-obligations-factor-through-last-two",
         "higher-arity-fields-disappear-from-minimal-signature",
         "higher-arity-computational-replacement",
+        "higherStructuralTraceDerived",
+        "normalizationClassifiesHigherStructuralByDerivation",
+        "NormalizationDerivedWitness",
+        "normalizationDerivedWitness",
+        "replaceDerivedField",
         "higher-structural-fields-derived",
         "higher-raw-structural-traces-derived",
         "structural-primitive-eliminates-above-two",
@@ -480,6 +493,7 @@
       ],
       "agda_modules": [
         "Metatheory/ComputationalReplacement.agda",
+        "Metatheory/ReplaceDerivedField.agda",
         "Metatheory/MuInvariance.agda"
       ],
       "agda_theorems": [
@@ -488,6 +502,8 @@
         "computational-replacement-preserves-canonical-presentation",
         "higher-arity-fields-disappear-from-minimal-signature",
         "higher-arity-computational-replacement",
+        "replaceDerivedField",
+        "presentationEquiv",
         "computational-replacement-preserves-mu"
       ],
       "status": "mechanized",

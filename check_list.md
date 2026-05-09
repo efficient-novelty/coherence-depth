@@ -73,15 +73,15 @@ Tracking checklist distilled from `paper_improvement_plan.md`. Keep detailed rat
 
 ## Replacement and normalization
 
-- [ ] Prove `replaceDerivedField`.
-- [ ] Define the forward map that forgets the primitive field.
-- [ ] Define the backward map that inserts the computed term.
-- [ ] Prove both presentation-equivalence round trips.
-- [ ] Prove `higherStructuralTraceDerived`.
+- [x] Prove `replaceDerivedField`.
+- [x] Define the forward map that forgets the primitive field.
+- [x] Define the backward map that inserts the computed term.
+- [x] Prove both presentation-equivalence round trips.
+- [x] Prove `higherStructuralTraceDerived`.
 - [ ] Normalize trace telescopes in dependency order.
 - [ ] Classify unary and binary structural trace fields as primitive candidates where appropriate.
-- [ ] Classify higher structural fields as derived only by calling the derivation theorem.
-- [ ] Ensure higher structural classification requires `IsStructuralHorn`, not just arity at least 3.
+- [x] Classify higher structural fields as derived only by calling the derivation theorem.
+- [x] Ensure higher structural classification requires `IsStructuralHorn`, not just arity at least 3.
 - [ ] Apply derived-field replacement during normalization.
 - [ ] Prove normalization terminates because replacements use only lower data.
 - [ ] Prove `normalizeEliminatesHigherStructuralTrace`.
@@ -106,8 +106,8 @@ Tracking checklist distilled from `paper_improvement_plan.md`. Keep detailed rat
 - [x] Add or update `Metatheory/DerivedTrace.agda`.
 - [x] Add or update `Metatheory/ReplaceDerivedField.agda`.
 - [x] Add or update `Metatheory/NormalizationDerived.agda`.
-- [ ] Update `Surface/Modal/Adequacy.agda`.
-- [ ] Ensure SMod explicit horn fields elaborate through `HornElaboration`.
+- [x] Update `Surface/Modal/Adequacy.agda`.
+- [x] Ensure SMod explicit horn fields elaborate through `HornElaboration`.
 - [x] Ensure SMod no longer assigns derivedness by tag.
 - [x] Run a `derived` search and verify it appears only in derivation records, witnessed public statuses, theorem names, or prose comments.
 
@@ -118,11 +118,11 @@ Tracking checklist distilled from `paper_improvement_plan.md`. Keep detailed rat
 - [x] Add or describe a closed-boundary filler request.
 - [x] Verify `openExtIsContr` cannot be applied to arbitrary closed-boundary fillers.
 - [x] Add an explicit SMod horn test.
-- [ ] Verify explicit SMod horn elaborates to `HornSemanticDerivation`.
+- [x] Verify explicit SMod horn elaborates to `HornSemanticDerivation`.
 - [x] Verify explicit SMod horn is removed from primitive trace.
 - [x] Verify explicit SMod horn has the same `mu` as the omitted-horn presentation.
 - [x] Add an omitted SMod horn test.
-- [ ] Verify omitted SMod horn inserts the same derived term.
+- [x] Verify omitted SMod horn inserts the same derived term.
 - [x] Verify explicit and omitted SMod horn presentations are presentation-equivalent.
 - [x] Add a fake higher payload test.
 - [x] Verify fake higher payload is not eliminated as structural trace.
@@ -158,8 +158,8 @@ Tracking checklist distilled from `paper_improvement_plan.md`. Keep detailed rat
 - [x] The replacement term is obtained from `openExtCenter` and decoded into the field type.
 - [x] The replacement term uses only lower public fields plus cubical Kan operations.
 - [x] Replacement soundness is proved.
-- [ ] Deleting a derived field is justified by presentation equivalence.
-- [ ] Normalization eliminates higher structural primitive fields by calling the derivation theorem.
+- [x] Deleting a derived field is justified by presentation equivalence.
+- [x] Normalization eliminates higher structural primitive fields by calling the derivation theorem.
 - [x] User-authored higher payload data is not eliminated by this theorem.
 - [x] Exact `Real_k` stabilization is proved using contractible open-box factors.
 - [x] Minimal-public-signature elimination is proved using `DerivedTrace` and replacement.
