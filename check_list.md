@@ -79,20 +79,20 @@ Tracking checklist distilled from `paper_improvement_plan.md`. Keep detailed rat
 - [x] Prove both presentation-equivalence round trips.
 - [x] Prove `higherStructuralTraceDerived`.
 - [ ] Normalize trace telescopes in dependency order.
-- [ ] Classify unary and binary structural trace fields as primitive candidates where appropriate.
+- [x] Classify unary and binary structural trace fields as primitive candidates where appropriate.
 - [x] Classify higher structural fields as derived only by calling the derivation theorem.
 - [x] Ensure higher structural classification requires `IsStructuralHorn`, not just arity at least 3.
-- [ ] Apply derived-field replacement during normalization.
+- [x] Apply derived-field replacement during normalization.
 - [ ] Prove normalization terminates because replacements use only lower data.
-- [ ] Prove `normalizeEliminatesHigherStructuralTrace`.
+- [x] Prove `normalizeEliminatesHigherStructuralTrace`.
 - [ ] Ensure `mu` counts only payload plus irreducible unary/binary structural trace fields.
 
 ## Exact realization and public signature claims
 
-- [ ] Prove each depth-k marginal structural obligation is an explicit `OpenExt` over `Real_{k-1}(X)`.
-- [ ] Prove each such `OpenExt` is contractible.
-- [ ] Prove `Real_k(X) ~= Real_{k-1}(X)` for `k >= 3`.
-- [ ] Prove `Real_k(X) ~= Real_2(X)` for `k >= 2`.
+- [x] Prove each depth-k marginal structural obligation is an explicit `OpenExt` over `Real_{k-1}(X)`.
+- [x] Prove each such `OpenExt` is contractible.
+- [x] Prove `Real_k(X) ~= Real_{k-1}(X)` for `k >= 3`.
+- [x] Prove `Real_k(X) ~= Real_2(X)` for `k >= 2`.
 - [x] State separately that arity `>= 3` structural trace fields have `DerivedTrace` witnesses.
 - [x] State separately that such fields are removed from `mu`-minimal public trace signatures.
 - [x] Keep exact-object contractibility separate from public-signature elimination.
@@ -113,7 +113,7 @@ Tracking checklist distilled from `paper_improvement_plan.md`. Keep detailed rat
 
 ## Negative tests
 
-- [ ] Add a fake high-arity trace-shaped field without `StructuralBoundary`.
+- [x] Add a fake high-arity trace-shaped field without `StructuralBoundary`.
 - [x] Verify that fake high-arity field is not classified as derived by tag.
 - [x] Add or describe a closed-boundary filler request.
 - [x] Verify `openExtIsContr` cannot be applied to arbitrary closed-boundary fillers.

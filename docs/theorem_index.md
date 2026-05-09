@@ -51,6 +51,7 @@ agda --transliterate Test/ActiveBasisExamples.agda
 agda --transliterate Test/SparseRecurrenceSmoke.agda
 agda --transliterate Test/SemanticFixtureSmoke.agda
 agda --transliterate Test/HigherPayloadSmoke.agda
+agda --transliterate Test/FakeHigherTraceNoBoundary.agda
 agda --transliterate Test/SemanticDepthSmoke.agda
 agda --transliterate Test/FibonacciScalingSmoke.agda
 agda --transliterate Test/PresentationInvariance/RebundleRecord.agda
@@ -127,10 +128,14 @@ vocabulary `mechanized`, `conditional-on-adequacy-package`, `paper-only`, and
 | `irreducible-obligation-requires-cell` | `Metatheory.Obligations` | irreducible obligations require a coherence cell |
 | `history-truncates-to-one` | `Metatheory.Extensional` | UIP/extensional depth-one collapse |
 | `structural-integration-horn-reduction` | `Metatheory.KanSubsumption` | structural obligations reduce to horn-extension form |
+| `depth-k-marginal-structural-obligation-open-ext` | `Metatheory.KanSubsumption` | expose the marginal depth-k exact obligation as a theorem-facing `OpenExt` fiber |
+| `depth-k-marginal-open-ext-contractible` | `Metatheory.KanSubsumption` | marginal theorem-facing `OpenExt` fibers are contractible |
 | `remote-layer-obligation-derived` | `Metatheory.KanSubsumption` | remote higher obligation is derived |
 | `telescopic-subsumption` | `Metatheory.KanSubsumption` | telescopic subsumption chain |
 | `telescopic-remote-comparison-derived` | `Metatheory.KanSubsumption` | remote comparison derivation through exported trace |
 | `structural-obligation-set-equivalence` | `Metatheory.UpperBound` | equivalence of higher and depth-two obligation sets |
+| `real-k-equivalent-real-k-minus-one` | `Metatheory.UpperBound` | one-step exact stabilization from depth `k` to `k-1` for `k >= 3` |
+| `real-k-equivalent-real-two` | `Metatheory.UpperBound` | iterated exact stabilization to depth two |
 | `structural-stabilizes-at-two` | `Metatheory.UpperBound` | exact upper-bound stabilization |
 | `structural-obligation-contractible-factorization` | `Metatheory.UpperBound` | contractible factor decomposition |
 | `contractible-remote-factor-contractible` | `Metatheory.UpperBound` | remote factor is contractible |
@@ -215,6 +220,10 @@ vocabulary `mechanized`, `conditional-on-adequacy-package`, `paper-only`, and
 | `HornElaborationInput` / `structuralHornElaboration` | `Metatheory.HornElaboration` | build a witnessed `HornSemanticDerivation` from boundary/open-box/replacement evidence |
 | `replaceDerivedField` / `presentationEquiv` | `Metatheory.ReplaceDerivedField` | delete a derived raw field through explicit forward/backward presentation maps and round trips |
 | `higherStructuralTraceDerived` / `normalizationDerivedWitness` | `Metatheory.NormalizationDerived` | classify higher structural fields as derived only from a `HornSemanticDerivation` and its replacement witness |
+| `normalizeEliminatesHigherStructuralTrace` | `Metatheory.NormalizationDerived` | derivation-based normalization has no primitive public status for the higher structural field |
+| `normalizationAppliesDerivedFieldReplacement` | `Metatheory.NormalizationDerived` | normalization exposes the presentation-equivalence replacement for the derived field |
+| `normalizationReplacementUsesOnlyLower` | `Metatheory.NormalizationDerived` | normalized replacement terms use the lower public boundary witness |
+| `fakeHighArityTraceField` | `Test.FakeHigherTraceNoBoundary` | negative smoke test: high-arity trace-shaped data without a structural boundary package |
 | `modal-explicit-horn-elaborates-through-HornElaboration` | `Surface.Modal.Adequacy` | concrete `SMod` explicit horn bridge into `HornElaboration` |
 | `modal-omitted-horn-inserts-derived-term` / `modal-explicit-and-omitted-horn-same-derived-term` | `Surface.Modal.Adequacy` | omitted and explicit `SMod` horns share the same derived replacement term |
 | `CanonicalNormalizedSignature` | `Metatheory.SurfaceNormalizationBridge` | canonical payload plus trace normal form for an admissible raw extension |

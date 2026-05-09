@@ -13,6 +13,14 @@ private
   variable
     ℓ : Level
 
+data PrimitivePublicStatus
+  {Γlower : RawTelescope (RawStructuralClause ℓ)}
+  {f : RawStructuralClause ℓ} :
+  PublicStatus Γlower f → Type (lsuc ℓ) where
+  primitivePublicStatus :
+    (irreducible : IrreducibleTrace Γlower f) →
+    PrimitivePublicStatus (primitiveStatus irreducible)
+
 record HigherStructuralDerivedStep
   (Γlower : RawTelescope (RawStructuralClause ℓ))
   (f : RawStructuralClause ℓ) : SSet (lsuc ℓ) where
@@ -50,6 +58,33 @@ normalizationClassifiesHigherStructuralByDerivation :
 normalizationClassifiesHigherStructuralByDerivation derivation =
   mkNormalizedPublicField
     (derivedStatus (higherStructuralTraceDerived derivation))
+
+normalizeEliminatesHigherStructuralTrace :
+  {Γlower : RawTelescope (RawStructuralClause ℓ)}
+  {f : RawStructuralClause ℓ} →
+  (derivation : HornSemanticDerivation Γlower f) →
+  PrimitivePublicStatus
+    (checkedPublicStatus
+      (normalizationClassifiesHigherStructuralByDerivation derivation)) →
+  PrimitivePublicStatus
+    (derivedStatus (hornDerivedTrace derivation))
+normalizeEliminatesHigherStructuralTrace derivation ()
+
+normalizationAppliesDerivedFieldReplacement :
+  {Γlower : RawTelescope (RawStructuralClause ℓ)}
+  {f : RawStructuralClause ℓ} →
+  (derivation : HornSemanticDerivation Γlower f) →
+  DerivedFieldReplacement Γlower f (hornDerivedTrace derivation)
+normalizationAppliesDerivedFieldReplacement derivation =
+  replacement (higherStructuralTraceDerivedByTheorem derivation)
+
+normalizationReplacementUsesOnlyLower :
+  {Γlower : RawTelescope (RawStructuralClause ℓ)}
+  {f : RawStructuralClause ℓ} →
+  (derivation : HornSemanticDerivation Γlower f) →
+  usesOnlyLower (hornDerivedTrace derivation)
+normalizationReplacementUsesOnlyLower derivation =
+  usesLowerBoundaryAndKan derivation
 
 record NormalizationDerivedWitness
   (Γlower : RawTelescope (RawStructuralClause ℓ))

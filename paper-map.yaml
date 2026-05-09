@@ -40,7 +40,8 @@
         "Metatheory/CanonicalTelescope.agda",
         "Metatheory/TraceCostNormalForm.agda",
         "Metatheory/PresentationEquivalence.agda",
-        "Metatheory/MuInvariance.agda"
+        "Metatheory/MuInvariance.agda",
+        "Test/FakeHigherTraceNoBoundary.agda"
       ],
       "agda_theorems": [
         "raw-extension-payload-fields",
@@ -78,7 +79,10 @@
         "canonical-telescope-cardinality",
         "trace-cost-normal-form-cardinality",
         "PresentationStep",
-        "mu-invariant-under-presentation-equivalence"
+        "mu-invariant-under-presentation-equivalence",
+        "fakeHighArityTraceField",
+        "fake-high-arity-trace-records-role-only",
+        "fake-high-arity-trace-has-no-structural-clause-kind"
       ],
       "status": "mechanized",
       "status_detail": "fully formalized for the fixed raw extension calculus",
@@ -399,6 +403,8 @@
       ],
       "agda_theorems": [
         "HornExtensionFiber",
+        "depth-k-marginal-structural-obligation-open-ext",
+        "depth-k-marginal-open-ext-contractible",
         "structural-integration-horn-reduction",
         "remote-layer-obligation-derived",
         "semantic-trace-normal-form",
@@ -417,6 +423,8 @@
         "semantic-telescopic-subsumption",
         "semantic-remote-comparison-derived",
         "structural-obligation-set-equivalence",
+        "real-k-equivalent-real-k-minus-one",
+        "real-k-equivalent-real-two",
         "structural-stabilizes-at-two",
         "primitive-trace-depth-at-most-two",
         "primitive-trace-normal-forms-stabilize-at-depth-two",
@@ -468,6 +476,9 @@
         "higher-arity-computational-replacement",
         "higherStructuralTraceDerived",
         "normalizationClassifiesHigherStructuralByDerivation",
+        "normalizeEliminatesHigherStructuralTrace",
+        "normalizationAppliesDerivedFieldReplacement",
+        "normalizationReplacementUsesOnlyLower",
         "NormalizationDerivedWitness",
         "normalizationDerivedWitness",
         "replaceDerivedField",

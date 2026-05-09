@@ -131,6 +131,29 @@ primitiveCostForRole (binary-comparison-role p left right) =
 primitiveCostForRole (horn-boundary-role b package) =
   derived
 
+unaryStructuralFieldPrimitiveCandidate :
+  (p : NewPayloadRef) →
+  (s : BasisSite) →
+  primitiveCostForRole {c = act {ℓ = ℓ} p s}
+    (unary-action-role {ℓ = ℓ} p s)
+    ≡ requiresPrimitive
+unaryStructuralFieldPrimitiveCandidate p s = refl
+
+binaryStructuralFieldPrimitiveCandidate :
+  (p : NewPayloadRef) →
+  (left right : BasisSite) →
+  primitiveCostForRole {c = cmp {ℓ = ℓ} p left right}
+    (binary-comparison-role {ℓ = ℓ} p left right)
+    ≡ requiresPrimitive
+binaryStructuralFieldPrimitiveCandidate p left right = refl
+
+higherStructuralFieldDerivedCandidate :
+  (b : RawBoundary ℓ) →
+  (package : PackagedHornBoundary b) →
+  primitiveCostForRole {c = horn b} (horn-boundary-role {ℓ = ℓ} b package)
+    ≡ derived
+higherStructuralFieldDerivedCandidate b package = refl
+
 traceCostFieldForRole :
   {c : RawStructuralClause ℓ} →
   TypedStructuralRole c →

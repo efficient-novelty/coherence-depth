@@ -19,6 +19,7 @@ open import Metatheory.KanSubsumption
         ; TelescopicTraceChain
         ; no-remote-traces
         ; extend-trace-chain
+        ; canonical-horn-extension
         ; structural-weaken
         ; structural-horn-language
         )
@@ -226,6 +227,35 @@ structural-obligation-set-equivalence u u0 offset = record
   ; rightInv = collapse-after-extend u u0 offset
   ; leftInv = extend-after-collapse u u0 offset
   }
+
+real-k-equivalent-real-k-minus-one :
+  {ℓ : Level} {A : Type ℓ} {φ : I} →
+  (u : I → Partial φ A) →
+  (u0 : A [ φ ↦ u i0 ]) →
+  (offset : Nat) →
+  Iso (StructuralObligation u u0 (3 + offset))
+      (StructuralObligation u u0 (2 + offset))
+real-k-equivalent-real-k-minus-one u u0 offset = record
+  { fun = λ where
+      (extend-remote-layer boundary fiber) → boundary
+  ; inv = λ boundary →
+      extend-remote-layer boundary (canonical-horn-extension u u0)
+  ; rightInv = λ boundary → refl
+  ; leftInv = λ where
+      (extend-remote-layer boundary fiber) →
+        cong (λ fiber' → extend-remote-layer boundary fiber')
+          (horn-extension-fiber-contractible u u0 .snd fiber)
+  }
+
+real-k-equivalent-real-two :
+  {ℓ : Level} {A : Type ℓ} {φ : I} →
+  (u : I → Partial φ A) →
+  (u0 : A [ φ ↦ u i0 ]) →
+  (offset : Nat) →
+  Iso (StructuralObligation u u0 (2 + offset))
+      (StructuralObligation u u0 2)
+real-k-equivalent-real-two =
+  structural-obligation-set-equivalence
 
 structural-stabilizes-at-two :
   {ℓ : Level} {A : Type ℓ} {φ : I} →

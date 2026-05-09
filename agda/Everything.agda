@@ -54,6 +54,7 @@ import Test.CubicalOpenBox.FlatArrHorn
 import Test.CubicalOpenBox.NaturalitySmoke
 import Test.CubicalOpenBox.ClosedBoundaryNotClaimed
 import Test.RawHornNoDerivedTag
+import Test.FakeHigherTraceNoBoundary
 import Surface.Modal.Syntax
 import Surface.Modal.Typing
 import Surface.Modal.Routes

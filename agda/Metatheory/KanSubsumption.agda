@@ -111,6 +111,25 @@ data StructuralObligation {ℓ : Level} {A : Type ℓ} {φ : I}
     HornExtensionFiber u u0 →
     StructuralObligation u u0 (suc (suc (suc k)))
 
+depth-k-marginal-structural-obligation-open-ext :
+  {ℓ : Level} {A : Type ℓ} {φ : I} →
+  {u : I → Partial φ A} {u0 : A [ φ ↦ u i0 ]} →
+  {offset : Nat} →
+  StructuralObligation u u0 (3 + offset) →
+  HornExtensionFiber u u0
+depth-k-marginal-structural-obligation-open-ext
+  (extend-remote-layer boundary fiber) =
+  fiber
+
+depth-k-marginal-open-ext-contractible :
+  {ℓ : Level} {A : Type ℓ} {φ : I} →
+  (u : I → Partial φ A) →
+  (u0 : A [ φ ↦ u i0 ]) →
+  (offset : Nat) →
+  isContr (HornExtensionFiber u u0)
+depth-k-marginal-open-ext-contractible u u0 offset =
+  horn-extension-fiber-contractible u u0
+
 record HornReductionView {ℓ : Level} {A : Type ℓ} {φ : I}
   (u : I → Partial φ A) (u0 : A [ φ ↦ u i0 ]) (offset : Nat) : Type ℓ where
   constructor mkHornReductionView
