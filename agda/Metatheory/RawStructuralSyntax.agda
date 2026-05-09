@@ -85,7 +85,7 @@ data RawStructuralClause (ℓ : Level) : Type (ℓ-suc ℓ) where
   horn : RawBoundary ℓ → RawStructuralClause ℓ
 
 data RawStructuralClauseKind : Type where
-  unary-action-kind binary-comparison-kind derived-horn-kind :
+  unary-action-kind binary-comparison-kind horn-kind :
     RawStructuralClauseKind
 
 rawStructuralClauseKind :
@@ -95,7 +95,7 @@ rawStructuralClauseKind (act p s) =
 rawStructuralClauseKind (cmp p left right) =
   binary-comparison-kind
 rawStructuralClauseKind (horn b) =
-  derived-horn-kind
+  horn-kind
 
 rawStructuralClauseSupportDepth :
   RawStructuralClause ℓ → Nat

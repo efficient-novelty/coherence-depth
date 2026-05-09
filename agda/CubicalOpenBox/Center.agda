@@ -1,6 +1,6 @@
 {-# OPTIONS --cubical --safe --guardedness #-}
 
-module CubicalOpenBox.Contractible where
+module CubicalOpenBox.Center where
 
 open import Cubical.Foundations.Prelude
 
@@ -13,24 +13,18 @@ private
     A : Type ℓ
     φ : I
 
-openExtIsContr :
+openExtCenter :
   {A : Type ℓ} {φ : I} →
   (side : I → Partial φ A) →
   (base : A [ φ ↦ side i0 ]) →
   (B : OpenBox side base) →
-  isContr (OpenExt side base B)
-openExtIsContr side base B =
-  canonicalOpenExt side base B ,
-  λ e →
-    sym (isContrSingl (outS base) .snd (canonicalOpenExt side base B))
-    ∙ isContrSingl (outS base) .snd e
+  OpenExt side base B
+openExtCenter = canonicalOpenExt
 
-canonicalOpenExtContracts :
+openExtCenterEndpointLaws :
   {A : Type ℓ} {φ : I} →
   (side : I → Partial φ A) →
   (base : A [ φ ↦ side i0 ]) →
   (B : OpenBox side base) →
-  (e : OpenExt side base B) →
-  canonicalOpenExt side base B ≡ e
-canonicalOpenExtContracts side base B e =
-  openExtIsContr side base B .snd e
+  FillerEndpointLaws side base (hfill side base) (canonicalLid side base B)
+openExtCenterEndpointLaws = canonicalEndpointLaws

@@ -13,56 +13,78 @@ private
     A : Type ℓ
     φ : I
 
--- A filler is the underlying path from the base face to a freely chosen lid.
--- The visible partial boundary and Sub base are explicit parameters; Cubical
--- Agda's hcomp/hfill typing checks that the canonical inhabitant respects
--- those boundary data.
+-- The checked homogeneous filler is the path produced by hfill. The visible
+-- Partial boundary and Sub base are explicit parameters; the endpoint laws
+-- below make the agreement obligations inspectable without moving Sub itself
+-- out of Cubical Agda's strict universe.
 Filler :
   {A : Type ℓ} {φ : I} →
-  (u : I → Partial φ A) →
-  (u0 : A [ φ ↦ u i0 ]) →
-  (B : OpenBox u u0) →
-  Lid u u0 B →
+  (side : I → Partial φ A) →
+  (base : A [ φ ↦ side i0 ]) →
+  (B : OpenBox side base) →
+  Lid side base B →
   Type ℓ
-Filler u u0 B lid = outS u0 ≡ lid
+Filler side base B lid = outS base ≡ lid
+
+record FillerEndpointLaws
+  {A : Type ℓ} {φ : I}
+  (side : I → Partial φ A)
+  (base : A [ φ ↦ side i0 ])
+  (fill : I → A)
+  (lid : A) : Type ℓ where
+  constructor mkFillerEndpointLaws
+  field
+    startsAtBase : fill i0 ≡ outS base
+    endsAtLid : fill i1 ≡ lid
+
+open FillerEndpointLaws public
 
 OpenExt :
   {A : Type ℓ} {φ : I} →
-  (u : I → Partial φ A) →
-  (u0 : A [ φ ↦ u i0 ]) →
-  OpenBox u u0 →
+  (side : I → Partial φ A) →
+  (base : A [ φ ↦ side i0 ]) →
+  OpenBox side base →
   Type ℓ
-OpenExt u u0 B = Σ (Lid u u0 B) (Filler u u0 B)
+OpenExt side base B = Σ (Lid side base B) (Filler side base B)
 
 canonicalLid :
   {A : Type ℓ} {φ : I} →
-  (u : I → Partial φ A) →
-  (u0 : A [ φ ↦ u i0 ]) →
-  (B : OpenBox u u0) →
-  Lid u u0 B
-canonicalLid u u0 B = hcomp u (outS u0)
+  (side : I → Partial φ A) →
+  (base : A [ φ ↦ side i0 ]) →
+  (B : OpenBox side base) →
+  Lid side base B
+canonicalLid side base B = hcomp side (outS base)
 
 canonicalFill :
   {A : Type ℓ} {φ : I} →
-  (u : I → Partial φ A) →
-  (u0 : A [ φ ↦ u i0 ]) →
-  (B : OpenBox u u0) →
-  Filler u u0 B (canonicalLid u u0 B)
-canonicalFill u u0 B i = hfill u u0 i
+  (side : I → Partial φ A) →
+  (base : A [ φ ↦ side i0 ]) →
+  (B : OpenBox side base) →
+  Filler side base B (canonicalLid side base B)
+canonicalFill side base B i = hfill side base i
+
+canonicalEndpointLaws :
+  {A : Type ℓ} {φ : I} →
+  (side : I → Partial φ A) →
+  (base : A [ φ ↦ side i0 ]) →
+  (B : OpenBox side base) →
+  FillerEndpointLaws side base (hfill side base) (canonicalLid side base B)
+canonicalEndpointLaws side base B =
+  mkFillerEndpointLaws refl refl
 
 canonicalOpenExt :
   {A : Type ℓ} {φ : I} →
-  (u : I → Partial φ A) →
-  (u0 : A [ φ ↦ u i0 ]) →
-  (B : OpenBox u u0) →
-  OpenExt u u0 B
-canonicalOpenExt u u0 B = canonicalLid u u0 B , canonicalFill u u0 B
+  (side : I → Partial φ A) →
+  (base : A [ φ ↦ side i0 ]) →
+  (B : OpenBox side base) →
+  OpenExt side base B
+canonicalOpenExt side base B = canonicalLid side base B , canonicalFill side base B
 
 openExtFillAt :
   {A : Type ℓ} {φ : I} →
-  (u : I → Partial φ A) →
-  (u0 : A [ φ ↦ u i0 ]) →
-  (B : OpenBox u u0) →
-  (e : OpenExt u u0 B) →
+  (side : I → Partial φ A) →
+  (base : A [ φ ↦ side i0 ]) →
+  (B : OpenBox side base) →
+  (e : OpenExt side base B) →
   I → A
-openExtFillAt u u0 B e i = e .snd i
+openExtFillAt side base B e i = e .snd i

@@ -418,8 +418,10 @@ is a field of $\Gamma_{\mathrm{cmp}}$ whose type presents a higher structural
 boundary together with the missing-face/filler package of
 \autoref{def:horn-extension-package}. Raw horn clauses may occur in the exact
 realized obligation object, but after adequacy and computational replacement
-they are classified as derived trace whenever their witness is synthesized by
-the cubical Kan operations from the lower boundary.
+they are not raw \emph{derived} syntax. The raw grammar records only that the
+clause has horn shape; derived public status is assigned later, and only when a
+derivation witness synthesizes the field from the lower boundary using the
+cubical Kan operations.
 \end{defi}
 
 \subsection{States, extensions, and promoted packages}
@@ -484,7 +486,7 @@ Every admissible surface extension declaration~$e$ determines such a candidate b
 \label{def:atomic-schema}
 Every public interface in this paper is counted only up to \emph{canonical telescope isomorphism}: reassociation and flattening of iterated dependent sums, splitting or rebundling one single-constructor record into several nested records, and currying or uncurrying iterated function arguments when these preserve the same sealed typing judgment. Concretely, an exported interface is read as a dependent record, equivalently an iterated $\Sigma$-type whose field types may themselves begin with $\Pi$-telescopes. Its \emph{counting normal form} is the fully flattened telescope obtained by reassociating the $\Sigma$-spine and expanding such record wrappers.
 
-An \emph{atomic schema} is one field of this counting normal form after transparent telescope isomorphisms have been quotiented. Such a field is tagged \emph{derived} when its inhabitant is uniformly synthesized from earlier fields by definitional equality, reflexivity, transport along already exported equalities, or the generic structural operations of the ambient calculus. It is tagged \emph{primitive} when no such transparent synthesis is available in the fixed calculus. The cost and basis notions below count primitive atomic schemas; derived schemas may remain present in exact signatures but contribute no primitive public trace unit.
+An \emph{atomic schema} is one field of this counting normal form after transparent telescope isomorphisms have been quotiented. Such a field is assigned derived public status when its inhabitant is uniformly synthesized from earlier fields by definitional equality, reflexivity, transport along already exported equalities, or the generic structural operations of the ambient calculus. It is assigned primitive status when no such transparent synthesis is available in the fixed calculus. The cost and basis notions below count primitive atomic schemas; derived schemas may remain present in exact signatures but contribute no primitive public trace unit.
 \end{defi}
 
 \begin{defi}[Core payload size]
@@ -890,19 +892,37 @@ All downstream semantic readings pass through the adequacy boundary recorded in
 
 \begin{figure}[t]
 \centering
-\begin{tikzpicture}[scale=0.92, transform shape,
-  every node/.style={font=\small},
-  box/.style={draw, align=center, minimum width=2.65cm, minimum height=0.85cm}]
-  \node[box] (sem) at (-5.2,0) {semantic sealed\\extension};
-  \node[box] (adq) at (-2.55,0) {adequacy\\package};
-  \node[box] (raw) at (0.1,0) {raw\\declaration};
-  \node[box] (norm) at (2.75,0) {normalized public\\signature};
-  \node[box] (mu) at (5.4,0) {$\mu$\\primitive trace};
-  \draw[->] (sem) -- node[above] {transfer} (adq);
-  \draw[->] (adq) -- node[above] {sound raw image} (raw);
-  \draw[->] (raw) -- node[above] {seal and normalize} (norm);
-  \draw[->] (norm) -- node[above] {count irreducibles} (mu);
-  \draw[->,dashed] (adq) to[bend left=28] node[below] {preserve support and derived status} (norm);
+\begin{tikzpicture}[
+  every node/.style={font=\footnotesize},
+  box/.style={
+    draw,
+    align=center,
+    text width=1.95cm,
+    minimum width=2.15cm,
+    minimum height=1.05cm,
+    inner sep=2pt},
+  flowlabel/.style={
+    font=\scriptsize,
+    align=center,
+    text width=1.55cm,
+    inner sep=1pt},
+  longlabel/.style={
+    font=\scriptsize,
+    align=center,
+    text width=3cm,
+    inner sep=1pt}]
+  \node[box] (sem) at (-4.8,0) {semantic sealed\\extension};
+  \node[box] (adq) at (-2.4,0) {adequacy\\package};
+  \node[box] (raw) at (0,0) {raw\\declaration};
+  \node[box] (norm) at (2.4,0) {normalized public\\signature};
+  \node[box] (mu) at (4.8,0) {$\mu$\\primitive trace};
+  \draw[->] (sem) -- node[flowlabel, above] {transfer} (adq);
+  \draw[->] (adq) -- node[flowlabel, above] {raw image} (raw);
+  \draw[->] (raw) -- node[flowlabel, above] {seal\\normalize} (norm);
+  \draw[->] (norm) -- node[flowlabel, above] {count} (mu);
+  \draw[->,dashed] (adq.south) to[bend right=18]
+    node[longlabel, below=2pt] {preserve support\\and derived status}
+    (norm.south);
 \end{tikzpicture}
 \caption{The adequacy boundary. A semantic sealed extension is counted only after an adequacy package interprets it in the fixed raw calculus, normalization exposes the sealed public signature, and $\mu$ counts the primitive trace fields that remain after derived horn data are removed.}
 \label{fig:adequacy-flow}
@@ -1008,8 +1028,9 @@ The left route applies \(\mathsf{flatEl}\) at \(\mathsf{Arr}(A,B)\), maps
 with \(\mathsf{ElArr}\) at the lifted codes, and transports domain and codomain
 along \(\mathsf{flatEl}(A)\) and \(\mathsf{flatEl}(B)\). The comparison between
 these routes is the generated higher horn \(\mathsf{flatArrCoh}\). A surface
-program may write it explicitly, but it is checked as derived trace and does
-not contribute to~\(\mu\).
+program may write it explicitly, but it is accepted as derived trace only
+after the route boundary has produced the horn derivation witness. It therefore
+does not contribute to~\(\mu\).
 
 \begin{center}
 \small
@@ -1031,9 +1052,10 @@ Let $E$ be a well-typed declaration in \texttt{SMod} over an opaque old
 universe interface. Then \(\mathsf{Elab}(E)\) is an admissible raw
 \(\Cext\)-declaration. Elaboration preserves payload fields, primitive trace
 fields, historical support, and normalized public cost~\(\mu\). The generated
-function-code compatibility horn elaborates to a derived structural horn
-clause; adding it explicitly as a surface field does not change the normalized
-public signature or~\(\mu\).
+function-code compatibility horn elaborates to a structural horn clause
+together with a derivation witness for its derived replacement; adding it
+explicitly as a surface field does not change the normalized public signature
+or~\(\mu\).
 \end{thm}
 
 \begin{proof}
@@ -1045,9 +1067,10 @@ clauses. The route comparison has exactly the structural open-box shape
 described in \autoref{thm:actual-open-box-contractibility}; if it is omitted,
 elaboration inserts the canonical center, and if it is supplied explicitly,
 contractibility identifies it with the canonical witness. In both cases the
-horn is tagged derived. The normalized surface telescope is therefore
-canonically isomorphic to the normalized raw telescope with the same
-primitive/derived tags, so support and \(\mu\) are preserved.
+horn derivation supplies the derived replacement term. The normalized surface
+telescope is therefore canonically isomorphic to the normalized raw telescope
+with the same primitive fields and witnessed derived fields, so support and
+\(\mu\) are preserved.
 
 The mechanized instance lives in
 \AgdaPath{Surface/Modal/Syntax.agda},

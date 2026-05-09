@@ -1,227 +1,167 @@
 # Paper Improvement Checklist
 
-Tracker for implementation of `paper_improvement_plan.md`. This checklist is intentionally compact: keep detailed theorem statements, proof sketches, and wording in the plan or paper drafts.
+Tracking checklist distilled from `paper_improvement_plan.md`. Keep detailed rationale and proof sketches in the plan; use this file to track completion.
 
-## 0. Scope And Claim Boundaries
+## Open-box formalization
 
-- [x] Use the revised claim hierarchy consistently: internal model theorem, actual cubical horn theorem, adequacy instance, mechanization evidence, semantic assumption, and paper-level interpretation.
-- [x] Audit the paper for ambiguous claims such as "standard open-box contractibility" or "hcomp computes the missing face" and replace them with precise scoped claims.
-- [x] Ensure the paper never implies arbitrary closed-boundary filler spaces are contractible.
-- [x] Ensure broad Cubical Agda/CCHM transfer claims are marked as assumptions, conjectures, or supported by an explicit adequacy theorem.
+- [ ] Replace the abstract/thin `OpenBox` object with an explicit `StructuralOpenBox`.
+- [ ] Include the cubical family `A`, visible-face condition `phi`, side boundary, and compatible base face.
+- [ ] Define `BoundaryFamily` using compatible sub-elements.
+- [ ] Define `Lid` as the compatible subtype at `i1`.
+- [ ] Define `Filler` as a path through compatible elements.
+- [x] Define `OpenExt` as the total space of lid plus filler.
+- [ ] Add an optional finite `FaceSystem` layer if useful for paper exposition.
+- [ ] Compile finite face systems into a single `Partial` boundary.
+- [x] State the explicit open-box definition in the paper.
+- [x] Prove the intuitive missing-face/filler package equivalent to explicit `OpenExt`.
+- [x] Prove that the missing-face/open-extension equivalence is substitution-natural.
+- [x] Construct `openExtCenter` using cubical composition/filling.
+- [ ] Add a wrapper such as `canonicalFillSub` for library-specific `Sub` details.
+- [ ] Prove `isContrPathPSingleton`.
+- [x] Prove `openExtIsContr` without postulates.
+- [x] Explicitly distinguish total open-box extensions from fixed-lid fillers.
+- [x] Explicitly distinguish open-box extensions from closed-boundary filler spaces.
+- [x] Prove named substitution stability for `OpenExt`.
+- [x] Prove canonical center preservation under substitution.
+- [x] Add a negative/non-theorem guard against applying open-box contractibility to closed boundaries.
+- [ ] If the explicit theorem is not mechanized, downgrade the paper claim to an adequacy assumption.
 
-## 1. Horn Theorem: Paper Work
+## Open-box modules
 
-- [x] Add subsection `5.4.1 Actual cubical open-box extension theorem` before the exact-stabilization proof.
-- [x] Replace old Lemma 5.17 with Theorem H1 for `OpenExt(A, phi, u, u0)`.
-- [x] Define `OpenExt` using actual CCHM face formulas or Cubical Agda `Partial`/`Sub` structure.
-- [x] State `isContr(OpenExt(A, phi, u, u0))`.
-- [x] Define the canonical center using cubical composition/filling: canonical lid from `comp` and canonical filler from `hfill`.
-- [x] Include the naturality clause for cubical substitutions.
-- [x] State that contraction paths commute with substitution propositionally, with judgmental uniformity recorded where available.
-- [x] Add the boxed qualification that H1 is an open-box theorem, not a closed-boundary filler theorem.
-- [x] Define the visible structural boundary as a real cofibration `phi_k`.
-- [x] State boundary well-formedness using `u : Partial phi_k (A t)` and `u0 : A i0 [ phi_k -> u i0 ]`.
-- [x] Explain that overlap compatibility is handled by the `Partial`/`Sub` typing discipline.
-- [x] State Lemma H0: missing-face packages are canonically equivalent to open-box extensions.
-- [x] Prove or sketch H0 by expanding the missing face, filler, dependent sum reassociation, and substitution naturality.
-- [x] Show the canonical lid/filler proof obligations at `i0`, `i1`, and on `phi`.
-- [x] Present contraction of an arbitrary extension to the canonical one.
-- [x] Include both proof routes for contraction, or explicitly formalize one and explain the other.
-- [x] State Lemma H2: substitution stability of structural open boxes.
-- [x] Prove or sketch naturality of centers and contraction paths under substitution.
-- [x] Rewrite Theorem 5.18 so exact stabilization factors through contractible fibers of `Real_k(X) -> Real_{k-1}(X)`.
-- [ ] Split Definition 5.12 into `5.12a Structural horn shape` and `5.12b Structural horn-extension object`.
-- [x] Retain `Sigma gamma . Fill(gamma)` only as intuitive notation and point to H0 for the formal identification.
-- [x] Add a negative example showing closed-boundary filler types are not generally contractible.
-- [x] Add an implementation note forbidding a singleton-record implementation of `H_k`.
+- [ ] Add `CubicalOpenBox/FaceSystem.agda` if using explicit finite faces.
+- [x] Add `CubicalOpenBox/Explicit.agda`.
+- [x] Add `CubicalOpenBox/Center.agda`.
+- [x] Add `CubicalOpenBox/Contractible.agda`.
+- [x] Add `CubicalOpenBox/MissingFaceEquiv.agda`.
+- [x] Add `CubicalOpenBox/Substitution.agda`.
 
-## 2. Horn Theorem: Agda Work
+## Derivedness architecture
 
-- [x] Create `agda/CubicalOpenBox/Base.agda`.
-- [x] In `Base.agda`, define an `OpenBox` wrapper around actual cubical `Partial` and `Sub`/subtype primitives.
-- [x] Create `agda/CubicalOpenBox/Extension.agda`.
-- [ ] In `Extension.agda`, define `Filler` with visible laws for `i0`, `i1`, and `phi`.
-- [x] In `Extension.agda`, define `OpenExt` as a sigma of a lid and a filler.
-- [x] Keep enough `OpenExt` structure visible that the theorem is non-vacuous.
-- [x] Create `agda/CubicalOpenBox/Contractible.agda`.
-- [x] Define `canonicalOpenExt`.
-- [x] Prove `openExtIsContr`, or explicitly scope the mechanized theorem to structural horn shapes if full generality is not feasible.
-- [x] Ensure any scoped weakening is reflected honestly in the paper text and theorem map.
-- [x] Create `agda/CubicalOpenBox/Substitution.agda`.
-- [x] Choose the substitution naturality strategy: semantic CwF record or parametric-module stability.
-- [x] Implement the selected naturality API.
-- [x] Create `agda/Metatheory/StructuralHornShape.agda`.
-- [ ] Define the structural horn shapes generated by the sealing grammar.
-- [x] Create `agda/Metatheory/StructuralHornToOpenBox.agda`.
-- [x] Implement `structuralHornToOpenBox`.
-- [x] Implement `structuralHornPackageIsoOpenExt`.
-- [x] Implement `structuralHornExtensionIsContr`.
-- [x] Implement `structuralHornExtensionNaturality`.
-- [x] Add `agda/Test/CubicalOpenBox/FlatArrHorn.agda`.
-- [x] Add `agda/Test/CubicalOpenBox/NaturalitySmoke.agda`.
-- [x] Add `agda/Test/CubicalOpenBox/ClosedBoundaryNotClaimed.agda`.
-- [x] Ensure the closed-boundary smoke test does not route closed boundaries through `openExtIsContr`.
+- [x] Remove any raw primitive/derived tag from horn syntax.
+- [x] Keep raw structural role and arity in raw syntax.
+- [x] Ensure user-authored higher operations remain payload unless generated as structural trace.
+- [x] Define `TraceRole` with action, comparison, and horn roles.
+- [ ] Define `RawTraceField` without unverified derived status.
+- [x] Define `DerivedTrace` with boundary, replacement term, support proof, and soundness proof.
+- [ ] Define `PublicStatus` so derived status contains a derivation witness.
+- [ ] Prevent cached public status from bypassing irreducibility or derivation proofs.
+- [x] Define `HornSemanticDerivation`.
+- [x] Include lower boundary data in `HornSemanticDerivation`.
+- [ ] Construct an explicit open box from lower boundary data.
+- [ ] Relate the horn package to `OpenExt`.
+- [ ] Decode the canonical open-box center into the field type.
+- [ ] Prove the replacement term only uses lower public fields plus cubical Kan operations.
+- [ ] Prove replacement soundness.
+- [x] Define `hornDerivedTrace`.
 
-## 3. Modal Surface Adequacy: Paper Work
+## Cubical horn elaboration
 
-- [x] Add a concrete adequacy instance for `SMod`, a global modality over a small Tarski universe.
-- [x] Explain why a nontrivial surface calculus is needed for the adequacy boundary.
-- [x] Define the old opaque interface `OldU` with `U`, `El`, `Arr`, and `ElArr`.
-- [x] Define the new payload fields `Flat` and `eta`.
-- [x] Define primitive structural trace fields: `FlatU`, `flat-El`, `flat-code-Arr`, and `flat-Arr`.
-- [x] Classify payload fields, primitive trace fields, and derived horn fields.
-- [x] Define the generated derived horn comparing the left and right `Arr` routes.
-- [x] Define the left route from `El (FlatU (Arr A B))` to `Flat (El A) -> Flat (El B)`.
-- [x] Define the right route from `El (FlatU (Arr A B))` to `Flat (El A) -> Flat (El B)`.
-- [x] Allow optional explicit `flat-Arr-coh` as a derived field.
-- [x] State that omitted `flat-Arr-coh` is synthesized by the open-box theorem.
-- [x] Define the surface grammar for `SMod` declarations.
-- [x] Include the minimal declaration form.
-- [x] Include the redundant explicit-horn declaration form.
-- [x] Define surface typing judgments for old interfaces, payloads, traces, derived horns, and full extensions.
-- [x] Add syntax-directed payload typing rules.
-- [x] Add syntax-directed trace typing rules.
-- [x] Add the derived horn typing rule.
-- [x] Add the synthesized horn typing rule.
-- [x] Define `Elab : SModExtension -> RawExtension_Cext`.
-- [x] Define elaboration for the minimal declaration.
-- [x] Define elaboration for the explicit-horn declaration.
-- [x] Specify that normalization replaces explicit or synthesized horn witnesses with the canonical derived horn field.
-- [x] Add the trace tag mapping table.
-- [x] Account for the paper's basis-normalization convention when counting `mu`.
-- [x] State Theorem A1: modal surface adequacy.
-- [x] Prove elaboration soundness.
-- [x] Prove payload preservation.
-- [x] Prove primitive trace preservation.
-- [x] Prove derived horn preservation.
-- [x] Prove historical support preservation.
-- [x] Prove `mu_SMod(E) = mu_Cext(Elab(E))`.
-- [x] Prove presentation invariance between minimal and explicit-horn declarations.
-- [ ] Decide whether to mention the optional universe-extension adequacy instance.
-- [ ] If using the universe-extension alternative, define its old interface, new extension fields, and generated derived horn.
+- [ ] Prove `structuralHornElaboration`.
+- [ ] Handle remote comparison horn elaboration.
+- [ ] Build the cubical family for each structural horn.
+- [ ] Build the visible-face cofibration for each structural horn.
+- [ ] Build the side boundary from lower unary and binary traces.
+- [ ] Prove side overlaps from lower trace equations.
+- [ ] Build the compatible base face.
+- [ ] Form the explicit structural open box.
+- [ ] Compute the canonical center.
+- [ ] Decode the center into the public field type.
+- [ ] Prove side, endpoint, and transport equations.
+- [ ] Handle degenerate horn elaboration.
+- [ ] Handle transported horn elaboration.
+- [ ] Prove substitution-stable derivedness.
 
-## 4. Modal Surface Adequacy: Agda Work
+## Replacement and normalization
 
-- [x] Create `agda/Surface/Modal/Syntax.agda`.
-- [x] In `Syntax.agda`, define `OldU`.
-- [x] In `Syntax.agda`, define `ModPayload`.
-- [x] In `Syntax.agda`, define `ModTrace`.
-- [x] In `Syntax.agda`, define optional horn fields and modal declarations.
-- [x] Create `agda/Surface/Modal/Typing.agda`.
-- [x] In `Typing.agda`, encode the syntax-directed surface typing judgments.
-- [x] Create `agda/Surface/Modal/Routes.agda`.
-- [x] In `Routes.agda`, define `leftRoute`.
-- [x] In `Routes.agda`, define `rightRoute`.
-- [x] In `Routes.agda`, define `ArrHornType`.
-- [x] Create `agda/Surface/Modal/Elaboration.agda`.
-- [x] In `Elaboration.agda`, define `elabModal : ModalDecl -> RawExtension`.
-- [x] In `Elaboration.agda`, define tag-preservation maps.
-- [x] Create `agda/Surface/Modal/Normalization.agda`.
-- [x] In `Normalization.agda`, define normalized modal signatures and normalized `mu` computation.
-- [x] Create `agda/Surface/Modal/Adequacy.agda`.
-- [x] Prove `modal-elaboration-sound`.
-- [x] Prove `modal-payload-preserved`.
-- [x] Prove `modal-primitive-trace-preserved`.
-- [x] Prove `modal-derived-horn-preserved`.
-- [x] Prove `modal-support-preserved`.
-- [x] Prove `modal-mu-preserved`.
-- [x] Prove `explicit-horn-presentation-invariant`.
-- [x] Add `agda/Test/Surface/ModalAdequacySmoke.agda`.
-- [x] Add a smoke test for the primitive trace count of a minimal modal declaration.
-- [x] Add a smoke test showing explicit `flat-Arr-coh` does not change `mu`.
-- [x] Add a smoke test showing trace-record refactoring/bundling does not change `mu`.
+- [ ] Prove `replaceDerivedField`.
+- [ ] Define the forward map that forgets the primitive field.
+- [ ] Define the backward map that inserts the computed term.
+- [ ] Prove both presentation-equivalence round trips.
+- [ ] Prove `higherStructuralTraceDerived`.
+- [ ] Normalize trace telescopes in dependency order.
+- [ ] Classify unary and binary structural trace fields as primitive candidates where appropriate.
+- [ ] Classify higher structural fields as derived only by calling the derivation theorem.
+- [ ] Ensure higher structural classification requires `IsStructuralHorn`, not just arity at least 3.
+- [ ] Apply derived-field replacement during normalization.
+- [ ] Prove normalization terminates because replacements use only lower data.
+- [ ] Prove `normalizeEliminatesHigherStructuralTrace`.
+- [ ] Ensure `mu` counts only payload plus irreducible unary/binary structural trace fields.
 
-## 5. Mechanization And Trust Boundary
+## Exact realization and public signature claims
 
-- [x] Add the core distinction paragraph at the start of the mechanization section.
-- [x] Replace the current status language with the formal status list.
-- [x] Include `checked-internal`.
-- [x] Include `checked-actual-cubical`.
-- [x] Include `checked-adequacy-instance`.
-- [x] Include `semantic-assumption`.
-- [x] Include `paper-level-interpretation`.
-- [x] Replace or add the mechanization claim table.
-- [x] Add a table row for fixed `C_ext` syntax and normalized trace.
-- [x] Add a table row for open-box contractibility H1.
-- [x] Add a table row for structural horns mapping to open boxes.
-- [x] Add a table row for modal surface adequacy A1.
-- [x] Add a table row for the exact depth-two theorem for the fixed calculus.
-- [x] Add a table row for broad Cubical Agda adequacy.
-- [x] Add a table row for the Fibonacci recurrence under full coupling.
-- [x] Add the paragraph defining "no local postulates".
-- [x] Add the paragraph explaining that general arbitrary-Cubical-Agda adequacy remains open.
-- [x] Add the explanatory box contrasting `SyntheticHorn` with actual CCHM/Cubical Agda horn-extension types.
-- [x] Extend `paper-map.yaml` with `formal_status` metadata for every paper theorem.
-- [x] Add or update the `H1` claim entry in `paper-map.yaml`.
-- [x] Add or update the `A1` claim entry in `paper-map.yaml`.
-- [x] Add or update the `G1` broad-transfer entry in `paper-map.yaml`.
-- [x] Add `agda_modules` metadata for every `checked-*` claim.
-- [x] Add local postulate and local primitive metadata where applicable.
-- [x] Add trusted external primitive metadata for actual cubical claims.
-- [x] Mark semantic adequacy and broad external transfer requirements explicitly.
-- [x] Update the audit script so every theorem must have a `formal_status`.
-- [x] Update the audit script so `checked-*` claims must list modules.
-- [x] Update the audit script so `semantic-assumption` claims are not reported as mechanized theorems.
-- [x] Update the audit script so broad "Cubical Agda" or "CCHM" claims require an adequacy theorem or assumption/conjecture status.
+- [ ] Prove each depth-k marginal structural obligation is an explicit `OpenExt` over `Real_{k-1}(X)`.
+- [ ] Prove each such `OpenExt` is contractible.
+- [ ] Prove `Real_k(X) ~= Real_{k-1}(X)` for `k >= 3`.
+- [ ] Prove `Real_k(X) ~= Real_2(X)` for `k >= 2`.
+- [x] State separately that arity `>= 3` structural trace fields have `DerivedTrace` witnesses.
+- [x] State separately that such fields are removed from `mu`-minimal public trace signatures.
+- [x] Keep exact-object contractibility separate from public-signature elimination.
 
-## 6. Revised Paper Structure
+## Artifact refactor
 
-- [x] Add the introduction paragraph explaining the open-box theorem and missing-face data.
-- [x] Add Section `3.x A concrete adequacy instance: global modality over a Tarski universe`.
-- [x] In Section 3.x, summarize `SMod`.
-- [x] In Section 3.x, state Theorem A1.
-- [x] In Section 3.x, give the proof sketch for Theorem A1.
-- [ ] Move full `SMod` syntax rules to an appendix if main-text space is tight.
-- [x] Replace the Section 5 horn proof with the H0/H1/H2 exact-stabilization structure.
-- [x] Replace the Section 7 mechanization table with the revised status table.
-- [x] Add the Section 7 explanation of checked fixed model, actual cubical H1, checked A1, and open broad adequacy.
-- [ ] Add Appendix A: modal surface calculus `SMod`.
-- [ ] Add Appendix A.1: syntax.
-- [ ] Add Appendix A.2: typing.
-- [ ] Add Appendix A.3: routes and generated horn.
-- [ ] Add Appendix A.4: elaboration into `C_ext`.
-- [ ] Add Appendix A.5: normalization and `mu`.
-- [ ] Add Appendix A.6: proof of modal adequacy.
-- [ ] Add Appendix B: cubical open-box theorem details.
-- [ ] Add Appendix B.1: CCHM face-formula version.
-- [ ] Add Appendix B.2: Cubical Agda `Partial`/`Sub` version.
-- [ ] Add Appendix B.3: substitution naturality.
-- [x] Insert or adapt the drop-in theorem statement for actual structural horn-extension contractibility.
-- [x] Insert or adapt the drop-in proof sketch for H1.
-- [x] Insert or adapt the drop-in theorem statement for modal surface adequacy.
-- [x] Insert or adapt the drop-in mechanization paragraph.
-- [x] Revise the abstract after the theorem boundary is final.
-- [x] Revise the introduction after the theorem boundary is final.
+- [x] Update `Metatheory/RawStructuralSyntax.agda`.
+- [ ] Add or update `Metatheory/StructuralBoundary.agda`.
+- [ ] Add or update `Metatheory/HornOpenBox.agda`.
+- [ ] Add or update `Metatheory/HornElaboration.agda`.
+- [x] Add or update `Metatheory/DerivedTrace.agda`.
+- [x] Add or update `Metatheory/ReplaceDerivedField.agda`.
+- [x] Add or update `Metatheory/NormalizationDerived.agda`.
+- [ ] Update `Surface/Modal/Adequacy.agda`.
+- [ ] Ensure SMod explicit horn fields elaborate through `HornElaboration`.
+- [x] Ensure SMod no longer assigns derivedness by tag.
+- [ ] Run a `derived` search and verify it appears only in derivation records, witnessed public statuses, theorem names, or prose comments.
 
-## 7. Acceptance Checks
+## Negative tests
 
-- [x] Horn: `OpenExt` is defined using actual CCHM/Cubical Agda partial-element structure.
-- [x] Horn: H1 states contractibility and substitution naturality.
-- [x] Horn: the paper explicitly rejects arbitrary closed-boundary filler contractibility.
-- [x] Horn: exact stabilization uses contractible fibers.
-- [x] Horn: the Agda code exposes a nontrivial open-box extension type.
-- [x] Horn: the Agda proof does not obtain contractibility by defining the extension type as a singleton.
-- [x] Adequacy: `SMod` has real syntax, typing, and elaboration rules.
-- [x] Adequacy: the example includes payload, unary trace, binary trace, and a generated higher horn.
-- [x] Adequacy: elaboration preserves primitive/derived tags.
-- [x] Adequacy: elaboration preserves historical support.
-- [x] Adequacy: elaboration preserves `mu`.
-- [x] Adequacy: explicit redundant higher horns are proved not to change `mu`.
-- [ ] Adequacy: if not fully mechanized, all remaining proof obligations are listed explicitly.
-- [x] Mechanization: every paper claim in the theorem map has an approved status.
-- [x] Mechanization: the artifact audit distinguishes local postulates from semantic adequacy.
-- [x] Mechanization: broad Cubical Agda/CCHM transfer is marked open unless a real transfer theorem is supplied.
-- [x] Mechanization: the theorem map identifies actual-cubical modules versus synthetic model modules.
-- [x] Run the Agda/typecheck target used by the repository.
-- [x] Run the paper-map/audit script after metadata changes.
-- [x] Review the final paper for overclaims against the claim hierarchy.
+- [ ] Add a fake high-arity trace-shaped field without `StructuralBoundary`.
+- [ ] Verify that fake high-arity field is not classified as derived by tag.
+- [x] Add or describe a closed-boundary filler request.
+- [x] Verify `openExtIsContr` cannot be applied to arbitrary closed-boundary fillers.
+- [x] Add an explicit SMod horn test.
+- [ ] Verify explicit SMod horn elaborates to `HornSemanticDerivation`.
+- [x] Verify explicit SMod horn is removed from primitive trace.
+- [x] Verify explicit SMod horn has the same `mu` as the omitted-horn presentation.
+- [x] Add an omitted SMod horn test.
+- [ ] Verify omitted SMod horn inserts the same derived term.
+- [x] Verify explicit and omitted SMod horn presentations are presentation-equivalent.
+- [x] Add a fake higher payload test.
+- [x] Verify fake higher payload is not eliminated as structural trace.
 
-## 8. Risk Mitigation Tasks
+## Paper rewrites
 
-- [ ] If general `OpenExt` contractibility is too hard to mechanize, mechanize the structural horn instance first.
-- [ ] If the mechanized theorem is scoped to structural horns, clearly state the split between semantic generality and mechanized scope.
-- [x] If raw substitution naturality is awkward in Cubical Agda, use a CwF-style semantic wrapper or parametric-module tests.
-- [x] Add parametric smoke tests for substitutions used by the structural grammar.
-- [x] Present `SMod` as a calculus of well-typed modality declarations, not as a claim that every endofunctor has `flat-Arr`.
-- [x] State `mu` preservation parametrically over the paper's basis-normalization map.
-- [x] Keep the main mechanization table short and place full metadata in `paper-map.yaml`.
+- [x] Rewrite the open-box theorem with explicit `A`, `phi`, `u`, and `u0` data.
+- [x] Add the warning that the theorem is not about fixed-lid fillers.
+- [x] Add the warning that the theorem is not about closed boundaries.
+- [x] Add the bridge lemma from generated structural horns to explicit open boxes.
+- [x] Rewrite derivedness prose so horn clauses are derived only through derivation witnesses.
+- [x] Remove wording that says horn clauses are simply tagged derived.
+- [x] Add the minimal-signature elimination theorem.
+- [x] Include proof steps for constructing `HornSemanticDerivation`, converting to `DerivedTrace`, replacing the field, and iterating over the telescope.
+- [x] Add the scope warning for user-authored higher operations, HIT constructors, coherence axioms, and closed-boundary fillers.
+- [x] Insert theorem/proof draft A for explicit open-box extension contractibility.
+- [x] Insert lemma/proof draft B for generated structural horns as explicit open boxes.
+- [x] Insert theorem/proof draft C for exact stabilization.
+- [x] Insert theorem/proof draft D for derivedness-as-theorem.
+- [x] Insert theorem/proof draft E for minimal-signature elimination.
+- [ ] Label any remaining abstraction as an adequacy assumption.
+
+## Acceptance gates
+
+- [ ] `StructuralOpenBox` is not empty.
+- [ ] `OpenExt` contains `Partial`/`Sub` data or explicit side/agreement equations.
+- [x] `openExtIsContr` is proved, not postulated.
+- [x] The proof contracts `Sigma lid, filler`, not arbitrary fixed-lid fillers.
+- [x] The proof does not claim arbitrary closed-boundary filler spaces are contractible.
+- [x] Raw syntax has no unverified primitive/derived tag for horn clauses.
+- [x] `DerivedTrace` contains an actual replacement term.
+- [ ] `HornSemanticDerivation` constructs an explicit open box from lower boundary data.
+- [ ] The replacement term is obtained from `openExtCenter` and decoded into the field type.
+- [ ] The replacement term uses only lower public fields plus cubical Kan operations.
+- [ ] Replacement soundness is proved.
+- [ ] Deleting a derived field is justified by presentation equivalence.
+- [ ] Normalization eliminates higher structural primitive fields by calling the derivation theorem.
+- [x] User-authored higher payload data is not eliminated by this theorem.
+- [x] Exact `Real_k` stabilization is proved using contractible open-box factors.
+- [x] Minimal-public-signature elimination is proved using `DerivedTrace` and replacement.
+- [x] The paper does not conflate contractible exact factors, derived fields, `mu`-minimal elimination, and absent obligations.
+- [ ] Any remaining abstraction is labeled as an adequacy assumption.

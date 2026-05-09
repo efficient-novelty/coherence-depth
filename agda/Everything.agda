@@ -19,11 +19,17 @@ import Semantics.ScalingRecurrence
 import Semantics.FibonacciScaling
 
 import CubicalOpenBox.Base
+import CubicalOpenBox.Explicit
 import CubicalOpenBox.Extension
+import CubicalOpenBox.Center
 import CubicalOpenBox.Contractible
+import CubicalOpenBox.MissingFaceEquiv
 import CubicalOpenBox.Substitution
 import Metatheory.StructuralHornShape
 import Metatheory.StructuralHornToOpenBox
+import Metatheory.DerivedTrace
+import Metatheory.ReplaceDerivedField
+import Metatheory.NormalizationDerived
 
 import CaseStudies.Common
 import CaseStudies.UniverseExtension
@@ -43,6 +49,7 @@ import Test.FibonacciScalingSmoke
 import Test.CubicalOpenBox.FlatArrHorn
 import Test.CubicalOpenBox.NaturalitySmoke
 import Test.CubicalOpenBox.ClosedBoundaryNotClaimed
+import Test.RawHornNoDerivedTag
 import Surface.Modal.Syntax
 import Surface.Modal.Typing
 import Surface.Modal.Routes

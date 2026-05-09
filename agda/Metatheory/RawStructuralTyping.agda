@@ -206,7 +206,7 @@ typed-role-clause-kind (unary-action-role p s) =
 typed-role-clause-kind (binary-comparison-role p left right) =
   binary-comparison-kind
 typed-role-clause-kind (horn-boundary-role b package) =
-  derived-horn-kind
+  horn-kind
 
 typed-role-kind-matches-raw :
   {ℓ : Level} →

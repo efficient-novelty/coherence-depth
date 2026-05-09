@@ -10,37 +10,60 @@ private
     A : Type ℓ
     φ : I
 
--- The theorem-facing open box used by the paper.  The visible faces are
--- represented by the actual Cubical Agda partial element interface, and the
--- base face is a Sub element.  The cubical data live as indices because
--- `Partial` and `Sub` inhabit Agda's strict `SSet` universe.
+-- The theorem-facing open box used by the paper. The visible faces are
+-- represented by the actual Cubical Agda Partial interface, and the base face
+-- is a Sub element. Cubical Agda keeps Partial/Sub in the strict SSet universe,
+-- so the side and base data live as indices rather than record fields.
 record OpenBox {ℓ : Level} {A : Type ℓ} {φ : I}
-  (u : I → Partial φ A)
-  (u0 : A [ φ ↦ u i0 ]) : Type ℓ where
+  (side : I → Partial φ A)
+  (base : A [ φ ↦ side i0 ]) : Type ℓ where
   constructor mkOpenBox
 
 open OpenBox public
 
+StructuralOpenBox :
+  {A : Type ℓ} {φ : I} →
+  (side : I → Partial φ A) →
+  (base : A [ φ ↦ side i0 ]) →
+  Type ℓ
+StructuralOpenBox = OpenBox
+
+openBoxSide :
+  {A : Type ℓ} {φ : I} →
+  (side : I → Partial φ A) →
+  (base : A [ φ ↦ side i0 ]) →
+  OpenBox side base →
+  I → Partial φ A
+openBoxSide side base B = side
+
+openBoxBase :
+  {A : Type ℓ} {φ : I} →
+  (side : I → Partial φ A) →
+  (base : A [ φ ↦ side i0 ]) →
+  OpenBox side base →
+  A [ φ ↦ side i0 ]
+openBoxBase side base B = base
+
 OpenBoxFamily :
   {A : Type ℓ} {φ : I} →
-  (u : I → Partial φ A) →
-  (u0 : A [ φ ↦ u i0 ]) →
-  OpenBox u u0 →
+  (side : I → Partial φ A) →
+  (base : A [ φ ↦ side i0 ]) →
+  OpenBox side base →
   I → Type ℓ
-OpenBoxFamily {A = A} u u0 B i = A
+OpenBoxFamily {A = A} side base B i = A
 
 Lid :
   {A : Type ℓ} {φ : I} →
-  (u : I → Partial φ A) →
-  (u0 : A [ φ ↦ u i0 ]) →
-  OpenBox u u0 →
+  (side : I → Partial φ A) →
+  (base : A [ φ ↦ side i0 ]) →
+  OpenBox side base →
   Type ℓ
-Lid u u0 B = OpenBoxFamily u u0 B i1
+Lid side base B = OpenBoxFamily side base B i1
 
 BaseFace :
   {A : Type ℓ} {φ : I} →
-  (u : I → Partial φ A) →
-  (u0 : A [ φ ↦ u i0 ]) →
-  OpenBox u u0 →
+  (side : I → Partial φ A) →
+  (base : A [ φ ↦ side i0 ]) →
+  OpenBox side base →
   Type ℓ
-BaseFace u u0 B = OpenBoxFamily u u0 B i0
+BaseFace side base B = OpenBoxFamily side base B i0
