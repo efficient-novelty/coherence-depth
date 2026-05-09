@@ -45,7 +45,7 @@ Use this as an implementation checklist for revising the paper. Items are groupe
 - [x] Add or reframe Conjecture 3: Global action forces active-basis coverage.
 - [x] Treat basis-density as conjectural or conditional unless the proof justifies the stronger semantic claim.
 - [x] Prefer a "Full-coupling coverage hypothesis" if density is an assumption.
-- [ ] Alternatively, present basis-density as a fixed-calculus theorem about the native-totality record.
+- [x] Alternatively, present basis-density as a fixed-calculus theorem about the native-totality record.
 - [x] Treat the current record-level density theorem as evidence for Conjecture 3, not as a general theorem about arbitrary operational semantics.
 - [x] Add Conjecture 4: Full-coupling Fibonacci envelope.
 - [x] Present the Fibonacci result as an envelope theorem rather than a universal law of software-library growth.
@@ -199,25 +199,25 @@ Use this as an implementation checklist for revising the paper. Items are groupe
 
 ## Diagrams
 
-- [ ] Add Diagram 1: payload vs trace at a sealed boundary.
-- [ ] Use Diagram 1 to explain opacity and why `mu` is not line count.
-- [ ] Add Diagram 2: unary, binary, and ternary obligations.
-- [ ] Use Diagram 2 to make arity-to-dimension concrete.
-- [ ] Add Diagram 3: exact vs public count.
-- [ ] Use Diagram 3 to show `Real_3(X) = Real_2(X) x ContractibleHorn_3` and primitive public signatures retaining only arity `<= 2`.
-- [ ] Add Diagram 4: arity bound vs chronological window.
-- [ ] Use Diagram 4 to explain why arity `<= 2` does not automatically imply recent history.
-- [ ] Add Diagram 5: sparse vs full coupling.
-- [ ] Use Diagram 5 to make recurrence assumptions visible.
+- [x] Add Diagram 1: payload vs trace at a sealed boundary.
+- [x] Use Diagram 1 to explain opacity and why `mu` is not line count.
+- [x] Add Diagram 2: unary, binary, and ternary obligations.
+- [x] Use Diagram 2 to make arity-to-dimension concrete.
+- [x] Add Diagram 3: exact vs public count.
+- [x] Use Diagram 3 to show `Real_3(X) = Real_2(X) x ContractibleHorn_3` and primitive public signatures retaining only arity `<= 2`.
+- [x] Add Diagram 4: arity bound vs chronological window.
+- [x] Use Diagram 4 to explain why arity `<= 2` does not automatically imply recent history.
+- [x] Add Diagram 5: sparse vs full coupling.
+- [x] Use Diagram 5 to make recurrence assumptions visible.
 
 ## Claim Boxes
 
-- [ ] Add a "What this result says" box at the start of every major theorem section.
-- [ ] Add a "What it does not say" line in each claim box.
-- [ ] Add a "Where the assumption enters" line in each claim box.
-- [ ] For horn reduction, explicitly state that higher structural integration obligations in the fixed calculus are represented as horn-extension packages and become derived public trace.
-- [ ] For horn reduction, explicitly state that arbitrary higher homotopy types or filler spaces in cubical type theory are not claimed to be contractible.
-- [ ] For horn reduction, identify the structural-integration grammar as the place where the horn-package assumption enters.
+- [x] Add a "What this result says" box at the start of every major theorem section.
+- [x] Add a "What it does not say" line in each claim box.
+- [x] Add a "Where the assumption enters" line in each claim box.
+- [x] For horn reduction, explicitly state that higher structural integration obligations in the fixed calculus are represented as horn-extension packages and become derived public trace.
+- [x] For horn reduction, explicitly state that arbitrary higher homotopy types or filler spaces in cubical type theory are not claimed to be contractible.
+- [x] For horn reduction, identify the structural-integration grammar as the place where the horn-package assumption enters.
 
 ## Terminology
 
@@ -240,8 +240,8 @@ Use this as an implementation checklist for revising the paper. Items are groupe
 - [x] Include swap obstruction as the step showing depth `1` is insufficient.
 - [x] Include recent-history factorization as the step turning arity depth into a two-layer time window.
 - [x] Include the counting theorem as the step giving sparse/full recurrence.
-- [ ] Add a detailed formal dependency table before the formal proof, in Section 7, or in an appendix.
-- [ ] Link paper theorem numbers to Agda modules in the detailed table.
+- [x] Add a detailed formal dependency table before the formal proof, in Section 7, or in an appendix.
+- [x] Link paper theorem numbers to Agda modules in the detailed table.
 
 ## Adequacy Boundary
 
@@ -285,7 +285,7 @@ Use this as an implementation checklist for revising the paper. Items are groupe
 - [x] Rename the section to "The adequacy boundary and normalized public signatures."
 - [x] Make the bridge explicit.
 - [x] Show exactly which claims depend on the bridge.
-- [ ] Start with a diagram from semantic sealed extension through adequacy package to raw declarations, normalized public signature, and `mu` count.
+- [x] Start with a diagram from semantic sealed extension through adequacy package to raw declarations, normalized public signature, and `mu` count.
 - [x] Split theorem labels into internal normalization results, conditional adequacy results, and presentation-invariance results.
 
 ## Section 4: Normal Forms For Structural Trace
@@ -317,7 +317,7 @@ Use this as an implementation checklist for revising the paper. Items are groupe
 - [x] Then specialize to full coupling.
 - [x] Then specialize to constant payload.
 - [x] Add a small numeric table.
-- [ ] Consider adding a plot or diagram.
+- [x] Consider adding a plot or diagram.
 - [x] Use "Fibonacci envelope" consistently.
 
 ## Section 7: Mechanization
@@ -413,8 +413,8 @@ Use this as an implementation checklist for revising the paper. Items are groupe
 ## Sparse-Vs-Full Example
 
 - [x] Add a small sparse-vs-full example to prevent misreading the Fibonacci result.
-- [ ] Use an active interface with primitive sites such as `A, B, C, D, E`.
-- [ ] Show a sparse extension touching only selected sites such as `A` and `C`.
+- [x] Use an active interface with primitive sites such as `A, B, C, D, E`.
+- [x] Show a sparse extension touching only selected sites such as `A` and `C`.
 - [x] Explain that sparse trace cost is proportional to selected sites, not the full interface.
 - [x] Show a full-coupling extension advertised as a global modality or universe-level operation.
 - [x] Explain that full coupling must act on every active primitive basis site.

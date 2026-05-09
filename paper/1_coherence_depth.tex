@@ -92,6 +92,21 @@ Keep the following picture in mind. The old interface exports two generators $A$
 
 The \emph{payload} is the genuinely new operation $X$. The \emph{unary trace} says how $X$ acts on individual old generators such as $A$ and $B$. The \emph{binary trace} says that this action respects old comparison data such as $p$. An apparent ternary obligation asks for compatibility among several already exported squares. In the fixed cubical calculus, that higher structural obligation is represented as a horn-extension package: it is present in the exact object, absent from the primitive public count. Cubical filling computes the missing face and filler from the lower boundary, so the sealed public signature counts only the primitive payload plus primitive unary and binary trace.
 
+\begin{figure}[t]
+\centering
+\[
+\begin{array}{c|c|c}
+\text{arity} & \text{visible structural shape} & \text{counting status} \\
+\hline
+1 & X\to A & \text{primitive unary trace may survive} \\
+2 & (X\to A)\xRightarrow{p}(X\to B) & \text{primitive binary trace may survive} \\
+3 & \partial\Box\ \text{with one remote face} & \text{derived horn package in }\Cext
+\end{array}
+\]
+\caption{Unary, binary, and apparent ternary obligations in the running example. Arity counts how many layers of prior public structure the new sealed payload must be compared against; dimension is the corresponding comparison cell. The theorem says that the third row remains present as an exact horn-extension factor, but not as primitive public trace in a $\mu$-minimal signature.}
+\label{fig:arity-obligations}
+\end{figure}
+
 The Boolean swap example gives the lower bound. If the old interface exports the two-point type and the univalent path induced by swapping its two points, then a constant-left unary action is well-formed objectwise but fails the binary naturality check along the swap path. By contrast, the identity action passes that check. Thus unary trace alone does not decide whether a sealed action is admissible.
 
 \subsection{Guiding conjectures}
@@ -553,6 +568,21 @@ This scope restriction is essential for the basis-coverage theorem below. Ordina
 
 \subsection{Global action, basis coverage, and canonical minimality}
 
+\begin{quote}
+\small
+\textbf{What this result says.}
+In the fixed native-totality record, a fully coupled declaration has one
+primitive interaction site for each active primitive basis site after counting
+normalization.
+\textbf{What it does not say.}
+It does not derive full coupling from ordinary canonicity for arbitrary local
+extensions.
+\textbf{Where the assumption enters.}
+Full coupling is the footprint hypothesis of \autoref{def:footprint}; the
+coverage theorem then counts the irreducible public fields required to realize
+that hypothesis.
+\end{quote}
+
 To speak about coupling to historical layers, it is convenient to parameterize the visible interface by depth.
 
 \begin{defi}[Historical interface]
@@ -836,6 +866,40 @@ The trace principle counts kernel-level extensions and promoted interface packag
 \label{sec:bridge}
 
 The counting calculus of \autoref{sec:framework} is intended to measure explicit extension declarations over the fixed cubical core~$C$, not a freestanding payload calculus detached from syntax. This section spells out the semantic adequacy bridge for the fixed raw extension calculus of \autoref{def:surface-extension}. Raw payload, action, comparison, algebraic-payload, and packaged horn-boundary declarations normalize to sealed public signatures; sealing exports only their opaque public interfaces; and counting is performed on the normalized public signature of that export. The statement is intentionally narrower than an arbitrary Cubical Agda elaboration theorem: Cubical Agda is the mechanization environment, while the theorem target is the raw extension calculus defined here.
+
+\begin{quote}
+\small
+\textbf{What this result says.}
+The bridge identifies which fields of a raw sealed declaration become payload,
+which become primitive public trace, and which are derived before $\mu$ is
+computed.
+\textbf{What it does not say.}
+It is not a parser or elaborator theorem for arbitrary Cubical Agda programs.
+\textbf{Where the assumption enters.}
+All downstream semantic readings pass through the adequacy boundary recorded in
+\autoref{rem:semantic-adequacy-package} and the fixed raw bridge of
+\autoref{rem:bridge-target}.
+\end{quote}
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[scale=0.92, transform shape,
+  every node/.style={font=\small},
+  box/.style={draw, align=center, minimum width=2.65cm, minimum height=0.85cm}]
+  \node[box] (sem) at (-5.2,0) {semantic sealed\\extension};
+  \node[box] (adq) at (-2.55,0) {adequacy\\package};
+  \node[box] (raw) at (0.1,0) {raw\\declaration};
+  \node[box] (norm) at (2.75,0) {normalized public\\signature};
+  \node[box] (mu) at (5.4,0) {$\mu$\\primitive trace};
+  \draw[->] (sem) -- node[above] {transfer} (adq);
+  \draw[->] (adq) -- node[above] {sound raw image} (raw);
+  \draw[->] (raw) -- node[above] {seal and normalize} (norm);
+  \draw[->] (norm) -- node[above] {count irreducibles} (mu);
+  \draw[->,dashed] (adq) to[bend left=28] node[below] {preserve support and derived status} (norm);
+\end{tikzpicture}
+\caption{The adequacy boundary. A semantic sealed extension is counted only after an adequacy package interprets it in the fixed raw calculus, normalization exposes the sealed public signature, and $\mu$ counts the primitive trace fields that remain after derived horn data are removed.}
+\label{fig:adequacy-flow}
+\end{figure}
 
 \subsection{What an adequacy theorem would have to prove}
 \label{subsec:adequacy-preservation}
@@ -1347,6 +1411,18 @@ fixed, the recurrence is a counting theorem for $\mu$ and $\kappa$. \\
 
 \subsection{\texorpdfstring{Theorem A: extensional systems collapse to $d_{\mathrm{obl}}=1$}{Theorem A: extensional systems collapse to d obl = 1}}
 
+\begin{quote}
+\small
+\textbf{What this result says.}
+In a UIP setting, higher exact equality obligations collapse to unary
+boundary data, so obligation depth is one.
+\textbf{What it does not say.}
+It is not the cubical theorem and does not describe univalent binary trace.
+\textbf{Where the assumption enters.}
+The collapse uses UIP directly, through uniqueness of identity proofs between
+fixed endpoints.
+\end{quote}
+
 \begin{thm}
 \label{thm:extensional}
 In Martin-L\"of type theory with UIP, the obligation depth is~$1$.
@@ -1363,6 +1439,21 @@ Since depth~$0$ would mean the absence of any interaction with the current inter
 \end{proof}
 
 \subsection{\texorpdfstring{Theorem B: the fixed cubical calculus has $d_{\mathrm{obl}}=2$}{Theorem B: the fixed cubical calculus has d obl = 2}}
+
+\begin{quote}
+\small
+\textbf{What this result says.}
+In $\Cext$, higher structural integration obligations generated by the sealing
+grammar are represented as horn-extension packages, become derived public trace
+by cubical computation, and leave exact public trace depth two.
+\textbf{What it does not say.}
+It does not claim that arbitrary higher homotopy types, user-supplied higher
+payload, or general cubical filler spaces are contractible.
+\textbf{Where the assumption enters.}
+The horn-package assumption enters through the structural-integration grammar
+and \autoref{def:horn-extension-package}; Kan composition and filling supply
+the computational replacement.
+\end{quote}
 
 From now on we specialize the paper's fixed theorem object to the cubical extension calculus built over the chosen CCHM-style core~\cite{cubical,cchm-hits}, with univalence and Kan composition available in the ambient operational semantics. Full coupling is not used to state the exact-depth theorem; it is reintroduced in \autoref{sec:scaling} when the two-layer window is counted as an equality-style recurrence. The next ingredients are deliberately complementary: an exact stabilization theorem for realized obligation objects gives the bound $d_{\mathrm{obl}} \leq 2$; \autoref{thm:higher-elim} gives the separate syntactic bound $d_\mu \leq 2$ on $\mu$-minimal public presentations; recent-history factorization turns the exact depth bound into a genuine two-step time window; and the explicit swap obstruction together with the clutching family give lower-bound witnesses. Together they determine exact obligation depth~$2$.
 
@@ -1524,6 +1615,24 @@ The cubical sketch above isolates the separation direction relevant for this pap
 \]
 whose first component is the would-be remote comparison field \texttt{remote-face}. Cubical composition makes $H_3(\partial(A,B))$ canonically contractible, so this higher obligation is still present in $\Real_3(X)$ even though it contributes no new irreducible primitive field to any $\mu$-minimal normalized trace signature. In counting terms, the depth-$3$ step adds an exact contractible horn factor but zero new units to~$\mu$. This is why \autoref{thm:upper} and \autoref{thm:higher-elim} are stated separately: even when the two depth bounds both land at~$2$, they measure different layers of structure.
 \end{rem}
+
+\begin{figure}[t]
+\centering
+\[
+\begin{array}{c}
+\Real_3(X)\ \simeq\ \Real_2(X)\times C_3(X),
+\qquad C_3(X)\ \text{contractible}
+\\[1.0ex]
+\downarrow\ \text{canonical replacement through }\Cext
+\\[1.0ex]
+\Prim(N_{\mathrm{tr}}(e'))=\Prim_{\leq2}(N_{\mathrm{tr}}(e')),
+\qquad
+\Der(N_{\mathrm{tr}}(e'))\ \text{may still contain horn fields}
+\end{array}
+\]
+\caption{Exact obligations versus the primitive public count. The higher horn factor is part of the exact realized object, displayed here at depth~$3$ as $\Real_3(X)\simeq\Real_2(X)\times C_3(X)$ with $C_3(X)$ contractible. After canonical replacement, the corresponding field is derived, so $\mu$ counts only primitive trace of arity at most two.}
+\label{fig:exact-vs-public-count}
+\end{figure}
 
 \begin{thm}[Minimal-signature elimination in the fixed calculus]
 \label{thm:higher-elim}
@@ -1691,6 +1800,27 @@ In the fixed cubical extension calculus, every sealing step at stage~$n+1$ has c
 \autoref{thm:upper} shows the exact realized-obligation stabilization $\Real_k(X) \simeq \Real_2(X)$ for all $k \geq 2$. \autoref{lem:telescopic} upgrades that dimensional statement to a temporal one: every surviving binary clause factors through the normalized signatures of the last two layers, so remote history contributes only boundary data already mediated by those exports. Hence primitive sealing data are exhausted by $S(L_n)\uplus S(L_{n-1})$, and all deeper history contributes only derived fillers.
 \end{proof}
 
+\begin{figure}[t]
+\centering
+\small
+\begin{tabular}{@{}p{0.22\linewidth}p{0.25\linewidth}p{0.41\linewidth}@{}}
+\toprule
+Statement & What it bounds & What still needs proof \\
+\midrule
+$d_\mu\leq2$ & primitive field arity &
+remote binary fields might still point far back \\
+recent-history factorization &
+primitive chronological support &
+$L_{n-r}$ for $r\geq2$ factors through $L_n,L_{n-1}$ \\
+two-layer window &
+counted active basis &
+$I_{n,\mathrm{bas}}^{(2)}=S_{\mathrm{bas}}(L_n)\uplus S_{\mathrm{bas}}(L_{n-1})$ \\
+\bottomrule
+\end{tabular}
+\caption{Arity depth versus chronological window. A bound on primitive arity says how many public objects a trace field compares, but not how far back those objects may live in time. The recent-history theorem supplies the extra factorization needed before the recurrence can count only the two most recent sealed layers.}
+\label{fig:arity-vs-chronology}
+\end{figure}
+
 \subsubsection{\texorpdfstring{Lower bound: explicit binary obstruction ($d \geq 2$)}{Lower bound}}
 
 \begin{thm}[Explicit binary sealing obstruction]
@@ -1809,6 +1939,19 @@ The recurrence theorem is intentionally arithmetic. Its role is to expose the
 scaling consequence of the depth-two public-trace theorem once a chronological
 window and a coupling footprint have already been fixed.
 
+\begin{quote}
+\small
+\textbf{What this result says.}
+Sparse footprints count only selected active sites; the Fibonacci law appears
+only at the full-coupling endpoint of the two-layer window.
+\textbf{What it does not say.}
+It is not a claim that ordinary libraries, local datatypes, or transparent
+definitions grow by Fibonacci recurrence.
+\textbf{Where the assumption enters.}
+The equality recurrence uses both \autoref{cor:chrono-window} and the
+full-footprint judgment $\Foot_{n,\mathrm{full}}^{(2)}=I_{n,\mathrm{bas}}^{(2)}$.
+\end{quote}
+
 \begin{defi}[Layerwise payload and trace contributions]
 \label{def:layerwise-mu-kappa}
 Let $e_n$ be the admissible surface extension declaration whose sealing exports the $n$th sealed layer~$L_n$, and let $X_n:=X(e_n)$ be its elaborated candidate. The \emph{payload contribution} of layer~$n$ is
@@ -1851,27 +1994,31 @@ then the sparse sealing cost is
 \]
 This is the ordinary case for local or orthogonal library growth: many intersections may be empty. The universal affine recurrence below is the full-coupling specialization in which $\Foot_n^{(d)}=I_{n,\mathrm{bas}}^{(d)}$, so every intersection is the whole recent basis layer and \autoref{thm:trace} turns each summand into $\mu_{n-j}+\kappa_{n-j}$.
 
+For a concrete picture, suppose the two-layer active interface has primitive
+sites
+\[
+  A,\ B,\ C,\ D,\ E.
+\]
+A sparse declaration might touch only $A$ and $C$, giving trace cost
+proportional to two selected sites. A full-coupling declaration advertised as a
+global modality or universe-level operation must touch all five sites, because
+its action is part of the exported foundational interface.
+
 \begin{figure}[t]
 \centering
 \[
-\begin{array}{c|ccc}
-& S_{\mathrm{bas}}(L_n)
-& S_{\mathrm{bas}}(L_{n-1})
-& S_{\mathrm{bas}}(L_{n-2})
+\begin{array}{c|ccccc|c}
+& A & B & C & D & E & \text{selected sites}
 \\
 \hline
 \text{sparse depth }2
-& \Foot_n^{(2)}\cap S_{\mathrm{bas}}(L_n)
-& \Foot_n^{(2)}\cap S_{\mathrm{bas}}(L_{n-1})
-& \varnothing
+& yes & no & yes & no & no & \{A,C\}
 \\[0.6ex]
 \text{fully coupled depth }2
-& S_{\mathrm{bas}}(L_n)
-& S_{\mathrm{bas}}(L_{n-1})
-& \varnothing
+& yes & yes & yes & yes & yes & \{A,B,C,D,E\}
 \end{array}
 \]
-\caption{Sparse versus fully coupled footprints at depth~$2$. Sparse growth may select only part of the recent interface, while full coupling selects the entire two-layer window and ignores layers outside that window. The recurrence is the second row read through the trace-principle identity $|S_{\mathrm{bas}}(L_i)|=\kappa_i+\mu_i$.}
+\caption{Sparse versus fully coupled footprints at depth~$2$. Sparse growth may select only part of the recent interface, for instance $A$ and $C$, while full coupling selects every active primitive site in the two-layer window. The recurrence is the second row read through the trace-principle identity $|S_{\mathrm{bas}}(L_i)|=\kappa_i+\mu_i$.}
 \label{fig:sparse-full-footprint}
 \end{figure}
 
