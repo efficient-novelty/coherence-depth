@@ -9,11 +9,13 @@ import CaseStudies.UniverseExtension
 import CaseStudies.GlobalModality
 import CaseStudies.PromotedInterface
 import CaseStudies.SparseDatatype
+import CaseStudies.HigherPayload
 
 import Test.MetatheorySmoke
 import Test.SurfaceBridgeSmoke
 import Test.ActiveBasisExamples
 import Test.SparseRecurrenceSmoke
+import Test.HigherPayloadSmoke
 import Test.PresentationInvariance.Smoke
 import Test.PresentationInvariance.RebundleRecord
 import Test.PresentationInvariance.SplitShell

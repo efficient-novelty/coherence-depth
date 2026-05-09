@@ -496,8 +496,8 @@ Goal: make the theorem tangible and test classification boundaries.
 - [x] Add one full-coupling sealed extension sequence fixture.
 - [x] Add one sparse dependency fixture.
 - [x] Add one transparent-development fixture.
-- [ ] Add one higher-payload fixture.
-- [ ] Ensure each fixture has expected classification metadata.
+- [x] Add one higher-payload fixture.
+- [x] Ensure each fixture has expected classification metadata.
 
 ### Possible Existing Case Studies To Review
 
@@ -513,8 +513,8 @@ Goal: make the theorem tangible and test classification boundaries.
 - [ ] Add semantic fixture tests.
 - [ ] Add sparse classification tests.
 - [ ] Add transparent zero-latency tests.
-- [ ] Add higher-payload classification tests.
-- [ ] Ensure audit script reports expected classification for each fixture.
+- [x] Add higher-payload classification tests.
+- [x] Ensure audit script reports expected classification for each fixture.
 
 ### Paper Tasks
 
@@ -522,13 +522,13 @@ Goal: make the theorem tangible and test classification boundaries.
 - [x] Show which fixture is full coupling.
 - [x] Show which fixture is sparse.
 - [x] Show which fixture is transparent and therefore outside recurrence.
-- [ ] Show which fixture contains higher payload rather than structural trace.
+- [x] Show which fixture contains higher payload rather than structural trace.
 
 ### Acceptance Criteria
 
-- [ ] Examples demonstrate the guardrails.
-- [ ] Classification agrees between paper, fixtures, and audit script.
-- [ ] No example accidentally treats arbitrary higher payload as trace.
+- [x] Examples demonstrate the guardrails.
+- [x] Classification agrees between paper, fixtures, and audit script.
+- [x] No example accidentally treats arbitrary higher payload as trace.
 
 ## Milestone 11: Paper Rewrite And Artifact Audit
 
@@ -561,7 +561,7 @@ Goal: produce the next complete paper/artifact version.
 - [x] Update `docs/theorem_index.md`.
 - [x] Update `docs/coherence_depth_trust_boundary.md`.
 - [x] Update `README.txt`.
-- [ ] Update `scripts/check_coherence_depth_artifact.sh`.
+- [x] Update `scripts/check_coherence_depth_artifact.sh`.
 - [x] Update `scripts/check_paper_map.py`.
 - [x] Update `scripts/audit_postulates.py`.
 - [ ] Update `.github/workflows/artifact-check.yml`.
@@ -742,7 +742,7 @@ Goal: produce the next complete paper/artifact version.
 - [ ] Add tests for full-coupling recurrence.
 - [ ] Add tests for sparse coupling separation.
 - [ ] Add tests for transparent zero latency.
-- [ ] Add tests for higher payload classification.
+- [x] Add tests for higher payload classification.
 
 ### Theorem Names To Stabilize
 
@@ -825,7 +825,7 @@ Goal: produce the next complete paper/artifact version.
 
 ### Artifact Check Script
 
-- [ ] Update `scripts/check_coherence_depth_artifact.sh`.
+- [x] Update `scripts/check_coherence_depth_artifact.sh`.
 - [ ] Add `Semantics/CubicalFoundation.agda`.
 - [ ] Add `Semantics/SealedExtension.agda`.
 - [ ] Add `Semantics/PrimitiveTrace.agda`.
@@ -873,8 +873,8 @@ Goal: produce the next complete paper/artifact version.
 ### Risk: Arbitrary HIT Constructors Are Counted As Trace
 
 - [x] Classify user-supplied higher constructors as payload.
-- [ ] Add a higher-payload case study.
-- [ ] Add a test that higher payload does not increase structural trace depth.
+- [x] Add a higher-payload case study.
+- [x] Add a test that higher payload does not increase structural trace depth.
 
 ### Risk: Horn Theorem Overclaims Contractibility
 

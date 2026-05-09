@@ -1,0 +1,17 @@
+id: higher_hit_payload
+title: Higher HIT Payload
+payload_fields: 1
+active_interface_footprint: 0
+unary_trace_obligations: 0
+binary_trace_obligations: 0
+higher_horn_obligations: 0
+higher_horn_derived: true
+active_basis_totality: false
+expected_mu: 0
+recurrence_law: no-recurrence-law
+classification_role: higher-payload
+envelope: none
+agda_module: CaseStudies.HigherPayload
+doc: docs/case_studies/coherence_depth_higher_hit_payload.md
+presentation_group: higher_hit_payload
+refactors: false

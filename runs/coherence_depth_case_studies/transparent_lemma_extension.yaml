@@ -9,6 +9,7 @@ higher_horn_derived: true
 active_basis_totality: false
 expected_mu: 0
 recurrence_law: transparent-zero
+classification_role: transparent-zero
 envelope: none
 agda_module: CaseStudies.PromotedInterface
 doc: docs/case_studies/coherence_depth_promoted_interface.md

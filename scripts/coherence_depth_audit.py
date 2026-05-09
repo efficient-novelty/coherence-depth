@@ -19,6 +19,7 @@ REQUIRED_KEYS = {
     "active_basis_totality",
     "expected_mu",
     "recurrence_law",
+    "classification_role",
     "envelope",
     "agda_module",
     "doc",
@@ -43,6 +44,15 @@ RECURRENCE_LAWS = {
     "promoted-active-basis",
     "full-coupling",
     "no-recurrence-law",
+}
+
+CLASSIFICATION_ROLES = {
+    "full-coupling",
+    "refactoring-invariance",
+    "sparse-local",
+    "transparent-zero",
+    "promoted-active-basis",
+    "higher-payload",
 }
 
 
@@ -99,6 +109,11 @@ def validate_fixture(path: Path, data: dict[str, object], errors: list[str]) -> 
         fail(errors, path, f"unknown recurrence_law {recurrence!r}")
         return
 
+    classification = data["classification_role"]
+    if classification not in CLASSIFICATION_ROLES:
+        fail(errors, path, f"unknown classification_role {classification!r}")
+        return
+
     if data["higher_horn_obligations"] > 0 and not data["higher_horn_derived"]:
         fail(errors, path, "higher horn obligations must be marked derived")
 
@@ -125,6 +140,25 @@ def validate_fixture(path: Path, data: dict[str, object], errors: list[str]) -> 
 
     if recurrence == "promoted-active-basis" and not data["active_basis_totality"]:
         fail(errors, path, "promoted-active-basis requires active_basis_totality")
+
+    if classification == "refactoring-invariance" and not data["refactors"]:
+        fail(errors, path, "refactoring-invariance requires refactors: true")
+
+    if classification == "higher-payload":
+        if recurrence != "no-recurrence-law":
+            fail(errors, path, "higher-payload must use recurrence_law: no-recurrence-law")
+        if data["payload_fields"] <= 0:
+            fail(errors, path, "higher-payload requires at least one payload field")
+        zero_trace_keys = [
+            "active_interface_footprint",
+            "unary_trace_obligations",
+            "binary_trace_obligations",
+            "higher_horn_obligations",
+            "expected_mu",
+        ]
+        for key in zero_trace_keys:
+            if data[key] != 0:
+                fail(errors, path, f"higher-payload requires {key} = 0")
 
 
 def validate_refactors(fixtures: list[tuple[Path, dict[str, object]]], errors: list[str]) -> None:

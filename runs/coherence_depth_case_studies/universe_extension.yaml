@@ -9,6 +9,7 @@ higher_horn_derived: true
 active_basis_totality: true
 expected_mu: 2
 recurrence_law: full-coupling
+classification_role: full-coupling
 envelope: full
 agda_module: CaseStudies.UniverseExtension
 doc: docs/case_studies/coherence_depth_universe_extension.md

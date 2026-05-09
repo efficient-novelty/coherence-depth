@@ -2198,22 +2198,25 @@ Fixture & Coupling regime & $\mu$ & Trace profile & Boundary demonstrated \\
 \AgdaPath{sparse_datatype.yaml} & sparse local & $1$ & unary $1$ & sparse footprint below the full envelope \\
 \AgdaPath{transparent_lemma_extension.yaml} & transparent zero & $0$ & no trace obligations & transparent development outside the recurrence \\
 \AgdaPath{promoted_interface.yaml} & active-basis totality & $2$ & unary $2$ & promoted interface package counted by active basis \\
+\AgdaPath{higher_hit_payload.yaml} & no recurrence law & $0$ & higher constructor is payload & user-supplied higher HIT constructor, not structural trace \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 The fixture audit therefore exercises the full-coupling endpoint, the sparse
 case, transparent zero-latency growth, promoted active-basis counting, and
-presentation invariance. It deliberately does not use the higher horn rows as a
-higher-payload example: those rows are structural horn obligations marked
-derived, while a user-supplied higher HIT constructor would be payload and
-requires a separate fixture.
+presentation invariance. It also includes a separate higher-payload fixture:
+the higher horn rows above are structural horn obligations marked derived,
+whereas \AgdaPath{higher_hit_payload.yaml} is a user-supplied higher HIT
+constructor counted as payload, with no primitive structural trace
+contribution.
 
 \begin{table}[t]
 \centering
 \caption{Mechanization status of the main theorem stack.}
 \label{tab:mechanization-status}
-\scriptsize
+\tiny
+\renewcommand{\arraystretch}{0.94}
 \begin{tabular}{@{}p{0.21\linewidth}p{0.23\linewidth}p{0.31\linewidth}p{0.11\linewidth}@{}}
 \toprule
 Paper result & Formal status & Agda module(s) & Bridge? \\
@@ -2230,10 +2233,11 @@ Paper result & Formal status & Agda module(s) & Bridge? \\
 \autoref{thm:adjunction}, \autoref{thm:clutching}, \autoref{cor:d2} & fully formalized & \AgdaPath{Metatheory/AdjunctionBarrier.agda}, \AgdaPath{Geometry/Clutching.agda}, \AgdaPath{Metatheory/ExactDepth.agda} & no \\
 \autoref{thm:2d-foundations}, \autoref{cor:2ltt-instantiation} & fully formalized & \AgdaPath{Metatheory/TwoDFoundations.agda}, \AgdaPath{Metatheory/TwoLTTFoundations.agda} & no \\
 \autoref{thm:recurrence}, \autoref{cor:d1}, \autoref{cor:fibonacci} & formalized; Fibonacci is the full-coupling endpoint of sparse recurrence & \AgdaPath{Metatheory/UniversalRecurrence.agda}, \AgdaPath{Metatheory/SparseDependencyRecurrence.agda}, \AgdaPath{Metatheory/FullCouplingEnvelope.agda}, \AgdaPath{Core/DepthOneAffine.agda}, \AgdaPath{Core/AffineRecurrence.agda} & yes \\
-Case-study audit data & fully formalized and audited & \AgdaPath{CaseStudies/UniverseExtension.agda}, \AgdaPath{CaseStudies/GlobalModality.agda}, \AgdaPath{CaseStudies/PromotedInterface.agda}, \AgdaPath{CaseStudies/SparseDatatype.agda}, \AgdaPath{scripts/coherence_depth_audit.py} & no \\
+Case-study audit data & fully formalized and audited & \AgdaPath{CaseStudies/UniverseExtension.agda}, \AgdaPath{CaseStudies/GlobalModality.agda}, \AgdaPath{CaseStudies/PromotedInterface.agda}, \AgdaPath{CaseStudies/SparseDatatype.agda}, \AgdaPath{CaseStudies/HigherPayload.agda}, \AgdaPath{scripts/coherence_depth_audit.py} & no \\
 \autoref{cor:refactoring} & fully formalized & \AgdaPath{Metatheory/Refactoring.agda} & no \\
 \bottomrule
 \end{tabular}
+\renewcommand{\arraystretch}{1}
 \end{table}
 
 {\small
@@ -2265,7 +2269,7 @@ Case-study audit data & fully formalized and audited & \AgdaPath{CaseStudies/Uni
 \item \autoref{cor:d1} corresponds exactly to \AgdaPath{Core/DepthOneAffine.agda} via \AgdaPath{depth1-affine-growth}, \AgdaPath{Delta-depth1-closed}, and \AgdaPath{tau-depth1-closed}; in the paper these arithmetic laws are read through \autoref{cor:mu-delta} as statements about minimal opaque cost.
 \item \autoref{cor:fibonacci} corresponds to the fully coupled endpoint of the sparse dependency calculus. The endpoint itself is formalized in \AgdaPath{Metatheory/FullCouplingEnvelope.agda} via \AgdaPath{full-coupling-envelope}, \AgdaPath{full-coupling-specializes-sparse-recurrence}, and \AgdaPath{full-coupling-depth-two-affine-law}, while the arithmetic specialization is in \AgdaPath{Core/AffineRecurrence.agda} via \AgdaPath{Delta-bootstrap}, \AgdaPath{U-bootstrap-closed}, and \AgdaPath{tau-bootstrap-closed}; the code's \AgdaPath{Delta}-named arithmetic sequence is the paper's $\mu$-sequence after the bridge identification of \autoref{cor:mu-delta}.
 \item \autoref{cor:refactoring} corresponds exactly to \AgdaPath{Metatheory/Refactoring.agda} via \AgdaPath{historical-support-correspondence} and \AgdaPath{refactoring-invariance}.
-\item The case-study audit is checked by \AgdaPath{CaseStudies/UniverseExtension.agda}, \AgdaPath{CaseStudies/GlobalModality.agda}, \AgdaPath{CaseStudies/PromotedInterface.agda}, \AgdaPath{CaseStudies/SparseDatatype.agda}, the YAML fixtures in \AgdaPath{runs/coherence_depth_case_studies/}, and \AgdaPath{scripts/coherence_depth_audit.py}. These cover full-coupling universe/global examples, a promoted active-basis interface, a transparent zero-footprint lemma extension, a sparse datatype, and a refactored universe presentation with the same~$\mu$.
+\item The case-study audit is checked by \AgdaPath{CaseStudies/UniverseExtension.agda}, \AgdaPath{CaseStudies/GlobalModality.agda}, \AgdaPath{CaseStudies/PromotedInterface.agda}, \AgdaPath{CaseStudies/SparseDatatype.agda}, \AgdaPath{CaseStudies/HigherPayload.agda}, the YAML fixtures in \AgdaPath{runs/coherence_depth_case_studies/}, and \AgdaPath{scripts/coherence_depth_audit.py}. These cover full-coupling universe/global examples, a promoted active-basis interface, a transparent zero-footprint lemma extension, a sparse datatype, a refactored universe presentation with the same~$\mu$, and a higher HIT constructor classified as payload rather than structural trace.
 \end{itemize}
 }
 

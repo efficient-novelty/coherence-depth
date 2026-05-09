@@ -96,6 +96,8 @@ Equivalent core checks from PowerShell:
   agda --transliterate Geometry/Clutching.agda
   agda --transliterate Test/ClutchingSmoke.agda
   agda --transliterate Test/Fibonacci.agda
+  agda --transliterate CaseStudies/HigherPayload.agda
+  agda --transliterate Test/HigherPayloadSmoke.agda
 
 The full theorem-facing module list is in docs/theorem_index.md.
 

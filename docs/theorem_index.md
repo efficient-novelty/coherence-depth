@@ -28,9 +28,11 @@ agda --transliterate CaseStudies/UniverseExtension.agda
 agda --transliterate CaseStudies/GlobalModality.agda
 agda --transliterate CaseStudies/PromotedInterface.agda
 agda --transliterate CaseStudies/SparseDatatype.agda
+agda --transliterate CaseStudies/HigherPayload.agda
 agda --transliterate Test/SurfaceBridgeSmoke.agda
 agda --transliterate Test/ActiveBasisExamples.agda
 agda --transliterate Test/SparseRecurrenceSmoke.agda
+agda --transliterate Test/HigherPayloadSmoke.agda
 agda --transliterate Test/PresentationInvariance/RebundleRecord.agda
 agda --transliterate Test/PresentationInvariance/SplitShell.agda
 agda --transliterate Test/PresentationInvariance/CurryUncurry.agda
@@ -129,6 +131,10 @@ vocabulary `mechanized`, `conditional-on-adequacy-package`, `paper-only`, and
 | `sparse-datatype-summary` | `CaseStudies.SparseDatatype` | counted sparse datatype case-study summary |
 | `sparse-datatype-recurrence` | `CaseStudies.SparseDatatype` | sparse datatype recurrence over one local dependency in a three-site window |
 | `sparse-datatype-below-full-envelope` | `CaseStudies.SparseDatatype` | sparse datatype footprint is bounded by the full previous-window envelope |
+| `higher-payload-classification` | `CaseStudies.HigherPayload` | user-supplied higher constructor is classified as payload |
+| `higher-payload-not-structural-trace` | `CaseStudies.HigherPayload` | higher payload is not structural trace |
+| `higher-payload-summary` | `CaseStudies.HigherPayload` | counted higher-payload case-study summary |
+| `higher-payload-zero-trace` | `CaseStudies.HigherPayload` | higher payload contributes no primitive structural trace |
 | `integration-trace-principle` | `Metatheory.TracePrinciple` | payload plus trace decomposition |
 | `canonical-telescope-cardinality` | `Metatheory.CanonicalTelescope` | finite cardinality of a canonical telescope |
 | `trace-cost-normal-form-cardinality` | `Metatheory.TraceCostNormalForm` | finite cardinality of a trace-cost normal form |

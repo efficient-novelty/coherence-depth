@@ -377,7 +377,8 @@
         "CaseStudies/UniverseExtension.agda",
         "CaseStudies/GlobalModality.agda",
         "CaseStudies/PromotedInterface.agda",
-        "CaseStudies/SparseDatatype.agda"
+        "CaseStudies/SparseDatatype.agda",
+        "CaseStudies/HigherPayload.agda"
       ],
       "agda_theorems": [
         "universe-extension-summary",
@@ -389,7 +390,11 @@
         "coverage-does-not-prove-fibonacci",
         "sparse-datatype-summary",
         "sparse-datatype-recurrence",
-        "sparse-datatype-below-full-envelope"
+        "sparse-datatype-below-full-envelope",
+        "higher-payload-classification",
+        "higher-payload-not-structural-trace",
+        "higher-payload-summary",
+        "higher-payload-zero-trace"
       ],
       "status": "mechanized",
       "status_detail": "fully formalized and audited",

@@ -9,6 +9,7 @@ higher_horn_derived: true
 active_basis_totality: true
 expected_mu: 2
 recurrence_law: promoted-active-basis
+classification_role: promoted-active-basis
 envelope: active-basis
 agda_module: CaseStudies.PromotedInterface
 doc: docs/case_studies/coherence_depth_promoted_interface.md

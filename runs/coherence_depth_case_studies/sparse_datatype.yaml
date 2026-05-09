@@ -9,6 +9,7 @@ higher_horn_derived: true
 active_basis_totality: false
 expected_mu: 1
 recurrence_law: sparse-local
+classification_role: sparse-local
 envelope: sparse
 agda_module: CaseStudies.SparseDatatype
 doc: docs/case_studies/coherence_depth_sparse_datatype.md

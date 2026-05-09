@@ -152,8 +152,8 @@ Current theorem-facing modules:
   `Metatheory/FullCouplingEnvelope.agda` expose sparse dependency recurrence
   and the fully coupled endpoint used for the Fibonacci specialization.
 - `CaseStudies/*.agda` packages the universe extension, global modality,
-  promoted active-basis interface, and sparse datatype examples checked by
-  the coherence-depth audit script.
+  promoted active-basis interface, sparse datatype, and higher-payload
+  examples checked by the coherence-depth audit script.
 - `Metatheory/Obligations.agda` also now includes the arity-to-dimension
   surface for `lem:arity-dimension`:
   `Positive`, `CoherenceCellShape`,
