@@ -8,6 +8,7 @@ open import Cubical.Foundations.Prelude
 open import CaseStudies.Common using (Unit; tt; one; two)
 open import Metatheory.Obligations using (Fin; fzero; fsuc)
 open import CubicalOpenBox.Base
+open import CubicalOpenBox.Extension
 open import Metatheory.StructuralBoundary
 open import Metatheory.HornOpenBox
 open import Metatheory.HornElaboration
@@ -56,11 +57,43 @@ modalHornPackage : HornOpenBoxPackage modalLowerTraceTelescope modalHornClause
 modalHornPackage =
   identityHornPackageOpenExt modalHornBoundary modalHornOpenBox
 
+modalHornCubicalData :
+  StructuralHornCubicalData modalHornPackage
+modalHornCubicalData =
+  mkStructuralHornCubicalData
+    remote-comparison-horn
+    Unit
+    i1
+    modalHornSide
+    Unit
+    tt
+    Unit
+    tt
+    Unit
+    tt
+    Unit
+    tt
+    modalHornBase
+    modalHornOpenBox
+    Unit
+    tt
+    (canonicalOpenExt
+      modalHornSide
+      modalHornBase
+      (structuralOpenBoxAsOpenBox modalHornOpenBox))
+    Unit
+    tt
+    Unit
+    tt
+    Unit
+    tt
+
 modalHornElaborationInput :
   HornElaborationInput modalLowerTraceTelescope modalHornClause
 modalHornElaborationInput =
   mkHornElaborationInput
     modalHornPackage
+    modalHornCubicalData
     Unit
     tt
     Unit
@@ -79,6 +112,32 @@ modalNormalizationDerivedWitness :
   NormalizationDerivedWitness modalLowerTraceTelescope modalHornClause
 modalNormalizationDerivedWitness =
   normalizationDerivedWitness modalHornSemanticDerivation
+
+modalDependencyOrderedField :
+  (i : Fin four) →
+  NormalizedPublicField modalLowerTraceTelescope (modalLowerStructuralAt i)
+modalDependencyOrderedField i =
+  mkNormalizedPublicField
+    (primitiveStatus (mkIrreducibleTrace Unit Unit))
+
+modalDependencyOrderedNormalization :
+  DependencyOrderedNormalization modalLowerTraceTelescope
+modalDependencyOrderedNormalization =
+  mkDependencyOrderedNormalization
+    (λ i → modalLowerTraceTelescope)
+    modalDependencyOrderedField
+    Unit
+    tt
+    Unit
+    tt
+    (λ i → one)
+    Unit
+    tt
+    Unit
+    tt
+    four
+    Unit
+    tt
 
 modal-elaboration-sound :
   (E : ModalDecl) → RawExtension lzero

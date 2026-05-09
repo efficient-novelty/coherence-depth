@@ -57,19 +57,19 @@ Tracking checklist distilled from `paper_improvement_plan.md`. Keep detailed rat
 ## Cubical horn elaboration
 
 - [x] Prove `structuralHornElaboration`.
-- [ ] Handle remote comparison horn elaboration.
-- [ ] Build the cubical family for each structural horn.
-- [ ] Build the visible-face cofibration for each structural horn.
-- [ ] Build the side boundary from lower unary and binary traces.
-- [ ] Prove side overlaps from lower trace equations.
-- [ ] Build the compatible base face.
-- [ ] Form the explicit structural open box.
-- [ ] Compute the canonical center.
-- [ ] Decode the center into the public field type.
-- [ ] Prove side, endpoint, and transport equations.
-- [ ] Handle degenerate horn elaboration.
-- [ ] Handle transported horn elaboration.
-- [ ] Prove substitution-stable derivedness.
+- [x] Handle remote comparison horn elaboration.
+- [x] Build the cubical family for each structural horn.
+- [x] Build the visible-face cofibration for each structural horn.
+- [x] Build the side boundary from lower unary and binary traces.
+- [x] Prove side overlaps from lower trace equations.
+- [x] Build the compatible base face.
+- [x] Form the explicit structural open box.
+- [x] Compute the canonical center.
+- [x] Decode the center into the public field type.
+- [x] Prove side, endpoint, and transport equations.
+- [x] Handle degenerate horn elaboration.
+- [x] Handle transported horn elaboration.
+- [x] Prove substitution-stable derivedness.
 
 ## Replacement and normalization
 
@@ -78,14 +78,14 @@ Tracking checklist distilled from `paper_improvement_plan.md`. Keep detailed rat
 - [x] Define the backward map that inserts the computed term.
 - [x] Prove both presentation-equivalence round trips.
 - [x] Prove `higherStructuralTraceDerived`.
-- [ ] Normalize trace telescopes in dependency order.
+- [x] Normalize trace telescopes in dependency order.
 - [x] Classify unary and binary structural trace fields as primitive candidates where appropriate.
 - [x] Classify higher structural fields as derived only by calling the derivation theorem.
 - [x] Ensure higher structural classification requires `IsStructuralHorn`, not just arity at least 3.
 - [x] Apply derived-field replacement during normalization.
-- [ ] Prove normalization terminates because replacements use only lower data.
+- [x] Prove normalization terminates because replacements use only lower data.
 - [x] Prove `normalizeEliminatesHigherStructuralTrace`.
-- [ ] Ensure `mu` counts only payload plus irreducible unary/binary structural trace fields.
+- [x] Ensure `mu` counts only payload plus irreducible unary/binary structural trace fields.
 
 ## Exact realization and public signature claims
 

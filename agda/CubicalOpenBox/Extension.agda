@@ -15,7 +15,9 @@ private
 
 -- The checked homogeneous filler is the path produced by hfill. The visible
 -- Partial boundary and Sub base are explicit parameters; the canonical
--- compatible refinement is exposed separately by canonicalFillSub.
+-- compatible refinement is exposed separately by canonicalFillSub. Cubical
+-- Agda's Sub family is strict (SSet), so the fully dependent path-through-Sub
+-- reading is carried by the paper bridge rather than this Set-level PathP.
 Filler :
   {A : Type ℓ} {φ : I} →
   (side : I → Partial φ A) →
@@ -99,3 +101,12 @@ openExtFillAt :
   (e : OpenExt side base B) →
   I → A
 openExtFillAt side base B e i = e .snd i
+
+openExtCompatibleCanonicalFillAt :
+  {A : Type ℓ} {φ : I} →
+  (side : I → Partial φ A) →
+  (base : A [ φ ↦ side i0 ]) →
+  (B : OpenBox side base) →
+  (i : I) →
+  CompatibleBoundaryFamily side base B i
+openExtCompatibleCanonicalFillAt = canonicalFillSub

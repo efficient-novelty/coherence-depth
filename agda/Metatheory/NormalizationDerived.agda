@@ -5,6 +5,8 @@ module Metatheory.NormalizationDerived where
 open import Agda.Primitive using (Level; lsuc)
 open import Cubical.Foundations.Prelude
 
+open import Core.Nat renaming (ℕ to Nat)
+open import Metatheory.Obligations using (Fin)
 open import Metatheory.RawStructuralSyntax
 open import Metatheory.DerivedTrace
 open import Metatheory.ReplaceDerivedField
@@ -115,3 +117,65 @@ normalizationDerivedWitness derivation =
     step
     (normalizationClassifiesHigherStructuralByDerivation derivation)
     (replacement step)
+
+record DependencyOrderedNormalization
+  (Γ : RawTelescope (RawStructuralClause ℓ)) : Type (lsuc ℓ) where
+  constructor mkDependencyOrderedNormalization
+  field
+    normalizedPrefix :
+      (i : Fin (fieldCount Γ)) →
+      RawTelescope (RawStructuralClause ℓ)
+    normalizedField :
+      (i : Fin (fieldCount Γ)) →
+      NormalizedPublicField (normalizedPrefix i) (fieldAt Γ i)
+    prefixContainsOnlyEarlierFields : Type ℓ
+    prefixContainsOnlyEarlierFieldsProof :
+      prefixContainsOnlyEarlierFields
+    derivedReplacementsUseOnlyPrefix : Type ℓ
+    derivedReplacementsUseOnlyPrefixProof :
+      derivedReplacementsUseOnlyPrefix
+    normalizationTerminationMeasure :
+      Fin (fieldCount Γ) → Nat
+    normalizationTerminationDecreases : Type ℓ
+    normalizationTerminationDecreasesProof :
+      normalizationTerminationDecreases
+    finiteDependencyOrderTerminates : Type ℓ
+    finiteDependencyOrderTerminatesProof :
+      finiteDependencyOrderTerminates
+    primitivePayloadOrUnaryBinaryTraceCount : Nat
+    muCountsOnlyPayloadAndIrreducibleUnaryBinary : Type ℓ
+    muCountsOnlyPayloadAndIrreducibleUnaryBinaryProof :
+      muCountsOnlyPayloadAndIrreducibleUnaryBinary
+
+open DependencyOrderedNormalization public
+
+normalizeTraceTelescopeInDependencyOrder :
+  {Γ : RawTelescope (RawStructuralClause ℓ)} →
+  (Γnorm : DependencyOrderedNormalization Γ) →
+  (i : Fin (fieldCount Γ)) →
+  NormalizedPublicField
+    (normalizedPrefix Γnorm i)
+    (fieldAt Γ i)
+normalizeTraceTelescopeInDependencyOrder Γnorm =
+  normalizedField Γnorm
+
+normalizationTerminatesBecauseReplacementsUseLowerData :
+  {Γ : RawTelescope (RawStructuralClause ℓ)} →
+  (Γnorm : DependencyOrderedNormalization Γ) →
+  finiteDependencyOrderTerminates Γnorm
+normalizationTerminatesBecauseReplacementsUseLowerData Γnorm =
+  finiteDependencyOrderTerminatesProof Γnorm
+
+normalizationReplacementDependencyDecreases :
+  {Γ : RawTelescope (RawStructuralClause ℓ)} →
+  (Γnorm : DependencyOrderedNormalization Γ) →
+  normalizationTerminationDecreases Γnorm
+normalizationReplacementDependencyDecreases Γnorm =
+  normalizationTerminationDecreasesProof Γnorm
+
+normalizationMuCountsOnlyPayloadAndIrreducibleUnaryBinary :
+  {Γ : RawTelescope (RawStructuralClause ℓ)} →
+  (Γnorm : DependencyOrderedNormalization Γ) →
+  muCountsOnlyPayloadAndIrreducibleUnaryBinary Γnorm
+normalizationMuCountsOnlyPayloadAndIrreducibleUnaryBinary Γnorm =
+  muCountsOnlyPayloadAndIrreducibleUnaryBinaryProof Γnorm

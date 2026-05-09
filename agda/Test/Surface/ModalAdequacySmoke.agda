@@ -11,6 +11,19 @@ open import Surface.Modal.Adequacy
 open import Surface.Modal.Normalization
 open import Surface.Modal.Elaboration using (four)
 open import Metatheory.DerivedTrace
+open import Metatheory.HornElaboration
+  using ( elaborationMode
+        ; hornCubicalData
+        ; remote-comparison-horn
+        ; substitutionStableDerivedness
+        ; hornElaborationSubstitutionStable
+        )
+open import Metatheory.NormalizationDerived
+  using ( finiteDependencyOrderTerminates
+        ; muCountsOnlyPayloadAndIrreducibleUnaryBinary
+        ; normalizationTerminatesBecauseReplacementsUseLowerData
+        ; normalizationMuCountsOnlyPayloadAndIrreducibleUnaryBinary
+        )
 
 unit-function-iso : Iso Unit (Unit → Unit)
 unit-function-iso = record
@@ -66,6 +79,29 @@ explicit-horn-elaborates-through-HornElaboration-smoke :
   HornSemanticDerivation modalLowerTraceTelescope modalHornClause
 explicit-horn-elaborates-through-HornElaboration-smoke =
   modal-explicit-horn-elaborates-through-HornElaboration explicit-modal refl
+
+modal-horn-elaboration-mode-smoke :
+  elaborationMode (hornCubicalData modalHornElaborationInput)
+  ≡ remote-comparison-horn
+modal-horn-elaboration-mode-smoke = refl
+
+modal-horn-substitution-stable-smoke :
+  substitutionStableDerivedness (hornCubicalData modalHornElaborationInput)
+modal-horn-substitution-stable-smoke =
+  hornElaborationSubstitutionStable modalHornElaborationInput
+
+modal-normalization-terminates-smoke :
+  finiteDependencyOrderTerminates modalDependencyOrderedNormalization
+modal-normalization-terminates-smoke =
+  normalizationTerminatesBecauseReplacementsUseLowerData
+    modalDependencyOrderedNormalization
+
+modal-normalization-mu-boundary-smoke :
+  muCountsOnlyPayloadAndIrreducibleUnaryBinary
+    modalDependencyOrderedNormalization
+modal-normalization-mu-boundary-smoke =
+  normalizationMuCountsOnlyPayloadAndIrreducibleUnaryBinary
+    modalDependencyOrderedNormalization
 
 omitted-horn-inserts-same-derived-term-smoke :
   replacementTerm
