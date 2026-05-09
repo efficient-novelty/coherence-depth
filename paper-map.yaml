@@ -198,6 +198,7 @@
       "paper_labels": [
         "lem:horn-reduction",
         "thm:semantic-horn-reduction",
+        "lem:kan-horn-contract",
         "thm:upper",
         "thm:primitive-depth-upper-bound",
         "cor:contractible-factor",
