@@ -32,6 +32,12 @@ ALLOWED_STATUSES = {
     "paper-only",
     "trusted-input",
 }
+BRIDGE_BOUNDARY_KEYWORDS = (
+    "adequacy",
+    "bridge",
+    "canonical trace",
+    "counted active interface",
+)
 
 
 def load_map(path: Path) -> dict[str, Any]:
@@ -65,6 +71,13 @@ def theorem_like_labels(paper_text: str) -> set[str]:
         match.group(1)
         for match in re.finditer(r"\\label\{((?:thm|lem|cor|prop):[^}]+)\}", paper_text)
     }
+
+
+def mentions_bridge_boundary(entry: dict[str, Any], trusted_inputs: list[str]) -> bool:
+    detail = entry.get("status_detail")
+    parts = trusted_inputs + ([detail] if isinstance(detail, str) else [])
+    haystack = " ".join(parts).lower()
+    return any(keyword in haystack for keyword in BRIDGE_BOUNDARY_KEYWORDS)
 
 
 def main() -> int:
@@ -134,6 +147,21 @@ def main() -> int:
 
         if not trusted_inputs:
             errors.append(f"entry {index} ({claim}): trusted_inputs must not be empty")
+
+        if raw_entry["status"] == "conditional-on-adequacy-package":
+            if not raw_entry["uses_bridge"]:
+                errors.append(
+                    f"entry {index} ({claim}): conditional adequacy result must set uses_bridge=true"
+                )
+            if not mentions_bridge_boundary(raw_entry, trusted_inputs):
+                errors.append(
+                    f"entry {index} ({claim}): conditional adequacy result must name the bridge or adequacy boundary"
+                )
+
+        if raw_entry["uses_bridge"] and not mentions_bridge_boundary(raw_entry, trusted_inputs):
+            errors.append(
+                f"entry {index} ({claim}): uses_bridge=true but trusted_inputs/status_detail do not name the bridge boundary"
+            )
 
         for label in labels:
             mapped_labels.add(label)

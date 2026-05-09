@@ -858,7 +858,7 @@ Goal: produce the next complete paper/artifact version.
 - [x] Teach scripts status `conditional-on-adequacy-package`.
 - [x] Teach scripts status `paper-only`.
 - [x] Teach scripts status `trusted-input`.
-- [ ] Make hidden semantic adequacy assumptions fail the audit.
+- [x] Make hidden semantic adequacy assumptions fail the audit.
 - [x] Make missing theorem-map entries fail the audit.
 
 ## Risk Mitigation Checklist

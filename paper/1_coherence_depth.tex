@@ -191,7 +191,7 @@ are separately named as theorem-level examples.
 \toprule
 Claim & Logical role & Main inputs & Status \\
 \midrule
-\autoref{thm:upper}, \autoref{cor:contractible-factor} & exact $\Real$-stabilization at depth~$2$ and trivialization of higher exact fibers & horn-reduction metatheory and contractibility of cubical horn-extension fibers & fully formalized \\
+\autoref{thm:upper}, \autoref{cor:contractible-factor} & exact $\Real$-stabilization at depth~$2$ and trivialization of higher exact fibers & horn reduction and contractible theorem-facing horn fibers & fully formalized \\
 \autoref{thm:higher-elim} & elimination from $\mu$-minimal normalized public signatures & \autoref{lem:horn-reduction}, \autoref{thm:computational-replacement}, canonical presentation, and the fixed raw bridge & formalized with bridge \\
 \autoref{lem:telescopic} & recent-history factorization of surviving binary primitive fields & factorization-complete trace export, the formal chronological-window chain, and the fixed raw bridge & formalized with bridge \\
 \autoref{thm:adjunction}, \autoref{thm:clutching} & lower-bound binary obstruction & swap barrier, adjunction coherence, and clutching-family witness & fully formalized \\
@@ -2029,7 +2029,10 @@ The cubical depth-two theorem can now be separated into two abstract layers. The
 
 \begin{thm}[Abstract horn-computational foundation interface]
 \label{thm:horn-interface}
-Let a sealed extension calculus satisfy the following package.
+Let a sealed extension calculus satisfy the following package. Here the fiber
+$H_k(\partial)$ is not the ambient space of all semantic fillers for a boundary;
+it is the theorem-facing exported horn-extension package selected by the sealed
+calculus after normalization.
 \begin{enumerate}
   \item For every candidate~$X$, every $k \geq 3$, and every boundary $\partial : \Real_{k-1}(X)$, the depth-$k$ obligation over~$\partial$ is canonically represented by a horn-extension fiber
   \[
@@ -2044,7 +2047,7 @@ Let a sealed extension calculus satisfy the following package.
     \simeq
     \sum_{\partial : \Real_{k-1}(X)} H_k(\partial).
   \]
-  \item Every horn-extension fiber~$H_k(\partial)$ of Property~(1) is canonically contractible.
+  \item Every theorem-facing horn-extension fiber~$H_k(\partial)$ of Property~(1) is canonically contractible.
   \item Every admissible surface extension declaration admits a canonical normalized trace presentation, together with presentation equivalence and primitive-versus-derived tagging on its trace fields.
   \item In the canonical presentation of Property~(3), every historical trace field of arity $k \geq 3$ corresponding to a horn factor of Property~(1) is marked \emph{transparently derived}, and computational replacement by the canonically synthesized horn witness preserves the canonical normalized trace presentation.
   \item Primitive historical support factors through the previous two normalized signatures: every primitive field in a canonical normalized trace presentation depends only on the last two layers up to the factorization relation of \autoref{def:factorization-complete}.
@@ -2062,7 +2065,7 @@ In particular, the exact obligation-depth bound $d_{\mathrm{obl}} \leq 2$ and th
 \end{thm}
 
 \begin{proof}
-By Property~(1), each passage from depth $k-1$ to depth~$k$ with $k \geq 3$ decomposes the exact realized obligation object into a depth-$(k-1)$ boundary together with one horn factor. Property~(2) makes that horn factor contractible, so the projection to the boundary is a canonical equivalence. Iterating from depth~$k$ down to depth~$2$ yields
+By Property~(1), each passage from depth $k-1$ to depth~$k$ with $k \geq 3$ decomposes the exact realized obligation object into a depth-$(k-1)$ boundary together with one theorem-facing horn factor. Property~(2) makes that horn factor contractible, so the projection to the boundary is a canonical equivalence. Iterating from depth~$k$ down to depth~$2$ yields
 \[
   \Real_k(X) \simeq \Real_2(X)
 \]
@@ -2077,7 +2080,7 @@ The fixed cubical extension calculus over the chosen CCHM-style core satisfies t
 \end{cor}
 
 \begin{proof}
-Property~(1) is exactly the horn-reduction description of \autoref{lem:horn-reduction}; Property~(2) is the cubical contractibility argument used in \autoref{thm:upper} and \autoref{cor:contractible-factor}; Property~(3) is the canonical trace-presentation interface supplied by \autoref{sec:bridge} together with the explicit presentation interface of \autoref{thm:computational-replacement}; Property~(4) is the computational-replacement clause of \autoref{thm:computational-replacement}; and Property~(5) is the recent-history factorization theorem \autoref{cor:chrono-window}. Therefore \autoref{thm:horn-interface} applies to the chosen cubical calculus.
+Property~(1) is exactly the horn-reduction description of \autoref{lem:horn-reduction}; Property~(2) is the cubical contractibility argument for the theorem-facing horn-extension package used in \autoref{thm:upper} and \autoref{cor:contractible-factor}; Property~(3) is the canonical trace-presentation interface supplied by \autoref{sec:bridge} together with the explicit presentation interface of \autoref{thm:computational-replacement}; Property~(4) is the computational-replacement clause of \autoref{thm:computational-replacement}; and Property~(5) is the recent-history factorization theorem \autoref{cor:chrono-window}. Therefore \autoref{thm:horn-interface} applies to the chosen cubical calculus.
 \end{proof}
 
 The theorem above is intentionally stronger than the exact-depth wrapper used below: it includes the canonical trace-presentation and computational-replacement clauses needed to transport horn computation all the way to elimination from $\mu$-minimal syntax. The next theorem forgets that bridge data and keeps only the weaker primitive/window and exact-stabilization package formalized in \AgdaPath{Metatheory/TwoDFoundations.agda}; that is the level at which the separate strict/fibrant $2$LTT-style discipline is checked.
@@ -2132,7 +2135,7 @@ The identity-elimination principle of the HoTT book reduces families over a vari
 Foundation & Binary lower bound & Exact stabilization / window & Bridge to $\mu$ & Claimed here? \\
 \midrule
 Chosen CCHM-style cubical core / Cubical Agda realization & yes; explicit swap and clutching witnesses & yes; horn reduction, stabilization, and recent-history factorization & yes; replacement interface and fixed raw bridge mechanized & yes \\
-Other cubical variants & only if a binary witness is checked case by case & only if the horn-reduction, contractible-fiber, and window clauses of \autoref{thm:horn-interface} are verified & only if the canonical-trace bridge clauses of \autoref{thm:horn-interface} are verified & no \\
+Other cubical variants & only if a binary witness is checked case by case & only if the horn-reduction, theorem-facing fiber, and window clauses of \autoref{thm:horn-interface} are verified & only if the canonical-trace bridge clauses of \autoref{thm:horn-interface} are verified & no \\
 Explicit strict/fibrant $2$LTT-style discipline & yes; concrete primitive binary witness & yes; exact stabilization and size-two window checked & not supplied here; only the weaker wrapper \autoref{thm:2d-foundations} is claimed & yes, for that discipline only \\
 Plain Book HoTT & no theorem isolated here & no cubical-style exact-stabilization argument supplied here & no & no \\
 \bottomrule
