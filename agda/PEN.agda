@@ -25,6 +25,7 @@ open import Saturation.Axiom public
 open import Saturation.Enumeration public
 open import Saturation.Decomposition public
 open import Saturation.AbstractionBarrier public
+import Saturation.AbstractionBarrier9
 
 -- Adjunction depth formalization
 open import Adjunction.AdjunctionDepth public

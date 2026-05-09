@@ -438,6 +438,36 @@
       "trusted_inputs": ["Agda kernel", "Cubical library", "Core/Nat.agda", "fixed raw bridge"]
     },
     {
+      "paper_claim": "Barrier discipline and concrete window decompositions",
+      "paper_labels": ["sec:mechanization"],
+      "agda_modules": [
+        "Saturation/AbstractionBarrier.agda",
+        "Saturation/AbstractionBarrier9.agda",
+        "Saturation/Decomposition.agda"
+      ],
+      "agda_theorems": [
+        "GroupB-Obligations",
+        "obl-8-6",
+        "obl-8-10",
+        "HopfBarrier-GroupB",
+        "HopfBarrier-GroupC",
+        "HopfBarrier-GroupE",
+        "obl-9-6-hopf",
+        "obl-9-14-factor-constant",
+        "obl-9-29",
+        "WindowDecomposition",
+        "decomp-step3",
+        "decomp-step8",
+        "recurrence-from-decomp",
+        "recurrence-at-3",
+        "recurrence-at-8"
+      ],
+      "status": "mechanized",
+      "status_detail": "checked local barrier examples and concrete decomposition recurrence witnesses",
+      "uses_bridge": false,
+      "trusted_inputs": ["Agda kernel", "Cubical library", "Core/Nat.agda"]
+    },
+    {
       "paper_claim": "Refactoring invariance",
       "paper_labels": ["cor:refactoring"],
       "agda_modules": ["Metatheory/Refactoring.agda"],

@@ -41,6 +41,7 @@ require_no_postulates() {
   local found=0
   local paths=(
     "$AGDA_DIR/Core"
+    "$AGDA_DIR/Saturation"
     "$AGDA_DIR/Metatheory"
     "$AGDA_DIR/Semantics"
     "$AGDA_DIR/Geometry/Clutching.agda"
@@ -134,6 +135,7 @@ run_python_check() {
 
 run_agda "Everything.agda"
 run_agda "PEN.agda"
+run_agda "Saturation/AbstractionBarrier9.agda"
 run_agda "Test/MetatheorySmoke.agda"
 run_agda "Test/PresentationInvariance/Smoke.agda"
 run_agda "Metatheory/PresentationEquivalence.agda"
