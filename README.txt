@@ -5,10 +5,6 @@ This repository is a compact artifact for the paper source
 paper/1_coherence_depth.tex and the theorem-facing Cubical Agda code used by
 that paper.
 
-The broader development repository is:
-
-  https://github.com/efficient-novelty/mechanization
-
 The public artifact repository for this folder is:
 
   https://github.com/efficient-novelty/coherence-depth
