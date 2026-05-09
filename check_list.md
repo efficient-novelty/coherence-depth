@@ -176,21 +176,21 @@ calculus explicit.
 
 ### Paper Tasks
 
-- [ ] Add section "Semantic adequacy of the extension calculus".
-- [ ] Define semantic structural obligations.
-- [ ] Define raw action clauses.
-- [ ] Define raw comparison clauses.
-- [ ] Define raw horn clauses.
-- [ ] State raw soundness.
-- [ ] State raw completeness.
-- [ ] State preservation of support.
-- [ ] State preservation of primitive/derived status.
-- [ ] State preservation of cardinality.
-- [ ] Clearly label mechanized, conditional, and assumed parts.
+- [x] Add section "Semantic adequacy of the extension calculus".
+- [x] Define semantic structural obligations.
+- [x] Define raw action clauses.
+- [x] Define raw comparison clauses.
+- [x] Define raw horn clauses.
+- [x] State raw soundness.
+- [x] State raw completeness.
+- [x] State preservation of support.
+- [x] State preservation of primitive/derived status.
+- [x] State preservation of cardinality.
+- [x] Clearly label mechanized, conditional, and assumed parts.
 
 ### Acceptance Criteria
 
-- [ ] The paper can honestly say which results are conditional on adequacy.
+- [x] The paper can honestly say which results are conditional on adequacy.
 - [ ] Downstream theorem modules typecheck parametrically over adequacy.
 - [ ] Adequacy assumptions are visible to the audit tooling.
 - [ ] The artifact does not look as if it assumes the main theorem.
@@ -541,7 +541,7 @@ Goal: produce the next complete paper/artifact version.
 - [ ] Add "scope at a glance" table.
 - [ ] Add semantic cubical foundation section.
 - [ ] Add sealed extensions and trace section.
-- [ ] Add semantic adequacy section.
+- [x] Add semantic adequacy section.
 - [ ] Add trace normal form section.
 - [ ] Add depth-at-most-two proof.
 - [ ] Add depth-at-least-two proof.
@@ -551,12 +551,12 @@ Goal: produce the next complete paper/artifact version.
 - [ ] Add Fibonacci corollary.
 - [ ] Add theorem dependency diagram.
 - [ ] Update mechanization table.
-- [ ] Update limitations section.
-- [ ] Check that all claims match code status.
+- [x] Update limitations section.
+- [x] Check that all claims match code status.
 
 ### Files To Update
 
-- [ ] Update `paper/1_coherence_depth.tex`.
+- [x] Update `paper/1_coherence_depth.tex`.
 - [ ] Update `paper-map.yaml`.
 - [ ] Update `docs/theorem_index.md`.
 - [ ] Update `docs/coherence_depth_trust_boundary.md`.
@@ -572,18 +572,18 @@ Goal: produce the next complete paper/artifact version.
 - [ ] Add semantic smoke tests to artifact check script.
 - [ ] Add semantic modules to CI workflow.
 - [ ] Add semantic smoke tests to CI workflow.
-- [ ] Run the full artifact check.
-- [ ] Run the postulate audit.
-- [ ] Run the paper-map audit.
+- [x] Run the full artifact check.
+- [x] Run the postulate audit.
+- [x] Run the paper-map audit.
 - [ ] Record any remaining trusted inputs.
 
 ### Acceptance Criteria
 
-- [ ] Paper claims match code claims.
-- [ ] Every theorem has a status.
-- [ ] The trust boundary is explicit.
+- [x] Paper claims match code claims.
+- [x] Every theorem has a status.
+- [x] The trust boundary is explicit.
 - [ ] CI covers the new semantic modules.
-- [ ] The reviewer can see exactly what is mechanized and what is conditional.
+- [x] The reviewer can see exactly what is mechanized and what is conditional.
 
 ## Paper Checklist
 
@@ -612,17 +612,17 @@ Goal: produce the next complete paper/artifact version.
 
 ### Preliminaries
 
-- [ ] Define cubical foundation.
-- [ ] Define sealed extension.
-- [ ] Define public interface.
-- [ ] Define payload.
-- [ ] Define resolved trace.
-- [ ] Define primitive trace.
-- [ ] Define derived trace.
-- [ ] Define historical support.
-- [ ] Define coherence depth.
-- [ ] Define chronological window.
-- [ ] Define full coupling.
+- [x] Define cubical foundation.
+- [x] Define sealed extension.
+- [x] Define public interface.
+- [x] Define payload.
+- [x] Define resolved trace.
+- [x] Define primitive trace.
+- [x] Define derived trace.
+- [x] Define historical support.
+- [x] Define coherence depth.
+- [x] Define chronological window.
+- [x] Define full coupling.
 
 ### Semantic Sections
 
@@ -640,63 +640,63 @@ Goal: produce the next complete paper/artifact version.
 
 ### Sealed Extensions And Trace
 
-- [ ] Define `E_n = (B_n, K_n, T_n, interpretation_n)` or equivalent.
-- [ ] Define `I_n = K_n + T_n`.
-- [ ] Define transparent development separately.
-- [ ] State transparent development has zero integration latency.
-- [ ] Connect transparent development to existing formal material if available.
+- [x] Define `E_n = (B_n, K_n, T_n, interpretation_n)` or equivalent.
+- [x] Define `I_n = K_n + T_n`.
+- [x] Define transparent development separately.
+- [x] State transparent development has zero integration latency.
+- [x] Connect transparent development to existing formal material if available.
 
 ### Adequacy Section
 
-- [ ] Define semantic structural obligations.
-- [ ] Define raw clauses.
-- [ ] Prove or state raw soundness.
-- [ ] Prove or state raw completeness.
-- [ ] Prove or state support preservation.
-- [ ] Prove or state primitive/derived preservation.
-- [ ] Prove or state cardinality preservation.
-- [ ] Label theorem status honestly.
+- [x] Define semantic structural obligations.
+- [x] Define raw clauses.
+- [x] Prove or state raw soundness.
+- [x] Prove or state raw completeness.
+- [x] Prove or state support preservation.
+- [x] Prove or state primitive/derived preservation.
+- [x] Prove or state cardinality preservation.
+- [x] Label theorem status honestly.
 
 ### Upper Bound Section
 
-- [ ] Normalize an arbitrary structural obligation.
-- [ ] Handle unary case.
-- [ ] Handle binary case.
-- [ ] Handle higher horn package case.
-- [ ] Use `hfill`/`hcomp` for higher horn trace.
-- [ ] Use telescopic subsumption for remote comparisons.
-- [ ] Conclude no primitive trace beyond depth two remains.
-- [ ] Avoid filler-space contractibility claims.
+- [x] Normalize an arbitrary structural obligation.
+- [x] Handle unary case.
+- [x] Handle binary case.
+- [x] Handle higher horn package case.
+- [x] Use `hfill`/`hcomp` for higher horn trace.
+- [x] Use telescopic subsumption for remote comparisons.
+- [x] Conclude no primitive trace beyond depth two remains.
+- [x] Avoid filler-space contractibility claims.
 
 ### Lower Bound Section
 
-- [ ] Present swap witness.
-- [ ] Explain nontrivial equivalence on the two-point type.
-- [ ] Explain univalence path.
-- [ ] Explain transport of unary clauses.
-- [ ] Explain distinguishability of constant-left and constant-right.
-- [ ] Conclude binary comparison is not unary-derived.
-- [ ] Optionally present clutching witness.
+- [x] Present swap witness.
+- [x] Explain nontrivial equivalence on the two-point type.
+- [x] Explain univalence path.
+- [x] Explain transport of unary clauses.
+- [x] Explain distinguishability of constant-left and constant-right.
+- [x] Conclude binary comparison is not unary-derived.
+- [x] Optionally present clutching witness.
 
 ### Scaling Section
 
-- [ ] Define `K_n`, `T_n`, `I_n`.
-- [ ] Define `kappa_n` and `mu_n`.
-- [ ] State chronological window theorem.
-- [ ] State full coupling as `T_(n+1) ~= I_n + I_(n-1)`.
-- [ ] Derive affine recurrence.
-- [ ] State sparse cases separately.
-- [ ] State constant-payload Fibonacci corollary.
-- [ ] Include bootstrap convention.
+- [x] Define `K_n`, `T_n`, `I_n`.
+- [x] Define `kappa_n` and `mu_n`.
+- [x] State chronological window theorem.
+- [x] State full coupling as `T_(n+1) ~= I_n + I_(n-1)`.
+- [x] Derive affine recurrence.
+- [x] State sparse cases separately.
+- [x] State constant-payload Fibonacci corollary.
+- [x] Include bootstrap convention.
 
 ### Limitations
 
-- [ ] Say arbitrary Cubical Agda elaboration remains outside scope unless a
+- [x] Say arbitrary Cubical Agda elaboration remains outside scope unless a
       concrete elaborator adequacy theorem is supplied.
-- [ ] Say semantic adequacy may remain a package/assumption until instantiated.
-- [ ] Say full coupling is maximal, not universal.
-- [ ] Say higher payload can be primitive at any dimension.
-- [ ] Say no global truncation of cubical foundations is claimed.
+- [x] Say semantic adequacy may remain a package/assumption until instantiated.
+- [x] Say full coupling is maximal, not universal.
+- [x] Say higher payload can be primitive at any dimension.
+- [x] Say no global truncation of cubical foundations is claimed.
 
 ## Agda Checklist
 
