@@ -1,0 +1,283 @@
+{-# OPTIONS --cubical --safe --guardedness #-}
+
+module Metatheory.KanSubsumption where
+
+open import Cubical.Foundations.Prelude
+open import Cubical.Foundations.Isomorphism using (Iso)
+
+open import Core.Nat renaming (ℕ to Nat)
+open import Core.Sequence using (Vec; []; _∷_)
+open import CubicalOpenBox.Base
+open import CubicalOpenBox.Extension
+open import CubicalOpenBox.Contractible
+open import Metatheory.Obligations
+  using ( HistoricalSupport
+        ; mkSupport
+        ; PrimitiveCost
+        ; derived
+        ; requiresPrimitive
+        ; ObligationLanguage
+        ; Fin
+        ; fzero
+        ; fsuc
+        ; mapVec
+        )
+
+private
+  variable
+    ℓ : Level
+    A : Type ℓ
+    φ : I
+
+-- This module isolates the algorithmic content of arity-3 subsumption.
+-- It does not claim that the full space of 3-cell fillers is contractible.
+-- Instead it packages exactly the open-box data consumed by cubical
+-- composition. When A is instantiated by a square type, this is the
+-- missing-face problem for an open 3-box.
+Arity3-Obligation :
+  {A : Type ℓ} {φ : I} →
+  (u : I → Partial φ A) →
+  (u0 : A [ φ ↦ u i0 ]) →
+  Type ℓ
+Arity3-Obligation {A = A} _ _ = A
+
+arity3-obligation-syntactically-derivable :
+  {A : Type ℓ} {φ : I} →
+  (u : I → Partial φ A) →
+  (u0 : A [ φ ↦ u i0 ]) →
+  Arity3-Obligation u u0
+arity3-obligation-syntactically-derivable u u0 =
+  hcomp u (outS u0)
+
+history-beyond-two-algorithmically-subsumed :
+  {A : Type ℓ} {φ : I} →
+  (u : I → Partial φ A) →
+  (u0 : A [ φ ↦ u i0 ]) →
+  Arity3-Obligation u u0
+history-beyond-two-algorithmically-subsumed =
+  arity3-obligation-syntactically-derivable
+
+arity3-open-box-hfilled :
+  {A : Type ℓ} {φ : I} →
+  (u : I → Partial φ A) →
+  (u0 : A [ φ ↦ u i0 ]) →
+  I → A
+arity3-open-box-hfilled u u0 =
+  hfill u u0
+
+HornExtensionFiber : {ℓ : Level} {A : Type ℓ} {φ : I}
+  (u : I → Partial φ A) (u0 : A [ φ ↦ u i0 ]) → Type ℓ
+HornExtensionFiber u u0 =
+  OpenExt u u0 mkOpenBox
+
+canonical-horn-extension :
+  {ℓ : Level} {A : Type ℓ} {φ : I} →
+  (u : I → Partial φ A) →
+  (u0 : A [ φ ↦ u i0 ]) →
+  HornExtensionFiber u u0
+canonical-horn-extension u u0 =
+  canonicalOpenExt u u0 mkOpenBox
+
+horn-extension-missing-face :
+  {ℓ : Level} {A : Type ℓ} {φ : I} →
+  {u : I → Partial φ A} {u0 : A [ φ ↦ u i0 ]} →
+  HornExtensionFiber u u0 → A
+horn-extension-missing-face fiber = fiber .fst
+
+horn-extension-filler :
+  {ℓ : Level} {A : Type ℓ} {φ : I} →
+  {u : I → Partial φ A} {u0 : A [ φ ↦ u i0 ]} →
+  (fiber : HornExtensionFiber u u0) → I → A
+horn-extension-filler fiber i = fiber .snd i
+
+horn-extension-fiber-contractible :
+  {ℓ : Level} {A : Type ℓ} {φ : I} →
+  (u : I → Partial φ A) →
+  (u0 : A [ φ ↦ u i0 ]) →
+  isContr (HornExtensionFiber u u0)
+horn-extension-fiber-contractible u u0 =
+  openExtIsContr u u0 mkOpenBox
+
+data HornCandidate : Type where
+  horn-candidate : HornCandidate
+
+data StructuralObligation {ℓ : Level} {A : Type ℓ} {φ : I}
+  (u : I → Partial φ A) (u0 : A [ φ ↦ u i0 ]) : Nat → Type ℓ where
+  depth2-boundary :
+    StructuralObligation u u0 (suc (suc zero))
+  extend-remote-layer :
+    {k : Nat} →
+    (boundary : StructuralObligation u u0 (suc (suc k))) →
+    HornExtensionFiber u u0 →
+    StructuralObligation u u0 (suc (suc (suc k)))
+
+depth-k-marginal-structural-obligation-open-ext :
+  {ℓ : Level} {A : Type ℓ} {φ : I} →
+  {u : I → Partial φ A} {u0 : A [ φ ↦ u i0 ]} →
+  {offset : Nat} →
+  StructuralObligation u u0 (3 + offset) →
+  HornExtensionFiber u u0
+depth-k-marginal-structural-obligation-open-ext
+  (extend-remote-layer boundary fiber) =
+  fiber
+
+depth-k-marginal-open-ext-contractible :
+  {ℓ : Level} {A : Type ℓ} {φ : I} →
+  (u : I → Partial φ A) →
+  (u0 : A [ φ ↦ u i0 ]) →
+  (offset : Nat) →
+  isContr (HornExtensionFiber u u0)
+depth-k-marginal-open-ext-contractible u u0 offset =
+  horn-extension-fiber-contractible u u0
+
+record HornReductionView {ℓ : Level} {A : Type ℓ} {φ : I}
+  (u : I → Partial φ A) (u0 : A [ φ ↦ u i0 ]) (offset : Nat) : Type ℓ where
+  constructor mkHornReductionView
+  field
+    boundary       : StructuralObligation u u0 (suc (suc offset))
+    additionalData : HornExtensionFiber u u0
+
+open HornReductionView public
+
+-- The paper's telescopic lemma iterates the one-step horn reduction:
+-- every additional remote binary comparison is generated from the already
+-- exported adjacent traces and contributes only another derived horn fiber.
+data TelescopicTraceChain {ℓ : Level} {A : Type ℓ} {φ : I}
+  (u : I → Partial φ A) (u0 : A [ φ ↦ u i0 ]) : Nat → Type ℓ where
+  no-remote-traces :
+    TelescopicTraceChain u u0 zero
+  extend-trace-chain :
+    {offset : Nat} →
+    HornExtensionFiber u u0 →
+    TelescopicTraceChain u u0 offset →
+    TelescopicTraceChain u u0 (suc offset)
+
+record TelescopicSubsumptionView {ℓ : Level} {A : Type ℓ} {φ : I}
+  (u : I → Partial φ A) (u0 : A [ φ ↦ u i0 ]) (offset : Nat) : Type ℓ where
+  constructor mkTelescopicSubsumptionView
+  field
+    recentBoundary : StructuralObligation u u0 (suc (suc zero))
+    traceChain     : TelescopicTraceChain u u0 offset
+
+open TelescopicSubsumptionView public
+
+telescopic-subsumption :
+  {ℓ : Level} {A : Type ℓ} {φ : I} →
+  (u : I → Partial φ A) →
+  (u0 : A [ φ ↦ u i0 ]) →
+  (offset : Nat) →
+  StructuralObligation u u0 (2 + offset) →
+  TelescopicSubsumptionView u u0 offset
+telescopic-subsumption u u0 zero depth2-boundary =
+  mkTelescopicSubsumptionView depth2-boundary no-remote-traces
+telescopic-subsumption u u0 (suc offset) (extend-remote-layer boundary fiber)
+  with telescopic-subsumption u u0 offset boundary
+... | mkTelescopicSubsumptionView recentBoundary traceChain =
+  mkTelescopicSubsumptionView recentBoundary
+    (extend-trace-chain fiber traceChain)
+
+realize-telescopic-subsumption :
+  {ℓ : Level} {A : Type ℓ} {φ : I} →
+  (u : I → Partial φ A) →
+  (u0 : A [ φ ↦ u i0 ]) →
+  (offset : Nat) →
+  TelescopicSubsumptionView u u0 offset →
+  StructuralObligation u u0 (2 + offset)
+realize-telescopic-subsumption u u0 zero
+  (mkTelescopicSubsumptionView recentBoundary no-remote-traces) =
+  recentBoundary
+realize-telescopic-subsumption u u0 (suc offset)
+  (mkTelescopicSubsumptionView recentBoundary
+    (extend-trace-chain fiber traceChain)) =
+  extend-remote-layer
+    (realize-telescopic-subsumption u u0 offset
+      (mkTelescopicSubsumptionView recentBoundary traceChain))
+    fiber
+
+structural-integration-horn-reduction :
+  {ℓ : Level} {A : Type ℓ} {φ : I} →
+  (u : I → Partial φ A) →
+  (u0 : A [ φ ↦ u i0 ]) →
+  (offset : Nat) →
+  Iso (StructuralObligation u u0 (suc (suc (suc offset))))
+      (HornReductionView u u0 offset)
+structural-integration-horn-reduction u u0 offset = record
+  { fun = λ where
+      (extend-remote-layer boundary fiber) →
+        mkHornReductionView boundary fiber
+  ; inv = λ where
+      (mkHornReductionView boundary fiber) →
+        extend-remote-layer boundary fiber
+  ; rightInv = λ where
+      (mkHornReductionView boundary fiber) → refl
+  ; leftInv = λ where
+      (extend-remote-layer boundary fiber) → refl
+  }
+
+allFin : (n : Nat) → Vec (Fin n) n
+allFin zero = []
+allFin (suc n) = fzero ∷ mapVec fsuc (allFin n)
+
+structural-support :
+  {ℓ : Level} {A : Type ℓ} {φ : I}
+  {u : I → Partial φ A} {u0 : A [ φ ↦ u i0 ]} {k : Nat} →
+  StructuralObligation u u0 k → HistoricalSupport k
+structural-support {k = suc (suc zero)} depth2-boundary =
+  mkSupport (suc (suc zero)) (allFin (suc (suc zero)))
+structural-support {k = suc (suc (suc k))} (extend-remote-layer _ _) =
+  mkSupport (suc (suc (suc k))) (allFin (suc (suc (suc k))))
+
+structural-primitive-cost :
+  {ℓ : Level} {A : Type ℓ} {φ : I}
+  {u : I → Partial φ A} {u0 : A [ φ ↦ u i0 ]} {k : Nat} →
+  StructuralObligation u u0 k → PrimitiveCost
+structural-primitive-cost depth2-boundary = requiresPrimitive
+structural-primitive-cost (extend-remote-layer _ _) = derived
+
+telescopic-remote-comparison-derived :
+  {ℓ : Level} {A : Type ℓ} {φ : I} →
+  (u : I → Partial φ A) →
+  (u0 : A [ φ ↦ u i0 ]) →
+  (offset : Nat) →
+  (o : StructuralObligation u u0 (3 + offset)) →
+  structural-primitive-cost o ≡ derived
+telescopic-remote-comparison-derived u u0 offset
+  (extend-remote-layer boundary fiber) = refl
+
+structural-weaken :
+  {ℓ : Level} {A : Type ℓ} {φ : I} →
+  (u : I → Partial φ A) →
+  (u0 : A [ φ ↦ u i0 ]) →
+  (k : Nat) →
+  StructuralObligation u u0 k →
+  StructuralObligation u u0 (suc k)
+structural-weaken u u0 zero ()
+structural-weaken u u0 (suc zero) ()
+structural-weaken u u0 (suc (suc k)) o =
+  extend-remote-layer o (canonical-horn-extension u u0)
+
+structural-horn-language :
+  {ℓ : Level} {A : Type ℓ} {φ : I} →
+  (u : I → Partial φ A) →
+  (u0 : A [ φ ↦ u i0 ]) →
+  ObligationLanguage ℓ-zero ℓ
+structural-horn-language u u0 = record
+  { Candidate = HornCandidate
+  ; O = λ _ k → StructuralObligation u u0 k
+  ; weaken = λ k o → structural-weaken u u0 k o
+  ; Supp = structural-support
+  ; primitiveCost = structural-primitive-cost
+  }
+
+remote-layer-obligation-derived :
+  {ℓ : Level} {A : Type ℓ} {φ : I} →
+  (u : I → Partial φ A) →
+  (u0 : A [ φ ↦ u i0 ]) →
+  (offset : Nat) →
+  (view : HornReductionView u u0 offset) →
+  ObligationLanguage.primitiveCost (structural-horn-language u u0)
+    {X = horn-candidate}
+    {k = suc (suc (suc offset))}
+    (Iso.inv (structural-integration-horn-reduction u u0 offset) view)
+    ≡ derived
+remote-layer-obligation-derived u u0 offset view = refl

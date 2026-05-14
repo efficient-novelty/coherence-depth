@@ -1,0 +1,26 @@
+{
+  "title": "Coherence Depth Two for Cubical Sealed Extensions: LMCS Artifact",
+  "upload_type": "software",
+  "description": "Artifact package for the LMCS submission version of the coherence-depth paper, including the 49-page LMCS paper source and PDF, theorem-facing Cubical Agda code, theorem map, audit scripts, trust-boundary documentation, and case-study fixtures.",
+  "creators": [
+    {
+      "name": "Lande, Halvor",
+      "affiliation": "Independent researcher, Oslo, Norway"
+    }
+  ],
+  "keywords": [
+    "cubical type theory",
+    "coherence",
+    "univalence",
+    "Agda",
+    "formalization"
+  ],
+  "access_right": "open",
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/efficient-novelty/coherence-depth",
+      "relation": "isSupplementTo",
+      "scheme": "url"
+    }
+  ]
+}

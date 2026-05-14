@@ -1,0 +1,14 @@
+This paper studies public coherence obligations created when a fixed cubical
+sealed-extension calculus is enlarged by globally acting structural layers such
+as modalities, universe formers, or promoted interface packages.  The main
+result is a depth-two theorem for this fixed calculus: unary trace is
+insufficient, because univalence creates genuine binary naturality obligations,
+but structural trace generated above binary arity is not primitive.  Higher
+structural obligations are represented by cubical open-box extension data
+computed from lower-arity boundaries, so realized obligation objects stabilize
+at binary trace and normalized minimal public signatures contain no primitive
+structural trace field above binary arity.  A separate counting result gives a
+two-step recurrence only under explicit full-coupling and constant-payload
+hypotheses.  The accompanying mechanization checks the theorem-facing
+fixed-calculus components and representative adequacy bridges; transfer to
+other cubical foundations remains conditional on the stated adequacy interface.

@@ -1,1264 +1,820 @@
-# Paper Improvement Plan: Explicit Open Boxes and Derivedness-as-Theorem
+# Paper Improvement Plan: LMCS-Ready Coherence Depth
 
 ## Purpose
 
-This plan targets two upgrades to the paper and artifact:
+This plan turns the current feedback on `paper/1_coherence_depth_draft.tex` into an actionable revision program. The goal is to make the paper credible as an LMCS submission by aligning the theorem claims, proof detail, mechanization status, and journal presentation.
 
-1. **Strengthen the open-box formalization.** Replace the thin/abstract `OpenBox` object with a record that explicitly contains the partial boundary, side constraints, compatible base face, lids, fillers, endpoint laws, agreement equations, and substitution stability. If this is not implemented, the paper should stop calling the result an *actual structural horn-extension contractibility theorem* and should present it as a theorem conditional on an abstract open-box adequacy assumption.
+The core diagnosis is:
 
-2. **Make “derivedness” a theorem rather than a tag.** Replace any raw syntactic `derived` tag for higher structural fields by a derivation-producing theorem. A higher structural field should be classified as derived only after constructing a cubical term from lower boundary data using `hcomp`/`comp`, `hfill`/`fill`, and `transp`, then proving that replacing the field by that term preserves the normalized public signature and does not contribute to `μ`.
+- The topic is in scope for LMCS.
+- The main theorem is interesting, but currently over-claimed relative to the formal core.
+- The proof chain from higher structural obligation to non-primitive trace must be made fully checkable.
+- The mechanization must either be strengthened to match the prose or the prose must classify the mechanization as abstract, conditional, or theorem-facing.
+- The paper must be cut and restyled for LMCS.
 
-The desired end state is:
+The intended revised contribution should be stated early and consistently:
+
+> This paper proves a depth-two theorem for a deliberately small sealed-extension calculus over a cubical core. It does not prove a theorem about arbitrary Cubical Agda developments, arbitrary module systems, or arbitrary cubical foundations. Broader transfer is formulated through an adequacy interface.
+
+## Target theorem stack
+
+The LMCS-ready version should be organized around the following theorem stack.
+
+1. **Fixed calculus `C_ext`.**
+   Define syntax, typing, sealing, normalized public signatures, trace roles, primitive/derived status, and `Real_k`.
+
+2. **Lower bound.**
+   In the univalent two-point interface, unary action data do not determine binary trace.
+
+3. **Structural horn theorem.**
+   Every sealing-generated higher structural obligation is equivalent to an explicit open-box extension object over lower public boundary data.
+
+4. **Open-box total-space theorem.**
+   The total space of compatible lids plus fillers is contractible.
+
+5. **Replacement theorem.**
+   A contractible structural horn factor yields a constructed `DerivedTrace` witness and is not primitive in `mu`-minimal public signatures.
+
+6. **Main theorem.**
+   For every object `X` in the fixed calculus, `Real_k(X) ~= Real_2(X)` for `k >= 2`, and no primitive structural trace above binary arity remains in minimal public signatures.
+
+7. **Optional accounting corollary.**
+   Under full coupling, factorization-complete export, bundled per-site trace counting, and uniform payload assumptions, the two-layer recurrence follows.
+
+Each theorem should explicitly name its dependencies. The paper should not use a later normalization or presentation-equivalence convention to make an earlier cubical proof look automatic.
+
+## Priority order
+
+### P0: Claim calibration
+
+These are required before the paper can be responsibly submitted.
+
+- State that the main result is for the fixed sealed-extension calculus only.
+- Replace broad claims about arbitrary cubical foundations or arbitrary implementations with conditional transfer claims through the adequacy interface.
+- Make the mechanization status explicit: fully mechanized, abstract-interface mechanized, conditional on adequacy, or paper-only.
+- Remove any wording that implies the current artifact already proves explicit cubical horn geometry if it only proves a based path singleton abstraction.
+
+### P1: Formal theorem repair
+
+These are the mathematical load-bearing repairs.
+
+- Define `Real_k(X)` as an actual dependent object.
+- Define the structural horn grammar formally.
+- Prove horn-to-open-box adequacy by induction on that grammar.
+- Separate total extension contractibility from fixed-boundary filler non-contractibility.
+- Replace derived-status tags with constructed `DerivedTrace` witnesses.
+- Prove replacement before using it to eliminate higher structural trace from `mu`-minimal signatures.
+
+### P2: Artifact alignment
+
+These make the repository support the paper honestly.
+
+- Introduce an explicit structural open-box record.
+- Prove contractibility of the total extension object.
+- Decode sealing-generated horns into explicit open boxes.
+- Replace raw higher-horn derived tags with derivation objects.
+- Update theorem map, README, and appendix status vocabulary.
+
+### P3: LMCS presentation
+
+These are required for a polished submission.
+
+- Cut the main text to about 45-50 pages or prepare an editor-facing length justification.
+- Move or remove the table of contents currently before the introduction.
+- Shorten and simplify the abstract.
+- Fix Type 3 fonts and text extraction.
+- Add affiliation and ORCID support.
+- Archive the artifact on Zenodo and cite a DOI.
+- Check bibliography, DOI coverage, theorem environments, comments, unsupported packages, and overfull boxes.
+
+## Workstream 1: Reframe the paper contract
+
+### Problem
+
+The draft oscillates between a broad foundational narrative and a theorem about a deliberately fixed calculus. This creates a mismatch between reader expectations and the formal proof.
+
+### Required revisions
+
+1. **Abstract.**
+   Rewrite the abstract to state:
+   - fixed calculus;
+   - depth-two theorem;
+   - binary lower bound;
+   - higher structural trace eliminated by open-box replacement;
+   - mechanization status, without implying more than the artifact proves.
+
+   Avoid dense notation where possible. If notation remains, prepare an HTML abstract for LMCS.
+
+2. **Introduction.**
+   Add the fixed-calculus contract in the first two pages. Keep only one strong scope paragraph in the introduction, one before the main theorem, and one in the conclusion.
+
+3. **Title.**
+   Decide whether the paper is unconditional or conditional:
+   - If the horn/open-box and replacement proofs are fully made precise, consider removing "Toward".
+   - If the main result remains conditional on an adequacy package, keep "Toward" or use another title that signals the conditional state.
+
+4. **Contribution list.**
+   Replace broad claims with a tight list:
+   - fixed sealed-extension calculus;
+   - formal `Real_k`;
+   - binary lower bound;
+   - structural horn-to-open-box adequacy;
+   - open-box total-space contractibility;
+   - derived trace replacement;
+   - exact depth two for structural trace;
+   - conditional recurrence/accounting corollary.
+
+5. **Non-goals.**
+   State once:
+   - not arbitrary Cubical Agda;
+   - not arbitrary module systems;
+   - not arbitrary cubical foundations;
+   - not a claim that all higher payload data are eliminable;
+   - not a claim that fixed-boundary filler spaces are generally contractible.
+
+### Acceptance criteria
+
+- A referee can tell by page 2 exactly what is proved and what is conditional.
+- No major theorem statement depends on informal scope disclaimers scattered later in the paper.
+- The abstract and title agree on whether the result is unconditional, conditional, or "toward" a larger theorem.
+
+## Workstream 2: Define `Real_k(X)` formally
+
+### Problem
+
+The current draft treats `Real_k(X)` too much like an interpretation slogan: "the dependent type, space, or cubical object interpreting `ObSig_k(X)`." That is not precise enough for the equivalence `Real_k(X) ~= Real_2(X)`.
+
+### Required definition
+
+Introduce a definition with the following data:
+
+- A fixed sealed-extension calculus `C_ext`.
+- Raw declarations and raw trace fields before primitive/derived classification.
+- Public signature extraction `PubSig(X)`.
+- Arity filtering operation `ObSig_k(X)`.
+- A semantics or realization interpretation `[[ - ]]`.
+- A dependent object:
+
+  ```text
+  Real_k(X) := [[ ObSig_k(X) ]]
+  ```
+
+  or the more explicit dependent sum/product object used by the semantics.
+
+- Restriction maps:
+
+  ```text
+  res_{k,l} : Real_l(X) -> Real_k(X)      for k <= l
+  ```
+
+- Weakening/extension maps where applicable.
+- Functoriality:
+
+  ```text
+  res_{k,k} = id
+  res_{j,k} . res_{k,l} = res_{j,l}
+  ```
+
+- The exact equivalence relation used in statements:
+  - definitional equality;
+  - isomorphism of dependent records;
+  - equivalence of types;
+  - cubical path/equivalence.
+
+### Proof obligations
+
+For each equivalence `Real_k(X) ~= Real_2(X)`, state:
+
+- the forward map;
+- the inverse or section/retraction data;
+- the homotopies or judgmental equalities proving equivalence;
+- whether the proof is natural in `X`;
+- whether the proof is internal to the calculus, meta-theoretic, or artifact-level.
+
+### Placement
+
+Place this before the main theorem in Section 5, or earlier if Section 2 is the definitional home for public signatures.
+
+### Acceptance criteria
+
+- `Real_k(X)` has a stable definition that later theorems refer to.
+- The maps between depths are named and typed.
+- The main theorem no longer relies on an informal interpretation of `ObSig_k(X)`.
+
+## Workstream 3: Formal structural horn grammar
+
+### Problem
+
+The paper currently relies on the claim that the sealing grammar generates exactly open boxes. A referee will expect this to be proved by induction on derivations from a precise grammar.
+
+### Required grammar
+
+For every constructor generating a higher structural obligation, specify:
+
+- constructor name;
+- arity;
+- raw input data;
+- lower public boundary data;
+- support/history footprint;
+- boundary faces;
+- missing face;
+- filler type;
+- public/export status;
+- substitution action;
+- stability under weakening and renaming;
+- whether it can introduce payload or only structural trace.
+
+### Suggested record shape
+
+Use a grammar judgment like:
 
 ```text
-higher structural field
-    -> construct structural open box from lower public boundary
-    -> compute canonical lid and filler by cubical Kan operations
-    -> decode that canonical open-box extension into the field's type
-    -> prove the presented field is replaceable by the computed term
-    -> normalize with no primitive trace fields of arity >= 3
+Gamma |- H : StructuralHorn(n, X)
 ```
 
-This keeps the exact realized object theorem and the minimal-public-signature theorem separate:
+with fields or derived projections:
 
 ```text
-Real_k(X) still contains higher contractible horn factors.
-μ-minimal public signatures do not expose those factors as primitive trace fields.
+support(H)
+boundary(H)
+missing(H)
+baseFace(H)
+fillerType(H)
+publicStatus(H)
+subst(H, sigma)
 ```
 
-## Guiding constraints
+The grammar should distinguish:
 
-The revised proof should enforce the following constraints.
+- unary action trace;
+- binary comparison trace;
+- higher structural trace;
+- payload fields that are not structural trace.
 
-- Do **not** prove or imply that arbitrary closed-boundary filler spaces are contractible.
-- Do **not** classify a field as derived merely because its arity is at least three.
-- Do **not** store primitive/derived status as an unverified input to the raw grammar.
-- Do **not** erase user-authored higher payload data. Only structural integration trace generated by the sealing grammar is subject to derivedness elimination.
-- Do **not** use presentation equivalence to prove cubical contractibility. Cubical contractibility should be proved first; presentation-equivalence elimination should come later.
+### Induction principle
 
----
-
-# Part I. Strengthen the open-box formalization
-
-## I.1. Problem to fix
-
-The paper currently wants to use the following idea:
+State and use the induction principle:
 
 ```text
-A higher structural obligation is not a closed sphere filler.
-It is an open-box extension problem with one remote face still free.
-The total space of the missing lid plus its compatible filler is contractible.
+To prove P(H) for every sealing-generated structural horn H,
+prove P for each constructor and show P is stable under substitution,
+weakening, and public-signature normalization.
 ```
 
-That idea is plausible, but the formal object must actually expose the open-box data. The proof should not reduce to a singleton argument over a record that has forgotten the boundary.
+### Acceptance criteria
 
-The formal object should explicitly contain:
+- There is no theorem whose proof says only "by expanding the sealing grammar."
+- Every higher structural obligation is produced by a named grammar constructor.
+- The horn-to-open-box theorem can literally be proved by induction on the displayed grammar.
 
-- the cubical family in which the cell lives;
-- the visible-face cofibration or face formula;
-- the partial boundary on the visible faces;
-- overlap and side-compatibility laws, either directly or through `Partial`/`Sub`;
-- the compatible base face;
-- the type of compatible lids;
-- the type of fillers from the base to the lid;
-- equations saying the filler agrees with the base, the lid, and every visible side;
-- reindexing/substitution laws.
+## Workstream 4: Horn-to-open-box adequacy theorem
 
-## I.2. Core formal representation
+### Problem
 
-The cleanest Agda-oriented representation is to define the extension space as a dependent path singleton in a family of compatible sub-elements.
-
-Use the cubical primitives as follows:
-
-- `I`, `i0`, `i1` for the distinguished open-box direction;
-- `Partial φ (A t)` for the visible side boundary at coordinate `t`;
-- `Sub` / `_[_↦_]` for elements of `A t` that are definitionally compatible with the side boundary;
-- `comp`/`transp` for heterogeneous families;
-- `hcomp` for homogeneous special cases;
-- `fill`/`hfill` for fillers.
-
-Agda-oriented pseudocode:
-
-```agda
-{-# OPTIONS --cubical #-}
-
-module CubicalOpenBox.Explicit where
-
-open import Cubical.Core.Primitives
-open import Cubical.Core.Glue
-
-record StructuralOpenBox (ℓ : Level) : Set (lsuc ℓ) where
-  field
-    -- The cubical family in the distinguished open direction.
-    A     : I → Type ℓ
-
-    -- Visible-face cofibration. In Cubical Agda this is represented by
-    -- an interval expression / face condition indexing Partial.
-    φ     : I
-
-    -- Visible side boundary. For every t, this gives the prescribed
-    -- partial element of A t on φ.
-    side  : (t : I) → Partial φ (A t)
-
-    -- Compatible base face at t = i0.
-    base  : A i0 [ φ ↦ side i0 ]
-
-BoundaryFamily : StructuralOpenBox ℓ → I → Type ℓ
-BoundaryFamily ob t =
-  StructuralOpenBox.A ob t
-    [ StructuralOpenBox.φ ob ↦ StructuralOpenBox.side ob t ]
-
-Lid : StructuralOpenBox ℓ → Type ℓ
-Lid ob = BoundaryFamily ob i1
-
-Filler : (ob : StructuralOpenBox ℓ) → Lid ob → Type ℓ
-Filler ob lid =
-  PathP (λ t → BoundaryFamily ob t)
-        (StructuralOpenBox.base ob)
-        lid
-
-OpenExt : StructuralOpenBox ℓ → Type ℓ
-OpenExt ob = Σ[ lid ∈ Lid ob ] Filler ob lid
-```
-
-This representation exposes all required agreement equations through the `Sub` family:
+The current load-bearing chain contains asserted links:
 
 ```text
-BoundaryFamily ob t = A t [ φ ↦ side t ]
+higher structural obligation
+  -> structural horn
+  -> open-box extension
+  -> contractible total extension space
+  -> derived public field
+  -> removed from mu-minimal signature
 ```
 
-An element of `BoundaryFamily ob t` is not merely an element of `A t`; it is an element of `A t` equipped with compatibility with the visible side boundary. A filler is therefore a path through compatible elements, not an arbitrary path in `A`.
+The horn-to-open-box step must become an explicit theorem, not a paragraph about reassociating dependent sums.
 
-### Optional explicit side-system layer
+### Theorem to add
 
-For the paper, it may be helpful to define a visibly explicit face system before compiling it into a single `Partial`.
+For every sealing-generated higher structural horn `H`, construct:
 
-Pseudocode:
+- a family `A : I -> Type`;
+- a cofibration or face formula `phi`;
+- a partial boundary
 
-```agda
-record FaceSystem (m : Nat) (A : I → Type ℓ) : Set (lsuc ℓ) where
-  field
-    face     : Fin m → I
-    body     : (s : Fin m) → (t : I) → Partial (face s) (A t)
+  ```text
+  u : (t : I) -> Partial phi (A t)
+  ```
 
-    -- Explicit overlap laws. These can be used in the paper prose even if
-    -- the final Agda implementation compiles them into a single Partial.
-    overlap  : (s r : Fin m) →
-               CompatibleOnOverlap (face s) (face r)
-                                   (body s) (body r)
+- a compatible base face
 
-compileFaceSystem : FaceSystem m A →
-  Σ[ φ ∈ I ] ((t : I) → Partial φ (A t))
-```
+  ```text
+  u0 : A i0 [ phi |-> u i0 ]
+  ```
 
-The formal proof can use the compiled `φ` and `side`; the paper can display the side constraints and overlap equations using `FaceSystem`.
+- a compatible lid type;
+- a filler type;
+- an equivalence between the original structural obligation and the explicit open extension object.
 
-## I.3. Revised definition in the paper
-
-Replace the current open-box definition with something like the following.
-
-> **Definition.** A structural open box over a cubical context `Γ` consists of a fibrant family `A : Γ, t : I ⊢ Type`, a visible-face cofibration `φ`, a visible partial boundary `u : (t : I) → Partial φ (A t)`, and a compatible base face `u₀ : A i0 [ φ ↦ u i0 ]`. Its lid type is `A i1 [ φ ↦ u i1 ]`. For a lid `ℓ`, its filler type is `PathP (λ t → A t [ φ ↦ u t ]) u₀ ℓ`. The open-box extension type is
->
-> ```text
-> OpenExt(A, φ, u, u₀) := Σ (ℓ : A i1 [ φ ↦ u i1 ]),
->                         PathP (λ t → A t [ φ ↦ u t ]) u₀ ℓ.
-> ```
->
-> The side equations are not implicit prose assumptions: they are part of the `Sub` family. Thus a filler agrees with the visible boundary at every `t`, agrees with the base at `i0`, and agrees with the lid at `i1`.
-
-Then state a separate equivalence between the paper's intuitive missing-face/filler package and the formal `OpenExt`.
-
-## I.4. Proof draft: missing-face packages are open-box extensions
-
-### Statement
+Suggested statement:
 
 ```text
-Lemma. For every structural horn generated by the sealing grammar, the intuitive package
-
-    H_k(∂) = Σ (γ : Γ_miss^k(∂)), Fill_∂^k(γ)
-
-is canonically equivalent to the explicit open-box extension type
-
-    OpenExt(A_k, φ_k, u_k, u0_k).
-
-The equivalence is natural under cubical substitution.
+HornOpenBoxAdequacy(H) :
+  StructuralObligation(H) ~= OpenExt(decodeOpenBox(H))
 ```
 
-### Proof draft
-
-1. Expand the sealing-generated higher obligation into its visible boundary data.
-
-   The depth-`k` step exposes a remote layer. All faces except the direct remote comparison are already determined by:
-
-   - exported unary action traces;
-   - exported binary comparison traces;
-   - previously generated transport/degenerate faces;
-   - substitution-stable definitional equalities.
-
-2. Compile the visible faces into a single partial element.
-
-   If the proof uses a finite side system, define:
-
-   ```text
-   φ_k  = disjunction of visible face formulas
-   u_k  = compiled partial element on φ_k
-   u0_k = base face plus compatibility with u_k at t = i0
-   ```
-
-   The overlap laws of the side system are exactly the well-typedness conditions required to form `Partial φ_k`.
-
-3. Identify the missing remote face with the lid.
-
-   A missing face `γ : Γ_miss^k(∂)` is the same as a compatible lid:
-
-   ```text
-   γ  ≃  ℓ : A_k i1 [ φ_k ↦ u_k i1 ].
-   ```
-
-   The compatibility clauses in `Γ_miss^k(∂)` become the `Sub` boundary condition at `i1`.
-
-4. Identify fillers.
-
-   A filler of the horn after choosing `γ` is the same as a dependent path through compatible elements:
-
-   ```text
-   Fill_∂^k(γ)
-      ≃ PathP (λ t → A_k t [ φ_k ↦ u_k t ]) u0_k ℓ_γ.
-   ```
-
-5. Assemble by sigma associativity.
-
-   ```text
-   Σ γ, Fill_∂^k(γ)
-      ≃ Σ ℓ, PathP (λ t → A_k t [ φ_k ↦ u_k t ]) u0_k ℓ
-      = OpenExt(A_k, φ_k, u_k, u0_k).
-   ```
-
-6. Prove naturality.
-
-   Cubical substitution acts structurally on `A_k`, `φ_k`, `u_k`, and `u0_k`. The equivalence above is built from projections, reindexing, sigma associativity, and `Sub`/`Partial` compatibility, so it commutes with substitution propositionally. The proof should produce a named lemma, not an informal remark:
-
-   ```agda
-   missingFaceOpenExtEquiv-subst :
-     (σ : Δ ⇒ Γ) →
-     substEquiv σ (missingFaceOpenExtEquiv h)
-   ```
-
-## I.5. Proof draft: canonical center by cubical filling
-
-### Statement
+where:
 
 ```text
-Lemma. Every explicit structural open box has a canonical element of OpenExt.
+OpenExt(ob) := Sigma lid, Filler(ob, lid)
 ```
 
-Agda-oriented pseudocode:
+### Proof method
 
-```agda
-openExtCenter : (ob : StructuralOpenBox ℓ) → OpenExt ob
-openExtCenter ob =
-  let B : I → Type ℓ
-      B t = BoundaryFamily ob t
+Use induction on the structural horn grammar.
 
-      p : (t : I) → B t
-      p t = canonicalFillSub ob t
-  in
-      (p i1 , p)
-```
+For each constructor:
 
-Here `canonicalFillSub` should be constructed from the cubical composition/filling operation.
+- identify `A`;
+- compute `phi`;
+- define `u`;
+- prove side compatibility;
+- identify the missing face;
+- identify the lid;
+- show the original filler obligation is equivalent to `PathP` through the boundary-compatible subtype;
+- prove substitution stability.
 
-For heterogeneous families use `comp`/`fill`:
+### What not to claim
 
-```agda
-canonicalFill : (ob : StructuralOpenBox ℓ) → (t : I) → A ob t
-canonicalFill ob t =
-  fill (A ob) (side ob) (base ob) t
-```
-
-For homogeneous families use `hcomp`/`hfill` as a specialization.
-
-The `Sub` proof that `canonicalFill ob t` agrees with `side ob t` is supplied by the boundary computation rules of `fill`/`hfill`. If the current Cubical Agda API does not expose this in exactly the desired form, introduce a wrapper lemma:
-
-```agda
-canonicalFillSub :
-  (ob : StructuralOpenBox ℓ) →
-  (t : I) →
-  A ob t [ φ ob ↦ side ob t ]
-```
-
-The wrapper is the right place to handle any library-specific `inS`/`outS` details.
-
-## I.6. Proof draft: contractibility of the open-box extension type
-
-### Statement
+Do not say:
 
 ```text
-Theorem. For every explicit structural open box ob,
-
-    isContr (OpenExt ob).
+fixed missing face -> filler
 ```
 
-### Proof draft
+is contractible in general.
 
-Let
+Say:
 
 ```text
-B(t) := A(t) [ φ ↦ u(t) ].
+Sigma (compatible missing face), filler
 ```
 
-Then
+is contractible as a dependent path singleton.
+
+### Acceptance criteria
+
+- The theorem statement contains the open-box data explicitly.
+- The proof has one case per structural horn constructor.
+- The proof exposes where the total-space singleton arises.
+- Fixed-lid filler spaces are never accidentally claimed to be contractible.
+
+## Workstream 5: Open-box total-space contractibility
+
+### Problem
+
+The current mechanized `OpenBox` appears too thin: an empty record with a `Lid` essentially given by `A i1`, and `Filler` as `outS u0 == lid`. This captures the total-space shape but not explicit boundary geometry.
+
+### Required paper theorem
+
+Define an explicit open-box record in the paper:
 
 ```text
-OpenExt(ob) = Σ (ℓ : B(i1)), PathP B u0 ℓ.
-```
-
-This is a dependent path singleton: the total space of endpoints reachable by a dependent path from a fixed base. The canonical center is the path produced by cubical filling:
-
-```text
-p₀ : (t : I) → B(t)
-p₀ := canonicalFillSub(ob)
-
-center := (p₀(i1), p₀).
-```
-
-For an arbitrary element
-
-```text
-x = (ℓ, p) : Σ (ℓ : B(i1)), PathP B u0 ℓ,
-```
-
-construct a path from `center` to `x` by the standard contractibility of dependent singletons. In the implementation, make this a reusable lemma:
-
-```agda
-isContrPathPSingleton :
-  {B : I → Type ℓ} →
-  (p₀ : (t : I) → B t) →
-  isContr (Σ[ b₁ ∈ B i1 ] PathP B (p₀ i0) b₁)
-```
-
-Then instantiate it with `B = BoundaryFamily ob` and `p₀ = canonicalFillSub ob`.
-
-If the library does not already provide `isContrPathPSingleton`, prove it once using cubical path induction or one additional cubical dimension. The key point is that the theorem contracts the **total extension space** `Σ lid, filler`; it does not assert that `Filler ob fixedLid` is contractible for a separately fixed lid.
-
-### Why this is not a closed-boundary theorem
-
-A fixed-lid filler type
-
-```text
-Filler ob fixedLid
-```
-
-may contain genuine higher homotopical information. The theorem is instead about
-
-```text
-Σ fixedLid, Filler ob fixedLid.
-```
-
-This distinction should be stated explicitly in the paper near the theorem statement.
-
-## I.7. Proof draft: substitution stability
-
-### Statement
-
-```text
-Theorem. For any cubical substitution σ : Δ → Γ,
-
-    OpenExtΓ(A, φ, u, u0)[σ]
-      ≃ OpenExtΔ(A[σ], φ[σ], u[σ], u0[σ]),
-
-and the equivalence maps the canonical center to the canonical center.
-```
-
-### Proof draft
-
-1. Reindex the open-box record fieldwise:
-
-   ```text
-   A      ↦ A[σ]
-   φ      ↦ φ[σ]
-   u      ↦ u[σ]
-   u0     ↦ u0[σ]
-   ```
-
-2. Show `BoundaryFamily` commutes with reindexing:
-
-   ```text
-   (A t [ φ ↦ u t ])[σ]
-      ≃ A[σ] t [ φ[σ] ↦ u[σ] t ].
-   ```
-
-3. Lift this equivalence to lids and fillers.
-
-4. Prove center preservation:
-
-   ```text
-   canonicalFillSub(ob)[σ]
-      = canonicalFillSub(ob[σ])
-   ```
-
-   This follows from the substitution/naturality computation laws for cubical composition and filling. If Cubical Agda exposes this propositionally rather than definitionally, record it as a theorem.
-
-## I.8. Artifact/module changes
-
-Suggested module structure:
-
-```text
-CubicalOpenBox/
-  FaceSystem.agda          -- optional explicit finite faces and overlap laws
-  Explicit.agda            -- StructuralOpenBox, Lid, Filler, OpenExt
-  Center.agda              -- canonicalFillSub and openExtCenter
-  Contractible.agda        -- isContrPathPSingleton and openExtIsContr
-  MissingFaceEquiv.agda    -- H_k(∂) ≃ OpenExt(A_k, φ_k, u_k, u0_k)
-  Substitution.agda        -- reindexing and center stability
-```
-
-Quality gates:
-
-- `StructuralOpenBox` must not be an empty record.
-- `OpenExt` must contain `Partial`/`Sub` data or explicit side/agreement equations.
-- `openExtIsContr` must not be a postulate.
-- The theorem must contract `Σ lid, filler`, not arbitrary fixed-lid fillers and not arbitrary closed-boundary filler spaces.
-- There should be a negative test or explicit non-theorem comment preventing accidental use of the result for closed boundaries.
-
-## I.9. Paper wording if the implementation is not completed
-
-If the explicit object and theorem above are not fully mechanized, revise the paper's claim from:
-
-```text
-Theorem. Actual structural horn-extension contractibility.
-```
-
-to:
-
-```text
-Assumption / adequacy hypothesis. Structural horn-extension contractibility.
-```
-
-Recommended wording:
-
-> The present formalization uses an abstract open-box interface. The depth-two theorem is therefore conditional on an adequacy package providing explicit partial boundaries, compatible lids, fillers, and a contractibility theorem for the associated total open-box extension spaces. We do not claim here to have mechanized the full `Partial`/`Sub`-indexed cubical theorem.
-
-This would make the paper honest even before the strengthened formalization is complete.
-
----
-
-# Part II. Make derivedness a theorem rather than a tag
-
-## II.1. Problem to fix
-
-The paper wants to say:
-
-```text
-A higher structural trace field is derived because cubical operations compute it from lower boundary data.
-```
-
-That is stronger than:
-
-```text
-The raw grammar labels higher structural fields as derived.
-```
-
-The formalization should therefore change the direction of explanation. Raw syntax may classify a clause as a horn-shaped structural clause, but it should not classify it as derived. Derivedness should be an output of a derivation theorem.
-
-## II.2. Revised architecture
-
-Use three layers.
-
-### Layer 1: raw structural role
-
-Raw syntax records what kind of structural obligation is present:
-
-```agda
-data TraceRole : Set where
-  action      : TraceRole
-  comparison  : TraceRole
-  horn        : TraceRole
-```
-
-A raw field may have a role and arity, but not an unverified primitive/derived tag:
-
-```agda
-record RawTraceField : Set where
-  field
-    role      : TraceRole
-    arity     : Nat
-    support   : Support arity
-    fieldTy   : TypeExpr
-    witness   : Maybe TermExpr
-```
-
-A user-authored higher operation should not be placed in `RawTraceField` merely because it is high-dimensional. It belongs in the payload telescope unless the sealing grammar generated it as structural trace.
-
-### Layer 2: derivation witness
-
-Derivedness is represented by an explicit derivation object.
-
-```agda
-record DerivedTrace
-  (Γlower : NormalizedTraceSignature)
-  (f      : RawTraceField)
-  : Set where
-  field
-    boundary      : LowerBoundary Γlower f
-    term          : CubicalTerm Γlower (fieldTy f)
-    usesOnlyLower : UsesOnly term (exports Γlower ++ kanPrimitives)
-    sound         : InterpretsAs term f
-```
-
-The `term` is the replacement term. The `sound` field proves it has the right semantic interpretation and satisfies the side equations required by the original field.
-
-### Layer 3: normalized public status
-
-Primitive/derived status is computed during normalization:
-
-```agda
-data PublicStatus Γ f : Set where
-  primitive : Irreducible Γ f → PublicStatus Γ f
-  derived   : DerivedTrace Γ f → PublicStatus Γ f
-```
-
-A normalized signature may cache `PublicStatus`, but only after constructing either an irreducibility proof or a derivation. There should be no raw `derived : Bool` or `derived` constructor that bypasses this proof.
-
-## II.3. Horn semantic derivation object
-
-For higher structural horns, use a specialized derivation record that exposes the cubical computation.
-
-```agda
-record HornSemanticDerivation
-  (Γlower : NormalizedTraceSignature)
-  (f      : RawTraceField)
-  : Set where
-  field
-    k          : Nat
-    k≥3        : 3 ≤ k
-    structural : IsStructuralHorn f
-
-    -- The lower public boundary from which the horn is generated.
-    boundary   : StructuralBoundary Γlower f
-
-    -- The explicit open box constructed from that boundary.
-    openBox    : StructuralOpenBox ℓ
-
-    -- The intuitive horn package and the explicit open-box extension are equivalent.
-    packageEquiv : HornPackage boundary ≃ OpenExt openBox
-
-    -- The field type is decoded from the horn package/open extension.
-    decode     : OpenExt openBox → InterpretationOf f
-
-    -- The replacement term is the decoded canonical center.
-    replacement : CubicalTerm Γlower (fieldTy f)
-
-    replacement-def :
-      replacement ≡ quoteTerm (decode (openExtCenter openBox))
-
-    -- The replacement term satisfies the original field specification.
-    sound      : InterpretsAs replacement f
-
-    -- The replacement term only uses lower trace plus cubical Kan operations.
-    support-ok : UsesOnly replacement (exports Γlower ++ kanPrimitives)
+record StructuralOpenBox where
+  A        : I -> Type
+  phi      : Cofibration
+  u        : (t : I) -> Partial phi (A t)
+  u0       : A i0 [ phi |-> u i0 ]
+  lidType  : Type
+  lidOk    : lidType -> BoundaryCompatibility
+  filler   : (lid : lidType) -> lidOk lid -> Type
 ```
 
 Then define:
 
-```agda
-hornDerivedTrace :
-  HornSemanticDerivation Γlower f → DerivedTrace Γlower f
+```text
+OpenExt(ob) := Sigma lid, Sigma lidOk, Filler(ob, lid, lidOk)
 ```
 
-## II.4. The cubical elaboration theorem
-
-### Statement
+or the equivalent subtype formulation:
 
 ```text
-Theorem. Let f be a raw trace field generated by the structural horn grammar, with arity k ≥ 3. If the lower boundary required by f is present in the normalized lower public signature Γlower, then there exists a HornSemanticDerivation Γlower f.
+OpenExt(ob) :=
+  Sigma (lid : A i1 [ phi |-> u i1 ]),
+    PathP BoundaryFamily base lid
 ```
 
-Agda-oriented name:
+### Required proof distinction
 
-```agda
-structuralHornElaboration :
-  (Γlower : NormalizedTraceSignature) →
-  (f : RawTraceField) →
-  IsStructuralHorn f →
-  3 ≤ arity f →
-  BoundaryAvailable Γlower f →
-  HornSemanticDerivation Γlower f
-```
+State both facts explicitly:
 
-### Proof draft
-
-Proceed by induction on the derivation that `f` is generated by the structural horn grammar.
-
-#### Case 1: remote comparison horn
-
-1. Extract the lower boundary.
-
-   The lower boundary contains the unary action traces and binary comparison traces needed to describe every visible side of the horn.
-
-2. Build the cubical family.
-
-   Define `A_k : I → Type` as the family in which the remote comparison cell lives. If the comparison type varies along earlier transports, define `A_k` heterogeneously and use `transp`/`comp` rather than pretending the situation is homogeneous.
-
-3. Build the visible-face cofibration.
-
-   Define `φ_k` as the disjunction of the visible side faces. If using `FaceSystem`, compile it to a `Partial` boundary.
-
-4. Build the side boundary.
-
-   Define
+1. Total extension contractibility:
 
    ```text
-   u_k : (t : I) → Partial φ_k (A_k t)
+   isContr(OpenExt(ob))
    ```
 
-   from the lower unary and binary traces. Side overlaps are exactly the naturality, transport, and comparison equations already present in `Γlower`.
+   because it is a dependent path singleton.
 
-5. Build the compatible base face.
-
-   Define
+2. Fixed lid non-contractibility warning:
 
    ```text
-   u0_k : A_k i0 [ φ_k ↦ u_k i0 ].
+   Filler(ob, fixedLid)
    ```
 
-6. Form the explicit open box.
+   is not generally contractible and may even be empty when the lid is incompatible.
+
+### Acceptance criteria
+
+- The distinction is in definitions, not only in prose.
+- The proof of the main theorem uses total extension contractibility only after the lid is included in the total space.
+- Examples and explanations avoid suggesting arbitrary boundary fillers are unique.
+
+## Workstream 6: Derivedness as constructed witness
+
+### Problem
+
+The paper says "derivedness is a theorem, not a tag," but the definitions still risk treating derivedness as a status assigned by the grammar.
+
+### Required architecture
+
+1. Define raw trace fields without primitive/derived status.
+
+2. Define a witness:
 
    ```text
-   ob_k := (A_k, φ_k, u_k, u0_k).
+   DerivedTrace(field) :=
+     Sigma lowerBoundaryData,
+     Sigma replacementTerm,
+     Sigma typingProof,
+     Sigma semanticProof,
+       UsesOnlyAllowedLowerData(replacementTerm)
    ```
 
-7. Compute the canonical center.
+3. Define primitive status negatively or canonically:
 
    ```text
-   c_k := openExtCenter ob_k.
+   Primitive(field) :=
+     no admissible DerivedTrace(field) in the fixed normalization relation
    ```
 
-   Internally this uses:
+   or by canonical minimal presentation after replacement has been proved.
 
-   - `transp` to align dependent endpoints;
-   - `comp`/`hcomp` to compute the missing lid/remote face;
-   - `fill`/`hfill` to package the filler.
+4. Define `mu` only after replacement and primitive status are defined.
 
-8. Decode the center into the field type.
+### Replacement theorem
 
-   If the public field is only the remote comparison face, decode the first component of the center. If the public field is the whole horn package, decode the full center.
-
-9. Prove soundness.
-
-   The side equations follow from the `Sub` boundary condition of `OpenExt`. Endpoint equations follow from the `PathP` filler. Transport equations follow from the construction of `A_k` and the `transp` laws.
-
-#### Case 2: degenerate horn
-
-A degenerate structural horn should elaborate to reflexivity, transport along a known equality, or a lower-dimensional comparison already present in `Γlower`. The derivation is still a theorem, but it does not need a nontrivial `hcomp`.
-
-Proof obligations:
+Add or strengthen the theorem:
 
 ```text
-replacement term uses only lower boundary;
-replacement term satisfies the field type;
-replacement is stable under substitution.
+Replacement(H) :
+  DerivedTrace(field(H)) ->
+  PubSig(X) equivalent to PubSig(X without field(H), replacementTerm(H))
 ```
 
-#### Case 3: transported horn
+This theorem must show:
 
-If the horn is obtained by transporting a previously generated horn along a public equality:
+- the replacement term has the same type;
+- the replacement preserves semantics;
+- the replacement uses only lower boundary data plus allowed cubical operations;
+- the normalized public signature is preserved;
+- the field does not count as primitive in `mu`.
 
-1. Use the induction hypothesis to derive the previous horn.
-2. Apply `transp` to move the replacement term into the transported target type.
-3. Prove side compatibility by the transport computation rules.
+### Acceptance criteria
 
-#### Case 4: substitution/reindexing
+- No raw grammar constructor takes "derived" as unverified input.
+- Theorem 5.16, or its revised version, constructs `DerivedTrace` for every structural trace field of arity at least 3.
+- The `mu`-minimal signature theorem depends on constructed witnesses, not tags.
 
-Use the substitution-stability theorem from Part I:
+## Workstream 7: Lower bound repair
+
+### Problem
+
+The boolean-swap obstruction is strong, but the lower-bound theorem should be stated as a formal separation between unary and binary obligations.
+
+### Required theorem shape
+
+Use one of these formulations.
+
+Formulation A:
 
 ```text
-OpenExt(ob)[σ] ≃ OpenExt(ob[σ])
+There exists X such that Real_1(X) is inhabited, but Real_2(X) is empty
+or not equivalent to Real_1(X).
 ```
 
-and center preservation:
+Formulation B:
 
 ```text
-openExtCenter(ob)[σ] = openExtCenter(ob[σ]).
+There exists a raw objectwise action accepted by the unary fragment whose
+sealing fails in the binary fragment.
 ```
 
-This gives substitution-stable derivedness.
-
-## II.5. Replacement theorem for normalized signatures
-
-### Statement
+Then prove:
 
 ```text
-Theorem. If a trace field f has a DerivedTrace witness from Γlower, then adding f as a primitive field is presentation-equivalent to omitting f and substituting its derived replacement term.
+d_obl >= 2
 ```
 
-Agda-oriented name:
+### Boolean-swap details to make explicit
 
-```agda
-replaceDerivedField :
-  (Γlower : NormalizedTraceSignature) →
-  (f : RawTraceField) →
-  DerivedTrace Γlower f →
-  PresentationEquiv
-    (extendPrimitive Γlower f)
-    (extendDerived Γlower f (DerivedTrace.term d))
-```
+State the precise calculation:
 
-### Proof draft
+- The interface is the univalent two-point interface.
+- Transport in the endomorphism family along `ua(swap)` conjugates an endomap by `swap`.
+- The identity endomap is fixed by conjugation.
+- The constant-left endomap is transported to constant-right.
+- Therefore the naturality equation for constant-left along the swap path is uninhabited.
 
-Given `d : DerivedTrace Γlower f`, define maps between the two presentations.
+### Wording to avoid
 
-#### Forward map: forget the primitive field
+Avoid language that makes the failing binary candidate sound like an admissible sealed extension. It is a unary-accepted candidate that fails binary sealing.
+
+### Acceptance criteria
+
+- The lower-bound theorem has a direct implication to `d_obl >= 2`.
+- The proof separates objectwise well-formedness from binary naturality/sealing.
+- The identity and constant-left examples are stated with the conjugation calculation.
+
+## Workstream 8: Mechanization alignment
+
+### Problem
+
+The artifact currently appears to support an abstract total-space singleton model more than the full paper theorem. That can be acceptable if stated honestly, but it cannot be presented as a complete mechanization of explicit cubical boundary geometry unless the artifact is upgraded.
+
+### Artifact upgrade path
+
+Upgrade the Agda development with:
+
+1. **Explicit open boxes.**
+   Add a record with:
+   - `A : I -> Type`;
+   - `phi`;
+   - partial boundary `u`;
+   - compatible base face `u0`;
+   - compatible lid subtype;
+   - `PathP` fillers through the compatible-subtype family;
+   - endpoint laws;
+   - side equations;
+   - substitution stability.
+
+2. **Total extension contractibility.**
+   Prove:
+
+   ```text
+   isContr (OpenExt ob)
+   ```
+
+   by identifying it as a dependent path singleton.
+
+3. **Structural horn decoding.**
+   For each sealing-generated higher structural horn, construct an explicit `StructuralOpenBox` and prove the obligation is equivalent to `OpenExt`.
+
+4. **Derived trace witnesses.**
+   Replace higher-horn derived tags with witness objects that carry:
+   - lower data;
+   - replacement term;
+   - typing proof;
+   - semantic proof;
+   - allowed-dependency proof.
+
+5. **Raw adequacy bridge.**
+   Clarify whether `RawAdequacyPackage` is:
+   - assumed interface;
+   - proved for a concrete grammar fragment;
+   - partially mechanized;
+   - paper-only.
+
+### Paper appendix update
+
+Create a theorem-to-artifact map with four statuses:
+
+- **Fully mechanized.**
+  The exact paper theorem is checked.
+
+- **Mechanized for an abstract interface.**
+  Agda checks an interface theorem, but the paper must separately justify the interface applies.
+
+- **Conditional on adequacy.**
+  The result follows once an adequacy package is supplied.
+
+- **Paper-only.**
+  The proof is in the text and not currently checked.
+
+### Acceptance criteria
+
+- The mechanization appendix no longer overstates artifact coverage.
+- A reader can see exactly which theorem depends on `RawAdequacyPackage`.
+- The README and theorem map use the same status vocabulary as the paper.
+
+## Workstream 9: Main theorem dependency cleanup
+
+### Problem
+
+The heart of the paper currently includes Lemma 5.11, Theorem 5.12, Lemma 5.15, Theorem 5.16, and Theorem 5.19. These are likely to draw referee scrutiny.
+
+### Required upgrades
+
+For each load-bearing result, provide:
+
+- exact statement with all parameters;
+- dependency list;
+- proof method;
+- artifact status;
+- role in the main theorem;
+- failure mode if the theorem were weakened.
+
+### Suggested dependency diagram
+
+Replace long prose "level audits" with a compact theorem dependency diagram:
 
 ```text
-Γlower, x : fieldTy(f), rest  →  Γlower, rest[x := d.term]
+Fixed grammar
+  -> structural horn induction
+  -> horn-to-open-box adequacy
+  -> total open-extension contractibility
+  -> DerivedTrace construction
+  -> replacement theorem
+  -> mu-minimal elimination
+  -> Real_k ~= Real_2
+
+Boolean swap obstruction
+  -> lower bound d_obl >= 2
 ```
 
-This map drops the explicit field `x` and evaluates all later references to `x` using the derived term.
+### Acceptance criteria
 
-#### Backward map: insert the computed term
+- The proof chain is linear and auditable.
+- No theorem uses its conclusion through a definition of "primitive" or "derived."
+- The final main theorem has both upper-bound and lower-bound dependencies clearly separated.
+
+## Workstream 10: Demote or split recurrence material
+
+### Problem
+
+Section 6 risks looking like the main contribution or like a broad empirical law, while it is a conditional accounting corollary under strong assumptions.
+
+### Options
+
+Option A: Keep a short counting section.
+
+- Rename it to "Counting consequences."
+- State assumptions in the theorem name and first sentence.
+- Keep only the essential recurrence theorem and one explanation.
+- Move sparse footprints, wrappers, robustness, and most examples to an appendix or supplement.
+
+Option B: Move recurrence to companion material.
+
+- Keep a short paragraph after the main theorem.
+- Say the recurrence is a conditional accounting consequence, not the proof core.
+- Put the detailed recurrence story in a note or artifact documentation.
+
+### Required theorem wording
+
+Use a title like:
 
 ```text
-Γlower, rest[x := d.term]  →  Γlower, x : fieldTy(f), rest
+Theorem (Primitive trace cost under factorization-complete export,
+full coupling, bundled per-site counting, and uniform payload).
 ```
 
-This map extends the context by `x := d.term`.
+The first sentence should repeat the assumptions before giving the recurrence.
 
-#### Round-trip proofs
+### Acceptance criteria
 
-The easy round trip is definitional: insert the computed term, then forget it.
+- Readers cannot mistake the Fibonacci endpoint for the main mathematical theorem.
+- The recurrence does not claim ordinary library growth follows a Fibonacci law.
+- The LMCS main paper becomes shorter and more focused.
 
-The other round trip uses `d.sound`. If the source presentation provided an explicit value `x`, use the contractibility of the corresponding open-box extension to identify `x` with the computed center. This is where exact realized-object contractibility supports public-presentation elimination, but it is not used to define the open-box theorem itself.
+## Workstream 11: Cut to LMCS length
 
-The proof should be phrased carefully:
+### Problem
 
-```text
-Exact object: explicit x may still exist as a point of a contractible horn factor.
-Public normal form: x is not exported as an irreducible primitive field.
-```
+The current draft is about 74 pages, while LMCS submissions generally should not exceed 50 pages unless the authors justify the length.
 
-## II.6. Higher structural fields become derived by theorem
+### Cutting plan
 
-### Statement
+1. **Introduction.**
+   Remove repeated scope disclaimers and keep the central contract once.
 
-```text
-Theorem. For every admissible raw extension e and every structural trace field f in its elaborated public trace telescope, if arity(f) ≥ 3, then there exists a DerivedTrace witness for f from the lower normalized public boundary.
-```
+2. **Sections 2-4.**
+   Compress definitions followed by "by definition" propositions.
+   Combine trivial presentation-equivalence lemmas.
+   Keep only definitions needed for the main theorem stack.
 
-Agda-oriented name:
+3. **Section 5.**
+   Expand the load-bearing proof detail even if other sections shrink.
+   This is the place where added pages are justified.
 
-```agda
-higherStructuralTraceDerived :
-  (e : RawExtension) →
-  Admissible e →
-  (f : RawTraceField) →
-  f ∈ elaboratedTrace e →
-  IsStructuralTrace f →
-  3 ≤ arity f →
-  Σ[ Γlower ∈ NormalizedTraceSignature ] DerivedTrace Γlower f
-```
+4. **Section 6.**
+   Move most recurrence/accounting content out of the main text.
 
-### Proof draft
+5. **Section 7 and Appendix A.**
+   Replace long prose audits with a theorem-to-artifact table.
+   Move artifact usage details to README or supplementary material.
 
-1. Use admissibility to show the required lower boundary is available.
+6. **Examples.**
+   Use one running example consistently instead of several partial examples.
 
-   The sealing grammar should guarantee that a generated higher structural field is posed over a lower public boundary, not over hidden derivations.
+### Page target
 
-2. Use `structuralHornElaboration` to construct a `HornSemanticDerivation`.
+- Main paper: 45-50 pages.
+- Supplement or artifact docs: detailed recurrence, long examples, extended mechanization guide.
 
-3. Convert `HornSemanticDerivation` to `DerivedTrace`.
+### Acceptance criteria
 
-4. Return the lower signature and the derivation.
+- Main PDF is within or near LMCS expectations.
+- Any remaining excess length is justified by formal proof detail, not repetition.
+- The central theorem stack is easier to follow after cutting.
 
-This theorem is the point where “derivedness” is established. It should be impossible to prove this theorem merely by inspecting a stored `derived` tag.
+## Workstream 12: LMCS style and presentation fixes
 
-## II.7. Normalization theorem
+### Required fixes
 
-### Statement
+1. **Introductory section first.**
+   Move `\tableofcontents` currently before the introduction to the end of the introduction, or remove it.
 
-```text
-Theorem. The canonical normalized public trace signature of an admissible extension contains no irreducible primitive structural trace field of arity ≥ 3.
-```
+2. **Abstract.**
+   Keep concise, plain-language, and near LMCS expectations. Reduce symbols.
 
-Agda-oriented name:
+3. **Class and environments.**
+   Use current `lmcs.cls` and LMCS theorem environments consistently.
 
-```agda
-normalizeEliminatesHigherStructuralTrace :
-  (e : RawExtension) →
-  Admissible e →
-  (f : RawTraceField) →
-  f ∈ primitiveFields (normalizeTrace e) →
-  IsStructuralTrace f →
-  arity f ≤ 2
-```
+4. **Author block.**
+   Add affiliation or suitable independent-researcher affiliation line.
+   Add ORCID via `\lmcsorcid{...}` if available.
 
-### Proof draft
+5. **Bibliography.**
+   Use BibTeX with `alphaurl` or equivalent.
+   Make formatting consistent.
+   Add DOIs where possible.
 
-1. Normalize the elaborated trace telescope in dependency order.
+6. **Artifact citation.**
+   Archive a release on Zenodo and cite the DOI.
+   Keep GitHub as the development repository, not the only archival artifact.
 
-2. When a field `f` is unary or binary, classify it as a primitive candidate unless another definitional or presentation-equivalence rule removes it.
+7. **Fonts and extraction.**
+   Remove Type 3 fonts.
+   Fix ligature extraction issues.
+   Verify text extraction for words like "fixed" and "affine."
 
-3. When a field `f` is structural and `arity(f) ≥ 3`, call `higherStructuralTraceDerived`.
+8. **Build hygiene.**
+   Fix overfull boxes.
+   Remove leftover comments.
+   Remove unsupported font packages.
+   Ensure links are stable.
 
-4. Apply `replaceDerivedField` to remove `f` from the primitive telescope and add its derived replacement to the substitution environment.
+### Acceptance criteria
 
-5. Termination follows because every derived replacement uses only lower boundary data. No replacement term may refer to the field being removed.
+- The PDF starts with the required introductory structure.
+- The abstract is journal-appropriate.
+- `pdffonts` shows no Type 3 fonts.
+- Text extraction is clean enough for search/accessibility.
+- The artifact citation includes a DOI.
 
-6. Since all trace telescopes are finite, iterating this procedure removes every higher structural primitive field.
+## Workstream 13: Repository deliverables
 
-7. Conclude that `μ` counts only payload plus irreducible unary/binary structural trace fields.
+### Paper deliverables
 
-## II.8. Exact-realization theorem after the change
-
-The revised exact stabilization theorem should be stated as a consequence of explicit open-box contractibility, not of normalized-signature deletion.
-
-Recommended structure:
-
-```text
-Lemma. The depth-k marginal structural obligation is an explicit OpenExt over Real_{k-1}(X).
-
-Lemma. Each such OpenExt is contractible.
-
-Theorem. Real_k(X) ≃ Real_{k-1}(X) for k ≥ 3.
-
-Corollary. Real_k(X) ≃ Real_2(X) for k ≥ 2.
-```
-
-Then state the public-signature theorem separately:
-
-```text
-Theorem. Every arity ≥ 3 structural trace field generated by the sealing grammar has a DerivedTrace witness; therefore it is removed from every μ-minimal public trace signature.
-```
-
-This prevents the common ambiguity between:
-
-```text
-contractible exact factor
-transparent derived public field
-eliminated μ-minimal field
-absent exact obligation
-```
-
-Only the third claim is about `μ`; the first claim is about `Real_k`.
-
----
-
-# Part III. Concrete artifact refactor
-
-## III.1. Replace tag-based raw syntax
-
-Current-risk pattern:
-
-```agda
-rawHorn : ... → DerivedTag → RawStructuralClause
-```
-
-Preferred pattern:
-
-```agda
-rawHorn : HornShape → RawStructuralClause
-```
-
-Then separately:
-
-```agda
-hornHasDerivation :
-  (h : HornShape) → BoundaryAvailable h → HornSemanticDerivation Γ h
-```
-
-A `grep` for `derived` should show it only in:
-
-- derivation records;
-- normalized public statuses that contain derivation witnesses;
-- theorem names about derivedness;
-- paper prose comments.
-
-It should not appear as an unverified constructor argument to raw horn syntax.
-
-## III.2. Suggested module map
-
-```text
-Metatheory/
-  RawStructuralSyntax.agda
-    - remove primitive/derived tag from raw fields
-    - keep role and arity
-
-  StructuralBoundary.agda
-    - define lower boundary data required by each structural horn
-    - prove boundary availability from admissibility
-
-  HornOpenBox.agda
-    - map structural horns to StructuralOpenBox
-    - prove H_k(∂) ≃ OpenExt
-
-  HornElaboration.agda
-    - define structuralHornElaboration
-    - construct replacement terms using comp/hcomp/transp/fill/hfill
-
-  DerivedTrace.agda
-    - define DerivedTrace and HornSemanticDerivation
-    - define hornDerivedTrace
-
-  ReplaceDerivedField.agda
-    - prove presentation equivalence for deleting derived fields
-
-  NormalizationDerived.agda
-    - define normalization that computes derivedness from derivations
-    - prove normalizeEliminatesHigherStructuralTrace
-
-CubicalOpenBox/
-  FaceSystem.agda
-  Explicit.agda
-  Center.agda
-  Contractible.agda
-  MissingFaceEquiv.agda
-  Substitution.agda
-
-Surface/Modal/
-  Adequacy.agda
-    - update SMod so explicit horn fields elaborate to derived terms
-      by calling HornElaboration, not by assigning a derived tag
-
-  Tests.agda
-    - explicit horn present: normalized μ unchanged because a derivation is produced
-    - explicit horn omitted: elaboration inserts same derived term
-    - fake higher payload: not eliminated as structural trace
-    - fake closed-boundary filler: not accepted as open-box contractibility
-```
-
-## III.3. Normalization algorithm sketch
-
-```agda
-normalizeTrace : RawTraceTelescope → NormalizedTraceSignature
-normalizeTrace [] = empty
-normalizeTrace (f ∷ fs) =
-  let Γ = normalizeTracePrefix fs in
-  case classifyStructural Γ f of λ where
-    (actionCase a) →
-       addPrimitive Γ f
-
-    (comparisonCase c) →
-       addPrimitive Γ f
-
-    (hornCase h k≥3 boundaryAvailable) →
-       let d = hornDerivedTrace
-                 (structuralHornElaboration Γ f h k≥3 boundaryAvailable)
-       in addDerived Γ f d
-
-    (nonStructuralHigher payloadEvidence) →
-       addPayloadOrRejectTrace Γ f payloadEvidence
-```
-
-Important: `hornCase` should require `IsStructuralHorn f`, not just `arity f ≥ 3`.
-
-## III.4. Negative tests
-
-Add tests that would fail if derivedness is merely a tag.
-
-### Test 1: fake higher structural field without horn derivation
-
-Create a high-arity trace-shaped field with no `StructuralBoundary` proof.
-
-Expected result:
-
-```text
-normalization does not classify it as derived;
-it is either rejected as inadmissible structural trace or treated as payload/content.
-```
-
-### Test 2: closed-boundary filler space
-
-Construct or describe a closed-boundary filler request and show that `openExtIsContr` cannot be applied because there is no free lid component.
-
-Expected result:
-
-```text
-no theorem proves isContr for arbitrary closed-boundary fillers.
-```
-
-### Test 3: explicit SMod horn
-
-Give SMod with an explicit higher horn field.
-
-Expected result:
-
-```text
-elaboration constructs HornSemanticDerivation;
-normalization removes the explicit field from primitive trace;
-μ equals the omitted-horn presentation.
-```
-
-### Test 4: omitted SMod horn
-
-Give SMod without the explicit higher horn field.
-
-Expected result:
-
-```text
-elaboration inserts the same derived term;
-normalized public trace signature is presentation-equivalent to Test 3.
-```
-
----
-
-# Part IV. Paper proof rewrites
-
-## IV.1. Rewrite the open-box theorem section
-
-Replace the theorem statement with explicit data:
-
-```text
-Theorem. Let Γ be a cubical context. Let
-
-    A  : Γ, t : I ⊢ Type_ℓ
-    φ  : face formula / cofibration
-    u  : (t : I) → Partial φ (A t)
-    u₀ : A i0 [ φ ↦ u i0 ]
-
-be a compatible structural open box. Define
-
-    OpenExt(A, φ, u, u₀)
-      := Σ (ℓ : A i1 [ φ ↦ u i1 ]),
-         PathP (λ t → A t [ φ ↦ u t ]) u₀ ℓ.
-
-Then OpenExt(A, φ, u, u₀) is contractible.
-```
-
-Add immediately after:
-
-```text
-This theorem is not a theorem about arbitrary fixed-lid fillers and not a theorem about closed boundaries. The lid is part of the total extension space.
-```
-
-## IV.2. Add a bridge lemma from structural horns to explicit open boxes
-
-The paper needs a lemma before invoking contractibility:
-
-```text
-Lemma. Every higher structural obligation generated by the sealing grammar determines an explicit structural open box (A_k, φ_k, u_k, u0_k), and its missing-face/filler package is canonically equivalent to OpenExt(A_k, φ_k, u_k, u0_k).
-```
-
-This lemma prevents the proof from silently assuming that all higher obligations have the right shape.
-
-## IV.3. Rewrite the derivedness section
-
-Replace tag-based wording with derivation-based wording.
-
-Avoid:
-
-```text
-Horn clauses are tagged derived.
-```
-
-Use:
-
-```text
-A horn clause is classified as derived only when the derivability relation constructs a HornSemanticDerivation for it. This derivation builds the structural open box from the lower public boundary, computes the canonical extension by cubical Kan operations, decodes it into the field's type, and proves replacement soundness.
-```
-
-## IV.4. Revised theorem statement for minimal-signature elimination
-
-Recommended theorem:
-
-```text
-Theorem. Let e be an admissible raw extension. For every structural trace field f in the elaborated trace telescope of e, if arity(f) ≥ 3, then there exists a DerivedTrace witness for f from lower public boundary data. Therefore e is presentation-equivalent to a declaration whose normalized primitive public trace telescope contains no structural trace field of arity ≥ 3.
-```
-
-Recommended proof outline:
-
-1. Fix `f`.
-2. Use admissibility and raw completeness to show `f` is generated by the structural horn grammar.
-3. Apply `structuralHornElaboration` to construct `HornSemanticDerivation`.
-4. Convert it to `DerivedTrace`.
-5. Apply `replaceDerivedField`.
-6. Iterate over the finite telescope.
-7. Conclude the `μ` statement.
-
-## IV.5. Add a scope warning
-
-Add near the main theorem:
-
-```text
-The theorem does not say that every higher-dimensional datum in a cubical program is eliminable. A user-authored higher operation, HIT constructor, coherence axiom, or closed-boundary filler is payload or extra structure unless the sealing adequacy theorem identifies it as a generated structural horn over lower public trace.
-```
-
----
-
-# Part V. Acceptance checklist
-
-The strengthened paper/artifact should satisfy the following checklist.
-
-## Open-box checklist
-
-- [ ] `StructuralOpenBox` contains `A`, `φ`, `side`, and `base`.
-- [ ] `Lid` is a compatible subtype at `i1`, not just an arbitrary element.
-- [ ] `Filler` is a path through compatible elements or otherwise contains explicit side/agreement laws.
-- [ ] `OpenExt = Σ lid, Filler lid`.
-- [ ] `openExtCenter` is built using cubical composition/filling.
-- [ ] `openExtIsContr` is proved, not postulated.
-- [ ] The proof explicitly distinguishes total open-box extensions from fixed-lid or closed-boundary filler spaces.
-- [ ] Substitution stability is a named theorem.
-- [ ] The paper states the theorem conditionally if these items are not implemented.
-
-## Derivedness checklist
-
-- [ ] Raw syntax has no unverified primitive/derived tag for horn clauses.
-- [ ] `DerivedTrace` contains an actual replacement term.
-- [ ] `HornSemanticDerivation` constructs an explicit open box from lower boundary data.
-- [ ] The replacement term is obtained from `openExtCenter` and decoded into the field type.
-- [ ] The replacement term uses only lower public fields plus cubical Kan operations.
-- [ ] Replacement soundness is proved.
-- [ ] Deleting a derived field is justified by a presentation-equivalence theorem.
-- [ ] Normalization eliminates higher structural primitive fields by calling the derivation theorem.
-- [ ] User-authored higher payload data is not eliminated by this theorem.
-
-## Paper-claim checklist
-
-- [ ] Exact `Real_k` stabilization is proved using contractible open-box factors.
-- [ ] Minimal-public-signature elimination is proved using `DerivedTrace` and replacement.
-- [ ] The paper never conflates “contractible exact factor,” “derived field,” “eliminated from μ-minimal signature,” and “absent obligation.”
-- [ ] Any remaining abstraction is labeled as an adequacy assumption rather than an actual mechanized cubical theorem.
-
----
-
-# Part VI. Compact dependency graph
-
-```text
-FaceSystem / Partial boundary
-        ↓
-StructuralOpenBox(A, φ, side, base)
-        ↓
-OpenExt = Σ lid, PathP through compatible sub-elements
-        ↓
-openExtCenter by comp/hcomp/transp/fill/hfill
-        ↓
-openExtIsContr
-        ↓
-H_k(∂) ≃ OpenExt for generated structural horns
-        ↓
-HornSemanticDerivation for arity ≥ 3 structural trace
-        ↓
-DerivedTrace replacement term
-        ↓
-replaceDerivedField presentation equivalence
-        ↓
-normalizeEliminatesHigherStructuralTrace
-        ↓
-μ-minimal signatures have primitive structural trace depth ≤ 2
-```
-
----
-
-# Part VII. Minimal theorem/proof drafts to insert into the paper
-
-## Draft theorem A: explicit open-box extension contractibility
-
-```text
-Theorem A. Let A : Γ, t : I ⊢ Type_ℓ, let φ be a visible-face cofibration, let
-u : (t : I) → Partial φ (A t), and let u₀ : A i0 [ φ ↦ u i0 ]. Define
-
-    OpenExt(A, φ, u, u₀)
-      := Σ (ℓ : A i1 [ φ ↦ u i1 ]),
-         PathP (λ t → A t [ φ ↦ u t ]) u₀ ℓ.
-
-Then OpenExt(A, φ, u, u₀) is contractible, naturally in Γ.
-```
-
-Proof draft:
-
-```text
-Let B(t) := A(t) [ φ ↦ u(t) ]. Cubical filling gives a section
-p₀ : (t : I) → B(t) with p₀(i0) = u₀. Define the center as
-(p₀(i1), p₀). For any other (ℓ, p), the standard dependent-singleton
-contraction for Σ(ℓ : B(i1)), PathP B u₀ ℓ gives a path from the center
-to (ℓ, p). Naturality follows because reindexing commutes with Partial,
-Sub, and cubical composition/filling.
-```
-
-## Draft lemma B: generated structural horns are explicit open boxes
-
-```text
-Lemma B. Every arity-k structural integration horn generated by the sealing grammar,
-k ≥ 3, determines data (A_k, φ_k, u_k, u0_k) as in Theorem A, and the generated
-missing-face/filler package H_k(∂) is canonically equivalent to
-OpenExt(A_k, φ_k, u_k, u0_k).
-```
-
-Proof draft:
-
-```text
-The visible faces are exactly the unary action traces, binary comparison traces,
-and degenerate/transport faces available from the lower public boundary. Their
-overlap equations are the compatibility equations of the lower trace. Compile
-these faces into u_k : (t : I) → Partial φ_k (A_k t). The omitted remote face is
-a compatible lid at t = i1. A filler of the original horn is a dependent path
-through the compatible sub-elements. This identifies H_k(∂) with the displayed
-OpenExt by sigma reassociation. All constructions commute with substitution.
-```
-
-## Draft theorem C: exact stabilization
-
-```text
-Theorem C. For every candidate X in the fixed calculus and every k ≥ 3,
-Real_k(X) ≃ Real_{k-1}(X). Hence Real_k(X) ≃ Real_2(X) for k ≥ 2.
-```
-
-Proof draft:
-
-```text
-By Lemma B, the marginal depth-k structural data over any boundary ∂ : Real_{k-1}(X)
-is an explicit OpenExt(A_k, φ_k, u_k, u0_k). By Theorem A, this fiber is contractible.
-Therefore Real_k(X) is a dependent sum over Real_{k-1}(X) with contractible fibers,
-hence equivalent to Real_{k-1}(X). Iterate.
-```
-
-## Draft theorem D: derivedness-as-theorem
-
-```text
-Theorem D. Let f be an arity-k structural trace field, k ≥ 3, generated by the sealing
-grammar over a normalized lower public boundary Γlower. Then there exists a
-DerivedTrace Γlower f.
-```
-
-Proof draft:
-
-```text
-Use Lemma B to construct the explicit open box associated to f. Use Theorem A's
-canonical center to obtain a lid and filler computed from the lower boundary. Decode
-that center into the type of f. The decoded term is built only from lower public trace
-and cubical Kan operations: transports align the dependent endpoints, composition
-computes the lid/remote comparison, and filling supplies the higher cell. The side and
-endpoint equations are inherited from the Sub/PathP definition of OpenExt. This gives
-the replacement term and its soundness proof, i.e. a DerivedTrace witness.
-```
-
-## Draft theorem E: minimal-signature elimination
-
-```text
-Theorem E. Let e be an admissible raw extension. Then e is presentation-equivalent to
-a declaration whose normalized primitive public trace signature contains no structural
-trace field of arity ≥ 3.
-```
-
-Proof draft:
-
-```text
-Normalize the elaborated trace telescope in dependency order. For every higher structural
-field f, apply Theorem D to obtain a DerivedTrace witness. The replacement theorem for
-derived fields deletes f from the primitive telescope and substitutes the computed term.
-The replacement term uses only lower public data, so the process terminates over the finite
-trace telescope. Unary and binary fields may remain as primitive candidates. User-authored
-higher payload is outside the theorem. Therefore every μ-minimal normalized public trace
-signature has primitive structural trace depth at most two.
-```
-
----
-
-# Part VIII. References for implementation choices
-
-The implementation should be checked against the current Cubical Agda API. The relevant primitives are `I`, path types, `transp`, `Partial`, `hcomp`, and the `Sub` interface; `hfill`/`fill` are standard derived filling operations built from `hcomp`/`comp` in the Cubical Agda core/library interface.
-
-Useful references:
-
-- Agda documentation, Cubical language reference: https://agda.readthedocs.io/en/latest/language/cubical.html
-- Agda built-in cubical primitives / `HCompU` helper definitions: https://agda.github.io/cubical/Agda.Builtin.Cubical.HCompU.html
+- Revised `paper/1_coherence_depth_draft.tex`.
+- Revised section files if the draft continues to use split sources.
+- Updated bibliography.
+- Shorter main PDF.
+- Optional supplementary note for recurrence/accounting.
+
+### Artifact deliverables
+
+- Explicit open-box Agda modules.
+- Total extension contractibility proof.
+- Structural horn decoding modules.
+- Derived trace witness modules.
+- Updated theorem map.
+- Updated README with exact verification commands and status vocabulary.
+
+### Review deliverables
+
+- A theorem dependency diagram.
+- A theorem-to-artifact status table.
+- A page-budget table showing cuts.
+- A submission checklist matching LMCS requirements.
+
+## Suggested revision sequence
+
+1. Reframe abstract, introduction, and theorem claims.
+2. Define `Real_k(X)` and the restriction maps.
+3. Formalize the structural horn grammar.
+4. Prove horn-to-open-box adequacy in the paper.
+5. Prove total open-extension contractibility with the total-space/fixed-lid distinction.
+6. Redesign derivedness around `DerivedTrace` witnesses.
+7. Repair the lower-bound theorem statement.
+8. Update the mechanization or downgrade mechanization claims.
+9. Demote recurrence material.
+10. Cut the paper to LMCS length.
+11. Fix LMCS formatting, fonts, artifact DOI, and bibliography.
+12. Rebuild, run artifact checks, and do a final theorem-claim audit.
+
+## Final readiness test
+
+Before submission, the answer to each question should be "yes."
+
+- Can a referee locate the exact definition of `Real_k(X)`?
+- Is the structural horn grammar precise enough for induction?
+- Does horn-to-open-box adequacy identify `A`, `phi`, `u`, `u0`, lids, and fillers?
+- Is total extension contractibility separated from fixed-lid filler uniqueness?
+- Is derivedness witnessed by constructed replacement terms?
+- Is `mu` defined only after primitive/derived status has been justified?
+- Does the lower bound formally imply `d_obl >= 2`?
+- Does the mechanization appendix honestly classify every theorem?
+- Is the recurrence section visibly optional and conditional?
+- Is the paper within or near LMCS length?
+- Does the PDF satisfy LMCS style, font, abstract, author, bibliography, and artifact requirements?

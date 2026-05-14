@@ -1,0 +1,168 @@
+\newcommand{\etalchar}[1]{$^{#1}$}
+\begin{thebibliography}{CCHM18}
+
+\bibitem[ABC{\etalchar{+}}21]{cartesian-cubical}
+Carlo Angiuli, Guillaume Brunerie, Thierry Coquand, Robert Harper,
+  Kuen-Bang~Hou (Favonia), and Daniel~R. Licata.
+\newblock Syntax and models of cartesian cubical type theory.
+\newblock {\em Mathematical Structures in Computer Science}, 31(4):424--468,
+  2021.
+\newblock \href {https://doi.org/10.1017/S0960129521000347}
+  {\path{doi:10.1017/S0960129521000347}}.
+
+\bibitem[ACK16]{altenkirch-strict}
+Thorsten Altenkirch, Paolo Capriotti, and Nicolai Kraus.
+\newblock Extending homotopy type theory with strict equality.
+\newblock In {\em 25th EACSL Annual Conference on Computer Science Logic (CSL
+  2016)}, volume~62 of {\em Leibniz International Proceedings in Informatics
+  (LIPIcs)}, pages 21:1--21:17. Schloss Dagstuhl -- Leibniz-Zentrum f{\"u}r
+  Informatik, 2016.
+\newblock URL:
+  \url{https://drops.dagstuhl.de/entities/document/10.4230/LIPIcs.CSL.2016.21},
+  \href {https://doi.org/10.4230/LIPIcs.CSL.2016.21}
+  {\path{doi:10.4230/LIPIcs.CSL.2016.21}}.
+
+\bibitem[ACKS23]{annenkov-2ltt}
+Danil Annenkov, Paolo Capriotti, Nicolai Kraus, and Christian Sattler.
+\newblock Two-level type theory and applications.
+\newblock {\em Mathematical Structures in Computer Science}, 33(7):688--743,
+  2023.
+\newblock \href {https://doi.org/10.1017/S0960129523000130}
+  {\path{doi:10.1017/S0960129523000130}}.
+
+\bibitem[CCHM18]{cubical}
+Cyril Cohen, Thierry Coquand, Simon Huber, and Anders M{\"o}rtberg.
+\newblock Cubical type theory: a constructive interpretation of the univalence
+  axiom.
+\newblock In {\em 21st International Conference on Types for Proofs and
+  Programs (TYPES 2015)}, volume~69 of {\em Leibniz International Proceedings
+  in Informatics (LIPIcs)}, pages 5:1--5:34. Schloss Dagstuhl --
+  Leibniz-Zentrum f{\"u}r Informatik, 2018.
+\newblock URL:
+  \url{https://drops.dagstuhl.de/entities/document/10.4230/LIPIcs.TYPES.2015.5},
+  \href {https://doi.org/10.4230/LIPIcs.TYPES.2015.5}
+  {\path{doi:10.4230/LIPIcs.TYPES.2015.5}}.
+
+\bibitem[Chr04]{chrzaszcz-coq-modules}
+Jacek Chrz{\k{a}}szcz.
+\newblock Modules in coq are and will be correct.
+\newblock In {\em Types for Proofs and Programs, International Workshop, TYPES
+  2003, Revised Selected Papers}, volume 3085 of {\em Lecture Notes in Computer
+  Science}, pages 130--146. Springer, 2004.
+\newblock \href {https://doi.org/10.1007/978-3-540-24849-1_9}
+  {\path{doi:10.1007/978-3-540-24849-1_9}}.
+
+\bibitem[Cou07]{courant-pts-modules}
+Judica{\"e}l Courant.
+\newblock A module calculus for pure type systems.
+\newblock {\em Journal of Functional Programming}, 17(3):287--352, 2007.
+\newblock \href {https://doi.org/10.1017/S0956796806005867}
+  {\path{doi:10.1017/S0956796806005867}}.
+
+\bibitem[DCH03]{dreyer-higher-modules}
+Derek Dreyer, Karl Crary, and Robert Harper.
+\newblock A type system for higher-order modules.
+\newblock In {\em Proceedings of the 30th ACM SIGPLAN-SIGACT Symposium on
+  Principles of Programming Languages}, pages 236--249. ACM, 2003.
+\newblock \href {https://doi.org/10.1145/604131.604151}
+  {\path{doi:10.1145/604131.604151}}.
+
+\bibitem[FL04]{filliatre-letouzey}
+Jean-Christophe Filli{\^a}tre and Pierre Letouzey.
+\newblock Functors for proofs and programs.
+\newblock In {\em Programming Languages and Systems, 13th European Symposium on
+  Programming}, volume 2986 of {\em Lecture Notes in Computer Science}, pages
+  370--384. Springer, 2004.
+\newblock \href {https://doi.org/10.1007/978-3-540-24725-8_26}
+  {\path{doi:10.1007/978-3-540-24725-8_26}}.
+
+\bibitem[HL94]{harper-lillibridge}
+Robert Harper and Mark Lillibridge.
+\newblock A type-theoretic approach to higher-order modules with sharing.
+\newblock In {\em Proceedings of the 21st ACM SIGPLAN-SIGACT Symposium on
+  Principles of Programming Languages}, pages 123--137. ACM, 1994.
+\newblock \href {https://doi.org/10.1145/174675.176927}
+  {\path{doi:10.1145/174675.176927}}.
+
+\bibitem[KvR20]{kraus-vonraumer}
+Nicolai Kraus and Jakob von Raumer.
+\newblock Coherence via well-foundedness.
+\newblock In {\em Proceedings of the 35th Annual ACM/IEEE Symposium on Logic in
+  Computer Science}, pages 662--675. ACM, 2020.
+\newblock \href {https://doi.org/10.1145/3373718.3394800}
+  {\path{doi:10.1145/3373718.3394800}}.
+
+\bibitem[Lan63]{maclane-coherence}
+Saunders~Mac Lane.
+\newblock Natural associativity and commutativity.
+\newblock {\em Rice University Studies}, 49(4):28--46, 1963.
+\newblock URL: \url{http://hdl.handle.net/1911/62865}.
+
+\bibitem[Ler94]{leroy-manifest}
+Xavier Leroy.
+\newblock Manifest types, modules, and separate compilation.
+\newblock In {\em Proceedings of the 21st ACM SIGPLAN-SIGACT Symposium on
+  Principles of Programming Languages}, pages 109--122. ACM, 1994.
+\newblock \href {https://doi.org/10.1145/174675.176926}
+  {\path{doi:10.1145/174675.176926}}.
+
+\bibitem[Lum10]{lumsdaine}
+Peter~LeFanu Lumsdaine.
+\newblock Weak $\omega$-categories from intensional type theory.
+\newblock {\em Logical Methods in Computer Science}, 6(3), 2010.
+\newblock \href {https://doi.org/10.2168/LMCS-6(3:24)2010}
+  {\path{doi:10.2168/LMCS-6(3:24)2010}}.
+
+\bibitem[Mac84]{macqueen-modules}
+David~B. MacQueen.
+\newblock Modules for standard ml.
+\newblock In {\em Proceedings of the 1984 ACM Symposium on LISP and Functional
+  Programming}, pages 198--207. ACM, 1984.
+\newblock \href {https://doi.org/10.1145/800055.802036}
+  {\path{doi:10.1145/800055.802036}}.
+
+\bibitem[ML84]{martinlof-itt}
+Per Martin-L{\"o}f.
+\newblock {\em Intuitionistic Type Theory}.
+\newblock Bibliopolis, 1984.
+
+\bibitem[SAG22]{xtt}
+Jonathan Sterling, Carlo Angiuli, and Daniel Gratzer.
+\newblock A cubical language for bishop sets.
+\newblock {\em Logical Methods in Computer Science}, 18(1), 2022.
+\newblock \href {https://doi.org/10.46298/lmcs-18(1:43)2022}
+  {\path{doi:10.46298/lmcs-18(1:43)2022}}.
+
+\bibitem[Sta63a]{stasheff-i}
+James~D. Stasheff.
+\newblock Homotopy associativity of {H}-spaces {I}.
+\newblock {\em Transactions of the American Mathematical Society},
+  108(2):275--292, 1963.
+\newblock \href {https://doi.org/10.1090/S0002-9947-1963-99936-3}
+  {\path{doi:10.1090/S0002-9947-1963-99936-3}}.
+
+\bibitem[Sta63b]{stasheff-ii}
+James~D. Stasheff.
+\newblock Homotopy associativity of {H}-spaces {II}.
+\newblock {\em Transactions of the American Mathematical Society},
+  108(2):293--312, 1963.
+\newblock \href {https://doi.org/10.1090/S0002-9947-1963-0158400-5}
+  {\path{doi:10.1090/S0002-9947-1963-0158400-5}}.
+
+\bibitem[vdBG11]{vdberg-garner}
+Benno van~den Berg and Richard Garner.
+\newblock Types are weak $\omega$-groupoids.
+\newblock {\em Proceedings of the London Mathematical Society},
+  102(2):370--394, 2011.
+\newblock \href {https://doi.org/10.1112/plms/pdq026}
+  {\path{doi:10.1112/plms/pdq026}}.
+
+\bibitem[VMA19]{cubical-agda}
+Andrea Vezzosi, Anders M{\"o}rtberg, and Andreas Abel.
+\newblock Cubical agda: a dependently typed programming language with
+  univalence and higher inductive types.
+\newblock {\em Proceedings of the ACM on Programming Languages},
+  3(ICFP):87:1--87:29, 2019.
+\newblock \href {https://doi.org/10.1145/3341691} {\path{doi:10.1145/3341691}}.
+
+\end{thebibliography}

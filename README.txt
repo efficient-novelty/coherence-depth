@@ -109,6 +109,7 @@ Equivalent core checks from PowerShell:
   agda --transliterate Test/SemanticDepthSmoke.agda
   agda --transliterate Test/FibonacciScalingSmoke.agda
   agda --transliterate Test/SemanticFixtureSmoke.agda
+  agda --transliterate Test/StructuralHornDecodingSmoke.agda
   agda --transliterate CaseStudies/HigherPayload.agda
   agda --transliterate Test/HigherPayloadSmoke.agda
 
@@ -167,10 +168,10 @@ The machine-readable map is:
 
 The map records paper claims, paper labels, Agda modules, theorem names,
 formalization status, bridge use, and trusted inputs. Status values are
-restricted to `mechanized`, `conditional-on-adequacy-package`, `paper-only`,
-and `trusted-input`, so adequacy assumptions cannot hide behind free-form
-status prose. The artifact check runs scripts/check_paper_map.py against this
-map, runs
+restricted to `fully mechanized`, `mechanized for an abstract interface`,
+`conditional on adequacy`, and `paper-only`, so adequacy assumptions cannot
+hide behind free-form status prose. The artifact check runs
+scripts/check_paper_map.py against this map, runs
 scripts/audit_postulates.py over the transitive theorem-facing import closure,
 and runs the case-study fixture audit.
 
@@ -191,9 +192,12 @@ What is not formalized:
     full-coupling recurrence.
 
 The paper's broad semantic statement is parametric in a
-SemanticCubicalFoundation and depends on a RawAdequacyPackage. This artifact
-checks the fixed raw-calculus instance and records the remaining semantic
-transfer boundary in docs/coherence_depth_trust_boundary.md.
+SemanticCubicalFoundation and depends on a RawAdequacyPackage. In the current
+artifact, RawAdequacyPackage is an assumed interface for broad semantic
+wrappers, a checked concrete instance for the fixed raw and SMod fragments, and
+a partially proved bridge for the intended transfer program. It is not a
+completed theorem for arbitrary Cubical Agda source. The remaining semantic
+transfer boundary is recorded in docs/coherence_depth_trust_boundary.md.
 
 The paper text discusses postulates in the broader development repository.
 Those auxiliary development files are not included in this artifact.

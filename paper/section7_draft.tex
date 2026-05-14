@@ -1,0 +1,481 @@
+
+\section{Mechanization, transfer, and trusted boundary}
+\label{sec:mechanization}
+
+The previous sections separate the mathematical story into three layers.  First, the fixed
+sealed-extension calculus has an exact cubical depth theorem: binary public trace is necessary,
+and higher sealing-generated structural trace is computed by open-box filling.  Second, the raw
+adequacy bridge turns that theorem into a statement about normalized public signatures and the
+minimal trace cost \(\mu\).  Third, the recurrence theorem adds a separate full-coupling and
+recent-history hypothesis.
+
+This section explains what the accompanying Cubical Agda development checks and, just as
+importantly, what it does not check.  Its purpose is not to replace the paper proofs by a list of
+module names.  It is to make the trusted boundary explicit enough that a reader can tell which
+claims are internal theorems of the fixed calculus, which claims use actual cubical composition
+and partial elements, which claims are surface-language adequacy instances, and which claims
+remain semantic transfer principles for future work.
+
+The guiding rule is simple:
+\begin{quote}
+A checked theorem proves the statement encoded by the checked definitions.  It does not, by
+itself, prove that those definitions are an adequate semantics for every external cubical
+language or every possible notion of sealed extension.
+\end{quote}
+That distinction is the reason the paper states its main theorem for the fixed calculus
+\(C_{\mathrm{ext}}\), and states broader transfer only through the interface of
+Section~\ref{sec:scaling}.
+
+\subsection{The artifact as a theorem-facing development}
+\label{subsec:artifact-theorem-facing}
+
+The formalization is organized around the same proof stack as the paper.  There is a raw
+extension calculus for payload and trace; an adequacy bridge from surface presentations to raw
+candidates; a cubical horn-computational layer; exact depth and recent-history theorems; a
+counting layer for sparse and full-coupling recurrences; and a small collection of fixtures and
+examples used to audit the intended classification discipline.
+
+It is useful to think of the artifact as having four concentric layers.
+\begin{enumerate}
+\item The \emph{cubical core layer} checks the open-box and horn-computation arguments using
+Cubical Agda's interval, partial elements, composition, filling, transport, paths, and
+univalence infrastructure.
+\item The \emph{fixed-calculus layer} checks the raw syntax, typing roles, normalized trace
+presentations, primitive-versus-derived classification, and \(\mu\)-invariance statements for
+\(C_{\mathrm{ext}}\).
+\item The \emph{bridge layer} checks that selected surface presentations, especially the modal
+fragment SMod, elaborate into the raw calculus while preserving payload, primitive trace,
+derived horn trace, historical support, and public trace cost.
+\item The \emph{counting and audit layer} checks sparse footprints, the full-coupling envelope,
+recurrence arithmetic, refactoring invariance, abstraction barriers, and case-study fixtures.
+\end{enumerate}
+These layers are related, but they should not be conflated.  A theorem in the fixed-calculus
+layer can be postulate-free and still depend on the modeling choice that its record type is the
+right representation of a sealed interface.  A theorem in the bridge layer is stronger: it shows
+that a specific surface fragment lands in that representation.  A theorem in the cubical core
+layer is stronger in a different direction: it uses the actual cubical operations rather than a
+synthetic singleton abstraction.
+
+\subsection{Status vocabulary}
+\label{subsec:status-vocabulary}
+
+The paper uses the following status vocabulary for artifact claims.  The vocabulary is
+intended to prevent a common mistake: reading every checked lemma as if it had the same
+semantic scope.
+
+\begin{center}
+\small
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{p{0.25\linewidth}p{0.66\linewidth}}
+\hline
+Status & Meaning \\
+\hline
+\texttt{checked-internal}
+& Proved inside the fixed calculus or one of its explicit abstraction records.  This is a
+real Agda theorem, but its semantic force is limited to the encoded calculus. \\
+\hline
+\texttt{checked-actual-cubical}
+& Proved using the actual Cubical Agda partial-element, path, composition, filling,
+transport, or univalence interface, rather than by assuming a synthetic singleton record. \\
+\hline
+\texttt{checked-adequacy-instance}
+& Proved for a specific surface language or fragment by an explicit elaboration into
+\(C_{\mathrm{ext}}\), preserving the trace quantities named in the paper. \\
+\hline
+\texttt{paper-level-interpretation}
+& Explained mathematically in the paper, with a checked counterpart that is slightly more
+explicit or more restricted than the prose phrasing.  The finite-basis reading of active-site
+cardinality is an example. \\
+\hline
+\texttt{semantic-assumption}
+& A transfer hypothesis about external foundations or languages.  The fixed calculus may
+satisfy the hypothesis, but arbitrary external systems are not automatically covered. \\
+\hline
+\end{tabular}
+\end{center}
+
+The absence of local postulates is reported separately from these statuses.  A postulate-free
+module is evidence that the encoded theorem was accepted by Agda under the stated options.  It
+is not evidence that the encoded object is the only possible, or the most general possible,
+semantics of cubical sealed extension.  For example, a postulate-free proof that a synthetic
+horn record is contractible would not by itself prove that the actual cubical open-box extension
+fiber is contractible.  The development therefore includes a cubical open-box layer whose role
+is precisely to connect the theorem-facing structural horn package to Cubical Agda's actual
+composition and filling operations.
+
+\subsection{Trusted base and reproducibility}
+\label{subsec:trusted-base-reproducibility}
+
+The trusted base is deliberately small but not empty.  It consists of the Agda kernel running
+with cubical support and safety options, the pinned Cubical Agda library declared by the
+artifact files, the fixed raw extension-calculus specification used as the theorem object, and a
+small natural-number/arithmetic layer used by the counting proofs.  The clutching example also
+imports the Cubical library's standard higher-inductive circle and suspension interfaces,
+together with the usual equivalence, isomorphism, and univalence infrastructure.
+
+The public artifact contains the paper source, theorem-facing Agda modules, the
+machine-readable theorem map, audit scripts, and the case-study fixtures.  A reviewer can run
+\texttt{scripts/check\_coherence\_depth\_artifact.sh}, or \texttt{make artifact-check} when
+GNU \texttt{make} is available.  The script checks the aggregate Agda module, checks the
+clutching module separately because of its higher-inductive-type imports, runs the case-study
+audit, verifies the paper-to-Agda map, and audits the transitive theorem-facing import closure
+for local postulates and local primitive declarations.
+
+The import audit is intentionally mechanical.  It reports the module name, whether local
+postulates occur, whether local primitive declarations occur, whether the module is checked
+under the intended safety options, and which trusted external imports are used.  This audit is
+not a semantic theorem.  It is a reproducibility check for the formal proof boundary.
+
+\begin{remark}[What postulate-free means]
+\label{rem:postulate-free-means}
+In this section, ``no local postulates'' means that the theorem-facing local modules typecheck
+without local \texttt{postulate} declarations or local Agda \texttt{primitive} declarations,
+except for the trusted cubical primitives imported from the selected Cubical library.  Auxiliary
+files outside the theorem-facing closure may exist, but they are not used by the aggregate
+artifact check for the paper's stated theorem map.
+\end{remark}
+
+\subsection{Main theorem-to-artifact map}
+\label{subsec:theorem-map}
+
+The full theorem map is stored in the artifact as a machine-readable file.  The table below is a
+human-readable summary of the load-bearing correspondences.  The purpose is to show where each
+mathematical claim enters the checked stack, not to list every helper lemma.
+
+\begin{center}
+\scriptsize
+\setlength{\tabcolsep}{2pt}
+\begin{tabular}{p{0.20\linewidth}p{0.32\linewidth}p{0.30\linewidth}p{0.12\linewidth}}
+\hline
+Paper claim & Checked components & What is checked & Status \\
+\hline
+Transparent growth and zero integration latency
+& \texttt{Metatheory/InterfaceCalculus.agda}
+& Transparent definitions preserve the active interface and contribute no sealed integration
+trace. & \texttt{checked-internal} \\
+\hline
+Raw structural syntax, roles, and normalization
+& \texttt{Metatheory/RawStructuralSyntax.agda},
+\texttt{RawStructuralTyping.agda}, \texttt{SurfaceNormalizationBridge.agda}
+& Raw clauses have the advertised roles; admissible raw extensions elaborate to candidates and
+normalize to canonical payload/trace signatures. & \texttt{checked-internal} \\
+\hline
+Presentation equivalence and \(\mu\)-invariance
+& \texttt{CanonicalTelescope.agda}, \texttt{TraceCostNormalForm.agda},
+\texttt{PresentationEquivalence.agda}, \texttt{MuInvariance.agda}
+& Rebundling, explicit presentation steps, and canonical telescope changes preserve the minimal
+public trace cost. & \texttt{checked-internal} \\
+\hline
+SMod surface adequacy instance
+& \texttt{Surface/Modal/*}
+& The modal fragment preserves payload, primitive trace, derived horn trace, support, and
+\(\mu\) under elaboration into the raw calculus. & \texttt{checked-adequacy-instance} \\
+\hline
+Structural horn image of raw clauses
+& \texttt{SurfaceToHornImage.agda}
+& Admissible higher raw structural clauses normalize into the horn-computational image rather
+than into primitive higher trace. & \texttt{checked-internal} \\
+\hline
+Cubical open-box extension theorem
+& \texttt{CubicalOpenBox/Base.agda}, \texttt{Extension.agda},
+\texttt{Contractible.agda}, \texttt{Substitution.agda}
+& The theorem-facing open-box extension package has a canonical point, is contractible, and is
+stable under reindexing. & \texttt{checked-actual-cubical} \\
+\hline
+Horn-to-open-box reduction and Kan subsumption
+& \texttt{StructuralHornToOpenBox.agda}, \texttt{KanSubsumption.agda}
+& Higher structural obligations reduce to cubical horn/open-box extension fibers; remote-layer
+horn obligations are derived. & \texttt{checked-actual-cubical} \\
+\hline
+Computational replacement
+& \texttt{ComputationalReplacement.agda}, \texttt{MuInvariance.agda}
+& Explicit higher structural fields are replaced by canonical cubical trace terms and disappear
+from \(\mu\)-minimal signatures. & \texttt{checked-internal} with cubical input \\
+\hline
+Exact stabilization above binary trace
+& \texttt{UpperBound.agda}, \texttt{ExactDepth.agda}
+& \(\mathrm{Real}_k(X)\) is equivalent to \(\mathrm{Real}_2(X)\) for \(k\geq 2\), with
+contractible higher factors in the fixed calculus. & \texttt{checked-internal} \\
+\hline
+Binary lower bound
+& \texttt{AdjunctionBarrier.agda}
+& The two-point swap obstruction supplies a concrete witness that unary trace is insufficient
+in general. & \texttt{checked-actual-cubical} \\
+\hline
+Recent-history factorization
+& \texttt{ChronologicalWindow.agda}, \texttt{KanSubsumption.agda}
+& Surviving primitive support factors through the two most recent normalized public signatures
+in the fixed calculus. & \texttt{checked-internal} with cubical input \\
+\hline
+Sparse and full-coupling recurrences
+& \texttt{UniversalRecurrence.agda}, \texttt{SparseDependencyRecurrence.agda},
+\texttt{FullCouplingEnvelope.agda}, \texttt{AffineRecurrence.agda}
+& Sparse footprints decompose by the active window; the full-coupling endpoint yields the
+payload-aware affine recurrence and Fibonacci specialization. & \texttt{checked-internal} \\
+\hline
+Case-study classification discipline
+& \texttt{CaseStudies/*}, \texttt{runs/coherence\_depth\_case\_studies/*},
+\texttt{coherence\_depth\_audit.py}
+& The intended fixture classifications agree with the payload/trace and sparse/full-coupling
+accounting discipline. & checked audit \\
+\hline
+\end{tabular}
+\end{center}
+
+The exact theorem names are deliberately not reproduced in full in the prose.  They are
+available in the machine-readable theorem map, and the checker verifies that the paper labels,
+Agda module paths, and named Agda declarations exist.  This keeps the paper readable while
+still making the mapping auditable.
+
+\subsection{The cubical core: open boxes rather than synthetic singletons}
+\label{subsec:cubical-core-artifact}
+
+The most important mechanized boundary is the one between a synthetic horn abstraction and the
+actual cubical operations.  Earlier versions of the story could be read as proving that higher
+horns are derived because the grammar marked them as derived, or because an abstract singleton
+record had been postulated.  The current theorem stack avoids that reading in two ways.
+
+First, the structural syntax still records which fields are intended to be primitive and which
+are intended to be horn-computational, but that classification is not the end of the proof.  A
+higher structural clause must enter the horn image, reduce to an open-box extension problem,
+and receive a canonical cubical replacement.
+
+Second, the open-box package is theorem-facing rather than merely rhetorical.  It contains the
+partial boundary, the compatible base/lid data, the filler, and the agreement information needed
+for the structural obligation.  The canonical inhabitant is computed from cubical composition
+and filling, and the package is stable under substitution.  This is why the paper can say that
+higher structural fields are \emph{computed} rather than merely relabeled.
+
+The checked cubical statement should be read in exactly that scope.  It is not a theorem that
+all higher filler spaces in Homotopy Type Theory are contractible.  It is a theorem that the
+specific theorem-facing structural open-box extension fibers produced by the fixed
+sealed-extension calculus have canonical contractible factors.  This is precisely the strength
+needed for the public-trace theorem: higher exact factors remain present, but they do not add
+primitive public trace.
+
+\begin{theorem}[Checked horn-computational core, artifact reading]
+\label{thm:checked-horn-core-artifact-reading}
+In the artifact's fixed cubical core, every higher structural clause in the horn image of an
+admissible raw declaration is assigned a canonical cubical replacement term, stable under
+reindexing, whose public trace presentation has the same normalized boundary data and no
+primitive structural field of arity greater than two.
+\end{theorem}
+
+\begin{proof}[Artifact proof reading]
+The horn-image theorem sends admissible higher raw structural clauses to structural horn
+packages.  The horn-to-open-box reduction identifies those packages with theorem-facing cubical
+open-box extension fibers.  The open-box theorem supplies the canonical extension and
+substitution stability.  The computational-replacement module packages this extension as a
+canonical trace presentation, and the \(\mu\)-invariance theorem reads the replacement as
+elimination from minimal primitive public trace.
+\end{proof}
+
+\subsection{Adequacy instances and the raw bridge}
+\label{subsec:adequacy-instances-artifact}
+
+The formalization contains two different kinds of adequacy evidence.
+
+The first is the fixed raw bridge.  This bridge is internal to the paper's theorem object: raw
+surface-like clauses are typed, assigned a role, normalized into canonical payload and trace
+signatures, and mapped into the horn-computational image when they are higher structural
+clauses.  This is the bridge used by the main theorem for \(C_{\mathrm{ext}}\).
+
+The second is a concrete surface-language instance.  The SMod fragment demonstrates that the
+adequacy interface is not vacuous.  Its elaboration theorem preserves the quantities the paper
+cares about: payload, primitive trace, derived horn trace, support, and \(\mu\).  The explicit
+horn presentation, the minimal presentation, and a rebundled presentation all land in the same
+normalized public trace cost.
+
+This is a deliberately modest adequacy result.  It does not say that arbitrary Cubical Agda
+programs can be parsed and elaborated into \(C_{\mathrm{ext}}\).  It says that one concrete
+surface fragment satisfies the bridge conditions, and that the general transfer criterion of
+Section~\ref{sec:scaling} identifies exactly what other fragments would have to prove.
+
+\begin{remark}[No parser theorem for arbitrary Cubical Agda]
+\label{rem:no-parser-theorem-cubical-agda}
+The artifact checks theorem-facing Agda modules and selected surface adequacy instances.  It
+does not contain a verified parser, elaborator, or semantic preservation theorem for arbitrary
+Cubical Agda code.  Consequently, the paper's claims about external cubical languages should be
+read through the transfer interface, not as automatic corollaries of the artifact.
+\end{remark}
+
+\subsection{Case-study fixtures}
+\label{subsec:case-study-fixtures}
+
+The case-study audit serves a different purpose from the theorem modules.  It checks that the
+classification discipline used throughout the paper behaves as advertised on representative
+inputs.  In particular, the fixtures separate four phenomena that are easy to confuse:
+full-coupling foundational-core growth, sparse local growth, transparent zero-footprint growth,
+and user-supplied higher payload.
+
+\begin{center}
+\scriptsize
+\setlength{\tabcolsep}{2pt}
+\begin{tabular}{p{0.24\linewidth}p{0.16\linewidth}p{0.08\linewidth}p{0.24\linewidth}p{0.20\linewidth}}
+\hline
+Fixture & Regime & \(\mu\) & Trace profile & Boundary demonstrated \\
+\hline
+\texttt{universe\_extension.yaml}
+& full coupling & 2
+& unary 1, binary 1, higher horn derived
+& fully coupled sealed-extension sequence \\
+\hline
+\texttt{universe\_extension\_refactored.yaml}
+& full coupling & 2
+& same normalized trace as the universe fixture
+& refactoring preserves public cost \\
+\hline
+\texttt{global\_modality.yaml}
+& full coupling & 3
+& unary 1, binary 2, higher horn derived
+& global modal payload with full-envelope trace \\
+\hline
+\texttt{sparse\_datatype.yaml}
+& sparse local & 1
+& unary 1
+& sparse footprint below the full-coupling envelope \\
+\hline
+\texttt{transparent\_lemma\_extension.yaml}
+& transparent zero & 0
+& no structural trace obligations
+& transparent development lies outside the recurrence \\
+\hline
+\texttt{promoted\_interface.yaml}
+& active-basis totality & 2
+& unary 2
+& promoted interface package counted by active basis \\
+\hline
+\texttt{higher\_hit\_payload.yaml}
+& payload, not structural trace & 0
+& higher constructor payload
+& user-supplied higher HIT data is not a structural horn trace \\
+\hline
+\end{tabular}
+\end{center}
+
+The last row is especially important.  The depth-two theorem is not a prohibition on higher
+constructors or higher paths.  It is a theorem about sealing-generated structural trace.  A
+higher HIT constructor supplied as payload is counted as payload.  A higher horn generated by
+structural sealing is counted as derived trace.  The audit fixtures keep that distinction
+visible.
+
+\subsection{Abstraction barriers and recurrence proofs}
+\label{subsec:barrier-recurrence-artifact}
+
+The recurrence theorem depends on an opacity invariant: once a sealed layer has discharged its
+internal obligations, later layers may use only the exported public schema, not the hidden
+internal derivation tree that produced it.  This is the formal version of the abstraction
+barrier introduced in Section~2.
+
+The artifact checks this discipline in two complementary ways.  The abstraction-barrier modules
+verify, for representative later-stage transitions, that inherited obligations are discharged
+through the owning layer's opaque record interface rather than by reopening deeper internal
+truncation or derivation data.  The decomposition modules then prove the recurrence from an
+explicit window decomposition: the next obligation set is split into contributions from the two
+most recent sealed layers, and the affine recurrence follows from the cardinalities of those
+splits.
+
+This is a useful safeguard.  The recurrence is not proved by first guessing a Fibonacci closed
+form and then checking that the numbers fit.  The checked proof goes in the intended direction:
+\[
+  \text{opaque exported window}
+  \quad\Longrightarrow\quad
+  \text{finite decomposition of the next footprint}
+  \quad\Longrightarrow\quad
+  \text{affine recurrence}.
+\]
+The constant-payload Fibonacci law is then a small arithmetic corollary of the affine
+recurrence.
+
+\subsection{What the mechanization establishes}
+\label{subsec:what-mechanization-establishes}
+
+Putting the preceding subsections together, the artifact establishes the following theorem
+stack for the encoded calculus and checked instances.
+
+\begin{theorem}[Mechanized theorem stack, paper reading]
+\label{thm:mechanized-theorem-stack}
+Relative to the trusted cubical base and the fixed definitions of \(C_{\mathrm{ext}}\), the
+Agda development checks:
+\begin{enumerate}
+\item the payload/trace and primitive/derived classification discipline for the raw calculus;
+\item canonical trace presentations, presentation equivalence, and \(\mu\)-invariance;
+\item a concrete SMod adequacy instance preserving payload, trace status, support, and \(\mu\);
+\item the structural horn-to-open-box reduction for higher structural clauses;
+\item theorem-facing cubical open-box contractibility and substitution stability;
+\item computational replacement of explicit higher structural fields;
+\item exact stabilization at binary trace and the two-point swap lower bound;
+\item recent-history factorization through the two most recent normalized signatures;
+\item sparse footprint accounting, the full-coupling affine recurrence, and the constant-payload
+Fibonacci specialization;
+\item refactoring invariance, abstraction-barrier checks, clutching and lower-bound examples,
+and the case-study classification audit.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}[Artifact proof reading]
+Each item is checked by the theorem-facing modules summarized in
+Section~\ref{subsec:theorem-map}.  The aggregate script checks the import closure containing
+those modules, the paper-map checker verifies that the paper labels and listed Agda theorem
+names exist, and the postulate audit reports no local postulates or local primitive declarations
+inside the theorem-facing closure.  The stated result is therefore a theorem of the encoded
+artifact relative to the trusted Cubical Agda base and the fixed definitions of the calculus.
+\end{proof}
+
+\subsection{What remains outside the mechanized claim}
+\label{subsec:outside-mechanized-claim}
+
+The exclusions are as important as the positive claims.
+
+First, the artifact does not prove a broad adequacy theorem for all cubical foundations.  The
+paper gives a transfer interface.  A new foundation must still show that its notion of sealed
+extension, public trace, horn representation, canonical replacement, and trace cardinality
+satisfy that interface.
+
+Second, the artifact does not prove that all higher cubical filler spaces are contractible.  The
+contractible factors are the theorem-facing structural open-box extension fibers produced by the
+fixed calculus.  Raw higher homotopy, higher inductive payload, and non-structural user data
+remain outside the elimination theorem.
+
+Third, the artifact does not prove that ordinary library growth follows the full-coupling
+recurrence.  Sparse local declarations and transparent helper definitions are explicitly allowed
+and audited.  The recurrence applies only after a two-layer chronological window and full active
+basis coupling have been established.
+
+Fourth, the artifact does not remove the trusted base.  The Agda kernel, the Cubical library
+interface, and the stated imports remain trusted in the usual way for a mechanized Cubical Agda
+formalization.
+
+\subsection{How to read the formalization}
+\label{subsec:how-to-read-formalization}
+
+A reader checking the artifact need not begin with the recurrence modules.  The most informative
+path follows the paper's proof stack.
+
+Start with the raw extension calculus and canonical trace modules to see how payload, primitive
+trace, derived horn trace, and \(\mu\) are represented.  Then inspect the surface-to-horn and
+computational-replacement modules; these are the point where ``derived'' becomes a theorem-facing
+property rather than a tag.  Next inspect the cubical open-box modules and the horn-to-open-box
+reduction; these are the semantic core of the depth-two upper bound.  Then inspect the swap
+barrier and exact-depth modules; these supply the lower bound and the final exact-depth theorem.
+Finally, inspect the chronological-window and recurrence modules; these explain how the semantic
+depth result becomes the two-layer affine law under full coupling.
+
+The case studies should be read last.  They are not the proof of the main theorem.  They are an
+audit that the classification vocabulary used by the theorem behaves correctly on small,
+representative presentations.
+
+\subsection{Summary}
+\label{subsec:mechanization-summary}
+
+The mechanization supports the main message of the paper in the following precise sense.  For
+the fixed calculus \(C_{\mathrm{ext}}\), it checks the open-box computation that makes higher
+structural trace derived, the replacement theorem that removes such trace from
+\(\mu\)-minimal public signatures, the binary lower bound supplied by the swap obstruction, and
+the counting consequences under recent-history and full-coupling hypotheses.
+
+The formalization therefore strengthens the paper's central claim, but it does not erase the
+semantic boundary.  The fixed theorem is checked.  The SMod bridge is checked as a representative
+adequacy instance.  The broad claim that many other cubical foundations or surface languages
+instantiate the same interface remains a transfer program: plausible, sharply specified, and
+not assumed by the main theorem.
