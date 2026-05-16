@@ -145,7 +145,7 @@
         "mu-invariant-under-presentation-equivalence"
       ],
       "status": "fully mechanized",
-      "status_detail": "fully formalized",
+      "status_detail": "fully formalized canonical presentation and mu-invariance layer",
       "uses_bridge": false,
       "trusted_inputs": [
         "Agda kernel",
@@ -492,7 +492,7 @@
         "stage-trace-supported-by-last-two-interfaces"
       ],
       "status": "mechanized for an abstract interface",
-      "status_detail": "fully formalized",
+      "status_detail": "checked stabilization theorem for the theorem-facing realization and horn interfaces; surface/public-signature readings are supplied by separate bridge rows",
       "uses_bridge": false,
       "trusted_inputs": [
         "Agda kernel",
@@ -572,7 +572,7 @@
         "computational-replacement-preserves-mu"
       ],
       "status": "conditional on adequacy",
-      "status_detail": "fully formalized on explicit canonical trace presentations",
+      "status_detail": "checked on explicit canonical trace presentations; applying the replacement to raw or surface declarations requires the fixed raw bridge",
       "uses_bridge": true,
       "trusted_inputs": [
         "Agda kernel",
@@ -617,7 +617,7 @@
         "sealed-structural-trace-depth-exactly-two"
       ],
       "status": "fully mechanized",
-      "status_detail": "fully formalized",
+      "status_detail": "checked lower-bound witness and fixed-calculus exact-depth wrappers",
       "uses_bridge": false,
       "trusted_inputs": [
         "Agda kernel",
@@ -654,7 +654,7 @@
         "two-level-window-size-two-for-2d-foundations"
       ],
       "status": "mechanized for an abstract interface",
-      "status_detail": "fully formalized",
+      "status_detail": "checked wrapper theorem for an abstract 2D-foundation package; concrete foundations require an instantiation of that package",
       "uses_bridge": false,
       "trusted_inputs": [
         "Agda kernel",
@@ -718,7 +718,7 @@
         "tau-bootstrap-closed"
       ],
       "status": "conditional on adequacy",
-      "status_detail": "formalized; Fibonacci is the full-coupling endpoint of sparse recurrence",
+      "status_detail": "checked sparse/full-coupling arithmetic; Fibonacci is the full-coupling endpoint, and the paper's mu reading is conditional on the adequacy bridge",
       "uses_bridge": true,
       "trusted_inputs": [
         "Agda kernel",

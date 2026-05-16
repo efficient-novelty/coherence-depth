@@ -362,6 +362,7 @@ and swap lower bound.  Sections~6 and~7 record the conditional counting
 corollary and the mechanized trusted boundary, and Section~8 concludes.
 
 \section{Fixed sealed-extension calculus}
+\label{sec:fixed-calculus}
 
 The preceding section stated the theorem informally: a sealed cubical extension must pay
 primitive public trace through binary comparison, but higher structural trace is computed by
@@ -3259,6 +3260,7 @@ sequence \(\mu_n+2c\) satisfies the Fibonacci recurrence.
 
 
 \section{Mechanization and trusted boundary}
+\label{sec:mechanization}
 
 The artifact checks the theorem-facing fixed-calculus stack and records the
 boundary between checked Agda statements, abstract interfaces, and paper-level
@@ -3266,23 +3268,92 @@ adequacy assumptions.  The detailed artifact guide, recurrence tables, and
 case-study walkthroughs are intentionally kept out of the LMCS paper and belong
 to the archived release.
 
+The paper and the machine-readable theorem map use the following four status
+phrases.  A claim is \emph{fully mechanized} when the named Agda modules check
+the claim directly for the fixed object under discussion, with no local
+postulates or local primitive declarations beyond the trusted cubical library.
+It is \emph{mechanized for an abstract interface} when Agda checks a precise
+interface theorem, but an instantiation or adequacy argument is a separate
+input.  It is \emph{conditional on adequacy} when checked components are present
+but the paper-level claim depends on the stated bridge from surface
+presentations or semantic wrappers to \(C_{\mathrm{ext}}\).  It is
+\emph{paper-only} when the item is an expository, release, or future-transfer
+claim rather than a theorem checked by the artifact.
+
 \begin{center}
-\small
-\setlength{\tabcolsep}{3pt}
-\begin{tabular}{p{0.23\linewidth}p{0.20\linewidth}p{0.24\linewidth}p{0.24\linewidth}}
+\scriptsize
+\setlength{\tabcolsep}{2pt}
+\begin{tabular}{p{0.17\linewidth}p{0.15\linewidth}p{0.18\linewidth}p{0.27\linewidth}p{0.16\linewidth}}
 \hline
-Result & Paper theorem & Artifact status & Trusted boundary \\
+Paper claim & LMCS reference & Status & Artifact surface & Trusted input or condition \\
 \hline
-Open-box core & Theorem~\ref{thm:open-ext-contr} & checked abstract interface
-& cubical primitives and library Kan operations \\
-Horn reduction & Lemma~\ref{lem:horn-open-box} & checked/conditional
-& raw adequacy bridge into structural horns \\
-Replacement & Section~3 & checked/conditional
-& normalized presentation interface \\
-Swap lower bound & Theorem~\ref{thm:swap-obstruction} & checked
-& univalence computation for the two-point swap \\
-Recurrence & Section~6 & checked arithmetic/conditional
-& full-coupling hypothesis and adequacy reading of \(\mu\) \\
+Fixed calculus and generated obligations
+& Section~\ref{sec:fixed-calculus}, Definition~\ref{def:generated-structural-obligations}
+& fully mechanized
+& raw structural syntax/typing and normalization bridge modules
+& fixed raw syntax and Cubical library \\
+\hline
+\(\mathrm{ObSig}_k\), \(\mathrm{Real}_k\), restriction, and stabilization
+& Definition~\ref{def:obsig-real}, Theorem~\ref{thm:exact-stabilization}
+& mechanized for an abstract interface
+& upper-bound and semantic exact-depth modules
+& theorem-facing realization and horn interfaces \\
+\hline
+Horn-to-open-box decoding
+& Lemma~\ref{lem:horn-open-box}
+& mechanized for an abstract interface
+& structural horn decoding and open-box bridge modules
+& generated horn grammar; raw/surface use needs the bridge \\
+\hline
+Total open-extension contractibility
+& Theorem~\ref{thm:open-ext-contr}
+& mechanized for an abstract interface
+& cubical open-box extension, contraction, and substitution modules
+& cubical \(\mathsf{hcomp}\), \(\mathsf{hfill}\), and \(\mathrm{Partial}/\mathrm{Sub}\);
+not fixed-lid uniqueness \\
+\hline
+Derived-trace replacement and \(\mu\)-minimal elimination
+& Theorems~\ref{thm:higher-structural-derived-trace}
+and~\ref{thm:minimal-signature-elimination}
+& conditional on adequacy
+& normalization-derived, replacement, and computational-replacement modules
+& canonical trace presentations and fixed raw bridge \\
+\hline
+Binary lower bound
+& Theorem~\ref{thm:swap-obstruction}
+& fully mechanized
+& adjunction-barrier, depth-lower-bound, and exact-depth modules
+& univalence and the two-point swap interface \\
+\hline
+Exact public depth-two conclusion
+& Corollary~\ref{cor:exact-depth-two}
+& conditional on adequacy
+& exact-depth wrappers plus replacement and chronology modules
+& adequacy bridge for public signatures; factorization for the window claim \\
+\hline
+Counting recurrence
+& Section~\ref{sec:scaling}
+& conditional on adequacy
+& sparse/full-coupling recurrence and semantic scaling modules
+& full-coupling assumptions and the adequacy reading of \(\mu\) \\
+\hline
+Concrete SMod surface instance
+& Section~3
+& fully mechanized
+& modal surface modules and smoke tests
+& this concrete surface calculus only \\
+\hline
+Broad transfer to arbitrary cubical languages
+& non-claim
+& conditional on adequacy
+& no theorem in this artifact
+& external parser/elaborator and semantic adequacy theorem required \\
+\hline
+Final archival tag and DOI
+& release metadata
+& paper-only
+& release scripts and Zenodo package
+& final tagged artifact, after this paper revision \\
 \hline
 \end{tabular}
 \end{center}
@@ -3290,11 +3361,12 @@ Recurrence & Section~6 & checked arithmetic/conditional
 The trusted base consists of the Agda kernel with cubical support, the pinned
 Cubical Agda library used by the repository, the fixed raw extension-calculus
 records that define \(C_{\mathrm{ext}}\), and the small arithmetic layer used by
-the counting corollary.  A postulate-free theorem-facing module means that the
-encoded claim checks without local postulates or local primitive declarations,
-apart from the imported cubical primitives in the selected library.  It does not
-by itself claim that every surface language or every cubical foundation
-instantiates the fixed interface.
+the counting corollary.  The theorem map audits the theorem-facing import
+closure for local postulates and local primitive declarations; imported cubical
+primitives remain part of the trusted library base.  A checked module therefore
+supports exactly the row in which it appears.  It does not by itself claim that
+every surface language or every cubical foundation instantiates the fixed
+interface.
 
 The archived artifact contains the paper source, Agda modules, theorem map,
 audit scripts, and case-study fixtures.  Reviewers can run the aggregate check
