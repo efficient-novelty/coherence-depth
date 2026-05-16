@@ -9,7 +9,7 @@ The LMCS paper source is:
 paper/1_coherence_depth_LMCS.tex
 ```
 
-The compiled 52-page submission PDF is:
+The compiled 47-page submission PDF is:
 
 ```text
 paper/1_coherence_depth_LMCS.pdf
@@ -24,7 +24,7 @@ submission source is the `_LMCS` file above.
 - `paper/`: LMCS paper source, compiled PDF, theorem-map TeX source,
   bibliography, LMCS class file, and submission helper notes.
 - `agda/`: theorem-facing Cubical Agda development and smoke tests.
-- `docs/`: theorem index, trust boundary, and artifact guide.
+- `docs/`: theorem index and trust-boundary documentation.
 - `scripts/`: artifact checking, theorem-map checking, postulate audit, and
   case-study audit scripts.
 - `runs/coherence_depth_case_studies/`: YAML fixtures used by the audit script.
@@ -58,6 +58,18 @@ Agda 2.8.0 and Cubical Agda `cubical-0.9` at the commit recorded in
 
 ## Archival Citation
 
-The archival release tag and Zenodo DOI are still release-blocking metadata.
-After uploading this folder to Zenodo, cite the versioned Zenodo DOI in the
-paper and replace any development-only artifact URL with the archived record.
+Reserved Zenodo DOI:
+
+```text
+10.5281/zenodo.20235005
+```
+
+DOI URL:
+
+```text
+https://doi.org/10.5281/zenodo.20235005
+```
+
+The archival release tag and hosted artifact-check workflow URL are still
+release-blocking metadata.  After publishing the Zenodo draft, cite the
+versioned Zenodo DOI and record the final tag/workflow URL with the release.

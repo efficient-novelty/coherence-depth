@@ -1,13 +1,17 @@
 Coherence Depth Artifact
 ========================
 
-This repository is a compact artifact for the LMCS paper source
-paper/1_coherence_depth_LMCS.tex and the theorem-facing Cubical Agda code used
-by that paper.
+This repository is a compact artifact for the paper source
+paper/1_coherence_depth.tex and the theorem-facing Cubical Agda code used by
+that paper.
 
 The public artifact repository for this folder is:
 
   https://github.com/efficient-novelty/coherence-depth
+
+The reserved Zenodo DOI for the LMCS artifact is:
+
+  https://doi.org/10.5281/zenodo.20235005
 
 This artifact intentionally contains only the paper source, direct TeX
 dependencies, theorem-facing Agda modules, audit scripts, theorem-map
@@ -19,8 +23,6 @@ Directory layout
 
 paper/
   1_coherence_depth.tex
-  1_coherence_depth_LMCS.tex
-  1_coherence_depth_LMCS.pdf
   coherence_depth_refs.bib
   lmcs.cls
 
@@ -151,10 +153,10 @@ Paper build
 From PowerShell:
 
   cd C:\dev\coherence-depth\paper
-  pdflatex -interaction=nonstopmode -halt-on-error 1_coherence_depth_LMCS.tex
-  bibtex 1_coherence_depth_LMCS
-  pdflatex -interaction=nonstopmode -halt-on-error 1_coherence_depth_LMCS.tex
-  pdflatex -interaction=nonstopmode -halt-on-error 1_coherence_depth_LMCS.tex
+  pdflatex -interaction=nonstopmode -halt-on-error 1_coherence_depth.tex
+  bibtex 1_coherence_depth
+  pdflatex -interaction=nonstopmode -halt-on-error 1_coherence_depth.tex
+  pdflatex -interaction=nonstopmode -halt-on-error 1_coherence_depth.tex
 
 
 Trust boundary

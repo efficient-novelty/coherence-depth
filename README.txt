@@ -9,6 +9,10 @@ The public artifact repository for this folder is:
 
   https://github.com/efficient-novelty/coherence-depth
 
+The reserved Zenodo DOI for the LMCS artifact is:
+
+  https://doi.org/10.5281/zenodo.20235005
+
 This artifact intentionally contains only the paper source, direct TeX
 dependencies, theorem-facing Agda modules, audit scripts, theorem-map
 documentation, and small case-study fixtures.

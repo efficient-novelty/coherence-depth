@@ -93,6 +93,26 @@ status strings.
 | `thm:full-coupling-affine-recurrence` | `FullCoupling`, `fullCouplingIso`, `full-coupling-window-iso`, `full-coupling-affine-recurrence`, `universal-affine-recurrence` | `conditional on adequacy` for the paper's `mu` reading |
 | `cor:constant-payload-fibonacci` | `constant-payload-fibonacci-scaling`, `constant-payload-fibonacci-closed`, `Delta-bootstrap`, `U-bootstrap-closed` | `conditional on adequacy` for the paper's `mu` reading |
 
+## LMCS Compressed Labels
+
+The LMCS submission file `paper/1_coherence_depth_LMCS.tex` compresses several
+older theorem labels into a shorter proof spine. Its Section 7 table uses the
+same four status phrases as `paper-map.yaml`. For the first LMCS submission,
+`paper-map.yaml` remains the checker target for the full repository paper source;
+this table is the explicit bridge from compressed LMCS references back to the
+checked Agda surface.
+
+| LMCS label or reference | Primary Agda surface | Status |
+|---|---|---|
+| Section 2, `def:generated-structural-obligations` | `Metatheory.RawStructuralSyntax`, `Metatheory.RawStructuralTyping`, `Metatheory.SurfaceNormalizationBridge` | `fully mechanized` for the fixed raw calculus |
+| `def:obsig-real`, `thm:exact-stabilization` | `Metatheory.UpperBound`, `Semantics.DepthUpperBound`, `Semantics.ExactDepth` | `mechanized for an abstract interface` |
+| `lem:horn-open-box`, `lem:syntactic-horn-reduction` | `Metatheory.StructuralHornDecoding`, `Metatheory.HornOpenBox`, `Metatheory.StructuralHornToOpenBox`, `Metatheory.SurfaceToHornImage` | `mechanized for an abstract interface`; raw/surface readings use the bridge |
+| `thm:open-ext-contr`, `lem:open-box-substitution`, `lem:kan-contraction-horn-fibers` | `CubicalOpenBox.Extension`, `CubicalOpenBox.Contractible`, `CubicalOpenBox.Substitution` | `mechanized for an abstract interface`; total extension, not fixed-lid uniqueness |
+| `thm:higher-structural-derived-trace`, `thm:minimal-signature-elimination` | `Metatheory.NormalizationDerived`, `Metatheory.ReplaceDerivedField`, `Metatheory.ComputationalReplacement` | `conditional on adequacy` |
+| `thm:swap-obstruction` | `Metatheory.AdjunctionBarrier`, `Semantics.DepthLowerBound`, `Semantics.ExactDepth` | `fully mechanized` |
+| `cor:exact-depth-two` | exact-depth wrappers plus the replacement and chronology modules | `conditional on adequacy` for the public-signature and window readings |
+| Section 6 recurrence | `Metatheory.UniversalRecurrence`, `Metatheory.SparseDependencyRecurrence`, `Metatheory.FullCouplingEnvelope`, `Semantics.ScalingRecurrence`, `Semantics.FibonacciScaling` | `conditional on adequacy` |
+
 ## Theorem Names
 
 | Name | Module | Role |

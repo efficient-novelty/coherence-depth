@@ -5,21 +5,16 @@
 This turn completed the page-budget and packaging cleanup for
 `paper/1_coherence_depth_LMCS.tex`:
 
-- Kept the LMCS paper at 52 pages instead of forcing a 50-page compression pass,
-  because the remaining length is doing referee-facing work: fixed-calculus
-  definitions, expanded proof sketches, and the theorem-to-artifact audit.
-- Replaced the temporary length fallback with an explicit 52-page length
-  decision and editor-facing rationale in
-  `paper/lmcs_length_justification_fallback.md`.
-- Added a compact Section 6 notation table for `kappa_n`, `mu_n`, `b_n`, and
-  the depth window `d`, so the conditional recurrence cannot be confused with
-  the exact-depth theorem.
-- Removed the final archival tag/DOI row from the theorem-to-artifact table and
-  moved that point into prose as release metadata, not a theorem claim.
+- Kept the LMCS paper at 47 pages after the final compression/proof-contract
+  pass, below the earlier 50-page fallback target.
+- Updated the length note in `paper/lmcs_length_justification_fallback.md` to
+  match the current 47-page build.
+- Added compact proof contracts to the load-bearing theorem statements and
+  tightened related-work/scope wording.
 - Marked broad transfer to arbitrary cubical languages as a paper-only
   non-claim in the LMCS mechanization table.
-- Updated the Zenodo package metadata from 49 pages to 52 pages and synced the
-  package LMCS source/PDF/length note with the current root build.
+- Updated the Zenodo package metadata to 47 pages and synced the package
+  LMCS source/PDF/BibTeX output/length note with the current root build.
 
 Pre-existing worktree changes outside this turn were preserved:
 
@@ -30,7 +25,7 @@ Pre-existing worktree changes outside this turn were preserved:
 
 - `pdflatex -interaction=nonstopmode -halt-on-error 1_coherence_depth_LMCS.tex`
   passed twice from `paper/`.
-- The final LaTeX log reports `1_coherence_depth_LMCS.pdf (52 pages, 677610 bytes)`.
+- The final LaTeX log reports `1_coherence_depth_LMCS.pdf (47 pages, 648983 bytes)`.
 - The final LaTeX log has no undefined-reference or rerun warnings.
 - Remaining LaTeX layout warnings are accepted for now: small overfull boxes near
   the Section 3.1 heading and dependency lines, plus underfull boxes in narrow
@@ -40,14 +35,16 @@ Pre-existing worktree changes outside this turn were preserved:
 - `python scripts/check_paper_map.py paper-map.yaml` passed.
 - `bash scripts/check_coherence_depth_artifact.sh` passed, including Agda
   typechecking, theorem-map checking, postulate audit, and case-study audit.
+- `bash scripts/check_coherence_depth_artifact.sh` also passed from
+  `coherence_depth_zenodo/`, verifying the upload folder in place.
 - The root and Zenodo-package LMCS TeX/PDF hashes match after syncing.
 - `make artifact-check` could not be used because `make` is not installed in
   this PowerShell environment; the bash artifact script was used instead.
 
 ## Recommended Next Improvement Turn
 
-Focus on the final archival release loop.  This is the remaining work that
-should happen only once the DOI/tag decision is real.
+Focus on the final archival release loop.  The DOI is reserved; the remaining
+release-blocking decision is the final tag and hosted workflow URL.
 
 ### Target Files
 
@@ -62,15 +59,16 @@ should happen only once the DOI/tag decision is real.
 
 ### Detailed Plan
 
-1. Reserve the Zenodo DOI and choose the final archival tag name.
-   - Do not create a final tag until the DOI and release metadata are ready to
-     point at the same snapshot.
+1. Choose the final archival tag name.
+   - The reserved Zenodo DOI is `10.5281/zenodo.20235005`.
+   - Do not create a final tag until the release metadata are ready to point at
+     the same snapshot.
 
-2. Insert final DOI/tag metadata consistently.
-   - Update the LMCS paper text, Zenodo metadata, Zenodo README, and any
-     editor-facing length note that mentions archival status.
-   - Replace development-only artifact wording with the archived record once it
-     exists.
+2. Insert final tag metadata consistently.
+   - DOI metadata has been inserted in the LMCS paper text, Zenodo metadata,
+     Zenodo README, and root README.
+   - Replace any remaining development-only artifact wording with the archived
+     record once the release tag and hosted workflow URL exist.
 
 3. Rebuild and resync the archive package.
    - Run `pdflatex` twice from `paper/`.

@@ -45,6 +45,12 @@ The semantic interface records and wrappers themselves are now checked in
 `agda/Semantics/`, including the smoke modules
 `Test/SemanticDepthSmoke.agda` and `Test/FibonacciScalingSmoke.agda`.
 
+The LMCS paper and `paper-map.yaml` use the same four status phrases:
+`fully mechanized`, `mechanized for an abstract interface`,
+`conditional on adequacy`, and `paper-only`. The intended reading is
+theorem-by-theorem: a checked module supports the row in which it appears, not a
+blanket transfer theorem for all surface languages or all cubical foundations.
+
 ## Trusted Base
 
 - Agda 2.8.0 with Cubical support.

@@ -88,10 +88,10 @@ Progress tracker for revising `paper/1_coherence_depth_LMCS.tex` before the firs
 - [x] Ensure the Zenodo artifact contains the theorem map.
 - [x] Ensure the Zenodo artifact contains trust-boundary documentation.
 - [x] Ensure the Zenodo artifact contains exact check commands.
-- [x] Sync the Zenodo package LMCS source and PDF with the current 52-page build.
+- [x] Sync the Zenodo package LMCS source and PDF with the current 47-page build.
 - [ ] Freeze a tagged artifact release before Zenodo upload.
 - [ ] Ensure the Zenodo artifact points to the tagged release.
-- [ ] Replace the Zenodo DOI placeholder in the paper and release metadata once the DOI is reserved.
+- [x] Replace the Zenodo DOI placeholder in the paper and release metadata once the DOI is reserved.
 - [ ] Record the final hosted artifact-check workflow URL for the tagged archival commit.
 - [x] Decide whether final artifact checking should keep `paper-map.yaml` pointed at `paper/1_coherence_depth.tex` or add an LMCS-specific theorem-map target for `paper/1_coherence_depth_LMCS.tex`.
 
@@ -108,23 +108,23 @@ Progress tracker for revising `paper/1_coherence_depth_LMCS.tex` before the firs
 - [x] Use the running example in the horn/open-box explanation.
 - [x] Use the running example in the final summary.
 - [x] Replace broad mechanization prose with the theorem-to-artifact table.
-- [ ] Strengthen proof sketches for load-bearing results.
-- [ ] For each load-bearing theorem, state the exact input data.
-- [ ] For each load-bearing theorem, state the exact constructed output.
-- [ ] For each load-bearing theorem, state the induction principle used.
-- [ ] For each load-bearing theorem, state where cubical operations enter.
-- [ ] For each load-bearing theorem, state why only lower-arity dependencies are used.
-- [ ] For each load-bearing theorem, state artifact status.
-- [ ] For each load-bearing theorem, state what would fail without it.
-- [ ] Cut repeated scope disclaimers.
-- [ ] Compress rhetorical terminology not used in theorem statements.
+- [x] Strengthen proof sketches for load-bearing results.
+- [x] For each load-bearing theorem, state the exact input data.
+- [x] For each load-bearing theorem, state the exact constructed output.
+- [x] For each load-bearing theorem, state the induction principle used.
+- [x] For each load-bearing theorem, state where cubical operations enter.
+- [x] For each load-bearing theorem, state why only lower-arity dependencies are used.
+- [x] For each load-bearing theorem, state artifact status.
+- [x] For each load-bearing theorem, state what would fail without it.
+- [x] Cut repeated scope disclaimers.
+- [x] Compress rhetorical terminology not used in theorem statements.
 - [x] Move detailed artifact instructions to repository or Zenodo documentation.
 - [x] Review remaining LaTeX overfull boxes before final submission, especially the displayed grammar around lines 482 and 2394 in the LMCS source.
-- [x] Reassess the LMCS page budget after the mechanization table increased the compiled PDF to 52 pages.
+- [x] Reassess the LMCS page budget after the mechanization table increased the compiled PDF.
 - [x] Decide whether the theorem-to-artifact table should stay in the main LMCS text if the final page budget target is stricter than 51 pages.
 - [x] Resolve or explicitly accept the remaining minor LaTeX layout warnings around the Section 3.1 heading, narrow role tables, and theorem-to-artifact status table.
 - [x] Return to abstract, introduction, and conclusion after the core proof is stable.
-- [x] Prepare either a final 50-page compression pass or an editor-facing length note if the LMCS PDF remains at 52 pages.
+- [x] Prepare the final sub-50-page LMCS compression pass and keep an editor-facing length note.
 - [x] Keep release metadata out of the theorem-to-artifact table.
 
 ## Conditional Recurrence and Accounting
@@ -145,7 +145,7 @@ Progress tracker for revising `paper/1_coherence_depth_LMCS.tex` before the firs
 - [x] Add or revise Section 1.1: motivation, payload vs public structural trace.
 - [x] Add or revise Section 1.2: main result for the fixed calculus.
 - [x] Add or revise Section 1.3: scope, non-goals, and mechanization boundary.
-- [ ] Add or revise Section 1.4: related work.
+- [x] Add or revise Section 1.4: related work.
 - [x] Add or revise Section 2: fixed sealed-extension calculus `C_ext`.
 - [x] Add or revise Section 2.1: cubical core assumptions.
 - [x] Add or revise Section 2.2: raw sealed declarations and public signatures.

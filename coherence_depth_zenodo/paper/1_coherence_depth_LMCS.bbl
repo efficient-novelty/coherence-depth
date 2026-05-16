@@ -121,11 +121,6 @@ David~B. MacQueen.
 \newblock \href {https://doi.org/10.1145/800055.802036}
   {\path{doi:10.1145/800055.802036}}.
 
-\bibitem[ML84]{martinlof-itt}
-Per Martin-L{\"o}f.
-\newblock {\em Intuitionistic Type Theory}.
-\newblock Bibliopolis, 1984.
-
 \bibitem[SAG22]{xtt}
 Jonathan Sterling, Carlo Angiuli, and Daniel Gratzer.
 \newblock A cubical language for bishop sets.
