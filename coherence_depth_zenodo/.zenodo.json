@@ -1,7 +1,7 @@
 {
   "title": "Coherence Depth Two for Cubical Sealed Extensions: LMCS Artifact",
   "upload_type": "software",
-  "description": "Artifact package for the LMCS submission version of the coherence-depth paper, including the 49-page LMCS paper source and PDF, theorem-facing Cubical Agda code, theorem map, audit scripts, trust-boundary documentation, and case-study fixtures.",
+  "description": "Artifact package for the LMCS submission version of the coherence-depth paper, including the 52-page LMCS paper source and PDF, theorem-facing Cubical Agda code, theorem map, audit scripts, trust-boundary documentation, and case-study fixtures.",
   "creators": [
     {
       "name": "Lande, Halvor",

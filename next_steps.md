@@ -2,94 +2,99 @@
 
 ## Current Handoff
 
-This turn focused on the final reader-facing LMCS polish pass for
+This turn completed the page-budget and packaging cleanup for
 `paper/1_coherence_depth_LMCS.tex`:
 
-- Added a single running two-point/swap example in the introduction and reused
-  it in the payload/trace discussion, the lower-bound section, the depth-three
-  open-box explanation, and the conclusion.
-- Kept the example technically honest: the constant-left branch proves the
-  unary-vs-binary lower bound, while the swap-respecting branch is the one used
-  to explain later generated horn/open-box obligations.
-- Rechecked the abstract/introduction/conclusion alignment and changed the
-  contribution wording so Section 6 is consistently a conditional accounting
-  corollary, not part of the exact-depth theorem.
-- Clarified the Section 6 counting convention inline: `kappa_n` is a payload
-  basis summand, `mu_n` is counted only after derived replacement, and missing
-  earlier indices are zero.
-- Added an explicit fixture-name sentence in the mechanization section
-  distinguishing full-coupling examples, sparse local growth, zero-footprint
-  transparent growth, and higher payload that is not structural trace.
-- Audited the remaining artifact-polish checklist items. The Agda/OpenExt names
-  already expose total extension rather than arbitrary filler uniqueness, and
-  the Zenodo package already contains the theorem map, trust-boundary docs, and
-  exact check commands.
-- Decided to keep the theorem-to-artifact table in the LMCS text despite the
-  narrow-cell warnings because it is the cleanest audit surface for referees.
+- Kept the LMCS paper at 52 pages instead of forcing a 50-page compression pass,
+  because the remaining length is doing referee-facing work: fixed-calculus
+  definitions, expanded proof sketches, and the theorem-to-artifact audit.
+- Replaced the temporary length fallback with an explicit 52-page length
+  decision and editor-facing rationale in
+  `paper/lmcs_length_justification_fallback.md`.
+- Added a compact Section 6 notation table for `kappa_n`, `mu_n`, `b_n`, and
+  the depth window `d`, so the conditional recurrence cannot be confused with
+  the exact-depth theorem.
+- Removed the final archival tag/DOI row from the theorem-to-artifact table and
+  moved that point into prose as release metadata, not a theorem claim.
+- Marked broad transfer to arbitrary cubical languages as a paper-only
+  non-claim in the LMCS mechanization table.
+- Updated the Zenodo package metadata from 49 pages to 52 pages and synced the
+  package LMCS source/PDF/length note with the current root build.
+
+Pre-existing worktree changes outside this turn were preserved:
+
+- `check_list.md` is deleted in the worktree.
+- `paper_improvement_plan.md` is modified in the worktree.
 
 ## Verification Completed This Turn
 
-- `python scripts/check_paper_map.py paper-map.yaml` passed.
-- `git diff --check -- paper/1_coherence_depth_LMCS.tex checklist.md next_steps.md`
-  passed.
 - `pdflatex -interaction=nonstopmode -halt-on-error 1_coherence_depth_LMCS.tex`
-  passed twice from `paper/` after the paper edits.
+  passed twice from `paper/`.
+- The final LaTeX log reports `1_coherence_depth_LMCS.pdf (52 pages, 677610 bytes)`.
 - The final LaTeX log has no undefined-reference or rerun warnings.
-- The compiled PDF is currently 52 pages. Remaining layout warnings are accepted
-  for now: small overfull hboxes around the Section 3.1 heading, the main
-  Section 5 slogan/dependency lines, and narrow cells in the theorem-to-artifact
-  table, plus underfull boxes in dense role/table material.
-- Pre-existing worktree changes outside this turn were preserved:
-  - `check_list.md` is deleted in the worktree.
-  - `paper_improvement_plan.md` is modified in the worktree.
+- Remaining LaTeX layout warnings are accepted for now: small overfull boxes near
+  the Section 3.1 heading and dependency lines, plus underfull boxes in narrow
+  role/theorem-map table cells.
+- `git diff --check` passed for the edited paper, package, checklist, and
+  length-note files.
+- `python scripts/check_paper_map.py paper-map.yaml` passed.
+- `bash scripts/check_coherence_depth_artifact.sh` passed, including Agda
+  typechecking, theorem-map checking, postulate audit, and case-study audit.
+- The root and Zenodo-package LMCS TeX/PDF hashes match after syncing.
+- `make artifact-check` could not be used because `make` is not installed in
+  this PowerShell environment; the bash artifact script was used instead.
 
 ## Recommended Next Improvement Turn
 
-Focus on final submission packaging and the last page-budget decision.
+Focus on the final archival release loop.  This is the remaining work that
+should happen only once the DOI/tag decision is real.
 
 ### Target Files
 
 - `paper/1_coherence_depth_LMCS.tex`
+- `paper/lmcs_length_justification_fallback.md`
 - `coherence_depth_zenodo/README_ZENODO.md`
 - `coherence_depth_zenodo/.zenodo.json`
+- `coherence_depth_zenodo/paper/1_coherence_depth_LMCS.tex`
+- `coherence_depth_zenodo/paper/1_coherence_depth_LMCS.pdf`
 - `checklist.md`
 - `next_steps.md`
-- optionally `README.txt` and `docs/coherence_depth_trust_boundary.md` if the
-  final release instructions change
 
 ### Detailed Plan
 
-1. Make the final page-budget decision.
-   - If the target is a hard 50 pages, do a compression pass aimed at 2 pages:
-     shorten Section 6 further, move the final archival-tag row out of the
-     theorem-to-artifact table, and compress repeated scope prose.
-   - If 52 pages is acceptable for first submission, prepare a short
-     editor-facing length note explaining that the extra space is used for the
-     mechanization boundary and theorem-to-artifact audit.
+1. Reserve the Zenodo DOI and choose the final archival tag name.
+   - Do not create a final tag until the DOI and release metadata are ready to
+     point at the same snapshot.
 
-2. Finish archival metadata.
-   - Reserve or insert the Zenodo DOI.
-   - Ensure `.zenodo.json`, `README_ZENODO.md`, the paper source, and the final
-     PDF all agree on title, authorship, repository URL, and version.
-   - Make sure the artifact points to the final tagged release rather than only
-     the moving development repository.
+2. Insert final DOI/tag metadata consistently.
+   - Update the LMCS paper text, Zenodo metadata, Zenodo README, and any
+     editor-facing length note that mentions archival status.
+   - Replace development-only artifact wording with the archived record once it
+     exists.
 
-3. Run the full artifact gate on the final commit.
-   - `make artifact-check` or `bash scripts/check_coherence_depth_artifact.sh`.
-   - `python scripts/check_paper_map.py paper-map.yaml`.
-   - `python scripts/audit_postulates.py agda paper-map.yaml`.
-   - Record the hosted GitHub Actions artifact-check URL once the tag is pushed.
-
-4. Do one final PDF pass.
+3. Rebuild and resync the archive package.
    - Run `pdflatex` twice from `paper/`.
-   - Check there are no undefined references.
-   - Reassess Type 3/font extraction if the submission system complains.
+   - Copy the final LMCS TeX/PDF into `coherence_depth_zenodo/paper/`.
+   - Recheck that root and package hashes match.
+
+4. Run the final gates and publish the archival snapshot.
+   - Run `bash scripts/check_coherence_depth_artifact.sh`.
+   - Push the final commit and tag.
+   - Wait for the hosted GitHub Actions artifact-check run on the tag, then
+     record the final workflow URL in the checklist or release notes.
+
+5. Do one last proof/layout sanity pass if time permits.
+   - Revisit the remaining unchecked proof-sketch audit items in `checklist.md`.
+   - Reassess the small LaTeX overfull/underfull warnings only if the DOI/tag
+     edits disturb layout.
 
 ## Acceptance Criteria For Next Turn
 
-- The page-count decision is explicit: compressed to target or accompanied by a
-  clear length rationale.
-- The paper and Zenodo metadata contain the final DOI/tag information.
-- The full artifact check passes locally and, if possible, on GitHub Actions for
-  the tagged archival commit.
-- `checklist.md` contains only release-blocking or deliberately deferred items.
+- The paper, Zenodo metadata, and archive README agree on DOI, tag, title,
+  authorship, repository URL, and version.
+- The final root LMCS TeX/PDF and Zenodo-package copies are byte-identical.
+- The local artifact check passes on the final release commit.
+- The hosted GitHub Actions artifact-check URL for the tagged archival commit is
+  recorded.
+- `checklist.md` contains only deliberately deferred proof-polish items or
+  post-submission follow-up.

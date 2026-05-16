@@ -9,7 +9,7 @@ The LMCS paper source is:
 paper/1_coherence_depth_LMCS.tex
 ```
 
-The compiled 49-page submission PDF is:
+The compiled 52-page submission PDF is:
 
 ```text
 paper/1_coherence_depth_LMCS.pdf
@@ -58,5 +58,6 @@ Agda 2.8.0 and Cubical Agda `cubical-0.9` at the commit recorded in
 
 ## Archival Citation
 
+The archival release tag and Zenodo DOI are still release-blocking metadata.
 After uploading this folder to Zenodo, cite the versioned Zenodo DOI in the
 paper and replace any development-only artifact URL with the archived record.

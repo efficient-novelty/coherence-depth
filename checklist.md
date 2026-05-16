@@ -88,6 +88,7 @@ Progress tracker for revising `paper/1_coherence_depth_LMCS.tex` before the firs
 - [x] Ensure the Zenodo artifact contains the theorem map.
 - [x] Ensure the Zenodo artifact contains trust-boundary documentation.
 - [x] Ensure the Zenodo artifact contains exact check commands.
+- [x] Sync the Zenodo package LMCS source and PDF with the current 52-page build.
 - [ ] Freeze a tagged artifact release before Zenodo upload.
 - [ ] Ensure the Zenodo artifact points to the tagged release.
 - [ ] Replace the Zenodo DOI placeholder in the paper and release metadata once the DOI is reserved.
@@ -123,7 +124,8 @@ Progress tracker for revising `paper/1_coherence_depth_LMCS.tex` before the firs
 - [x] Decide whether the theorem-to-artifact table should stay in the main LMCS text if the final page budget target is stricter than 51 pages.
 - [x] Resolve or explicitly accept the remaining minor LaTeX layout warnings around the Section 3.1 heading, narrow role tables, and theorem-to-artifact status table.
 - [x] Return to abstract, introduction, and conclusion after the core proof is stable.
-- [ ] Prepare either a final 50-page compression pass or an editor-facing length note if the LMCS PDF remains at 52 pages.
+- [x] Prepare either a final 50-page compression pass or an editor-facing length note if the LMCS PDF remains at 52 pages.
+- [x] Keep release metadata out of the theorem-to-artifact table.
 
 ## Conditional Recurrence and Accounting
 
@@ -133,7 +135,7 @@ Progress tracker for revising `paper/1_coherence_depth_LMCS.tex` before the firs
 - [x] Add an explicit non-goal paragraph for ordinary transparent library growth.
 - [x] Audit recurrence indexing conventions.
 - [x] Audit payload counting conventions.
-- [ ] Add a notation table for accounting symbols.
+- [x] Add a notation table for accounting symbols.
 - [x] Separate the recurrence corollary from the exact-depth theorem.
 - [x] Demote recurrence to a conditional accounting corollary.
 

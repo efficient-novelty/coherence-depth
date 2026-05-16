@@ -3215,9 +3215,22 @@ local dependency notion, while full coupling is a maximal accounting envelope.
 counted only after derived replacement; missing earlier indices are read as
 zero.
 
+\begin{center}
+\small
+\begin{tabular}{p{0.16\linewidth}p{0.56\linewidth}p{0.18\linewidth}}
+\hline
+Symbol & Meaning & Counted as primitive trace? \\
+\hline
+\(\kappa_n\) & payload basis exported by \(L_n\) & no, payload basis \\
+\(\mu_n\) & primitive trace cost after replacement and normalization & yes \\
+\(b_n\) & active primitive basis available to the next layer & only through selected trace sites \\
+\(d\) & chronological window supplied before accounting starts & no \\
+\hline
+\end{tabular}
+\end{center}
+
 \begin{defi}[Layerwise quantities and active basis]
-For layer \(n\), write \(\kappa_n\) for payload size, \(\mu_n\) for primitive
-trace cost, and \(b_n\) for active basis size.  Under a depth-\(d\) window,
+Under a depth-\(d\) window, the active basis size is
 \[
   b_n = \kappa_n + \sum_{i=1}^{d} \mu_{n-i}
 \]
@@ -3346,15 +3359,9 @@ Concrete SMod surface instance
 \hline
 Broad transfer to arbitrary cubical languages
 & non-claim
-& conditional on adequacy
+& paper-only
 & no theorem in this artifact
 & external parser/elaborator and semantic adequacy theorem required \\
-\hline
-Final archival tag and DOI
-& release metadata
-& paper-only
-& release scripts and Zenodo package
-& final tagged artifact, after this paper revision \\
 \hline
 \end{tabular}
 \end{center}
@@ -3380,7 +3387,9 @@ diagnostic: \texttt{universe-extension-summary} and
 \texttt{transparent-lemma-summary} is a zero-footprint transparent addition,
 and \texttt{higher-payload-summary} records higher user payload that is not
 structural trace.  The development repository is not the archival citation; the
-LMCS submission should cite the Zenodo release DOI once reserved.
+LMCS submission should cite the Zenodo release DOI once reserved.  The final
+archival tag, DOI, and hosted artifact-check URL are release metadata, not
+additional theorem claims.
 
 
 \section{Conclusion}
