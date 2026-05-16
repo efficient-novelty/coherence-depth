@@ -475,9 +475,9 @@ The fixed calculus is specified by the following judgments:
   B\vdash \mathrm{Seal}(e):\mathrm{Layer} &&& \text{opaque sealing},\\
   B\vdash N(e):\mathrm{NormSig} &&& \text{normalized public signatures},\\
   B\vdash \phi:\mathrm{RawField} &&& \text{selected public fields before classification},\\
-  B\vdash \mathrm{class}(\phi)\in\{\mathrm{primitive},\mathrm{derived}\}
-    &&& \text{classification after witnessed replacement and normalization},\\
-  B\vdash \mathrm{Supp}(\phi)=S &&& \text{historical support of a field}. 
+  B\vdash \mathrm{class}(\phi)\in\{\Prim,\Der\}
+    &&& \text{post-replacement class},\\
+  B\vdash \Supp(\phi)=S &&& \text{historical support}.
 \end{array}
 \]
 An admissible declaration is therefore not just a syntactic tuple.  Its payload, action
@@ -697,6 +697,7 @@ declaration \(e\) determines such a candidate by elaboration.
 \end{defi}
 
 \begin{defi}[Counting normal form and atomic schemas]
+\label{def:counting-normal-form}
 Every public interface in this paper is counted only up to canonical telescope isomorphism:
 reassociation and flattening of iterated dependent sums, splitting or rebundling a
 single-constructor record into nested records, and currying or uncurrying iterated function
@@ -797,16 +798,14 @@ of atomic exported schemas in the counting normal form of its public interface a
 for its core payload size.  The indexing is chosen so that \(\Delta_k\) denotes the sealing cost
 of \(L_k\).
 
-\begin{prop}[Transparent user-level code lies outside the recurrence]
-Let \(U\) be a family of transparent definitions, lemmas, or record packages over \(B\) whose
-symbols are definitionally reducible using the existing operational semantics and are not
-promoted to a new opaque exported layer.  Then \(U\) contributes zero integration latency and
-does not alter the active interface seen by later sealing steps.
-\end{prop}
-Indeed, such a development creates no new irreducible interaction site against the exported
-interface: all reductions remain inherited from the pre-existing library, and no new opaque
-generators are added to the global interface telescope.  It is ordinary growth inside one
-state, not a state transition of the form \(B_n\rightsquigarrow B_{n+1}\).
+\paragraph{Transparent user-level code.}
+A family \(U\) of transparent definitions, lemmas, or record packages over \(B\) lies outside
+the recurrence when its symbols are definitionally reducible using the existing operational
+semantics and are not promoted to a new opaque exported layer.  Such a development contributes
+zero integration latency and does not alter the active interface seen by later sealing steps:
+all reductions remain inherited from the pre-existing library, and no new opaque generators are
+added to the global interface telescope.  It is ordinary growth inside one state, not a state
+transition of the form \(B_n\rightsquigarrow B_{n+1}\).
 
 \begin{defi}[Foundational core extension]
 A candidate \(X\) over \(B_n\) is a \emph{foundational core extension} if its payload package is
@@ -820,6 +819,7 @@ interfaces whose exported action is library-wide.
 \end{defi}
 
 \begin{rem}
+\label{rem:sparse-extensions}
 Not every sealed extension is foundational in the sense of the previous definition.  A new
 datatype or API layer may be orthogonal to much of the existing library and therefore require
 only sparse interaction data.  Such extensions may preserve canonicity without becoming
@@ -855,6 +855,7 @@ The tags matter: if two layers happen to export isomorphic-looking fields, they 
 different public sites unless the normalized sealed interface identifies them.
 
 \begin{defi}[Primitive classes and basis families]
+\label{def:primitive-bases}
 For each sealed layer \(L\), let
 \[
   \operatorname{PrimClasses}(S(L))
@@ -863,7 +864,7 @@ be the finite set of primitive normal-form classes of the normalized public sign
 \(L\).  Two primitive fields represent the same class exactly when counting normalization
 identifies them by transparent generation, definitional equality, uniform polymorphic
 instantiation, transport along already exported equalities, or the generic structural
-operations quotiented in Definition~2.7.
+operations quotiented in Definition~\ref{def:counting-normal-form}.
 
 A \emph{basis family} \(S_{\mathrm{bas}}(L)\) is a chosen transversal of
 \(\operatorname{PrimClasses}(S(L))\), that is, one representative primitive field from each
@@ -877,8 +878,10 @@ Its elements are the basis sites on which a globally acting extension is primiti
 \end{defi}
 
 \begin{thm}[Canonical primitive classes determine bases]
+\label{thm:canonical-bases}
 For every sealed layer \(L\) in counting normal form, basis families in the sense of
-Definition~2.18 exist.  If \(S_{\mathrm{bas}}(L)\) and \(S'_{\mathrm{bas}}(L)\) are two such basis
+Definition~\ref{def:primitive-bases} exist.  If \(S_{\mathrm{bas}}(L)\) and
+\(S'_{\mathrm{bas}}(L)\) are two such basis
 families, then projection to primitive normal-form classes identifies a canonical bijection
 \[
   S_{\mathrm{bas}}(L) \cong S'_{\mathrm{bas}}(L).
@@ -897,15 +900,14 @@ the normalization theorem of Section~3; this isomorphism preserves witnessed pri
 classifications and transparent-generation classes.  Thus the invariant is the primitive
 normal-form class set itself, not an arbitrary minimal generating family.
 
-\begin{lem}[Primitive basis invariants]
+\paragraph{Primitive basis invariants.}
 For every sealed layer \(L\) and every presentation-equivalent replacement \(L'\), the finite
 primitive class set, any basis-family cardinality, and the historical support and arity of every
-primitive trace field are canonically invariant.
-\end{lem}
-This follows by transporting along the canonical isomorphism of normalized public
-signatures: Theorem~2.19 identifies basis families with primitive normal-form class sets, and
-the normalization theorem of Section~3 preserves primitive/derived classifications,
-transparent-generation classes, and opaque layer identifiers.
+primitive trace field are canonically invariant.  This follows by transporting along the
+canonical isomorphism of normalized public signatures: Theorem~\ref{thm:canonical-bases}
+identifies basis families with primitive normal-form class sets, and the normalization theorem
+of Section~3 preserves primitive/derived classifications, transparent-generation classes, and
+opaque layer identifiers.
 
 \subsection{Global action, basis coverage, and canonical minimality}
 
@@ -917,14 +919,16 @@ coverage and minimality turn it into a precise trace count.
 \begin{defi}[Basis coverage and canonical basis minimality]
 An admissible foundational core candidate sealed against \(I_n^{(k)}\) has \emph{basis
 coverage} if, for any historical basis \(I_{n,\mathrm{bas}}^{(k)}\) supplied by
-Definition~2.18, every basis site receives at least one primitive interaction datum from the
-new extension.  It is in \emph{canonical basis-minimal form} if, again for any such historical
+Definition~\ref{def:primitive-bases}, every basis site receives at least one primitive
+interaction datum from the new extension.  It is in \emph{canonical basis-minimal form} if,
+again for any such historical
 basis, after elaboration and normalization each basis site contributes at most one irreducible
-public trace schema.  By Theorem~2.19, these properties do not depend on which basis family
-is chosen.
+public trace schema.  By Theorem~\ref{thm:canonical-bases}, these properties do not depend on
+which basis family is chosen.
 \end{defi}
 
 \begin{defi}[Active footprint and full coupling judgment]
+\label{def:full-coupling}
 For a state \(B_n\) and a depth \(d\), an \emph{active footprint} is a finite subset
 \[
   \mathrm{Foot}^{(d)}_n \subseteq I_{n,\mathrm{bas}}^{(d)}.
@@ -944,6 +948,7 @@ footprints remain available for ordinary local or orthogonal growth.
 \end{defi}
 
 \begin{rem}[Trace-counting convention]
+\label{rem:trace-counting-convention}
 The recurrence uses one trace schema per active basis site per sealed layer.  A trace schema
 may be a dependent record packaging the behavior of the whole new payload telescope at that
 site; the individual clauses inside that package are not counted separately after bundling and
@@ -954,20 +959,23 @@ bundled per-site convention.
 \end{rem}
 
 \begin{defi}[Fully coupled foundation]
+\label{def:fully-coupled-foundation}
 A foundation is \emph{fully coupled} if the admissible sealed extensions under study are
-foundational core extensions satisfying the full-coupling judgment of Definition~2.22 at the
+foundational core extensions satisfying the full-coupling judgment of
+Definition~\ref{def:full-coupling} at the
 relevant depth.  Equivalently, the paper's fully coupled declarations are globally acting
 payload packages whose intended coupling footprint is the whole active historical basis, not
 orthogonal additions with sparse dependency patterns.  This definition fixes the scope of the
 action as a hypothesis.  The coverage and minimality theorems below derive the exact
 irreducible primitive interaction data required to realize that action under the bundled
-per-site trace convention of Remark~2.23.
+per-site trace convention of Remark~\ref{rem:trace-counting-convention}.
 \end{defi}
 
 The next theorem turns basis coverage into a metatheoretic necessity for this globally coupled
 regime rather than a stylistic choice.
 
 \begin{thm}[Full-coupling coverage in the fixed native-totality record]
+\label{thm:full-coupling-coverage}
 Let \(B_n\) be a library state in a fully coupled foundation, let \(X\) be an admissible
 foundational core extension sealed against the historical interface \(I_n^{(k)}\), and let
 \(I_{n,\mathrm{bas}}^{(k)}\) be any historical basis for that interface.  If the extended theory is
@@ -979,18 +987,19 @@ the exported global interface.
 \end{thm}
 
 \begin{proof}
-By Definition~2.24, the admissible candidates considered here are not arbitrary sealed
-additions but foundational core extensions whose payload is intended to act on the whole
-active interface.  The theorem is therefore about that global regime only; orthogonal
-extensions of the kind noted in Remark~2.16 are outside its hypotheses.
+By Definition~\ref{def:fully-coupled-foundation}, the admissible candidates considered here
+are not arbitrary sealed additions but foundational core extensions whose payload is intended
+to act on the whole active interface.  The theorem is therefore about that global regime only;
+orthogonal extensions of the kind noted in Remark~\ref{rem:sparse-extensions} are outside its
+hypotheses.
 
 First consider a native global computational extension.  In a Tarski-style universe
 presentation~\cite{martinlof-itt}, suppose the active interface exports a code universe \(U\)
 and a decoding map
 \(\operatorname{El}:U\to\mathrm{Type}\).  If the new sealed layer extends the universe with a
 fresh code but the extended decoding machinery omits one basis site of the active interface,
-then by Definition~2.18 there remains a family of raw exported generators whose behavior is
-not recovered from the remaining primitive clauses by definitional equality, polymorphic
+then by Definition~\ref{def:primitive-bases} there remains a family of raw exported generators
+whose behavior is not recovered from the remaining primitive clauses by definitional equality, polymorphic
 instantiation, transport, or generic structural operations.  Closed terms mentioning that
 uncovered family no longer reduce through the advertised global operator, so the extension
 is not total on the active interface it claims to cover.  In the native case this appears as a
@@ -1003,12 +1012,13 @@ exhaustiveness of the exported global interface.  If the package is advertised a
 library-wide action, its public typing judgment is a total dependent map out of the record
 enumerating the active interface.  Omitting one basis site leaves an irreducible family of
 cases uncovered, because that site's action is not derivable from the other clauses by the
-transparent operations built into Definition~2.18.  Later sealing steps cannot therefore treat
-the package as a closed global operation.  Thus promoted packages also require at least one
-primitive witness for every basis site of \(I_{n,\mathrm{bas}}^{(k)}\).
+transparent operations built into Definition~\ref{def:primitive-bases}.  Later sealing steps
+cannot therefore treat the package as a closed global operation.  Thus promoted packages also
+require at least one primitive witness for every basis site of \(I_{n,\mathrm{bas}}^{(k)}\).
 \end{proof}
 
 \begin{prop}[Canonical normalized presentations are basis-minimal]
+\label{prop:basis-minimal}
 Let \(e\) be an admissible surface extension declaration over \(B_n\) whose candidate
 \(X(e)\) is sealed against the historical interface \(I_n^{(k)}\), and let
 \(I_{n,\mathrm{bas}}^{(k)}\) be any historical basis for that interface.  Then the normalized public
@@ -1031,9 +1041,9 @@ Let \(B_n\) be a library state, let \(e\) be an admissible foundational core dec
 \[
   B_n \vdash e\;\mathrm{fully\mbox{-}coupled}(k)
 \]
-in the sense of Definition~2.22.  Let \(X(e)\) be its elaborated candidate and let
-\(I_{n,\mathrm{bas}}^{(k)}\) be any historical basis for the active interface.  Under the bundled
-per-site convention of Remark~2.23,
+in the sense of Definition~\ref{def:full-coupling}.  Let \(X(e)\) be its elaborated candidate
+and let \(I_{n,\mathrm{bas}}^{(k)}\) be any historical basis for the active interface.  Under the bundled
+per-site convention of Remark~\ref{rem:trace-counting-convention},
 \[
   \Delta(X(e)\mid B_n)
   = |\mathrm{Foot}^{(k)}_{n,\mathrm{full}}|
@@ -1041,13 +1051,14 @@ per-site convention of Remark~2.23,
 \]
 In particular, sealing cost counts irreducible basis clauses rather than the raw number of
 exported generators, and the right-hand side is independent of the chosen basis family by
-Theorem~2.19.
+Theorem~\ref{thm:canonical-bases}.
 \end{thm}
 
 The proof just combines the preceding coverage and minimality facts.  The judgment
 \(B_n\vdash e\;\mathrm{fully\mbox{-}coupled}(k)\) identifies the active footprint with
-\(I_{n,\mathrm{bas}}^{(k)}\).  Theorem~2.25 supplies at least one primitive interaction datum
-per basis site, and Proposition~2.26 leaves at most one irreducible schema per basis site in
+\(I_{n,\mathrm{bas}}^{(k)}\).  Theorem~\ref{thm:full-coupling-coverage} supplies at least one
+primitive interaction datum per basis site, and Proposition~\ref{prop:basis-minimal} leaves at
+most one irreducible schema per basis site in
 canonical normal form.  Since \(\Delta(X(e)\mid B_n)\) counts those irreducible primitive
 obligations, the displayed cardinality identity follows.
 
@@ -1330,28 +1341,24 @@ The theorem explains why the later sections can stop mentioning surface syntax. 
 declaration has crossed the adequacy bridge, all remaining claims are claims about normalized
 public signatures and their induced structural obligations.
 
-\begin{prop}[Necessity of irreducible public fields]
+\paragraph{Irreducible public fields.}
 Let \(e\) be an admissible surface extension over \(B_n\), and let \(\phi\) be an irreducible
 field of \(N(e)\).  If \(e'\approx e\), then \(N(e')\) contains a canonically corresponding
 irreducible field \(\phi'\).  Equivalently, no presentation-equivalent declaration can delete an
 irreducible payload or primitive trace schema from the sealed public signature.
-\end{prop}
-
 This is immediate from the definition of presentation equivalence: it identifies elaborated
 sealed extensions only up to definitional equality, canonical telescope isomorphism, and
 transparent internal normalization.  If \(\phi\) were absent from \(N(e')\), then \(e'\) would
 either omit a public field present in \(e\), contradicting \(e'\approx e\), or reconstruct
 \(\phi\) uniformly from the remaining exported data, contradicting irreducibility.
 
-\begin{prop}[Canonical normalized presentations]
+\paragraph{Canonical normalized presentations.}
 If \(e\approx e'\), then \(N(e)\) and \(N(e')\) are canonically isomorphic, and their trace
 parts are canonically isomorphic.  Consequently every presentation-equivalence class admits a
 canonical normalized public signature up to isomorphism, and
 \[
   \mu(e)=\left|\operatorname{Prim}(N_{\mathrm{tr}}(e))\right|.
 \]
-\end{prop}
-
 Here presentation equivalence means equality of public typing judgments up to the generated
 presentation steps, and counting normal form forgets exactly those differences.  Hence
 \(N(e)\) and \(N(e')\) are canonically isomorphic, with corresponding trace subfamilies because
@@ -1462,41 +1469,35 @@ interface and to the counted abstract interface.
 The recurrence theorem later uses the symbols \(\mu_k\), \(\kappa_k\), \(\Delta\), and
 \(S_{\mathrm{bas}}(L_k)\).  Those symbols live at slightly different levels: surface
 declarations, normalized trace signatures, abstract obligation families, and primitive basis
-classes.  The next two results record that, after the adequacy bridge, they are the same
-cardinalities read through different lenses.
+classes.  The dictionary below records the only identifications used later.
 
-\begin{cor}[Minimal opaque cost agrees with abstract coherence cost]
+\paragraph{Trace-cost dictionary.}
 For every admissible surface extension declaration \(e\) over \(B_n\),
 \[
   \mu(e)
   = \left|\operatorname{Prim}(N_{\mathrm{tr}}(e))\right|
   = \Delta(X(e)\mid B_n).
 \]
-If \(e_k\) is the declaration whose sealing exports \(L_k\), if
-\(\mu_k:=\mu(e_k)\), and if \(S_{\mathrm{bas}}(L_k)\) is any basis family of \(L_k\), then
-\[
-  |S_{\mathrm{bas}}(L_k)| = \kappa_k + \mu_k.
-\]
-\end{cor}
-
 Adequacy of normalized public signatures says that the trace part of \(N(e)\) records exactly
 the irreducible public trace schemas arising from resolved obligations of \(X(e)\), while
 canonical normalization identifies \(\mu(e)\) with the cardinality of the primitive part of that
-trace signature.  The active-basis accounting of Section~2 identifies those primitive trace
-schemas with the basis sites counted by \(\Delta(X(e)\mid B_n)\).  The final formula is the
-payload/trace decomposition of the sealed public basis into payload classes of size
-\(\kappa_k\) and primitive trace classes of size \(\mu_k\).
+trace signature.  The active-basis accounting of Section~2 reads those same primitive trace
+schemas as the abstract structural cost \(\Delta(X(e)\mid B_n)\).
 
-\begin{lem}[Trace-cost dictionary]
-Let \(e_k\) be an admissible fully coupled declaration whose sealing exports \(L_k\).  Then
-the following quantities are the same cardinality, read at their respective levels:
+If \(e_k\) is the declaration whose sealing exports \(L_k\), if \(\mu_k:=\mu(e_k)\), and if
+\(S_{\mathrm{bas}}(L_k)\) is any basis family of \(L_k\), then
+\[
+  |S_{\mathrm{bas}}(L_k)| = \kappa_k + \mu_k.
+\]
+For an admissible fully coupled declaration \(e_k\), the quantities in
 \[
   \mu(e_k)
   = \left|\operatorname{Prim}(N_{\mathrm{tr}}(e_k))\right|
   = \Delta(X(e_k)\mid B_{k-1})
   = |\operatorname{Str}(L_k)|.
 \]
-Moreover, the primitive basis of the exported layer decomposes as
+are the same cardinality, read at their respective levels.  Moreover, the primitive basis of
+the exported layer decomposes as
 \[
   |S_{\mathrm{bas}}(L_k)|
   = |S_{\mathrm{core}}(L_k)| + |\operatorname{Str}(L_k)|
@@ -1504,14 +1505,6 @@ Moreover, the primitive basis of the exported layer decomposes as
 \]
 Thus the recurrence later uses a cardinality identity obtained from normalized public
 signatures, not an additional semantic growth assumption.
-\end{lem}
-This is just the preceding corollary read through the trace-cost notation.  The first equality
-is the definition of minimal opaque cost on the canonical normalized trace presentation; the
-next two read the same primitive trace classes as abstract structural cost and then as the
-structural part of the sealed export.  The displayed basis formula is the primitive-class
-restriction of payload/trace decomposition, with
-\(|S_{\mathrm{core}}(L_k)|=\kappa_k\); presentation invariance follows from
-presentation-step stability.
 
 \subsection{Factorization-complete public trace export}
 
@@ -1558,10 +1551,10 @@ chronological factorization theorem.
 \begin{thm}[Sealed layers export factorization-complete trace data]
 Every sealed layer \(L_k\) with \(k\geq 2\) in the fixed fully coupled cubical extension calculus
 has factorization-complete public trace export.
-
-Dependencies: payload/trace decomposition, normalized-public-signature adequacy,
-irreducible-field necessity, and the transparency boundary for generated structural faces.
 \end{thm}
+
+Dependencies: payload and trace decomposition, normalized public signature adequacy,
+irreducible-field necessity, and the transparency boundary for generated structural faces.
 
 \begin{proof}
 Choose an admissible declaration \(e_k\) whose sealing exports \(L_k\).  By the
@@ -1998,7 +1991,7 @@ that package is absent from the primitive part of the normalized public signatur
 higher exact factors can be present and contractible while higher primitive public fields are
 eliminated.
 
-\begin{prop}[Primitive status of the three roles]
+\paragraph{Primitive status of the three roles.}
 Assume every normalized higher structural horn package in a sealed declaration carries a
 derived trace witness.  Then the primitive part of the normalized structural trace
 signature is contained in the union of unary action trace and binary comparison trace:
@@ -2011,8 +2004,6 @@ signature is contained in the union of unary action trace and binary comparison 
 \]
 Equivalently, no higher structural horn package contributes an irreducible primitive public
 trace field to \(\mu\).
-\end{prop}
-
 By the trichotomy of normal roles, each normalized structural trace field is unary, binary, or
 horn-shaped.  Unary and binary fields remain primitive exactly when they are not removed by
 transparent generation, canonical telescope isomorphism, or presentation equivalence.  A
@@ -2057,13 +2048,11 @@ additional structural coherence required to integrate that constructor with the 
 sealed interface is normalized as unary action, binary comparison, and derived horn
 computation.  It does not say that the constructor itself is derived or absent.
 
-\begin{lem}[No payload-to-trace leakage]
+\paragraph{No payload-to-trace leakage.}
 Canonical normalization preserves the distinction between payload fields and structural trace
 fields.  A payload field can be accompanied by structural trace explaining its action on old
 interfaces, but the payload field itself is not moved into \(N_{\mathrm{tr}}\) merely because it
 has higher arity or higher dimension.
-\end{lem}
-
 The normalized public signature decomposes into payload and trace parts before primitive trace
 cost is computed.  Presentation moves may rebundle a payload field, unfold a record containing
 it, or transport it along an exported definitional equality, but they do not change its semantic
@@ -2361,37 +2350,20 @@ window.
 \label{rem:level-audit}
 The main proof chain separates exact semantic obligations, public-signature minimality,
 chronological support, and later counting arithmetic:
+{\small
 \[
-\begin{gathered}
-\text{fixed structural grammar}
-\Longrightarrow
-\text{structural horn induction}
-\Longrightarrow
-\text{horn-to-open-box adequacy}
-\Longrightarrow
-\text{total open-extension contractibility}
-\\
-\Longrightarrow
-\text{exact stabilization of realized obligations},
-\qquad
-\text{total open-extension contractibility}
-\Longrightarrow
-\text{\(\mathsf{DerivedTrace}\) construction}
-\\
-\Longrightarrow
-\text{replacement in normalized public signatures}
-\Longrightarrow
-d_\mu\leq 2
-\\[0.6ex]
-\text{two-point swap obstruction}
-\Longrightarrow
-d_{\mathrm{obl}}\geq 2,
-\qquad
-\text{recent-history factorization}
-\Longrightarrow
-\text{two-layer counting window}.
-\end{gathered}
+\begin{array}{@{}r@{\;}c@{\;}l@{}}
+\text{fixed grammar} &\Rightarrow& \text{horn induction and horn-to-open-box adequacy}\\
+                    &\Rightarrow& \text{total \(\OpenExt\) contractibility}\\
+                    &\Rightarrow& \text{exact stabilization of \(\Real_k\)}\\[0.4ex]
+\text{total \(\OpenExt\)} &\Rightarrow& \mathsf{DerivedTrace}\text{ witnesses}\\
+                    &\Rightarrow& \text{replacement in normalized signatures}\\
+                    &\Rightarrow& d_\mu\leq 2\\[0.4ex]
+\text{swap obstruction} &\Rightarrow& d_{\mathrm{obl}}\geq 2\\
+\text{recent-history factorization} &\Rightarrow& \text{two-layer counting window}.
+\end{array}
 \]
+}
 The recurrence theorem in Section~\ref{sec:scaling} starts only after the last implication and
 after a separate full-coupling hypothesis.  It is not an input to the cubical depth theorem.
 \end{rem}
@@ -2485,10 +2457,11 @@ fiber.
 For every derivation \(\Gamma\vdash H:\mathsf{SHorn}_k(X)\) generated by the structural horn
 grammar, there are explicitly defined cubical open-box data
 \[
-  A_H:\Gamma,t:\mathbb I\vdash\mathcal U,\qquad
-  \varphi_H,\qquad
-  u_H:(t:\mathbb I)\to\mathrm{Partial}_{\varphi_H}(A_H(t)),\qquad
+  \begin{gathered}
+  A_H:\Gamma,t:\mathbb I\vdash\mathcal U,\qquad \varphi_H,\\
+  u_H:(t:\mathbb I)\to\mathrm{Partial}_{\varphi_H}(A_H(t)),\\
   u^0_H:A_H(i0)[\varphi_H\mapsto u_H(i0)]
+  \end{gathered}
 \]
 and a canonical equivalence
 \[
@@ -2877,7 +2850,7 @@ from depth two onward, each further exposure of remote history adjoins one struc
 open-box extension factor; each such factor is contractible; dependent sums with
 contractible fibers are equivalent to their bases.
 
-\begin{lem}[Kan contraction for structural horn fibers]
+\begin{lem}[Kan contraction for horn fibers]
 \label{lem:kan-contraction-horn-fibers}
 For every structural horn-extension fiber \(H_k(\partial)\) generated by the fixed cubical
 sealing grammar, the projection
@@ -3204,7 +3177,7 @@ content behind the paper's slogan:
   \text{binary trace is necessary; higher structural trace is cubically payable.}
 \]
 
-\section{Counting consequences}
+\section{Conditional counting consequences}
 \label{sec:scaling}
 
 This section records only the counting consequence used by the paper.  The
@@ -3230,15 +3203,15 @@ with missing earlier indices interpreted as zero.  A candidate is
 used by the exported trace footprint of the layer.
 \end{defi}
 
-\begin{thm}[Full-coupling affine recurrence under a depth-\(d\) window]
-Assume the fixed-calculus adequacy bridge and the full-coupling hypothesis.  If
-the active primitive basis after sealing layer \(n\) is obtained from the new
-payload together with the primitive trace exported by the preceding \(d\) active
+\begin{cor}[Conditional full-coupling accounting recurrence under a depth-\(d\) window]
+Assume the fixed-calculus adequacy bridge, the bundled per-site counting convention, and the
+full-coupling hypothesis.  If the active primitive basis after sealing layer \(n\) is obtained
+from the new payload together with the primitive trace exported by the preceding \(d\) active
 layers, then
 \[
   \mu_n = \kappa_n + \mu_{n-1}+\cdots+\mu_{n-d}.
 \]
-\end{thm}
+\end{cor}
 
 \begin{proof}
 By the active-window theorem, primitive support for sealed structural trace
@@ -3248,7 +3221,7 @@ trace representative for each primitive class.  The displayed sum is therefore
 exactly the active basis cardinality.
 \end{proof}
 
-\begin{cor}[Depth-two full-coupling recurrence in the fixed calculus]
+\begin{cor}[Depth-two full-coupling accounting specialization]
 In the fixed cubical sealed-extension calculus, the exact-depth theorem gives
 the depth-two window.  Under full coupling,
 \[
@@ -3279,6 +3252,11 @@ but the paper-level claim depends on the stated bridge from surface
 presentations or semantic wrappers to \(C_{\mathrm{ext}}\).  It is
 \emph{paper-only} when the item is an expository, release, or future-transfer
 claim rather than a theorem checked by the artifact.
+
+For this submission, \texttt{paper-map.yaml} remains the machine-readable theorem map for the
+full repository paper source.  The LMCS file deliberately compresses several labels into the
+table below; the bridge from those compressed LMCS references back to the checked Agda surface
+is documented in the repository theorem index rather than by retargeting the existing checker.
 
 \begin{center}
 \scriptsize

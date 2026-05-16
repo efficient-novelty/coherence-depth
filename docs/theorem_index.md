@@ -97,7 +97,10 @@ status strings.
 
 The LMCS submission file `paper/1_coherence_depth_LMCS.tex` compresses several
 older theorem labels into a shorter proof spine. Its Section 7 table uses the
-same four status phrases as `paper-map.yaml`.
+same four status phrases as `paper-map.yaml`. For the first LMCS submission,
+`paper-map.yaml` remains the checker target for the full repository paper source;
+this table is the explicit bridge from compressed LMCS references back to the
+checked Agda surface.
 
 | LMCS label or reference | Primary Agda surface | Status |
 |---|---|---|

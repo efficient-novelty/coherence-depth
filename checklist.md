@@ -90,15 +90,15 @@ Progress tracker for revising `paper/1_coherence_depth_LMCS.tex` before the firs
 - [ ] Ensure the Zenodo artifact contains exact check commands.
 - [ ] Freeze a tagged artifact release before Zenodo upload.
 - [ ] Ensure the Zenodo artifact points to the tagged release.
-- [ ] Decide whether final artifact checking should keep `paper-map.yaml` pointed at `paper/1_coherence_depth.tex` or add an LMCS-specific theorem-map target for `paper/1_coherence_depth_LMCS.tex`.
+- [x] Decide whether final artifact checking should keep `paper-map.yaml` pointed at `paper/1_coherence_depth.tex` or add an LMCS-specific theorem-map target for `paper/1_coherence_depth_LMCS.tex`.
 
 ## Phase 5 - Presentation Simplification
 
-- [ ] Audit every theorem-like statement.
-- [ ] Remove theorem labels from definitional statements.
-- [ ] Convert rhetorical/scope statements into prose or remarks.
-- [ ] Keep named theorem labels only for load-bearing results and useful corollaries.
-- [ ] Add a proof dependency diagram.
+- [x] Audit every theorem-like statement.
+- [x] Remove theorem labels from definitional statements.
+- [x] Convert rhetorical/scope statements into prose or remarks.
+- [x] Keep named theorem labels only for load-bearing results and useful corollaries.
+- [x] Add a proof dependency diagram.
 - [ ] Add one running example and reuse it throughout.
 - [ ] Use the running example in the introduction.
 - [ ] Use the running example in the lower-bound section.
@@ -115,22 +115,24 @@ Progress tracker for revising `paper/1_coherence_depth_LMCS.tex` before the firs
 - [ ] For each load-bearing theorem, state what would fail without it.
 - [ ] Cut repeated scope disclaimers.
 - [ ] Compress rhetorical terminology not used in theorem statements.
-- [ ] Move detailed artifact instructions to repository or Zenodo documentation.
-- [ ] Review remaining LaTeX overfull boxes before final submission, especially the displayed grammar around lines 482 and 2394 in the LMCS source.
-- [ ] Reassess the LMCS page budget after the mechanization table increased the compiled PDF to 52 pages.
+- [x] Move detailed artifact instructions to repository or Zenodo documentation.
+- [x] Review remaining LaTeX overfull boxes before final submission, especially the displayed grammar around lines 482 and 2394 in the LMCS source.
+- [x] Reassess the LMCS page budget after the mechanization table increased the compiled PDF to 52 pages.
+- [ ] Decide whether the theorem-to-artifact table should stay in the main LMCS text if the final page budget target is stricter than 51 pages.
+- [ ] Resolve or explicitly accept the remaining minor LaTeX layout warnings around the Section 3.1 heading, narrow role tables, and theorem-to-artifact status table.
 - [ ] Return to abstract, introduction, and conclusion after the core proof is stable.
 
 ## Conditional Recurrence and Accounting
 
-- [ ] Rename the recurrence section to emphasize conditional accounting.
-- [ ] State all full-coupling and factorization-complete export assumptions in the theorem name or statement.
-- [ ] Move most recurrence material out of the main proof path.
-- [ ] Add an explicit non-goal paragraph for ordinary transparent library growth.
+- [x] Rename the recurrence section to emphasize conditional accounting.
+- [x] State all full-coupling and factorization-complete export assumptions in the theorem name or statement.
+- [x] Move most recurrence material out of the main proof path.
+- [x] Add an explicit non-goal paragraph for ordinary transparent library growth.
 - [ ] Audit recurrence indexing conventions.
 - [ ] Audit payload counting conventions.
 - [ ] Add a notation table for accounting symbols.
-- [ ] Separate the recurrence corollary from the exact-depth theorem.
-- [ ] Demote recurrence to a conditional accounting corollary.
+- [x] Separate the recurrence corollary from the exact-depth theorem.
+- [x] Demote recurrence to a conditional accounting corollary.
 
 ## Suggested Section Outline Tracking
 
@@ -148,7 +150,7 @@ Progress tracker for revising `paper/1_coherence_depth_LMCS.tex` before the firs
 - [x] Add or revise Section 3: binary trace is necessary.
 - [x] Add or revise Section 4: higher structural obligations as open boxes.
 - [x] Add or revise Section 5: replacement and depth-two stabilization.
-- [ ] Add or revise Section 6: conditional counting consequences.
+- [x] Add or revise Section 6: conditional counting consequences.
 - [x] Add or revise Section 7: mechanization and artifact boundary.
 - [ ] Revise Section 8: conclusion.
 
@@ -177,6 +179,6 @@ Progress tracker for revising `paper/1_coherence_depth_LMCS.tex` before the firs
 - [x] The lower-bound wording avoids calling a binary-failing object fully admissible.
 - [x] Every artifact claim has one of the fixed mechanization statuses.
 - [x] Broad transfer claims are conditional on the adequacy package.
-- [ ] The recurrence is visibly conditional and downstream.
-- [ ] Definitional/rhetorical propositions have been converted into definitions, remarks, or proof paragraphs.
+- [x] The recurrence is visibly conditional and downstream.
+- [x] Definitional/rhetorical propositions have been converted into definitions, remarks, or proof paragraphs.
 - [x] The upper-bound proof path is visible from grammar to horn decoding to total contractibility to replacement to depth-two equivalence.
