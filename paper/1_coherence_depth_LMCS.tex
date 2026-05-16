@@ -33,6 +33,7 @@
 \newcommand{\Shape}{\Pi_{\!\infty}}
 \newcommand{\Supp}{\mathrm{Supp}}
 \newcommand{\hcomp}{\mathrm{hcomp}}
+\newcommand{\hfillop}{\mathrm{hfill}}
 \newcommand{\compop}{\mathrm{comp}}
 \newcommand{\transp}{\mathrm{transp}}
 \newcommand{\OpenExt}{\mathrm{OpenExt}}
@@ -2551,8 +2552,8 @@ fixed cubical core,
 \]
 A center is computed by cubical composition and filling:
 \[
-  \bigl(\mathrm{comp}(A,\varphi,u,u_0),
-        \mathrm{hfill}(A,\varphi,u,u_0)\bigr).
+  \bigl(\hcomp(A,\varphi,u,u_0),
+        \hfillop(A,\varphi,u,u_0)\bigr).
 \]
 Moreover, for every cubical substitution \(\sigma:\Delta\to\Gamma\), there is a canonical
 equivalence
@@ -2570,8 +2571,11 @@ substitution stability of the generated boundary and lid subtype.
 \begin{proof}
 The visible boundary is encoded as a cubical partial element.  The compatibility equations on
 overlaps are exactly the well-typedness conditions for \(u\) and for the subtype element
-\(u_0\).  Cubical composition computes the top lid; cubical filling supplies the relative
-section from the base to that lid.  This gives the displayed center.
+\(u_0\).  Homogeneous composition \(\hcomp\) computes the compatible top lid, and cubical
+filling \(\hfillop\) supplies the relative section from the base to that lid.  Thus
+\(\OpenExt_\Gamma(A,\varphi,u,u_0)\) is the total type of endpoints together with dependent
+paths from the fixed base, i.e. a boundary-compatible path singleton rather than a fixed-lid
+filler space.  This gives the displayed center.
 
 Let \((\ell,f)\) be any other lid-and-filler pair.  To contract it to the canonical pair, apply
 cubical composition one dimension higher in the extension family.  The boundary of this
@@ -2579,7 +2583,8 @@ higher composition is given by the candidate filler \(f\), the canonical filler,
 partial boundary on \(\varphi\), and the common base face at \(t=i0\).  The endpoint and
 overlap equations required for this higher box are precisely the filler laws for \((\ell,f)\)
 and for the canonical extension.  The resulting higher filler is a path from \((\ell,f)\) to
-the canonical extension.
+the canonical extension.  Equivalently, this is the path-singleton contraction for the total
+space of a compatible lid together with a filler from the fixed base to that lid.
 
 Uniformity of composition and filling under substitution gives the displayed reindexing
 equivalence and center-stability statement.  No presentation quotient is used in this proof;
@@ -3061,6 +3066,25 @@ A univalent interface that exports the two-point type also exports the path corr
 its nontrivial automorphism.  A sealed action must respect that path.  Objectwise unary data
 alone cannot express this naturality condition.
 
+\begin{defi}[Unary and binary fragments for the swap test]
+\label{def:swap-unary-binary-fragments}
+For a candidate \(X\) over the two-point interface, the unary fragment
+\(\Real_1(X)\) records only the objectwise action field
+\[
+  F_2:2\to 2.
+\]
+The binary fragment \(\Real_2(X)\) extends this record by the comparison field forced by the
+exported univalent swap path:
+\[
+  \alpha_{\mathrm{swap}}:
+  \mathrm{transport}_{\lambda A. A\to A}(p_{\mathrm{swap}},F_2)=F_2.
+\]
+The map \(\res_{1,2}:\Real_2(X)\to\Real_1(X)\) forgets
+\(\alpha_{\mathrm{swap}}\).  Thus a unary-accepted candidate is an inhabitant of
+\(\Real_1(X)\), while binary acceptance asks for a point in the fiber of
+\(\res_{1,2}\) over that unary action.
+\end{defi}
+
 \begin{thm}[Explicit binary sealing obstruction]
 \label{thm:swap-obstruction}
 Let the active interface of a univalent foundation export the two-point type \(2\) and the
@@ -3068,11 +3092,18 @@ univalent path
 \[
   p_{\mathrm{swap}} := \mathrm{ua}(\mathrm{swap}) : 2 = 2.
 \]
-Then there exists an objectwise promoted-interface candidate whose unary clause is
-well-formed on the active object \(2\), while the corresponding binary sealing obligation over
-\(p_{\mathrm{swap}}\) is uninhabited.  Equivalently, the unary fragment admits a raw
-objectwise action that the binary fragment rejects.  Consequently depth-one data are
-insufficient in general, and \(d_{\mathrm{obl}}\geq 2\).
+Then there is a candidate \(X_{\mathrm{const}}\) and an element
+\[
+  x_1:\Real_1(X_{\mathrm{const}})
+\]
+such that the fiber
+\[
+  \sum_{x_2:\Real_2(X_{\mathrm{const}})}
+  \res_{1,2}(x_2)=x_1
+\]
+is empty.  Equivalently, the unary fragment admits a raw objectwise action that the binary
+fragment rejects.  Consequently depth-one data are insufficient in general, and
+\(d_{\mathrm{obl}}\geq 2\).
 
 Dependencies: the univalent two-point interface, transport in the endomorphism family, and
 the distinction between unary objectwise action and binary sealing naturality.
@@ -3088,9 +3119,10 @@ The unary candidate chooses the constant-left map
 \[
   F_2 := \lambda\_.\,\mathsf{left}.
 \]
-This is a well-formed objectwise clause.  But sealing a globally acting structural extension
-requires compatibility with exported paths.  Since the interface exports
-\(p_{\mathrm{swap}}\), the binary naturality obligation is
+This is a well-formed objectwise clause, so it determines the point
+\(x_1:\Real_1(X_{\mathrm{const}})\).  But sealing a globally acting structural extension
+requires compatibility with exported paths.  Since the old public interface exports
+\(p_{\mathrm{swap}}\), the binary naturality obligation in \(\Real_2(X_{\mathrm{const}})\) is
 \[
   \alpha_{\mathrm{swap}}:
   \mathrm{transport}_{\lambda A. A\to A}(p_{\mathrm{swap}},F_2)=F_2.
@@ -3114,11 +3146,11 @@ which is impossible because evaluating at \(\mathsf{left}\) would force
 There is also a positive control: if \(F_2\) is the identity map, conjugation along swap
 returns the identity map, and the binary obligation is inhabited.  The failure of the
 constant-left map is therefore not a defect of the formulation; it is the type checker
-detecting an objectwise action that does not respect exported path structure.  Hence
-there is a unary-accepted raw action whose binary sealing extension is impossible.  In
-particular, \(\mathrm{Real}_1\) can be inhabited in a case where the corresponding
-\(\mathrm{Real}_2\) fiber is empty, so \(\mathrm{Real}_1\) and \(\mathrm{Real}_2\) are not
-canonically equivalent in general.  The obligation depth cannot be one.
+detecting an objectwise action that does not respect exported path structure.  Hence the
+fiber of \(\res_{1,2}\) over the constant-left unary point is empty: \(\Real_1\) can be
+inhabited while the corresponding \(\Real_2\) extension is impossible.  Thus
+\(\Real_1\) and \(\Real_2\) are not canonically equivalent in general, and the obligation
+depth cannot be one.
 \end{proof}
 
 \begin{rem}[Adjunctions as an explanatory analogue]

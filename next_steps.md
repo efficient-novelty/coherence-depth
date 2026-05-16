@@ -1,76 +1,83 @@
 # Next Steps
 
-## Current handoff
+## Current Handoff
 
-This turn completed the remaining constructor-by-constructor higher-horn decoding
-mechanization item.
+This turn sharpened the next reviewer-risk layer of the LMCS paper:
 
-- Added `Metatheory/StructuralHornDecoding.agda`.
-  - Introduces `HigherHornOpenBoxData`, the explicit cubical data carried by a generated
-    higher horn.
-  - Introduces `SealingGeneratedHigherHorn` with one constructor for each sealing-generated
-    semantic case: `remoteComparisonGenerated`, `degenerateGenerated`, and
-    `transportedGenerated`.
-  - Provides constructor-specific decoders:
-    `decodeRemoteComparisonHornOpenBox`, `decodeDegenerateHornOpenBox`, and
-    `decodeTransportedHornOpenBox`.
-  - Provides the general decoder:
-    `decodeGeneratedHigherHornOpenBox`.
-  - Repackages decoded horns as `HornOpenBoxPackage` and `StructuralHornCubicalData` via
-    `decodeGeneratedHigherHornPackage` and `decodeGeneratedHigherHornCubicalData`.
-  - Proves the decoded structural total extension is contractible via
-    `decodeGeneratedHigherHornContractible`.
-- Added `Test/StructuralHornDecodingSmoke.agda`, which instantiates all three generated horn
-  constructors and checks mode selection, open-box decoding, horn-package production,
-  cubical-data production, and contractibility.
-- Imported the new module and test from `Everything.agda`, and exported the public decoding
-  surface from `PEN.agda`.
-- Updated `paper-map.yaml`, `docs/theorem_index.md`, `README.txt`, and `agda/README.md`.
-- Marked the checklist item "Decode each sealing-generated higher horn into an explicit open
-  box" complete.
+- Restated the lower-bound theorem as an explicit `Real_1`/`Real_2` separation.
+  - Added `Unary and binary fragments for the swap test`.
+  - The swap obstruction now gives `x_1 : Real_1(X_const)` whose `res_{1,2}` fiber is empty.
+  - The proof keeps the two-point calculation and ties the obstruction directly to the public univalent swap path.
+- Tightened the open-box contractibility proof.
+  - The canonical lid is now explicitly computed by `hcomp`.
+  - The filler is now explicitly computed by `hfill`.
+  - The proof now identifies `OpenExt` as the total endpoint-plus-dependent-path object, i.e. the path-singleton/total-extension statement rather than a fixed-lid filler uniqueness claim.
+- Updated `checklist.md` for the formal-core, lower-bound, open-box, derivedness, and exact-depth items that are now present in the paper.
 
-## Verification completed this turn
+## Verification Completed This Turn
 
-- `agda --transliterate Test/StructuralHornDecodingSmoke.agda` passes.
-- `agda --transliterate Everything.agda` passes.
-- README-style direct Agda checklist passes for 26 files, including the new decoding smoke
-  test and higher-payload checks.
-- `python scripts/check_paper_map.py paper-map.yaml` passes:
-  19 entries, 77 modules, 301 names.
-- `python scripts/audit_postulates.py agda paper-map.yaml` passes:
-  112 local modules in the transitive closure, no local postulates or primitives.
-- `python scripts/coherence_depth_audit.py runs\coherence_depth_case_studies` passes:
-  7 fixtures.
-- Agda still emits existing `UnsupportedIndexedMatch` warnings; these remain warnings and
-  were not introduced as errors.
+- `pdflatex -interaction=nonstopmode -halt-on-error 1_coherence_depth_LMCS.tex` passed twice from `paper/`.
+- `git diff --check -- paper/1_coherence_depth_LMCS.tex checklist.md next_steps.md` passed.
+- The generated LMCS PDF is currently 51 pages.
+- Existing unstaged changes outside this turn were left alone:
+  - `check_list.md` is deleted in the worktree.
+  - `paper_improvement_plan.md` is modified in the worktree.
 
-## Mechanization status
+## Recommended Next Improvement Turn
 
-The Mechanization checklist section is now complete except for non-mechanization external
-items elsewhere in the checklist.  The artifact has:
+Focus on Critical Issue 5: mechanization claims should be narrowed and synchronized with the artifact map. This is the next high-value paper pass because the mathematical proof path is now more explicit, but the mechanization table still uses broad statuses such as `checked/conditional`.
 
-- explicit structural open boxes;
-- explicit structural total-extension and compatible-lid surfaces;
-- total-extension contractibility;
-- constructor-by-constructor generated higher-horn decoding;
-- derivation-object based higher-horn derivedness;
-- theorem-map and README coverage.
+### Target Files
 
-## Recommended next turn
+- `paper/1_coherence_depth_LMCS.tex`
+- `paper-map.yaml`
+- `docs/theorem_index.md`
+- `checklist.md`
+- optionally `README.txt` if the trust-boundary wording needs to match the paper
 
-1. Move to PDF/LMCS verification.
-   - Build the intended submission TeX entry point.
-   - Run `pdffonts`, `pdfinfo`, and `pdftotext`.
-   - Inspect the build log for overfull boxes.
-   - Mark Type 3, text extraction, page count, overfull-box, and clean-rebuild checklist
-     items only after inspecting actual tool output.
+### Detailed Plan
 
-2. Keep the Agda limitation visible in prose/docs.
-   - `CompatibleStructuralOpenExt` exposes compatible lids plus a `PathP` filler through the
-     underlying cubical family.
-   - A literal `PathP` through Cubical Agda's `Sub` family remains an adequacy-bridge reading
-     because the primitive `PathP` ranges over `Set`, while `Sub` is in `SSet`.
+1. Inspect current artifact metadata.
+   - Read the relevant `paper-map.yaml` entries for:
+     `C_ext`, generated obligations, `ObSig_k`, `Real_k`, lower bound, horn decoding,
+     open-box contractibility, derived-trace replacement, exact depth, recurrence, and transfer.
+   - Read `docs/theorem_index.md` for current theorem names and status wording.
 
-3. External-data items remain blocked.
-   - ORCID requires a real author ORCID.
-   - Zenodo citation requires an archived release DOI.
+2. Define a fixed status vocabulary in the paper.
+   - Suggested vocabulary:
+     `fully mechanized`, `mechanized for an abstract interface`, `conditional on adequacy`,
+     `paper proof`, `not claimed`.
+   - Add a short paragraph explaining that these statuses are theorem-by-theorem, not a blanket claim about arbitrary Cubical Agda developments.
+
+3. Replace the Section 7 mechanization table with a theorem-to-artifact map.
+   - Include rows for:
+     fixed calculus grammar, generated structural obligations, `ObSig_k`/`Real_k`,
+     binary lower bound, horn-to-open-box adequacy, total open-extension contractibility,
+     derived-trace replacement, exact depth-two stabilization, recurrence, and broad transfer.
+   - Use specific artifact module/theorem names where available.
+   - Mark any abstract-interface result honestly instead of calling it fully checked.
+   - Include the trusted input/condition in the final column.
+
+4. Synchronize repository docs and maps.
+   - Update `paper-map.yaml` status text if it conflicts with the paper vocabulary.
+   - Update `docs/theorem_index.md` if theorem names or status wording drift.
+   - Keep claims about arbitrary Cubical Agda transfer conditional.
+
+5. Update `checklist.md`.
+   - Mark only the mechanization-boundary rows that are actually completed.
+   - Likely candidates:
+     theorem-to-artifact table, fixed status vocabulary, fully/interface/conditional/paper-only status rows,
+     trust-boundary paragraph, conditional broad-transfer claims, paper-map alignment, theorem-index alignment.
+
+6. Verify.
+   - Run `python scripts/check_paper_map.py paper-map.yaml`.
+   - Run `pdflatex -interaction=nonstopmode -halt-on-error 1_coherence_depth_LMCS.tex` twice from `paper/`.
+   - Run `git diff --check`.
+
+## Acceptance Criteria For Next Turn
+
+- Section 7 no longer relies on vague `checked/conditional` wording.
+- Every major theorem has a precise artifact status and trusted boundary.
+- `paper-map.yaml`, `docs/theorem_index.md`, and the paper use compatible names/statuses.
+- The paper still compiles after the table update.
+- Unrelated worktree changes remain untouched unless explicitly requested.
