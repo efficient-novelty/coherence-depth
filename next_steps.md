@@ -2,98 +2,94 @@
 
 ## Current Handoff
 
-This turn focused on the Critical Issue 7 presentation pass for
+This turn focused on the final reader-facing LMCS polish pass for
 `paper/1_coherence_depth_LMCS.tex`:
 
-- Replaced fragile manual theorem-number references in Section 2 with stable
-  labels for primitive bases, full coupling, trace-counting convention, sparse
-  extensions, coverage, and basis minimality.
-- Demoted low-yield theorem-like bookkeeping statements to prose paragraphs:
-  transparent user-level code, primitive basis invariants, irreducible public
-  fields, canonical normalized presentations, the trace-cost dictionary,
-  primitive status of trace roles, and payload-to-trace non-leakage.
-- Tightened the proof-path display into a compact dependency audit that keeps
-  exact obligation depth, public-signature minimality, chronology, and recurrence
-  separate.
-- Renamed Section 6 to "Conditional counting consequences" and demoted the
-  recurrence theorem to a conditional accounting corollary with the bundled
-  per-site and full-coupling hypotheses in the statement.
-- Decided the theorem-map target strategy: keep `paper-map.yaml` pointed at the
-  full repository paper source, and use the LMCS compressed-label bridge in
-  `docs/theorem_index.md` plus the Section 7 table for the LMCS submission file.
-- Split the wide horn-to-open-box data display and shortened the early judgment
-  display. The compiled LMCS PDF is now 51 pages, down from 52.
+- Added a single running two-point/swap example in the introduction and reused
+  it in the payload/trace discussion, the lower-bound section, the depth-three
+  open-box explanation, and the conclusion.
+- Kept the example technically honest: the constant-left branch proves the
+  unary-vs-binary lower bound, while the swap-respecting branch is the one used
+  to explain later generated horn/open-box obligations.
+- Rechecked the abstract/introduction/conclusion alignment and changed the
+  contribution wording so Section 6 is consistently a conditional accounting
+  corollary, not part of the exact-depth theorem.
+- Clarified the Section 6 counting convention inline: `kappa_n` is a payload
+  basis summand, `mu_n` is counted only after derived replacement, and missing
+  earlier indices are zero.
+- Added an explicit fixture-name sentence in the mechanization section
+  distinguishing full-coupling examples, sparse local growth, zero-footprint
+  transparent growth, and higher payload that is not structural trace.
+- Audited the remaining artifact-polish checklist items. The Agda/OpenExt names
+  already expose total extension rather than arbitrary filler uniqueness, and
+  the Zenodo package already contains the theorem map, trust-boundary docs, and
+  exact check commands.
+- Decided to keep the theorem-to-artifact table in the LMCS text despite the
+  narrow-cell warnings because it is the cleanest audit surface for referees.
 
 ## Verification Completed This Turn
 
 - `python scripts/check_paper_map.py paper-map.yaml` passed.
-- `git diff --check -- paper/1_coherence_depth_LMCS.tex docs/theorem_index.md`
+- `git diff --check -- paper/1_coherence_depth_LMCS.tex checklist.md next_steps.md`
   passed.
 - `pdflatex -interaction=nonstopmode -halt-on-error 1_coherence_depth_LMCS.tex`
-  passed twice from `paper/`.
-- The final LaTeX run has no undefined-reference warnings.
-- Remaining layout warnings are minor: small overfull hboxes around the Section
-  3.1 heading, a dependencies line near the syntactic horn reduction, and narrow
-  cells in the theorem-to-artifact table; the old wide displays around the
-  former LMCS lines 482 and 2394 were fixed.
-- Pre-existing worktree changes outside this turn were left untouched:
+  passed twice from `paper/` after the paper edits.
+- The final LaTeX log has no undefined-reference or rerun warnings.
+- The compiled PDF is currently 52 pages. Remaining layout warnings are accepted
+  for now: small overfull hboxes around the Section 3.1 heading, the main
+  Section 5 slogan/dependency lines, and narrow cells in the theorem-to-artifact
+  table, plus underfull boxes in dense role/table material.
+- Pre-existing worktree changes outside this turn were preserved:
   - `check_list.md` is deleted in the worktree.
   - `paper_improvement_plan.md` is modified in the worktree.
 
 ## Recommended Next Improvement Turn
 
-Focus on the last reader-facing LMCS polish pass: running example, introduction
-and conclusion alignment, remaining fixture/naming tasks, and final artifact
-readiness.
+Focus on final submission packaging and the last page-budget decision.
 
 ### Target Files
 
 - `paper/1_coherence_depth_LMCS.tex`
+- `coherence_depth_zenodo/README_ZENODO.md`
+- `coherence_depth_zenodo/.zenodo.json`
 - `checklist.md`
 - `next_steps.md`
-- optionally Agda/doc fixture files if sparse/full-coupling fixture naming is
-  addressed
+- optionally `README.txt` and `docs/coherence_depth_trust_boundary.md` if the
+  final release instructions change
 
 ### Detailed Plan
 
-1. Add and reuse one running example.
-   - Thread the two-point/swap example through the introduction, lower-bound
-     section, horn/open-box explanation, and conclusion.
-   - Keep it short: it should orient the referee, not become a second proof.
+1. Make the final page-budget decision.
+   - If the target is a hard 50 pages, do a compression pass aimed at 2 pages:
+     shorten Section 6 further, move the final archival-tag row out of the
+     theorem-to-artifact table, and compress repeated scope prose.
+   - If 52 pages is acceptable for first submission, prepare a short
+     editor-facing length note explaining that the extra space is used for the
+     mechanization boundary and theorem-to-artifact audit.
 
-2. Return to the abstract, introduction, and conclusion.
-   - Make sure the now-conditional Section 6 wording is mirrored exactly.
-   - Make the fixed-calculus theorem path visible before the accounting story.
-   - Check that no broad Cubical Agda transfer claim outruns the adequacy
-     boundary.
+2. Finish archival metadata.
+   - Reserve or insert the Zenodo DOI.
+   - Ensure `.zenodo.json`, `README_ZENODO.md`, the paper source, and the final
+     PDF all agree on title, authorship, repository URL, and version.
+   - Make sure the artifact points to the final tagged release rather than only
+     the moving development repository.
 
-3. Finish the remaining Phase 4 artifact-polish items.
-   - Check whether Agda/module names visibly say total extension rather than
-     arbitrary filler uniqueness.
-   - Add fixture names or docs that distinguish sparse cases from full-coupling
-     cases.
-   - Prepare the Zenodo checklist: theorem map, trust-boundary docs, exact check
-     commands, tagged release, and DOI placeholder.
+3. Run the full artifact gate on the final commit.
+   - `make artifact-check` or `bash scripts/check_coherence_depth_artifact.sh`.
+   - `python scripts/check_paper_map.py paper-map.yaml`.
+   - `python scripts/audit_postulates.py agda paper-map.yaml`.
+   - Record the hosted GitHub Actions artifact-check URL once the tag is pushed.
 
-4. Decide the final treatment of the theorem-to-artifact table.
-   - If the LMCS page target is stricter than 51 pages, consider shortening the
-     table or moving some artifact detail to the release docs.
-   - Otherwise explicitly accept the table warnings as the cost of an auditable
-     mechanization boundary.
-
-5. Verify.
-   - Run `python scripts/check_paper_map.py paper-map.yaml`.
-   - Run `pdflatex -interaction=nonstopmode -halt-on-error 1_coherence_depth_LMCS.tex`
-     twice from `paper/`.
-   - Run `git diff --check`.
+4. Do one final PDF pass.
+   - Run `pdflatex` twice from `paper/`.
+   - Check there are no undefined references.
+   - Reassess Type 3/font extraction if the submission system complains.
 
 ## Acceptance Criteria For Next Turn
 
-- The paper has one visible running example instead of several disconnected
-  intuitions.
-- The abstract, introduction, Section 6, and conclusion use the same scoped
-  theorem language.
-- Remaining artifact-readiness checklist items are either completed or narrowed
-  to release-only work.
-- Remaining layout warnings are either fixed or explicitly accepted with a short
-  reason.
+- The page-count decision is explicit: compressed to target or accompanied by a
+  clear length rationale.
+- The paper and Zenodo metadata contain the final DOI/tag information.
+- The full artifact check passes locally and, if possible, on GitHub Actions for
+  the tagged archival commit.
+- `checklist.md` contains only release-blocking or deliberately deferred items.

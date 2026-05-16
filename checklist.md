@@ -81,15 +81,17 @@ Progress tracker for revising `paper/1_coherence_depth_LMCS.tex` before the firs
 - [x] Ensure the theorem index points to modules implementing or approximating public-signature normalization.
 - [x] Update `docs/theorem_index.md` to match the paper wording.
 - [x] Update trust-boundary docs to match the paper wording.
-- [ ] Ensure Agda/module names reflect total extension rather than arbitrary filler uniqueness.
+- [x] Ensure Agda/module names reflect total extension rather than arbitrary filler uniqueness.
 - [x] Add a theorem-map note distinguishing total-extension contractibility from fixed-lid filler uniqueness.
 - [x] Mark recurrence theorem-map entries as conditional on accounting hypotheses.
-- [ ] Add fixture names distinguishing sparse cases from full-coupling cases.
-- [ ] Ensure the Zenodo artifact contains the theorem map.
-- [ ] Ensure the Zenodo artifact contains trust-boundary documentation.
-- [ ] Ensure the Zenodo artifact contains exact check commands.
+- [x] Add fixture names distinguishing sparse cases from full-coupling cases.
+- [x] Ensure the Zenodo artifact contains the theorem map.
+- [x] Ensure the Zenodo artifact contains trust-boundary documentation.
+- [x] Ensure the Zenodo artifact contains exact check commands.
 - [ ] Freeze a tagged artifact release before Zenodo upload.
 - [ ] Ensure the Zenodo artifact points to the tagged release.
+- [ ] Replace the Zenodo DOI placeholder in the paper and release metadata once the DOI is reserved.
+- [ ] Record the final hosted artifact-check workflow URL for the tagged archival commit.
 - [x] Decide whether final artifact checking should keep `paper-map.yaml` pointed at `paper/1_coherence_depth.tex` or add an LMCS-specific theorem-map target for `paper/1_coherence_depth_LMCS.tex`.
 
 ## Phase 5 - Presentation Simplification
@@ -99,11 +101,11 @@ Progress tracker for revising `paper/1_coherence_depth_LMCS.tex` before the firs
 - [x] Convert rhetorical/scope statements into prose or remarks.
 - [x] Keep named theorem labels only for load-bearing results and useful corollaries.
 - [x] Add a proof dependency diagram.
-- [ ] Add one running example and reuse it throughout.
-- [ ] Use the running example in the introduction.
-- [ ] Use the running example in the lower-bound section.
-- [ ] Use the running example in the horn/open-box explanation.
-- [ ] Use the running example in the final summary.
+- [x] Add one running example and reuse it throughout.
+- [x] Use the running example in the introduction.
+- [x] Use the running example in the lower-bound section.
+- [x] Use the running example in the horn/open-box explanation.
+- [x] Use the running example in the final summary.
 - [x] Replace broad mechanization prose with the theorem-to-artifact table.
 - [ ] Strengthen proof sketches for load-bearing results.
 - [ ] For each load-bearing theorem, state the exact input data.
@@ -118,9 +120,10 @@ Progress tracker for revising `paper/1_coherence_depth_LMCS.tex` before the firs
 - [x] Move detailed artifact instructions to repository or Zenodo documentation.
 - [x] Review remaining LaTeX overfull boxes before final submission, especially the displayed grammar around lines 482 and 2394 in the LMCS source.
 - [x] Reassess the LMCS page budget after the mechanization table increased the compiled PDF to 52 pages.
-- [ ] Decide whether the theorem-to-artifact table should stay in the main LMCS text if the final page budget target is stricter than 51 pages.
-- [ ] Resolve or explicitly accept the remaining minor LaTeX layout warnings around the Section 3.1 heading, narrow role tables, and theorem-to-artifact status table.
-- [ ] Return to abstract, introduction, and conclusion after the core proof is stable.
+- [x] Decide whether the theorem-to-artifact table should stay in the main LMCS text if the final page budget target is stricter than 51 pages.
+- [x] Resolve or explicitly accept the remaining minor LaTeX layout warnings around the Section 3.1 heading, narrow role tables, and theorem-to-artifact status table.
+- [x] Return to abstract, introduction, and conclusion after the core proof is stable.
+- [ ] Prepare either a final 50-page compression pass or an editor-facing length note if the LMCS PDF remains at 52 pages.
 
 ## Conditional Recurrence and Accounting
 
@@ -128,16 +131,16 @@ Progress tracker for revising `paper/1_coherence_depth_LMCS.tex` before the firs
 - [x] State all full-coupling and factorization-complete export assumptions in the theorem name or statement.
 - [x] Move most recurrence material out of the main proof path.
 - [x] Add an explicit non-goal paragraph for ordinary transparent library growth.
-- [ ] Audit recurrence indexing conventions.
-- [ ] Audit payload counting conventions.
+- [x] Audit recurrence indexing conventions.
+- [x] Audit payload counting conventions.
 - [ ] Add a notation table for accounting symbols.
 - [x] Separate the recurrence corollary from the exact-depth theorem.
 - [x] Demote recurrence to a conditional accounting corollary.
 
 ## Suggested Section Outline Tracking
 
-- [ ] Revise Section 1: Introduction.
-- [ ] Add or revise Section 1.1: motivation, payload vs public structural trace.
+- [x] Revise Section 1: Introduction.
+- [x] Add or revise Section 1.1: motivation, payload vs public structural trace.
 - [x] Add or revise Section 1.2: main result for the fixed calculus.
 - [x] Add or revise Section 1.3: scope, non-goals, and mechanization boundary.
 - [ ] Add or revise Section 1.4: related work.
@@ -152,7 +155,7 @@ Progress tracker for revising `paper/1_coherence_depth_LMCS.tex` before the firs
 - [x] Add or revise Section 5: replacement and depth-two stabilization.
 - [x] Add or revise Section 6: conditional counting consequences.
 - [x] Add or revise Section 7: mechanization and artifact boundary.
-- [ ] Revise Section 8: conclusion.
+- [x] Revise Section 8: conclusion.
 
 ## Definition and Theorem Template Tracking
 
@@ -167,7 +170,7 @@ Progress tracker for revising `paper/1_coherence_depth_LMCS.tex` before the firs
 
 ## Final Readiness Checks
 
-- [ ] A referee can locate the complete definition of `C_ext`.
+- [x] A referee can locate the complete definition of `C_ext`.
 - [x] A referee can locate the generated obligation judgment.
 - [x] `Real_k(X)` is defined independently of `Real_k(X) ~= Real_2(X)`.
 - [x] `res_{2,k}` is named, typed, and proved to be an equivalence.

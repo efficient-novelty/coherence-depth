@@ -102,6 +102,15 @@ structural layer, how much public integration trace must remain primitive after
 normalization and opacity?
 \end{quote}
 
+We keep one small running example in view.  The old interface exports the
+two-point type \(2\) and the univalent swap path
+\(p_{\mathrm{swap}}=\mathrm{ua}(\mathrm{swap}):2=2\).  A sealed operation
+\(X\) supplies an endomap \(F_2:2\to2\).  The constant-left choice is valid
+unary data but fails the binary comparison along \(p_{\mathrm{swap}}\); the
+identity choice is the positive control.  Later, after such binary boundary data
+is present, an additional generated compatibility becomes a structural horn
+whose missing face is supplied by the open-box construction.
+
 The answer proved here is a depth-two theorem for one fixed formal calculus.  In
 that calculus, unary trace is not enough: univalence supplies genuine binary
 naturality obligations.  But trace above binary arity is not primitive: the
@@ -122,7 +131,7 @@ libraries grow according to a fixed recurrence.  It says that, for the sealed
 extension calculus studied below, the additional public trace forced by sealing a
 globally acting structural layer stabilizes at binary trace.
 
-\subsection{Payload, trace, and the first obstruction}
+\subsection{Payload, trace, and the running example}
 
 The first distinction is between \emph{payload} and \emph{trace}.  The payload is
 what the new sealed layer contributes: a new operation, modality, universe rule,
@@ -146,22 +155,23 @@ actions, because \(p\) is part of the old public interface.  A sealed action tha
 acts correctly on \(A\) and \(B\) separately may still fail to commute with the
 public equivalence between them.
 
-The basic lower-bound example is the two-point type.  Univalence turns the
-nontrivial boolean swap equivalence into a public path.  A candidate sealed
-action may be well formed objectwise but fail the naturality square along this
-swap path.  More precisely, transport in the endomorphism family along the
-univalent swap path conjugates an endomap by the swap.  The identity endomap is
-fixed by this conjugation, while the constant-left endomap is sent to the
-constant-right endomap.  Thus the unary fragment can accept objectwise data
-whose binary sealing obligation is uninhabited.  Hence unary trace alone cannot
-decide admissibility in general.  Binary trace is a real public obligation, not
-an accounting artifact.
+The running lower-bound example specializes this distinction.  Univalence turns
+the boolean swap equivalence into a public path, and transport in the endomorphism
+family along that path conjugates an endomap by the swap.  The identity endomap
+is fixed, while the constant-left endomap is sent to the constant-right endomap.
+Thus the unary fragment can accept objectwise data whose binary sealing
+obligation is uninhabited.  Binary trace is a real public obligation, not an
+accounting artifact.
 
 This is the first half of the depth-two story:
 \[
   \text{depth one is insufficient.}
 \]
-The second half explains why the story stops at two.
+The constant-left branch proves this lower bound.  The identity branch shows
+that binary trace is not an impossible demand, and it is the branch to keep in
+mind when the later open-box argument computes additional generated
+compatibilities from an already supplied binary boundary.  The second half
+explains why the story stops at two.
 
 \subsection{Why higher structural obligations are different}
 
@@ -193,6 +203,11 @@ are no longer primitive public data, because the calculus computes them from the
 lower-arity boundary.  Equivalently, an explicit higher structural field in a
 surface presentation can be replaced by a cubical term built from the displayed
 boundary, and then erased from the minimal public signature.
+
+In the running example, the constant-left branch has already failed before this
+stage.  On the swap-respecting branch, the binary comparison is part of the
+public boundary; a later generated compatibility asks whether that lower
+boundary extends to a marginal box, not for an unrelated primitive field.
 
 Thus the main theorem has two levels.  At the level of exact realized obligation
 objects, higher factors are present but contractible.  At the level of normalized
@@ -292,8 +307,9 @@ Fourth, it proves exact structural integration depth two for \(C_{\mathrm{ext}}\
 primitive public trace above binary arity, while the swap obstruction shows that
 unary trace alone is insufficient.
 
-Fifth, it proves the downstream counting results: sparse footprint accounting,
-the fully coupled affine recurrence, and the shifted Fibonacci specialization.
+Fifth, it records downstream counting corollaries: sparse footprint accounting,
+the fully coupled affine recurrence, and the shifted Fibonacci specialization,
+all under the accounting hypotheses stated in Section~\ref{sec:scaling}.
 
 Finally, the accompanying Cubical Agda development checks the theorem-facing
 fixed model stack: raw normalization and trace accounting, structural horn
@@ -2655,11 +2671,14 @@ obligation is precisely the filler predicate.  This is the displayed dependent s
 \end{proof}
 
 \paragraph{A concrete depth-three picture.}
-At depth three, the new layer \(X\) is compared with \(L_n\), \(L_{n-1}\), and the newly
-exposed remote layer \(L_{n-2}\).  The visible faces include the unary bridges from \(X\) to
-the recent layers and the binary comparisons already exported by \(L_n\) and \(L_{n-1}\).
-The missing face is the direct comparison between the two composites from \(X\) to
-\(L_{n-2}\).  The depth-three factor is therefore
+This is the upper-bound branch of the running example: after the
+swap-respecting binary boundary is public, one more exported comparison route
+creates a marginal horn.  In the abstract notation of the fixed calculus, the
+new layer \(X\) is compared with \(L_n\), \(L_{n-1}\), and the newly exposed
+remote layer \(L_{n-2}\).  The visible faces include the unary bridges from
+\(X\) to the recent layers and the binary comparisons already exported by
+\(L_n\) and \(L_{n-1}\).  The missing face is the direct comparison between the
+two composites from \(X\) to \(L_{n-2}\).  The depth-three factor is therefore
 \[
   H_3(\partial)
   =
@@ -3038,7 +3057,8 @@ inside the two-layer chronological window under an additional full-coupling hypo
 It remains to show that the upper bound is exact.  The obstruction is small but decisive.
 A univalent interface that exports the two-point type also exports the path corresponding to
 its nontrivial automorphism.  A sealed action must respect that path.  Objectwise unary data
-alone cannot express this naturality condition.
+alone cannot express this naturality condition.  This is the lower-bound branch of the
+running example from the introduction.
 
 \begin{defi}[Unary and binary fragments for the swap test]
 \label{def:swap-unary-binary-fragments}
@@ -3191,6 +3211,9 @@ sealing \(L_n\).  A sparse presentation pays only for the primitive basis classe
 that occur in its footprint.  A full-coupling presentation pays against the
 entire active basis exposed by the depth window.  Thus sparse footprint is a
 local dependency notion, while full coupling is a maximal accounting envelope.
+\(\kappa_n\) is a new basis summand, not itself structural trace; \(\mu_n\) is
+counted only after derived replacement; missing earlier indices are read as
+zero.
 
 \begin{defi}[Layerwise quantities and active basis]
 For layer \(n\), write \(\kappa_n\) for payload size, \(\mu_n\) for primitive
@@ -3350,9 +3373,14 @@ The archived artifact contains the paper source, Agda modules, theorem map,
 audit scripts, and case-study fixtures.  Reviewers can run the aggregate check
 from the release root; it typechecks the theorem-facing aggregate, verifies the
 paper-to-Agda map, and audits the theorem-facing import closure for local
-postulates and primitive declarations.  The development repository is not the
-archival citation; the LMCS submission should cite the Zenodo release DOI once
-reserved.
+postulates and primitive declarations.  The fixture names are intentionally
+diagnostic: \texttt{universe-extension-summary} and
+\texttt{global-modality-summary} are full-coupling examples,
+\texttt{sparse-datatype-summary} is sparse local growth,
+\texttt{transparent-lemma-summary} is a zero-footprint transparent addition,
+and \texttt{higher-payload-summary} records higher user payload that is not
+structural trace.  The development repository is not the archival citation; the
+LMCS submission should cite the Zenodo release DOI once reserved.
 
 
 \section{Conclusion}
@@ -3367,10 +3395,13 @@ therefore removes such fields from \(\mu\)-minimal normalized public signatures.
 
 The binary boundary is exact because it is where public comparison first enters.
 Objectwise action is unary, but naturality along a public equivalence is binary.
-After that boundary is present, sealing-generated higher coherence data has the
-shape cubical composition is designed to fill: lower faces are public, the
-missing face is computed, and the filler is canonical up to the contractibility
-proved in the fixed interface.
+In the running two-point example, the constant-left action exposes the lower
+bound by failing this comparison, while the identity action shows the positive
+branch on which higher questions can be asked.  After that binary boundary is
+present, sealing-generated higher coherence data has the shape cubical
+composition is designed to fill: lower faces are public, the missing face is
+computed, and the filler is canonical up to the contractibility proved in the
+fixed interface.
 
 The result is deliberately scoped.  It does not eliminate higher paths, forbid
 higher payload, or claim that arbitrary Cubical Agda developments satisfy the
