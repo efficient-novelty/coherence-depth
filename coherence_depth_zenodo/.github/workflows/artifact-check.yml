@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+    tags:
+      - "v*-lmcs-artifact"
   pull_request:
   workflow_dispatch:
 
@@ -56,6 +58,7 @@ jobs:
           git clone https://github.com/agda/cubical.git "$HOME/cubical"
           git -C "$HOME/cubical" checkout b150186d2544e7efeddd31e5d14a8b9ecbb100f7
           cp "$HOME/cubical/cubical.agda-lib" "$HOME/cubical/cubical-0.9.agda-lib"
+          sed -i 's/^name:.*/name: cubical/' "$HOME/cubical/cubical.agda-lib"
           sed -i 's/^name:.*/name: cubical-0.9/' "$HOME/cubical/cubical-0.9.agda-lib"
           mkdir -p "$HOME/.agda"
           {
