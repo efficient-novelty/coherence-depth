@@ -25,6 +25,7 @@
 \newcommand{\ObSig}{\mathrm{ObSig}}
 \newcommand{\Ix}{\mathrm{Ix}}
 \newcommand{\Real}{\mathrm{Real}}
+\newcommand{\SObl}{\mathrm{SObl}}
 \newcommand{\Prim}{\mathrm{Prim}}
 \newcommand{\Der}{\mathrm{Der}}
 \newcommand{\PrimClasses}{\mathrm{PrimClasses}}
@@ -35,6 +36,8 @@
 \newcommand{\compop}{\mathrm{comp}}
 \newcommand{\transp}{\mathrm{transp}}
 \newcommand{\OpenExt}{\mathrm{OpenExt}}
+\newcommand{\res}{\operatorname{res}}
+\newcommand{\ext}{\operatorname{ext}}
 \newcommand{\Partial}[2]{\mathrm{Partial}_{#1}(#2)}
 \newcommand{\Type}{\mathrm{Type}}
 \newcommand{\El}{\mathrm{El}}
@@ -210,12 +213,13 @@ to arity \(k\).  Write \(\mu\) for the primitive public trace cost of a normaliz
 opaque signature.  The central result is:
 \begin{quote}
 \textbf{Main theorem for \(C_{\mathrm{ext}}\).}
-For every admissible candidate \(X\), the exact realized obligation objects
-stabilize at binary trace:
+For every admissible candidate \(X\) and every \(k\geq 2\), the restriction map
 \[
-  \mathrm{Real}_k(X) \simeq \mathrm{Real}_2(X)
-  \qquad (k \geq 2).
+  \res_{2,k}(X):\mathrm{Real}_k(X)\longrightarrow\mathrm{Real}_2(X)
 \]
+is an equivalence.  Its inverse \(\ext_{2,k}(X)\) is constructed by adjoining,
+in dependency order, the canonical total open-extension witnesses for the
+higher structural obligations generated above binary arity.
 Moreover, every \(\mu\)-minimal normalized public signature contains no primitive
 structural trace field of arity greater than two.  Unary trace is insufficient in
 general, as witnessed by the two-point swap obstruction.
@@ -364,6 +368,25 @@ cubical horn filling.  This section defines the fixed raw sealed-extension calcu
 \(C_{\mathrm{ext}}\), in which payload, trace, opacity, support, and trace cost can be measured
 without depending on a particular surface presentation.
 
+\begin{center}
+\fbox{\begin{minipage}{0.92\linewidth}
+\textbf{Fixed-calculus contract.}
+All depth and trace theorems in this paper concern the calculus
+\(\Cext\) defined here.  The calculus consists of:
+(i) a cubical core with interval, cofibrations, transport, composition,
+filling, and univalence;
+(ii) raw sealed-extension declarations;
+(iii) public-signature extraction and normalization;
+(iv) a generated structural-obligation judgment;
+(v) depth-indexed obligation signatures \(\ObSig_k\);
+(vi) realization objects \(\Real_k\) with restriction maps; and
+(vii) a primitive/derived trace classification assigned only after explicit
+replacement witnesses have been constructed.  The depth-two theorem is not a
+claim about arbitrary Cubical Agda developments or arbitrary cubical
+foundations without an adequacy package.
+\end{minipage}}
+\end{center}
+
 The section has three jobs.  First, it explains what counts as a sealed layer and what is
 visible after sealing.  Second, it defines the normalized public signatures on which all
 cardinality statements are made.  Third, it isolates the special fully coupled regime used by
@@ -417,18 +440,28 @@ factor while contributing no primitive field to the minimal opaque signature.
 The theorem target is the following raw extension calculus.  Its grammar is deliberately
 small:
 \[
-  i,j,n \in \mathrm{LayerId},
-  \qquad
-  B ::= \cdot \mid B,L_i,
-  \qquad
-  e ::= (\Gamma_{\mathrm{new}},\Gamma_{\mathrm{act}},\Gamma_{\mathrm{cmp}},\sigma).
+\begin{array}{rcl}
+\multicolumn{3}{c}{i,j,n \in \mathrm{LayerId}}\\
+B &::=& \cdot \mid B,L_i,\\
+e &::=& (\Gamma_{\mathrm{new}},\Gamma_{\mathrm{act}},
+          \Gamma_{\mathrm{cmp}},\sigma),\\
+\phi &::=&
+  \mathsf{Payload}(q)
+  \mid \mathsf{Act}(s)
+  \mid \mathsf{Cmp}(s,t,p)
+  \mid \mathsf{Horn}_k(\partial),\\
+\Sigma &::=& \cdot \mid \Sigma,\phi:T.
+\end{array}
 \]
 Here \(B\) is a monotone state of sealed layers.  The new declaration \(e\) has four parts.
 The payload telescope \(\Gamma_{\mathrm{new}}\) introduces the new symbols of the layer.  The
 action telescope \(\Gamma_{\mathrm{act}}\) describes unary action on selected old interface
 sites.  The comparison telescope \(\Gamma_{\mathrm{cmp}}\) describes binary comparison,
 transport, naturality, and horn-boundary data.  The export selection \(\sigma\) records which
-elaborated fields are visible after sealing.
+elaborated fields are visible after sealing.  The field grammar separates payload from
+structural trace: \(\mathsf{Payload}(q)\) belongs to the new mathematical content, while
+\(\mathsf{Act}\), \(\mathsf{Cmp}\), and \(\mathsf{Horn}\) are the theorem-facing structural
+trace shapes.
 
 The fixed calculus is specified by the following judgments:
 \[
@@ -508,6 +541,37 @@ judgments use the schematic families \(\mathsf{Act}\), \(\mathsf{Cmp}\), and
 later sections make their normalization and derivedness criteria precise.}
 \label{fig:core-rules}
 \end{figure}
+
+\begin{defi}[Generated structural obligations]
+\label{def:generated-structural-obligations}
+For a cubical context \(\Gamma\), a normalized old public signature \(\Sigma\), and a
+candidate \(X\), the structural obligations generated by sealing \(X\) over
+\(\Sigma\) are the least arity-indexed family of judgments
+\[
+  \Gamma;\Sigma\vdash \tau\in\SObl_n(X)
+\]
+closed under the \textsc{Act}, \textsc{Cmp}, and \textsc{Horn} constructors of
+Figure~\ref{fig:core-rules}, and stable under weakening, substitution, and
+presentation equivalence of \(\Sigma\).  The arity \(n\) is the maximum public
+boundary dimension inspected by \(\tau\): action obligations have arity one,
+comparison obligations have arity two, and structural horn obligations have
+arity \(n\geq 3\).  Payload declarations are not members of \(\SObl_n(X)\)
+unless the export selection explicitly reclassifies them as structural
+integration trace.
+\end{defi}
+
+\begin{defi}[Depth-indexed admissibility]
+\label{def:depth-indexed-admissibility}
+For \(k\in\mathbb N\cup\{\infty\}\), a candidate \(X\) is
+\emph{\(k\)-admissible} when every generated obligation
+\(\tau\in\SObl_n(X)\) with \(n\leq k\) has evidence in the corresponding
+realized obligation object.  Unary admissibility means \(1\)-admissibility,
+binary admissibility means \(2\)-admissibility, and full admissibility means
+\(\infty\)-admissibility.  The paper does not define full admissibility by
+appealing to the depth-two theorem; the theorem later proves that, for
+\(\Cext\), binary admissibility extends canonically to full structural
+admissibility.
+\end{defi}
 
 \begin{defi}[Raw structural clause classes]
 The raw calculus uses three theorem-facing structural clause classes.
@@ -2161,13 +2225,13 @@ what makes the later open-box theorem applicable.
 Because interfaces grow cumulatively, the signatures form an inclusion system.  If \(j\leq k\),
 forgetting all obligations of arity greater than \(j\) induces a restriction map
 \[
-  \rho_{j,k}(X):\mathrm{Real}_k(X)\longrightarrow \mathrm{Real}_j(X).
+  \res_{j,k}(X):\mathrm{Real}_k(X)\longrightarrow \mathrm{Real}_j(X).
 \]
 These maps are telescope projections, so they satisfy
 \[
-  \rho_{k,k}=\mathrm{id},
+  \res_{k,k}=\mathrm{id},
   \qquad
-  \rho_{i,j}\circ\rho_{j,k}=\rho_{i,k}
+  \res_{i,j}\circ\res_{j,k}=\res_{i,k}
   \quad (i\leq j\leq k).
 \]
 The corresponding primitive index sets have inclusions
@@ -2184,7 +2248,7 @@ Throughout this section, a \emph{canonical equivalence}
   \mathrm{Real}_k(X)\simeq \mathrm{Real}_j(X)
 \]
 means an equivalence of the dependent telescope objects just defined.  One map is always the
-restriction projection \(\rho_{j,k}(X)\).  The inverse is constructed by adjoining, in
+restriction projection \(\res_{j,k}(X)\).  The inverse is constructed by adjoining, in
 dependency order, the canonical centers of the higher structural extension fibers.  The two
 round trips are the telescope equalities or homotopies obtained from the contraction of those
 fibers.  Thus the stabilization theorem is not a cardinality statement and not a
@@ -2832,10 +2896,20 @@ public field as derived.
 \begin{thm}[Exact stabilization of realized structural obligations]
 \label{thm:exact-stabilization}
 In the fixed cubical extension calculus, for every foundational-core candidate \(X\) and
-every \(k\geq 2\) there is a canonical equivalence
+every \(k\geq 2\) the restriction map
 \[
-  \mathrm{Real}_k(X) \simeq \mathrm{Real}_2(X).
+  \res_{2,k}(X):\mathrm{Real}_k(X)\longrightarrow\mathrm{Real}_2(X)
 \]
+is an equivalence.  Its inverse
+\[
+  \ext_{2,k}(X):\mathrm{Real}_2(X)\longrightarrow\mathrm{Real}_k(X)
+\]
+is constructed by structural recursion over the generated obligations of arity
+greater than two, adjoining for each such obligation the canonical center of
+the decoded total open-extension object.  The composites
+\(\res_{2,k}\circ\ext_{2,k}\) and \(\ext_{2,k}\circ\res_{2,k}\) are identified
+with the corresponding identities by the contraction paths of those
+open-extension fibers.
 Consequently \(d_{\mathrm{obl}}\leq 2\).
 
 Dependencies: the formal definition of \(\mathrm{Real}_k\), arity-cell identification,
@@ -2868,7 +2942,14 @@ contracts that fiber, so
   \qquad (k\geq 3).
 \]
 Iterating these equivalences yields \(\mathrm{Real}_k(X)\simeq\mathrm{Real}_2(X)\) for all
-\(k\geq 2\).
+\(k\geq 2\).  Written as maps, the forward map is the telescope projection
+\(\res_{2,k}(X)\).  The inverse \(\ext_{2,k}(X)\) starts with
+\(\partial:\mathrm{Real}_2(X)\) and repeatedly adjoins the canonical center of each
+successive horn-extension fiber \(H_j(\partial_j)\), for \(3\leq j\leq k\).
+The first round trip is judgmentally the identity on the retained depth-two
+fields.  The second round trip is homotopic to the identity because each
+discarded higher component is connected to the canonical center by the
+contraction supplied by Lemma~\ref{lem:kan-contraction-horn-fibers}.
 \end{proof}
 
 \begin{cor}[Contractible-factor decomposition]
