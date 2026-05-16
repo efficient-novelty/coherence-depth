@@ -89,10 +89,10 @@ Progress tracker for revising `paper/1_coherence_depth_LMCS.tex` before the firs
 - [x] Ensure the Zenodo artifact contains trust-boundary documentation.
 - [x] Ensure the Zenodo artifact contains exact check commands.
 - [x] Sync the Zenodo package LMCS source and PDF with the current 47-page build.
-- [ ] Freeze a tagged artifact release before Zenodo upload.
-- [ ] Ensure the Zenodo artifact points to the tagged release.
+- [x] Freeze a tagged artifact release before Zenodo upload.
+- [x] Ensure the Zenodo artifact points to the tagged release.
 - [x] Replace the Zenodo DOI placeholder in the paper and release metadata once the DOI is reserved.
-- [ ] Record the final hosted artifact-check workflow URL for the tagged archival commit.
+- [x] Record the final hosted artifact-check workflow URL for the tagged archival commit.
 - [x] Decide whether final artifact checking should keep `paper-map.yaml` pointed at `paper/1_coherence_depth.tex` or add an LMCS-specific theorem-map target for `paper/1_coherence_depth_LMCS.tex`.
 
 ## Phase 5 - Presentation Simplification

@@ -13,6 +13,14 @@ The reserved Zenodo DOI for the LMCS artifact is:
 
   https://doi.org/10.5281/zenodo.20235005
 
+The archival LMCS artifact tag is:
+
+  https://github.com/efficient-novelty/coherence-depth/releases/tag/v0.1.2-lmcs-artifact
+
+The hosted artifact-check run for that tag is:
+
+  https://github.com/efficient-novelty/coherence-depth/actions/runs/25963679151
+
 This artifact intentionally contains only the paper source, direct TeX
 dependencies, theorem-facing Agda modules, audit scripts, theorem-map
 documentation, and small case-study fixtures.

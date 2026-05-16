@@ -43,8 +43,13 @@ Pre-existing worktree changes outside this turn were preserved:
 
 ## Recommended Next Improvement Turn
 
-Focus on the final archival release loop.  The DOI is reserved; the remaining
-release-blocking decision is the final tag and hosted workflow URL.
+The archival release loop is complete for the LMCS Zenodo artifact.  Use
+`v0.1.2-lmcs-artifact` for the upload record and cite the passing hosted
+artifact-check run:
+
+```text
+https://github.com/efficient-novelty/coherence-depth/actions/runs/25963679151
+```
 
 ### Target Files
 
@@ -59,29 +64,20 @@ release-blocking decision is the final tag and hosted workflow URL.
 
 ### Detailed Plan
 
-1. Choose the final archival tag name.
+1. Upload the prepared `coherence_depth_zenodo` contents to Zenodo.
    - The reserved Zenodo DOI is `10.5281/zenodo.20235005`.
-   - Do not create a final tag until the release metadata are ready to point at
-     the same snapshot.
+   - The final archival tag is `v0.1.2-lmcs-artifact`.
+   - The hosted artifact-check run on that tag passed:
+     `https://github.com/efficient-novelty/coherence-depth/actions/runs/25963679151`.
 
-2. Insert final tag metadata consistently.
-   - DOI metadata has been inserted in the LMCS paper text, Zenodo metadata,
-     Zenodo README, and root README.
-   - Replace any remaining development-only artifact wording with the archived
-     record once the release tag and hosted workflow URL exist.
+2. In the Zenodo draft metadata, cross-check the DOI, repository URL, release
+   tag URL, title, authorship, and description against
+   `coherence_depth_zenodo/.zenodo.json`.
 
-3. Rebuild and resync the archive package.
-   - Run `pdflatex` twice from `paper/`.
-   - Copy the final LMCS TeX/PDF into `coherence_depth_zenodo/paper/`.
-   - Recheck that root and package hashes match.
+3. After publishing the Zenodo record, replace any provisional/reserved DOI
+   wording only if Zenodo assigns different final wording for the same DOI.
 
-4. Run the final gates and publish the archival snapshot.
-   - Run `bash scripts/check_coherence_depth_artifact.sh`.
-   - Push the final commit and tag.
-   - Wait for the hosted GitHub Actions artifact-check run on the tag, then
-     record the final workflow URL in the checklist or release notes.
-
-5. Do one last proof/layout sanity pass if time permits.
+4. Do one last proof/layout sanity pass if time permits.
    - Revisit the remaining unchecked proof-sketch audit items in `checklist.md`.
    - Reassess the small LaTeX overfull/underfull warnings only if the DOI/tag
      edits disturb layout.

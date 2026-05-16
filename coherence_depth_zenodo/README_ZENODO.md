@@ -70,6 +70,20 @@ DOI URL:
 https://doi.org/10.5281/zenodo.20235005
 ```
 
-The archival release tag and hosted artifact-check workflow URL are still
-release-blocking metadata.  After publishing the Zenodo draft, cite the
-versioned Zenodo DOI and record the final tag/workflow URL with the release.
+Archival release tag:
+
+```text
+v0.1.2-lmcs-artifact
+```
+
+Release URL:
+
+```text
+https://github.com/efficient-novelty/coherence-depth/releases/tag/v0.1.2-lmcs-artifact
+```
+
+Hosted artifact-check run:
+
+```text
+https://github.com/efficient-novelty/coherence-depth/actions/runs/25963679151
+```
